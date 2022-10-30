@@ -147,7 +147,7 @@ def doing(k):
             k11.pop(-1)
             k12.pop(-1)
             checks(maina2(k11), k[:-1], k11)
-            # checks(maina2(k12), k[:-1], k12)
+            checks(maina2(k12), k[:-1], k12)
 
 
 lis = [
