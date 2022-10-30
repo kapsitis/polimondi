@@ -341,6 +341,9 @@ def doing(kk):
 lis = []
 
 
+# Vairs nav jākopē polimondu saraksti iekšā lis = []. Tagad var kods autoātiski paņem sarakstus no citiem, failiem(347.rinda),
+# kuri un izvada rezultātus jaunos failos(105.rinda).
+
 f = open("output15.txt", "r")
 for k in f.readlines():
     l = list(ast.literal_eval(k))
@@ -353,21 +356,11 @@ lists = []
 for i in lis:
     lists.append(maina1(i))
 
-# print(lists)
-
-# lip = []
-# for i in lists:
-#     lip.append(maina2(i))
-
-# print(lip)
 
 komb = gen()
 
-# print(komb)
 for t in lists:
     doing(t)
-# doing(lists[0])
-
 
 end_time = datetime.now()
 print("Laiks: {}".format(end_time - start_time))
