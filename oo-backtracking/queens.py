@@ -38,7 +38,7 @@ class QueenProblem:
         
     # Funkcija, lai ielūkotos backtracking objekta iekšējā stāvoklī
     def debugState(self): 
-        print('row={}, rowPos={}, leftDiag={}, rightDiag={}'.format(self.row, self.rowPos, self.leftDiag, self.rightDiag))
+        print('rowPos={}, row={}, leftDiag={}, rightDiag={}'.format(self.rowPos, self.row, self.leftDiag, self.rightDiag))
 
     # Pielabo apdraudējumu datu struktūras pēc dāmas uzlikšanas/novākšanas
     def setPosition(self, rowNo, colNo, status):
@@ -83,7 +83,7 @@ class QueenProblem:
         #         else:
         #             print("0", end=" ")
         #     print()
-        print('rows = {}'.format(self.rowPos))
+        print('rowPos={}'.format(self.rowPos))
 
     # Atgriež iteratoru ar iespējamiem gājieniem: 
     # Kārtējā kolonnā dāmu mēģina nolikt jebkurā rindiņā (1...n), algoritms pats izlaidīs apdraudētās pozīcijas.
@@ -130,7 +130,7 @@ class QueenProblem:
 
 
 def main():
-    q = QueenProblem(8)
+    q = QueenProblem(4)
     b = Backtrack(q)
     if b.attempt(0):
         q.display()

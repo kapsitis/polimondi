@@ -21,13 +21,14 @@ class Backtrack:
     # Mēģina risināt uzdevumu, atrodoties koka līmenī "level" 
     # level=0 ir pašā augšā - pirms izdarīti "gājieni" (novietotas jebkādas dāmas)
     def attempt(self, level):
-        #self.b.display()
+        
         successful = False
         moveIterator = self.b.moves(level)
 
         for move in moveIterator:
             if self.b.valid(level, move):
                 self.b.record(level, move)
+                self.b.debugState()
                 if self.b.done(level):
                     successful= True
                 else:
