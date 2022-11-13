@@ -42,17 +42,17 @@ class QueenProblem:
 
     # Pielabo apdraudējumu datu struktūras pēc dāmas uzlikšanas/novākšanas
     def setPosition(self, rowNo, colNo, status):
-        self.row[rowNo-1] = status
-        self.leftDiag[rowNo+colNo-2] = status
-        self.rightDiag[rowNo - colNo + self.MAXROW - 2] = status
+        self.row[rowNo] = status
+        self.leftDiag[rowNo+colNo] = status
+        self.rightDiag[rowNo - colNo + self.MAXROW - 1] = status
 
     # Vai var dāmu uzlikt uz galdiņa?
     # "move" te nozīmē jaunas dāmas uzlikšanu. 
     def valid(self, level, move):
         rowNo = move
-        colNo = level + 1
+        colNo = level
         # visiem apdraudējumiem jābūt 0
-        result = (self.row[rowNo-1] == 0) and (self.leftDiag[rowNo + colNo-2] == 0) and (self.rightDiag[rowNo - colNo+self.MAXROW - 2] == 0)
+        result = (self.row[rowNo] == 0) and (self.leftDiag[rowNo + colNo] == 0) and (self.rightDiag[rowNo - colNo + self.MAXROW - 1] == 0)
         return result
 
     # Vai visas dāmas jau izvietotas (vai n-polimonds sekmīgi noslēdzis vienkāršo lauzto līniju)?
@@ -62,14 +62,14 @@ class QueenProblem:
     # Pievienojam esošo gājienu
     def record(self, level, move):
         rowNo = move
-        colNo = level + 1
-        self.rowPos[colNo-1] = rowNo - 1
+        colNo = level
+        self.rowPos[colNo] = rowNo
         self.setPosition(rowNo, colNo, 1)
 
     # Parāpjamies atpakaļ, ja bija sasniegts strupceļš
     def undo(self, level, move):
         rowNo = move
-        colNo = level + 1
+        colNo = level
         self.rowPos[colNo] = 0
         self.setPosition(rowNo, colNo, 0)
 
@@ -105,16 +105,16 @@ class QueenProblem:
     # "nedaudz pa labi" - bruņurupucis pagriežas par -60 grādiem
     # "ass pagrieziens pa labi" - bruņurupucis pagriežas par -120 grādiem
     class QueenEnumeration:
-        cursor = 0
+        cursor = -1
         outer_instance = None
 
         def __init__(self, outer_instance):
-            self.cursor = 0
+            # self.cursor = -1
             self.outer_instance = outer_instance
 
         # Laikam var atstāt šādi: Iterators atgriež pats savu tekošo objektu        
         def __iter__(self):
-            self.cursor = 0
+            # self.cursor = -1
             return self
     
         #def hasMoreElements(self):
@@ -123,7 +123,7 @@ class QueenProblem:
 
         def __next__(self):
             self.cursor += 1
-            if self.cursor < self.outer_instance.MAXROW+1:
+            if self.cursor < self.outer_instance.MAXROW:
                 return self.cursor
             raise StopIteration
 
