@@ -81,9 +81,12 @@ Backtracking un DFS uzdevumi
    nonākusi lauzta līnija. Pieņemsim, ka to turpina kā vienkāršu lauztu līniju, izmantojot malu garumus $k,k-1,\ldots,1$. 
    Kurās vietās var nonākt šī lauztā līnija pēc visu $k$ posmu uzzīmēšanas? (Atbildes norādīt kā relatīvos pārvietojumus trijstūra 
    režģu koordinātēs.)   
-   *Šo uzdevumu var izmantot, lai paātrināti atrastu labos polimondus ar pietiekami lielu malu garumu -- 
+   (Šo uzdevumu var izmantot, lai paātrināti atrastu labos polimondus ar pietiekami lielu malu garumu -- 
    ja izrādās, ka ar pēdējiem $k$ posmiem nevarēs veikt vajadzīgo pārvietojumu (pat neņemot vērā iespējamos konfliktus
-   ar agrāk novilktajām malām), tad attiecīgo apakškoku neaplūko.*
+   ar agrāk novilktajām malām), tad attiecīgo apakškoku neaplūko.)
 2. Dots labs $(2n+1)$-polimonds ar debesspušu kodējumu. Atrast visus veidus, kuros to var turpināt, ievietojot debespušu kodējumā 
    $2$ vai $4$ jaunas malas/debesspuses?
+3. Skaitīt tikai tos labos polimondus, kuri apmierina kādu ierobežojumu. Piemēram, ar noteiktu laukumu, ar fiksētu/nelielu skaitu 
+   pagriezienu pa šauru/asu leņķi vai citu īpašību, kas ļautu vieglāk tos pēc tam analizēt - piemēram, pamatot, ka induktīvais 
+   solis (divu jaunu malu pievienošana) allaž noved pie derīga polimonda, kam nav malu krustošanās.
 
