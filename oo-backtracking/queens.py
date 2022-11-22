@@ -2,6 +2,9 @@
 # https://realpython.com/python-interface/
 # https://stackoverflow.com/questions/19151/how-to-build-a-basic-iterator
 
+import sys
+import time
+
 from backtrack import *
 
 # Mazliet izmainīts šaha dāmu algoritms - rindas un kolonnas numurētas, sākot ar 0. 
@@ -37,16 +40,23 @@ class QueenProblem:
         self.MAXROW = n
         self.leftDiag = [0] * (2*self.MAXROW-1)
         self.rightDiag = [0] * (2*self.MAXROW-1)
-        self.row = [0]*(self.MAXROW)
-        # self.rowPos = [-1]*(self.MAXROW)
+        self.row = [0]*(self.MAXROW)        
         self.rowPos = []
         self.initValues = []
         
 
+    def reset(self): 
+        self.leftDiag = [0] * (2*self.MAXROW-1)
+        self.rightDiag = [0] * (2*self.MAXROW-1)
+        self.row = [0]*(self.MAXROW)        
+        self.rowPos = []
+
+
 
     # Funkcija, lai ielūkotos backtracking objekta iekšējā stāvoklī
     def debugState(self, prefix): 
-        print('{}: rowPos={}, row={}, leftDiag={}, rightDiag={}'.format(prefix, self.rowPos, self.row, self.leftDiag, self.rightDiag))
+        #print('{}: rowPos={}, row={}, leftDiag={}, rightDiag={}'.format(prefix, self.rowPos, self.row, self.leftDiag, self.rightDiag))
+        pass
 
     # Pielabo apdraudējumu datu struktūras pēc dāmas uzlikšanas/novākšanas
     def setPosition(self, rowNo, colNo, status):
@@ -70,7 +80,7 @@ class QueenProblem:
     def done(self, level):
         # return (level + 1 >= self.MAXROW)
         # return len(self.rowPos) == self.MAXROW
-        print ('IS DONE = {}, level = {}'.format(level >= self.MAXROW - 1, level))
+        # print ('IS DONE = {}, level = {}'.format(level >= self.MAXROW - 1, level))
         return level >= self.MAXROW - 1
 
     # Pievienojam esošo gājienu
@@ -129,33 +139,21 @@ class QueenProblem:
             return QueenEnumeration(self.initValues[level]+1, self.MAXROW)
 
 
-# Iekšēja klase (Inner class) - QueenEnumeration dzīvo QueenPosition vēderā un 
-# var piekļūt visiem tās globālajiem mainīgajiem. 
-# Pieejas smukums ir tāds, ka "QueenEnumeration" ir tādi objekti, kuriem nav 
-# jēgas ārpus "QueenPosition" - tāpēc neviens cits tiem objektiem netiek klāt un nevar neko nobojāt, 
-# bet paši šie objekti tiek klāt tam, ko viņiem vajag. 
-
-# Polimondu gadījumā - var uztaisīt līdzīgu iteratoru, kurš atgriež nevis visas iespējamās rindas, 
-# bet relatīvos (vai varbūt absolūtos?) virzienus. Piemēram: 
-# "ass pagrieziens pa kreisi" - bruņurupucis pagriežas par +120 grādiem    
-# "nedaudz pa kreisi" - bruņurupucis pagriežas par +60 grādiem
-# "nedaudz pa labi" - bruņurupucis pagriežas par -60 grādiem
-# "ass pagrieziens pa labi" - bruņurupucis pagriežas par -120 grādiem
+# Iterators, kurš ģenerē iespējamos dāmu novietojumus kārtējā kolonnā
 class QueenEnumeration:
     cursor = 0
     end = 0
-    # outer_instance = None
 
+    # Konstruktors: iterators sāksies ar vērtību "initial" un beidzas ar max-1. 
     def __init__(self, initial, max):
-        # print('In QueenEnumeration.__init__({},{})'.format(initial, max))
         self.cursor = initial - 1
         self.end = max        
 
-    # Laikam var atstāt šādi: Iterators atgriež pats savu tekošo objektu        
+    # Sagatavo iteratoru "for" cikla pašā sākumā un atgriež to
     def __iter__(self):
         return self
 
-
+    # atgriež tekošo vērtību intervālā [initial; max-1]. Ja beidzas, tad izlec no cikla ar "StopIteration"
     def __next__(self):
         self.cursor += 1
         if self.cursor < self.end:
@@ -163,13 +161,57 @@ class QueenEnumeration:
         raise StopIteration
 
 
-
-def main():
-    q = QueenProblem(8)
+def findFirstPlacement(n): 
+    q = QueenProblem(n)
     b = Backtrack(q)
     if b.attempt(0):
-        q.displayBoard()
-    
+        q.displayBoard()    
+
+
+
+def findAllPlacements(n): 
+    q = QueenProblem(n)
+    b = Backtrack(q)
+    n = 0
+    while b.attempt(0):
+        q.display()
+        q.initValues = q.rowPos
+        q.reset()
+        n += 1
+    print('{} positions found'.format(n))    
+
+
+def recordRunTimes(n1, n2):
+    computation_times = dict()
+
+    with open('computation_times3.txt', 'a') as file_object:
+        file_object.write('N,milliseconds\n')
+
+        for n in range(n1, n2+1):
+            start_time = time.time()
+
+            q = QueenProblem(n)
+            b = Backtrack(q)
+            if b.attempt(0):
+                q.displayBoard()    
+
+
+            end_time = time.time()
+            print('---{}: {:.3f} seconds ---'.format(n, end_time - start_time))
+            computation_times[n] = round(1000*(end_time - start_time))
+            file_object.write("{},{}\n".format(n, computation_times[n]))
+
+
+
+
+def main():
+    if len(sys.argv) <= 2:
+        print('Usage: python queens.py <n1> <n2>')
+        exit(0)    
+    n1 = int(sys.argv[1])
+    n2 = int(sys.argv[2])
+    recordRunTimes(n1, n2)
+
 
 
 

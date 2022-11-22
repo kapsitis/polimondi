@@ -61,3 +61,13 @@ def test_board22_with_6_queens():
     b = Backtrack(q)
     assert b.attempt(0)
     assert q.rowPos == [0, 2, 4, 1, 3, 9, 13, 16, 19, 12, 18, 21, 17, 7, 20, 11, 8, 5, 15, 6, 10, 14]
+
+# def output_all_with6(): 
+#     q = QueenProblem(6)
+#     b = Backtrack(q)
+#     if b.attempt(0):
+#         q.displayBoard()
+#     q.initValues = q.rowPos
+#     q.reset()
+#     if b.attempt(0):
+#         q.displayBoard()
