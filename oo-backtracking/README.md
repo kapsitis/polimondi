@@ -20,7 +20,7 @@ to debesspušu kodējumi sakrīt, izņemot to, ka polimonda ar $n+2i+2$ malām
 kodējumā ir iesprausti divi jauni debesspušu burti (jebkurās divās vietās).  
 Līdzīgi definē arī labu polimondu virknes ar indukcijas soli $4, 6, 8$ utml. 
 
-(*Vai polimondu virknē malu iespraušanai jānotiek pēc kādas regulāras shēmas, piemēram, 
+(Vai polimondu virknē malu iespraušanai jānotiek pēc kādas regulāras shēmas, piemēram, 
 debesspušu kodējumiem jābūt ģenerējamiem ar *bezkonteksta gramatiku* vai ar 
 vienkāršāku metodi - periodisku apakšvirkņu ievietošanu divās kodējuma vietās, vēl neesam izlēmuši.)
 
@@ -39,10 +39,10 @@ vienkāršāku metodi - periodisku apakšvirkņu ievietošanu divās kodējuma v
 sastāv no 4 burtiem (a,b,c,d). Pirmo malu novelk jebkurā izvēlētā virzienā (parasti - taisni pa labi), 
 šai malai kodējumā neviens burts neatbilst. Turpmākos burtus iegūst sekojoši:
 
-* burtu "a" raksta kodējumā tad, ja nākamā mala pret iepriekšējo veic asu/šaurleņķa pagriezienu pa kreisi (60 grādu leņķis); 
-* burtu "b" raksta kodējumā tad, ja nākamā mala pret iepriekšējo veic platleņķa pagriezienu pa kreisi (120 grādu leņķis); 
-* burtu "c" raksta kodējumā tad, ja nākamā mala pret iepriekšējo veic platleņķa pagriezienu pa labi (120 grādu leņķis); 
-* burtu "d" raksta kodējumā tad, ja nākamā mala pret iepriekšējo veic asu/šaurleņķa pagriezienu pa labi (60 grādu leņķis). 
+* burtu "a" raksta kodējumā tad, ja nākamā mala pret iepriekšējo veic asu/šaurleņķa pagriezienu pa kreisi ($60^{\circ}$ leņķis); 
+* burtu "b" raksta kodējumā tad, ja nākamā mala pret iepriekšējo veic platleņķa pagriezienu pa kreisi ($120^{\circ}$ leņķis); 
+* burtu "c" raksta kodējumā tad, ja nākamā mala pret iepriekšējo veic platleņķa pagriezienu pa labi ($120^{\circ}$ leņķis); 
+* burtu "d" raksta kodējumā tad, ja nākamā mala pret iepriekšējo veic asu/šaurleņķa pagriezienu pa labi ($60^{\circ}$ grādu leņķis). 
 
 Labiem polimondiem pieņemam, ka malu garumi ir secībā  $n,n-1,n-2,\ldots,3,2,1$, 
 bet citiem polimondiem kopā ar relatīvo virzienu (a,b,c,d) norāda arī attiecīgās malas garumu.
