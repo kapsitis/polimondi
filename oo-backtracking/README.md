@@ -8,7 +8,7 @@ kam visas virsotnes atrodas trijstūru režģa virsotnēs, bet malas iet pa trij
 ir skaitļi $n,n-1,n-2,\ldots,3,2,1$ tieši šādā secībā.
 
 **Definīcija:** $n$-polimonda *kodējums ar debesspusēm* ir virknīte garumā $n$, kura 
-sastāv no 6 burtiem (A,B,C,D,E,F), kas norāda uz malu virzieniem, kuros tiek vilktas secīgas
+sastāv no 6 burtiem (`A`,`B`,`C`,`D`,`E`,`F`), kas norāda uz malu virzieniem, kuros tiek vilktas secīgas
 polimonda malas. (Labiem polimondiem malu garumi ir secībā  $n,n-1,n-2,\ldots,3,2,1$, 
 bet citiem polimondiem kopā ar debespusi kodējumā norāda arī attiecīgās malas garumu.)
 
@@ -36,7 +36,7 @@ vienkāršāku metodi - periodisku apakšvirkņu ievietošanu divās kodējuma v
 
 
 **Definīcija:** Par $2n+1$ polimonda *relatīvo kodējumu* sauc $2n$-burtu virknīti, kas
-sastāv no 4 burtiem (a,b,c,d). Pirmo malu novelk jebkurā izvēlētā virzienā (parasti - taisni pa labi), 
+sastāv no 4 burtiem (`a`,`b`,`c`,`d`). Pirmo malu novelk jebkurā izvēlētā virzienā (parasti - taisni pa labi), 
 šai malai kodējumā neviens burts neatbilst. Turpmākos burtus iegūst sekojoši:
 
 * burtu "a" raksta kodējumā tad, ja nākamā mala pret iepriekšējo veic asu/šaurleņķa pagriezienu pa kreisi ($60^{\circ}$ leņķis); 
