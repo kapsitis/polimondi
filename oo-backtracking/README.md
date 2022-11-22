@@ -2,37 +2,41 @@ Par polimondiem
 ======================
 
 **Definīcija:** Par $n$-*polimondu* sauc vienkāršu slēgtu lauztu līniju (jeb daudzstūri) no $n$ posmiem, 
-kam visas virsotnes atrodas trijstūru režģa virsotnēs. 
+kam visas virsotnes atrodas trijstūru režģa virsotnēs, bet malas iet pa trijstūru režģa līnijām. 
 
 **Definīcija:** $n$-polimondu sauc par *labu*, ja tā malu garumi, sākot skaitīt no kādas virsotnes, 
 ir skaitļi $n,n-1,n-2,\ldots,3,2,1$ tieši šādā secībā.
 
-**Definīcija:** $n$-polimonda kodējums ar debesspusēm ir virknīte garumā $n$, kura 
+**Definīcija:** $n$-polimonda *kodējums ar debesspusēm* ir virknīte garumā $n$, kura 
 sastāv no 6 burtiem (A,B,C,D,E,F), kas norāda uz malu virzieniem, kuros tiek vilktas secīgas
-polimonda malas. (Labiem polimondiem pieņemam, ka malu garumi ir secībā  $n,n-1,n-2,\ldots,3,2,1$, 
+polimonda malas. (Labiem polimondiem malu garumi ir secībā  $n,n-1,n-2,\ldots,3,2,1$, 
 bet citiem polimondiem kopā ar debespusi kodējumā norāda arī attiecīgās malas garumu.)
 
-**Definīcija:** Polimondu virkni $n, n+2, \ldots, n+2(k-1)$ malām sauc par *labu polimondu virkni
+**Definīcija:** Polimondu virkni garumā $k$, kas satur polimondus ar 
+$n, n+2, \ldots, n+2(k-1)$ malām sauc par *labu polimondu virkni
 ar indukcijas soli 2*, ja 
-katri divi blakusesoši polimondi (ar $n+2i$ un $n+2i+2$ malām) 
-šajā virknē ir ar kodējumiem, kuros debesspuses sakrīt, izņemot to, ka polimonda ar $n+2i+2$ malām 
-kodējumā ir iespraustas divi jauni debesspušu burti (patvaļīgās divās vietās).
-
+katriem diviem blakusesošiem polimondiem (ar $n+2i$ un $n+2i+2$ malām, $i = 0,\ldots,k-2$) 
+to debesspušu kodējumi sakrīt, izņemot to, ka polimonda ar $n+2i+2$ malām 
+kodējumā ir iesprausti divi jauni debesspušu burti (jebkurās divās vietās).  
 Līdzīgi definē arī labu polimondu virknes ar indukcijas soli $4, 6, 8$ utml. 
+
+(*Vai polimondu virknē malu iespraušanai jānotiek pēc kādas regulāras shēmas, piemēram, 
+debesspušu kodējumiem jābūt ģenerējamiem ar *bezkonteksta gramatiku* vai ar 
+vienkāršāku metodi - periodisku apakšvirkņu ievietošanu divās kodējuma vietās, vēl neesam izlēmuši.)
 
 **Definīcija:** Par polimonda laukumu sauc veselu skaitli - tajā ietilpstošo mazo trijstūrīšu skaitu. 
 
 **Definīcija:** Par polimonda gabarītizmēriem sauc naturālu skaitļu trijnieku $(i,j,k)$, kur 
 * $i$ izsaka mazāko attālumu starp divām horizontālām taisnēm trijstūra režģī tādām, 
   ka visas polimonda virsotnes atrodas starp šīm taisnēm (vai uz tām). 
-* $j$ izsaka mazāko attālumu starp divām slīpām taisnēm (kas vilktas no ziemeļaustrumiem uz dienvidrietumiem) tādām, 
+* $j$ izsaka mazāko attālumu starp divām paralēlām slīpām taisnēm (kas vilktas no ziemeļaustrumiem uz dienvidrietumiem) tādām, 
   ka visas polimonda virsotnes atrodas starp šīm taisnēm (vai uz tām). 
-* $k$ izsaka mazāko attālumu starp divām slīpām taisnēm (kas vilktas no ziemeļrietumiem uz dienvidaustrumiem) tādām, 
+* $k$ izsaka mazāko attālumu starp divām paralēlām slīpām taisnēm (kas vilktas no ziemeļrietumiem uz dienvidaustrumiem) tādām, 
   ka visas polimonda virsotnes atrodas starp šīm taisnēm (vai uz tām). 
 
 
 **Definīcija:** Par $2n+1$ polimonda *relatīvo kodējumu* sauc $2n$-burtu virknīti, kas
-sastāv no 4 burtiem $(a,b,c,d)$. Pirmo malu novelk jebkurā izvēlētā virzienā (parasti - taisni pa labi), 
+sastāv no 4 burtiem (a,b,c,d). Pirmo malu novelk jebkurā izvēlētā virzienā (parasti - taisni pa labi), 
 šai malai kodējumā neviens burts neatbilst. Turpmākos burtus iegūst sekojoši:
 
 * burtu "a" raksta kodējumā tad, ja nākamā mala pret iepriekšējo veic asu/šaurleņķa pagriezienu pa kreisi (60 grādu leņķis); 
@@ -46,8 +50,8 @@ bet citiem polimondiem kopā ar relatīvo virzienu (a,b,c,d) norāda arī attiec
 
 **Definīcija:** Polimonds ir *divdaļīgs*, ja eksistē kāda diagonāle, kura pilnībā atrodas šī polimonda iekšpusē un 
 visi augstumi, kurus novelk no polimonda virsotnēm uz šo diagonāli arī pilnībā atrodas polimonda iekšpusē. 
-(Vienkāršoti sakot, polimondam ir koka lapas forma ar centrālo dzīslu, kurai var novilkt perpendikulus uz jebkuru vietu uz 
-šīs lapas perimetra.)
+(Vienkāršoti sakot, polimondam ir koka lapas forma ar centrālo dzīslu, no kuras var novilkt perpendikulus uz jebkuru vietu uz 
+lapas perimetra.)
 
 
 
@@ -76,6 +80,9 @@ Nezināmi jautājumi
 
 Backtracking un DFS uzdevumi
 --------------------------------
+
+Te var apkopot dažus derīgus jautājumus, kas risināmi ar kādu mēģinājumu/kļūdu metodi, piemēram, pielāgojot 
+esošo universālo "backtracking" algoritmu. 
 
 1. Pieņemsim, ka plaknes punktā ar trijstūra režģu koordinātēm $(x,y,z)$ no kādas debesspuses (A,B,C,D,E, vai F) 
    nonākusi lauzta līnija. Pieņemsim, ka to turpina kā vienkāršu lauztu līniju, izmantojot malu garumus $k,k-1,\ldots,1$. 
