@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # https://dl.acm.org/doi/pdf/10.1145/331795.331886
 # https://realpython.com/python-interface/
 # https://stackoverflow.com/questions/19151/how-to-build-a-basic-iterator
@@ -7,12 +9,12 @@ import time
 
 from backtrack import *
 
-# Mazliet izmainīts šaha dāmu algoritms - rindas un kolonnas numurētas, sākot ar 0. 
-class QueenProblem: 
+# Mazliet izmainīts šaha dāmu algoritms - rindas un kolonnas numurētas, sākot ar 0.
+class QueenProblem:
     # Galdiņa izmēru faktiski uzstāda __init__
     MAXROW = 0
 
-    # Ja rowPos[x]==y  (y pieder [0;n-1]), tad x-tās kolonnas y-tajā rindiņā ir novietota dāma; 
+    # Ja rowPos[x]==y  (y pieder [0;n-1]), tad x-tās kolonnas y-tajā rindiņā ir novietota dāma;
     # ja rowPos[x] neeksistē (jo stekā nav pietiekami vērtību), tad x-tajā kolonnā dāma vēl nav novietota.
     rowPos = []
 
@@ -20,12 +22,12 @@ class QueenProblem:
     row = []
 
     # Aizņemtās diagonāles, kuras iet uz leju un pa kreisi. Ja leftDiag[x]==1, tad šajā diagonālē novietota dāma
-    # Diagonāles skaitli iegūst, saskaitot rindiņu un kolonnu. Teiksim, dāma kreisajā augšējā stūrī (0,0) ir uz diagonāles 0+0=0. 
+    # Diagonāles skaitli iegūst, saskaitot rindiņu un kolonnu. Teiksim, dāma kreisajā augšējā stūrī (0,0) ir uz diagonāles 0+0=0.
     # Piemēram, 8*8 galdiņam masīva elementi ir leftDiag[0],...,leftDiag[14]
     leftDiag = []
     # Aizņemtās diagonāles, kuras iet uz leju un pa kreisi. Ja leftDiag[x]==1, tad šajā diagonālē novietota dāma
-    # Diagonāles skaitli iegūst, atņemot no kolonnas rindiņu. Šaha galdiņam 8*8 šīs diagonāles ir -7, -6, ...., 6, 7. 
-    # Šim skaitlim vēl pieskaita (MAXROW-1), t.i. masīva elementi ir rightDiag[0], ... , rightDiag[14]. 
+    # Diagonāles skaitli iegūst, atņemot no kolonnas rindiņu. Šaha galdiņam 8*8 šīs diagonāles ir -7, -6, ...., 6, 7.
+    # Šim skaitlim vēl pieskaita (MAXROW-1), t.i. masīva elementi ir rightDiag[0], ... , rightDiag[14].
     rightDiag = []
 
 
@@ -34,27 +36,27 @@ class QueenProblem:
 
 
 
-    # Izveido šaha galdiņu n*n; visas dāmu pozīcijas un visas apdraudētās pozīcijas sākotnēji ir False. 
+    # Izveido šaha galdiņu n*n; visas dāmu pozīcijas un visas apdraudētās pozīcijas sākotnēji ir False.
     # (Polimondiem - visi saraksti sākumā ir tukši)
     def __init__(self, n):
         self.MAXROW = n
         self.leftDiag = [0] * (2*self.MAXROW-1)
         self.rightDiag = [0] * (2*self.MAXROW-1)
-        self.row = [0]*(self.MAXROW)        
+        self.row = [0]*(self.MAXROW)
         self.rowPos = []
         self.initValues = []
-        
 
-    def reset(self): 
+
+    def reset(self):
         self.leftDiag = [0] * (2*self.MAXROW-1)
         self.rightDiag = [0] * (2*self.MAXROW-1)
-        self.row = [0]*(self.MAXROW)        
+        self.row = [0]*(self.MAXROW)
         self.rowPos = []
 
 
 
     # Funkcija, lai ielūkotos backtracking objekta iekšējā stāvoklī
-    def debugState(self, prefix): 
+    def debugState(self, prefix):
         #print('{}: rowPos={}, row={}, leftDiag={}, rightDiag={}'.format(prefix, self.rowPos, self.row, self.leftDiag, self.rightDiag))
         pass
 
@@ -65,7 +67,7 @@ class QueenProblem:
         self.rightDiag[rowNo - colNo + self.MAXROW - 1] = status
 
     # Vai var dāmu uzlikt uz galdiņa?
-    # "move" te nozīmē jaunas dāmas uzlikšanu. 
+    # "move" te nozīmē jaunas dāmas uzlikšanu.
     def valid(self, level, move):
         rowNo = move
 
@@ -96,7 +98,7 @@ class QueenProblem:
         # Push a new item to the stack
 
 
-        
+
 
     # Parāpjamies atpakaļ, ja bija sasniegts strupceļš
     def undo(self, level, move):
@@ -125,16 +127,16 @@ class QueenProblem:
             print()
 
 
-    # Atgriež iteratoru ar iespējamiem gājieniem: 
+    # Atgriež iteratoru ar iespējamiem gājieniem:
     # Kārtējā kolonnā dāmu mēģina nolikt jebkurā rindiņā (1...n), algoritms pats izlaidīs apdraudētās pozīcijas.
     def moves(self, level):
         if len(self.initValues) <= level:
             # self.debugState("CCC, level={}, init={} ".format(level, 0))
             return QueenEnumeration(0, self.MAXROW)
-        elif level < self.MAXROW-1: 
+        elif level < self.MAXROW-1:
             # self.debugState("DDD, level={}, init={} ".format(level, self.initValues[level]))
             return QueenEnumeration(self.initValues[level], self.MAXROW)
-        else: 
+        else:
             # self.debugState("EEE, level={}, init={} ".format(level, self.initValues[level]+1))
             return QueenEnumeration(self.initValues[level]+1, self.MAXROW)
 
@@ -144,10 +146,10 @@ class QueenEnumeration:
     cursor = 0
     end = 0
 
-    # Konstruktors: iterators sāksies ar vērtību "initial" un beidzas ar max-1. 
+    # Konstruktors: iterators sāksies ar vērtību "initial" un beidzas ar max-1.
     def __init__(self, initial, max):
         self.cursor = initial - 1
-        self.end = max        
+        self.end = max
 
     # Sagatavo iteratoru "for" cikla pašā sākumā un atgriež to
     def __iter__(self):
@@ -161,15 +163,15 @@ class QueenEnumeration:
         raise StopIteration
 
 
-def findFirstPlacement(n): 
+def findFirstPlacement(n):
     q = QueenProblem(n)
     b = Backtrack(q)
     if b.attempt(0):
-        q.displayBoard()    
+        q.displayBoard()
 
 
 
-def findAllPlacements(n): 
+def findAllPlacements(n):
     q = QueenProblem(n)
     b = Backtrack(q)
     n = 0
@@ -178,27 +180,28 @@ def findAllPlacements(n):
         q.initValues = q.rowPos
         q.reset()
         n += 1
-    print('{} positions found'.format(n))    
+    print('{} positions found'.format(n))
 
 
 def recordRunTimes(n1, n2):
     computation_times = dict()
 
-    with open('computation_times3.txt', 'a') as file_object:
+    with open('computation_times4.txt', 'a') as file_object:
         file_object.write('N,milliseconds\n')
 
-        for n in range(n1, n2+1):
-            start_time = time.time()
+    for n in range(n1, n2+1):
+        start_time = time.time()
 
-            q = QueenProblem(n)
-            b = Backtrack(q)
-            if b.attempt(0):
-                q.displayBoard()    
+        q = QueenProblem(n)
+        b = Backtrack(q)
+        if b.attempt(0):
+            q.displayBoard()
 
 
-            end_time = time.time()
-            print('---{}: {:.3f} seconds ---'.format(n, end_time - start_time))
-            computation_times[n] = round(1000*(end_time - start_time))
+        end_time = time.time()
+        print('---{}: {:.3f} seconds ---'.format(n, end_time - start_time))
+        computation_times[n] = round(1000*(end_time - start_time))
+        with open('computation_times3.txt', 'a') as file_object:
             file_object.write("{},{}\n".format(n, computation_times[n]))
 
 
@@ -207,7 +210,7 @@ def recordRunTimes(n1, n2):
 def main():
     if len(sys.argv) <= 2:
         print('Usage: python queens.py <n1> <n2>')
-        exit(0)    
+        exit(0)
     n1 = int(sys.argv[1])
     n2 = int(sys.argv[2])
     recordRunTimes(n1, n2)
@@ -217,7 +220,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
