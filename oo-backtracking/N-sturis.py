@@ -21,7 +21,7 @@ class PointTg:
         z = self.z + other.z
         return PointTg(x, y, z)
 
-    # Reizina vektoru ar skaitli
+    # Reizina vektoru ar skaitli (skaitlim jābūt rakstītam pa kreisi no vektora)
     def __rmul__(self, other):
         return PointTg(other*self.x, other*self.y, other*self.z)
 
@@ -146,7 +146,7 @@ class NSturisProblem:
     def moves(self, level, direction):
         if len(self.initValues) <= level:
             return MoveEnumeration(0, direction)
-        elif level < self.MAXROW-1:
+        elif level < self.N-1:
             return MoveEnumeration(self.initValues[level], direction)
         else:
             return MoveEnumeration(self.initValues[level]+1, direction)
