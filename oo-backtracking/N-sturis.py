@@ -21,8 +21,8 @@ class PointTg:
         z = self.z + other.z
         return PointTg(x, y, z)
 
+    # Reizina vektoru ar skaitli
     def __rmul__(self, other):
-        #print '__mul__'
         return PointTg(other*self.x, other*self.y, other*self.z)
 
     # Atgriež trijstūru režģī novilktas malas garumu (ja paralēla režģa līnijām)
@@ -139,7 +139,7 @@ class NSturisProblem:
 
     # Izvada risinājumu kompaktā formā
     def display(self):
-        print('rowPos={}'.format(self.rowPos))
+        print('directions={}'.format(self.directions))
 
 
     # Atgriež iteratoru ar iespējamiem gājieniem, ja iepriekšējās malas virziens bija "direction"
