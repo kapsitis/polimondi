@@ -1,6 +1,56 @@
 Par polimondiem
 ======================
 
+Trijstūra režģa koordinātes
+-------------------------------
+
+Apzīmēsim sešas debesspuses kā sekojošus plaknes vektorus: 
+
+$$A = (1,0),\; B = (1/2, \sqrt{3}/2),\; C = (-1/2, \sqrt{3}/2),$$
+
+$$D = (-1,0),\; E = (-1/2, -\sqrt{3}/2),\; F = (1/2, -\sqrt{3}{2}).$$
+
+Lai nebūtu jāstrādā ar daļskaitļiem un kvadrātsaknēm (un lai koordinātes 
+neatšķirtos pēc režģa mērvienībām), ieviešam trijstūra režģa koordinātes 
+kā trīs skaitļu komplektu sekojoši: 
+
+$$A = (1,0,-1),\; B = (1,-1,0),\; C = (0,-1,1),\; D = (-1,0,1),\; E = (-1,1,0),\; F = (0,1,-1).$$
+
+Šos vektorus var saskaitīt un pārvietoties pa trijstūra režģa punktiem - 
+katram punktam šajā trijstūru režģī atbilst veselu skaitļu trijnieks $(x,y,z)$. 
+Tā kā koordinātes joprojām apraksta plaknes punktus, tad šie trijnieki 
+apmierina vienu un to pašu lineāro sakarību: $x+y+z = 0$.
+(Katru punktu ar trim veselām koordinātēm, kam $x+y+z = 0$ var iezīmēt 
+šajā trijstūru režģī).
+
+![Bilde](images/triangle-coordinates.png)
+
+
+Polimondu konstruēšana kanoniskā secībā
+------------------------------------------
+
+Lai būtu vieglāk salīdzināt divu polimondu pārlases algoritmu uzvedību, 
+tos pārstaigājam vienmēr vienādā veidā: 
+
+![Bilde2](images/move-iterator.png)
+
+Ir spēkā trīs gadījumi (sk. zīmējumu): 
+
+* Ja iepriekšējais gājiens bijis virzienā A vai D, tad nākamais var būt 
+  virzienos C, B, E, F (šādā secībā). 
+* Ja iepriekšējais gājiens bijis virzienā C vai F, tad nākamais var būt 
+  virzienos virzienos D, B, A, E (šādā secībā). 
+* Ja iepriekšējais gājiens bijis virzienā B vai E, tad nākamais var būt 
+  virzienos virzienos D, C, A, F (šādā secībā).
+
+Labus polimondus konstruē, vispirms veicot gājienu virzienā A par $N$ garuma vienībām, 
+kur $N$ ir iepriekš uzdotais polimonda malu skaits.
+Pēc tam veic otro gājienu (obligāti virzienos C vai B -- lai pirmais pagrieziens būtu 
+pa kreisi). Ja pirmais pagrieziens būtu pa labi, tad aplūkojam polimonda 
+spoguļattēlu (un ja pirmais gājiens nav virzienā A, tad polimondu pagriež tā, lai 
+pirmais gājiens vienmēr būtu pa labi). 
+
+
 **Definīcija:** Par $n$-*polimondu* sauc vienkāršu slēgtu lauztu līniju (jeb daudzstūri) no $n$ posmiem, 
 kam visas virsotnes atrodas trijstūru režģa virsotnēs, bet malas iet pa trijstūru režģa līnijām. 
 

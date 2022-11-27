@@ -1,6 +1,6 @@
 import math
 
-N = 7
+N = 5
 
 
 class PointTg:
@@ -26,6 +26,7 @@ class PointTg:
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
+            # return self.__dict__ == other.__dict__
             return self.x == other.x and self.y == other.y and self.z == other.z
         else:
             return False
@@ -61,8 +62,9 @@ def pointset(a, b, n, myset):
 def galv(list1, m, t, mysett):
     if (list1[-1][0] == 0 and (list1[-1][1] == 1 or list1[-1][1] == -1)) or ((list1[-1][0] == 1 or list1[-1][0] == -1) and list1[-1][0] == 0):
         return False
-    lis = [list1[0], list1[1], list1[2],
-           list1[3], list1[4], list1[5], list1[6]]
+    lis = []
+    for i in range(N):
+        lis.append(list1[i])
     d = int(((m - 1) * m) / 2)
     p0 = PointTg(0, 0, 0)
 
@@ -160,17 +162,8 @@ def maina(lis2d):
     return dlist
 
 
-mysett = ()
-for i in range(N+1):
-    mysett = list(mysett)
-    mysett.append((i, 0, -i))
-    mysett = tuple(mysett)
-
-
 def doing(p, x1, mysets):
     global mysett, liss, N
-    # print('p={}, x1={}, liss={}, N={}'.format(p,x1,liss, N))
-    # print('mysets = {}'.format(mysets))
     if x1 == 0:
         print("{},".format(liss))
         return False
@@ -186,13 +179,11 @@ def doing(p, x1, mysets):
             li1 = [[0, -x1], [x1, -x1 / 2], [0, x1], [-x1, x1 / 2]]
     for y2 in li1:
         mysett = mysets
-        p[0] = y2[0]
-        p[1] = y2[1]
-        liss[0] = [0, 7]
+        liss[0] = [0, N]
         liss[N-x1] = y2
         mi2 = galv(liss, x1, N-x1, mysett)
         if mi2 != False:
-            if doing(p, x1-1, mi2) == False:
+            if doing(y2, x1-1, mi2) == False:
                 mysett = set(list(mysett)[:-(x1-1)])
                 for i in range(x1):
                     liss[-i][0] = 0
@@ -217,5 +208,6 @@ for i in range(N+1):
     mysett = list(mysett)
     mysett.append((i, 0, -i))
     mysett = tuple(mysett)
+
 
 doing(p, x111, mysett)
