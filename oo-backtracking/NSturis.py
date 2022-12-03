@@ -14,12 +14,23 @@ class PointTg:
     def __str__(self):
         return "({},{},{})".format(self.x, self.y, self.z)
 
+    def __repr__(self):
+        return "({},{},{})".format(self.x, self.y, self.z)
+
     # Ar šo funkciju var pieskaitīt pašreizējam punktam izmaiņu "delta" (jauno malu)
     def __add__(self, other):
         x = self.x + other.x
         y = self.y + other.y
         z = self.z + other.z
         return PointTg(x, y, z)
+
+    # Ar šo funkciju var pieskaitīt pašreizējam punktam izmaiņu "delta" (jauno malu)
+    def __sub__(self, other):
+        x = self.x - other.x
+        y = self.y - other.y
+        z = self.z - other.z
+        return PointTg(x, y, z)
+
 
     # Reizina vektoru ar skaitli (skaitlim jābūt rakstītam pa kreisi no vektora)
     def __rmul__(self, other):
@@ -46,8 +57,9 @@ DIRECTIONS = {'A': PointTg(1,0,-1), 'B': PointTg(1,-1,0), 'C': PointTg(0,-1,1),
               'D': PointTg(-1,0,1), 'E': PointTg(-1,1,0),'F': PointTg(0,1,-1)}
 
 # Secība, kādā pārbaudīt nākamos gājienus.
-NEXT_MOVES = {'A': ['C', 'B', 'E', 'F'], 'B': ['D', 'C', 'A', 'F'], 'C': ['D', 'B', 'A', 'E'],
-              'D': ['C', 'B', 'E', 'F'], 'E': ['D', 'C', 'A', 'F'], 'F': ['D', 'B', 'A', 'E']}
+NEXT_MOVES = {'0': ['A'], '1': ['C', 'B'],
+    'A': ['C', 'B', 'E', 'F'], 'B': ['D', 'C', 'A', 'F'], 'C': ['D', 'B', 'A', 'E'],
+    'D': ['C', 'B', 'E', 'F'], 'E': ['D', 'C', 'A', 'F'], 'F': ['D', 'B', 'A', 'E']}
 
 class NSturisProblem:
     # Polimonda malu skaits
@@ -61,7 +73,8 @@ class NSturisProblem:
     vertices = []
 
     # PointTg kopa - punkti, kuriem cauri iet polimonda perimetrs.
-    points = set()
+    # points = set()
+    points = []
 
     # Līdz kurai vietai ir nonākts katrā no virsotnēm
     initValues = []
@@ -73,19 +86,21 @@ class NSturisProblem:
         self.N = n
         self.directions = []
         self.vertices = [PointTg(0, 0, 0)]
-        self.points = set()
+        # self.points = set()
+        self.points = list()
         self.initValues = []
-        series_sums = []
+        self.series_sums = []
         partial_sum = 0
         for i in range(1, n+1):
             partial_sum += i
-            series_sums.append(partial_sum)
+            self.series_sums.append(partial_sum)
 
 
     def reset(self):
         self.directions = []
         self.vertices = []
-        self.points = set()
+        # self.points = set()
+        self.points = list()
 
     # Funkcija, lai ielūkotos backtracking objekta iekšējā stāvoklī
     def debugState(self, prefix):
@@ -94,18 +109,22 @@ class NSturisProblem:
     # Pielabo datu struktūras, pievienojot vai atceļot gājienu.
     # status = 0 (ja atceļ malu ar "undo"), status = 1 (ja pievieno malu ar "record").
     def setPosition(self, move, status):
-        sideLength = self.N - len(self.directions)
+        sideLength = self.N - len(self.directions) + 1
+
         if status == 1:
             nextSide = sideLength*DIRECTIONS[move]
             nextVertex = self.vertices[-1] + nextSide
-            self.vertices.append(nextVertex)
-            for i in range(0, sideLength):
+            for i in range(1, sideLength+1):
                 currPoint = self.vertices[-1] + i*DIRECTIONS[move]
-                self.points.add(currPoint)
+                # self.points.add(currPoint)
+                self.points.append(currPoint)
+            self.vertices.append(nextVertex)
+
         if status == 0:
             prevVertext = self.vertices.pop()
-            for i in range(0, sideLength):
-                currPoint = prevVertext + i*DIRECTIONS[move]
+            for i in range(0, sideLength - 1):
+                currPoint = prevVertext - i*DIRECTIONS[move]
+                # print("remove currPoint = {}; prevVert = {}, i = {}, direction = {}, move = {}".format(currPoint, prevVertext, i, DIRECTIONS[move], move))
                 self.points.remove(currPoint)
 
 
@@ -114,6 +133,7 @@ class NSturisProblem:
         # does the move lead to a place we can return?
         nextSide = (self.N - level) * DIRECTIONS[move]
         nextVertex = self.vertices[-1] + nextSide
+
         if nextVertex.abs() > self.series_sums[self.N - level - 1]:
             return False
         for i in range(1, self.N - level + 1):
@@ -131,19 +151,49 @@ class NSturisProblem:
         self.directions.append(move)
         self.setPosition(move, 1)
 
+
     # Parāpjamies atpakaļ, ja apakškokā zem šī gājiena visur bija strupceļš
     def undo(self, level, move):
         move = self.directions.pop()
         self.setPosition(move, 0)
 
 
+
     # Izvada risinājumu kompaktā formā
     def display(self):
         print('directions={}'.format(self.directions))
 
+    def get_joc_koord(self):
+        result = []
+        side_length = len(self.directions)
+        for item in self.directions:
+            if item == 'A':
+                result.append([0, side_length])
+            elif item == 'B':
+                result.append([side_length, 0.5*side_length])
+            elif item == 'C':
+                result.append([side_length, -0.5*side_length])
+            elif item == 'D':
+                result.append([0, -side_length])
+            elif item == 'E':
+                result.append([-side_length, -0.5*side_length])
+            else:
+                result.append([-side_length, 0.5*side_length])
+            side_length -= 1
+        return result
 
     # Atgriež iteratoru ar iespējamiem gājieniem, ja iepriekšējās malas virziens bija "direction"
-    def moves(self, level, direction):
+    # Ja direction=='0', tad drīkst braukt tikai pa labi.
+    # Ja direction=='1', tad drīkst pagriezties pa kreisi šaurā 60 grādu leņķī ('C') vai 120 grādu leņķī ('B')
+    # Visos citos gadījumos nākamie gājieni ir četri (nevar sakrist ar "direction" vai tam pretējo).
+    def moves(self, level):
+        if level == 0:
+            direction = '0'
+        elif level == 1:
+            direction = '1'
+        else:
+            direction = self.directions[level-1]
+
         if len(self.initValues) <= level:
             return MoveEnumeration(0, direction)
         elif level < self.N-1:
@@ -159,9 +209,9 @@ class MoveEnumeration:
 
     # Konstruktors: iterators sāksies ar vērtību "initial" un beidzas ar max-1.
     def __init__(self, initial, direction):
-        self.cursor = initial - 1
-        self.end = 4
         self.next_moves = NEXT_MOVES[direction]
+        self.cursor = initial - 1
+        self.end = len(self.next_moves)
 
     # Sagatavo iteratoru "for" cikla pašā sākumā un atgriež to
     def __iter__(self):
@@ -180,14 +230,14 @@ def findFirstPlacement(n):
     b = Backtrack(q)
     if b.attempt(0):
         q.display()
+        q.debugState("AAA")
 
 
 # This is not finished - will not work for findFirstPlacement(...)
 def main():
-    #findFirstPlacement(7)
-    dd = DIRECTIONS['A']
-    nextSide = 13 * dd
-    print('nextSide = {}'.format(nextSide))
+    findFirstPlacement(17)
+
+
 
 
 if __name__ == '__main__':

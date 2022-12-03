@@ -24,7 +24,7 @@ class Backtrack:
     # sākumstāvoklī, kurā novietotas kaut kādas dāmas, turpina DFS apstaigāšanu
     # un atgriež "True" tad un tikai tad, ja izdodas atrast jaunu atrisinājumu.
     def attempt(self, level):
-        self.b.debugState("AAA ")
+        # self.b.debugState("AAA ")
 
         successful = False
 
@@ -46,7 +46,7 @@ class Backtrack:
         for move in moveIterator:
             if self.b.valid(level, move):
                 self.b.record(level, move)   # ALSO Record Move Interator?
-                self.b.debugState("BBB ")
+                # self.b.debugState("BBB ")
                 if self.b.done(level):
                     successful= True
                 else:
