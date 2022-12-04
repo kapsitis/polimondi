@@ -2,6 +2,7 @@
 
 import sys
 import time
+import math
 
 from backtrack import *
 
@@ -56,10 +57,17 @@ class PointTg:
 DIRECTIONS = {'A': PointTg(1,0,-1), 'B': PointTg(1,-1,0), 'C': PointTg(0,-1,1),
               'D': PointTg(-1,0,1), 'E': PointTg(-1,1,0),'F': PointTg(0,1,-1)}
 
-# Secība, kādā pārbaudīt nākamos gājienus.
+DIRECTIONS_JOC_KOORD = {'A': [0, 1], 'B': [1, 0.5], 'C': [1, -0.5], 'D': [0, -1], 'E': [-1, -0.5], 'F': [-1, 0.5]}
+
+# Secība, kādā pārbaudīt nākamos gājienus (kā definēts Martas zīmējumos)
 NEXT_MOVES = {'0': ['A'], '1': ['C', 'B'],
     'A': ['C', 'B', 'E', 'F'], 'B': ['D', 'C', 'A', 'F'], 'C': ['D', 'B', 'A', 'E'],
     'D': ['C', 'B', 'E', 'F'], 'E': ['D', 'C', 'A', 'F'], 'F': ['D', 'B', 'A', 'E']}
+# Secība, kādā pārbaudīt nākamos gājienus (alfabētiska)
+#NEXT_MOVES = {'0': ['A'], '1': ['B', 'C'],
+#    'A': ['B', 'C', 'E', 'F'], 'B': ['A', 'C', 'D', 'F'], 'C': ['A', 'B', 'D', 'E'],
+#    'D': ['B', 'C', 'E', 'F'], 'E': ['A', 'C', 'D', 'F'], 'F': ['A', 'B', 'D', 'E']}
+
 
 class NSturisProblem:
     # Polimonda malu skaits
@@ -73,38 +81,55 @@ class NSturisProblem:
     vertices = []
 
     # PointTg kopa - punkti, kuriem cauri iet polimonda perimetrs.
-    # points = set()
-    points = []
+    points = set()
+    # points = []
 
+    # Ja netiek izmantots, tad jābūt []; nedrīkst likt [0]*self.N
     # Līdz kurai vietai ir nonākts katrā no virsotnēm
     initValues = []
 
-    # aritmētisko progresiju summas
+    # aritmētisko progresiju summas. Ja n == 5, tad  series_sums = [0, 1, 3, 6, 10, 15]
     series_sums = []
 
     def __init__(self, n):
         self.N = n
         self.directions = []
         self.vertices = [PointTg(0, 0, 0)]
-        # self.points = set()
-        self.points = list()
+        self.points = set()
+        # self.points = list()
         self.initValues = []
         self.series_sums = []
         partial_sum = 0
-        for i in range(1, n+1):
+        for i in range(0, n+1):
             partial_sum += i
             self.series_sums.append(partial_sum)
 
-
     def reset(self):
         self.directions = []
-        self.vertices = []
-        # self.points = set()
-        self.points = list()
+        self.vertices = [PointTg(0, 0, 0)]
+        self.points = set()
+        # self.points = list()
+
+    def find_indices(self):
+        result = []
+        for i in range(0, self.N):
+            if i == 0:
+                result.append(NEXT_MOVES['0'].index(self.directions[i]))
+            elif i == 1:
+                result.append(NEXT_MOVES['1'].index(self.directions[i]))
+            else:
+                result.append(NEXT_MOVES[self.directions[i-1]].index(self.directions[i]))
+        return result
+
 
     # Funkcija, lai ielūkotos backtracking objekta iekšējā stāvoklī
-    def debugState(self, prefix):
+    def debug_state(self, prefix):
+        print('{}, directions = {}, initValues = {}'.format(prefix, self.directions, self.initValues))
+
+    def debug_full(self, prefix):
         print('{}: directions={}, vertices={}, points={}'.format(prefix, self.directions, self.vertices, self.points))
+        # print('{}: directions={}, vertices={}, points={}'.format(prefix, self.get_joc_koord(), self.vertices, self.points))
+
 
     # Pielabo datu struktūras, pievienojot vai atceļot gājienu.
     # status = 0 (ja atceļ malu ar "undo"), status = 1 (ja pievieno malu ar "record").
@@ -116,8 +141,8 @@ class NSturisProblem:
             nextVertex = self.vertices[-1] + nextSide
             for i in range(1, sideLength+1):
                 currPoint = self.vertices[-1] + i*DIRECTIONS[move]
-                # self.points.add(currPoint)
-                self.points.append(currPoint)
+                self.points.add(currPoint)
+                # self.points.append(currPoint)
             self.vertices.append(nextVertex)
 
         if status == 0:
@@ -128,19 +153,32 @@ class NSturisProblem:
                 self.points.remove(currPoint)
 
 
-    # Vai var novilkt malu norādītajā virzienā?
-    def valid(self, level, move):
-        # does the move lead to a place we can return?
-        nextSide = (self.N - level) * DIRECTIONS[move]
-        nextVertex = self.vertices[-1] + nextSide
-
-        if nextVertex.abs() > self.series_sums[self.N - level - 1]:
-            return False
+    # Vai nekrustojas ar agrākām malām
+    def check1(self, level, move):
         for i in range(1, self.N - level + 1):
             currPoint = self.vertices[-1] + i * DIRECTIONS[move]
             if currPoint in self.points:
                 return False
         return True
+
+    # Vai pietiek atlikušo malu garumu, lai atgrieztos
+    def check2(self, level, move):
+        nextSide = (self.N - level) * DIRECTIONS[move]
+        nextVertex = self.vertices[-1] + nextSide
+        return nextVertex.abs() <= self.series_sums[self.N - level - 1]
+
+    def check3(self, level, move):
+        if level == self.N - 1 and (move == 'A' or move == 'D'):
+            return False
+        return True
+
+    # Vai var novilkt malu norādītajā virzienā?
+    def valid(self, level, move):
+        # print()
+        c1 = self.check1(level, move)
+        c2 = self.check2(level, move)
+        c3 = self.check3(level, move)
+        return c1 and c2 and c3
 
     # Vai polimonda līnija pabeigta?
     def done(self, level):
@@ -156,16 +194,24 @@ class NSturisProblem:
     def undo(self, level, move):
         move = self.directions.pop()
         self.setPosition(move, 0)
+        # self.initValues = [0]*self.N
+        self.initValues = []
+
 
 
 
     # Izvada risinājumu kompaktā formā
     def display(self):
-        print('directions={}'.format(self.directions))
+        # print('***********', end="")
+        print(self.get_joc_koord(), end="")
+        print(", #S = {}".format(self.get_signed_area()))
+        # print()
+
+
 
     def get_joc_koord(self):
         result = []
-        side_length = len(self.directions)
+        side_length = self.N
         for item in self.directions:
             if item == 'A':
                 result.append([0, side_length])
@@ -202,6 +248,29 @@ class NSturisProblem:
             return MoveEnumeration(self.initValues[level]+1, direction)
 
 
+    def get_signed_area(self):
+        unit_triangle_height = math.sqrt(3)/2
+        unit_triangle_area = math.sqrt(3)/4
+        joc_koord = self.get_joc_koord()
+
+        # Summē malu vektoriņus, aprēķina virsotnes jocīgajās koordinātēs (sākas un beidzas ar [0;0])
+        partial_sums = [[0,0]]
+        for i in range(0, self.N):
+            new_pair = [partial_sums[-1][0] + joc_koord[i][0], partial_sums[-1][1] + joc_koord[i][1]]
+            partial_sums.append(new_pair)
+
+        # Pārveido jocīgās koordinātes Dekarta koordinātēs (pareizina y ar trijstūra augstumu)
+        dekartaXY = [[unit_triangle_height*y, x] for [y,x] in partial_sums]
+        summa = 0
+        for i in range(0, self.N - 1):
+            summa += dekartaXY[i][1]*dekartaXY[i+1][0] - dekartaXY[i][0]*dekartaXY[i+1][1]
+        summa += dekartaXY[self.N-1][1]*dekartaXY[0][0] - dekartaXY[self.N-1][0]*dekartaXY[0][1]
+        # summa/2 ir laukums 1*1 kvadrātiņu vienībās; pārveido to mazo trijstūrīšu vienībās.
+        result = (summa/2)/unit_triangle_area
+        return int(round(result))
+
+
+
 # Iterators, kurš ģenerē iespējamos dāmu novietojumus kārtējā kolonnā
 class MoveEnumeration:
     cursor = 0
@@ -225,19 +294,26 @@ class MoveEnumeration:
         raise StopIteration
 
 
-def findFirstPlacement(n):
+def findFirstSolution(n):
     q = NSturisProblem(n)
     b = Backtrack(q)
     if b.attempt(0):
         q.display()
-        q.debugState("AAA")
 
+def findAllSolutions(n):
+    q = NSturisProblem(n)
+    b = Backtrack(q)
+    n = 0
+    while b.attempt(0):
+        q.display()
+        q.initValues = q.find_indices()
+        q.reset()
+        n += 1
+    print('{} positions found'.format(n))
 
 # This is not finished - will not work for findFirstPlacement(...)
 def main():
-    findFirstPlacement(17)
-
-
+    findAllSolutions(9)
 
 
 if __name__ == '__main__':

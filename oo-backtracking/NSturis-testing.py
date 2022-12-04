@@ -34,16 +34,42 @@ def test_5sturis():
     assert b.attempt(0)
     assert n5_problem.directions == ['A', 'C', 'E', 'D', 'F']
 
+# [[0, 5], [4, -2.0], [-3, -1.5], [0, -2], [-1, 0.5]],
+
 def test_7sturis():
     n7_problem = NSturisProblem(7)
     b = Backtrack(n7_problem)
     assert b.attempt(0)
-    assert n7_problem.directions == ['A', 'C', 'D', 'E', 'F', 'B', 'E']
-    n7_problem.initValues = n7_problem.directions
+    assert n7_problem.directions == ['A', 'C', 'D', 'E', 'F', 'A', 'C']
+    # [[0, 7], [6, -3.0], [0, -5], [-4, -2.0], [-3, 1.5], [0, 2], [1, -0.5]]
+    n7_problem.initValues = n7_problem.find_indices()
     n7_problem.reset()
     assert b.attempt(0)
-    assert n7_problem.directions == ['A' 'C', 'D', 'E', 'F', 'A', 'C']
-    n7_problem.initValues = n7_problem.directions
+    assert n7_problem.directions == ['A', 'C', 'D', 'E', 'F', 'B', 'F']
+    # [[0, 7], [6, -3.0], [0, -5], [-4, -2.0], [-3, 1.5], [2, 1.0], [-1, 0.5]]
+    n7_problem.initValues = n7_problem.find_indices()
     n7_problem.reset()
     assert not b.attempt(0)
+
+# [[0, 7], [6, -3.0], [0, -5], [-4, -2.0], [-3, 1.5], [2, 1.0], [-1, 0.5]],
+# [[0, 7], [6, -3.0], [0, -5], [-4, -2.0], [-3, 1.5], [0, 2], [1, -0.5]],
+
+
+
+
+
+#directions=['A', 'B', 'F', 'D', 'E', 'D', 'C', 'D', 'C']
+#[[0, 9], [8, 4.0], [-7, 3.5], [0, -6], [-5, -2.5], [0, -4], [3, -1.5], [0, -2], [1, -0.5]]
+
+
+
+
+# ['A', 'B', 'F', 'D', 'E', 'D', 'C', 'D', 'C']
+# [[0, 9], [8, 4.0], [-7, 3.5], [0, -6], [-5, -2.5], [0, -4], [3, -1.5], [0, -2], [1, -0.5]],
+
+# ['A', 'C', 'E', 'C', 'E', 'A', 'E', 'A', 'C']
+#[[0, 9], [8, -4.0], [-7, -3.5], [6, -3.0], [-5, -2.5], [0, 4], [-3, -1.5], [0, 2], [1, -0.5]],
+
+# ['A', 'C', 'E', 'D', 'E', 'A', 'B', 'A', 'C']
+# [[0, 9], [8, -4.0], [-7, -3.5], [0, -6], [-5, -2.5], [0, 4], [3, 1.5], [0, 2], [1, -0.5]],
 
