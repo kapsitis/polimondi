@@ -147,3 +147,43 @@ esošo universālo "backtracking" algoritmu.
    pagriezienu pa šauru/asu leņķi vai citu īpašību, kas ļautu vieglāk tos pēc tam analizēt - piemēram, pamatot, ka induktīvais 
    solis (divu jaunu malu pievienošana) allaž noved pie derīga polimonda, kam nav malu krustošanās.
 
+
+
+Nezināmi jautājumi - 2
+---------------------------
+
+1. Aplūkojam kādu no $(2n)!$ permutācijām, kurās var izkārtot
+   $2n+1$-stūra malu garumiem (neņemot vērā malu rotācijas). Veidojam 
+   perfektus $2n+1$-polimondus, kuros malu garumi atbilst dotajai permutācijai. 
+   Kurai no malu garumu permutācijām būs lielākais/mazākais skaits atbilstošo perfekto 
+   polimondu. Vai perfektie+maģiskie polimondi, kur permutācija ir 
+   tieši $1,2,\ldots,2n+1$, ir biežāk sastopami nekā nemaģiskie (vai viņu ir vairāk)?
+2. Vai jebkurai malu garumu permutācijai eksistēs perfekts $(2n+1)$-polimonds, ja
+   $n = 2, 3, 4, \ldots$. 
+3. Ar $P_n$ apzīmējam visu maģisko polimondu skaitu. (Piemēram, $S_5 = 1$, 
+   $S_7 = 2$, $S_9 = 3$, $S_11 = 21$ utt.) Savukārt ar $L_n$ apzīmējam to
+   slēgto lauzto līniju skaitu, kur malu garumi arī atbilst permutācijai 
+   $1,2,\ldots,n$, bet līnija drīkst sevi krustot, vilkt pa to pašu līniju 
+   vairākas reizes vai sakrist virsotnes (mūs interesē vienīgi, lai malu vektori
+   būtu kādā no sešiem virzieniem un to summa būtu nulles vektors). 
+   Vai eksistē galīga robeža $\lim_{n \rightarrow \infty} \frac{P_{2n+1}}{L_{2n+1}}$
+4. Aplūkojam divus "dvīņu polimondus", kuru malu skaits atšķiras par $2$, un 
+   lielākais ir savā debesspušu kodējumā iespraudis divus jaunus burtus. 
+   Aplūkojam 
+5. Uzdevums - ar vienkāršu lauztu līniju (bez posmu krustošanās), 
+   kuras posmu garumi ir noteikti un jāizmanto noteiktā secībā
+   (piemēram, $1,2,\ldots,2n+1$) jānokļūst no trijstūru režģa punkta $A$ uz trijstūru režģa punktu $B$,
+   pārvietojoties tikai pa režģa līnijām.
+   Vai eksistē efektīvs algoritms, kurš nosaka, vai to var izdarīt? Vai arī šāds uzdevums ir NP-pilns (NP-complete)?
+   Līdzīgs jautājums arī par kvadrātiņu režģi. 
+6. Pēc katra no polimondiem izmērāmiem parametriem (laukums, baricentra atrašanās vieta, dažādu iekšējo leņķu skaits)
+   atrast "lielākos" un "mazākos" maģiskos polimondus - un noskaidrot, vai no tiem nevar izveidot kādu periodisku konstrukciju - 
+   t.i. iegūt no viena optimāla polimonda nākamo ar kaut kādu induktīvo soli (2,4,6,utt.)
+7. Vai polimondu skaits $P_{2n+1}$ stingri aug, ja $n$ aug?
+8. Vai eksistē sakarība, kas ļauj pēc maģiska polimonda iekšējo leņķu skaita (cik tur ir 60, 120, 240 vai 300 grādu leņķi) 
+   noteikt, kādas vērtības var pieņemt polimonda laukums?
+9. Kurām $n$ vērtībām eksistē maģiski $(2n+1)$-polimondi, kuros ir tikai $60$ vai $300$ leņķi?
+   Maģisks $9$-polimonds ar šo īpašību redzams zīmējumā.    
+   ![Bilde](images/polimonds-9.png)
+10. Vai eksistē bezgalīga maģisku polimondu virkne, kuru debesspušu kodējumā 
+    apraksta ar bezkonteksta gramatiku (*context-free grammar*)?
