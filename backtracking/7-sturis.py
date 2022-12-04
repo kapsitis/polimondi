@@ -169,8 +169,6 @@ for i in range(N+1):
 
 def doing(p, x1, mysets):
     global mysett, liss, N
-    # print('p={}, x1={}, liss={}, N={}'.format(p,x1,liss, N))
-    # print('mysets = {}'.format(mysets))
     if x1 == 0:
         print("{},".format(liss))
         return False
