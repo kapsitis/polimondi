@@ -167,9 +167,13 @@ Nezināmi jautājumi - 2
    vairākas reizes vai sakrist virsotnes (mūs interesē vienīgi, lai malu vektori
    būtu kādā no sešiem virzieniem un to summa būtu nulles vektors). 
    Vai eksistē galīga robeža $\lim_{n \rightarrow \infty} \frac{P_{2n+1}}{L_{2n+1}}$
-4. Aplūkojam divus "dvīņu polimondus", kuru malu skaits atšķiras par $2$, un 
-   lielākais ir savā debesspušu kodējumā iespraudis divus jaunus burtus. 
-   Aplūkojam 
+4. Aplūkojam maģisku $(2n+1)$-polimondu un 
+   divus debesspušu burtus ($X,Y \in \{A,B,C,D,E,F \}$), kuri varētu būt kandidāti, lai 
+   veidotu "dvīņu polimondus" (pēc divu burtu iespraušanas debesspušu kodējumā no 
+   maģiskā $(2n+1)$-polimonda varētu rasties maģisks $(2n+3)$-polimonds.
+   Aplūkojam visas iespējamās vietas, kur dotajā maģiskajā $2n+1$-polimondā var iespraust šos $X,Y$ - tādā gadījumā 
+   lauztā līnija, iespējams, nenoslēgsies. Atrast to punktu ģeometrisko vietu, kurā šī līnija var beigties? 
+   Vai šī ģeometriskā vieta atkarīga no izvēlētā maģiskā $2n+1$ formas, vai arī - tikai no burtiem $X,Y$?
 5. Uzdevums - ar vienkāršu lauztu līniju (bez posmu krustošanās), 
    kuras posmu garumi ir noteikti un jāizmanto noteiktā secībā
    (piemēram, $1,2,\ldots,2n+1$) jānokļūst no trijstūru režģa punkta $A$ uz trijstūru režģa punktu $B$,
@@ -187,3 +191,11 @@ Nezināmi jautājumi - 2
    ![Bilde](images/polimonds-9.png)
 10. Vai eksistē bezgalīga maģisku polimondu virkne, kuru debesspušu kodējumā 
     apraksta ar bezkonteksta gramatiku (*context-free grammar*)?
+11. Aplūkojam regulāru sešstūri ar malas garumu $55$ (to var uzskatīt par "riņķi" trijstūru režģa metrikā ar rādiusu $55$). 
+    Šis sešstūris satur visus tos punktus, kam pietiktu ar $10$ gājieniem garumā $10,9,8,\ldots,1$, lai atgrieztos sešstūra centrā). 
+    No visiem sešstūra iekšpusē un uz perimetra esošajiem punktiem atzīmējam tos, no kuriem tiešām var atgriezties centrā.
+    Kādu daļu no visiem punktiem esam atzīmējuši?
+12. Vai kādai no perfekto/maģisko polimondu pasaulē esošajām skaitļu virknēm varam atrast "ģenerējošo funkciju" (pakāpju rindas summu, kuras koeficienti 
+    ir attiecīgās virknes locekļi)? Sk. [Generating functions](https://cse.iitkgp.ac.in/~animeshm/generating_funct.pdf).
+    
+    
