@@ -4,19 +4,26 @@ from backtrack import *
 class Polimondi:
 
     liss = []
-    p = 0
-    x111 = 0
     mysett = []
-    p = 0
 
     def __init__(self, n):
         self.N = n
         self.liss.append([0, self.N])
-        self.p = [0, self.N]
-        self.x111 = self.N-1
         for i in range(1, self.N+1):
             self.mysett.append([i, 0, -i])
 
+    def debugstate(self, move, level):
+        print(self.mysett)
+        print(self.liss)
+        print(move)
+        print(level)
+
+    def debugstate2(self, mm, v, d, m, k):
+        print(mm)
+        print(v)
+        print(d)
+        print(m)
+        print(k)
 
     # Funkcija 33.rindā pārbauda, vai gadījumā, ja pēdējais nogrieznis ar garumu 1 ir pielikts,
     # vai viņš nav horizontāli novietots, tādā gadījumā polimonds būtu nepareizs,
@@ -26,23 +33,22 @@ class Polimondi:
     # iespējamās jauno malu koordinātas. 58. rinda pārbauda, vai neviens no jaunajiem punktiem
     # jau neatrodas sarakstā mysett.
 
-    def checks(self, move):
+    def checks(self, move, level):
+        self.level = level
         self.move = move
-        self.list1 = self.liss.copy()
-        self.list1.append(move)
         if move[0] == 0 and (move[1] == 1 or move[1] == -1):
             return False
         new_mysett_elem = []
         ped = self.mysett[-1]
         ll0 = self.move[0]
         ll1 = self.move[1]
-        for k in range(self.N-(self.level)):
+        for k in range(self.N-self.level):
             if ll0 == 0 and ll1 > 0:
                 new_mysett_elem.append(
-                    [(k+1+ped[0]), (ped[1]), (ped[2])-(k+1)])
+                    [(k+1+ped[0]), (ped[1]), (ped[2]-(k+1))])
             elif ll0 == 0 and ll1 < 0:
                 new_mysett_elem.append(
-                    [(ped[0])-(k+1), (ped[1]), (k+1+ped[2])])
+                    [(ped[0]-(k+1)), (ped[1]), (k+1+ped[2])])
             elif ll0 > 0 and ll1 > 0:
                 new_mysett_elem.append(
                     [(k+1+ped[0]), (ped[1])-(k+1), (ped[2])])
@@ -68,28 +74,36 @@ class Polimondi:
     # Funkcija pārbauda, vai pievienojot jauno malu, ir iespējams atgriezties atpakaļ sākumpunktā
     # ar atlikušajām malām. d-jau izveidotā polimonda augstums, v-platums.
 
-    def checks2(self, level):
+    def checks2(self, move, level):
+        self.level = level
+        self.move = move
+        self.list1 = self.liss.copy()
+        self.list1.append(move)
         d = 0
         v = 0
         for k in self.list1:
             d += k[0]
             v += k[1]
         m = self.N - self.level - 1
-        mm = m*(m+1)/2
-        if mm < abs(d) or mm < abs(v):
+        mm = (m*(m+1))/2
+        # self.debugstate2(mm, v, d, m, self.level)
+        if (mm < abs(d)) or (mm < abs(v)):
             return False
         return True
 
     def valid(self, level, move):
         self.p = move
-        if self.checks(move) and self.checks2(move):
-            # print(move)
-            return True
+        # self.debugstate(move, level)
+        c1 = self.checks(move, level)
+        c2 = self.checks2(move, level)
+        # print("c1={}, c2={}".format(c1, c2))
+        return c1 and c2
 
     def done(self, level):
-        if level == self.N - 1:
-            return True
-        return False
+        # if level == self.N - 1:
+        #     return True
+        # return False
+        return (level == self.N - 1)
 
     # Pievienojam jauno malu sarakstā liss un šīs malas visus punktus sarakstā mysett.
 
@@ -104,8 +118,9 @@ class Polimondi:
         self.liss = self.liss[:-1]
         self.mysett = self.mysett[:-(self.N-(level))]
         self.new_mysett_elem = []
+        self.list1 = []
 
-    # Izvada risinājumu kompaktā formā
+    # Izvada risinājumu
 
     def display(self):
         print("{},".format(self.liss))
@@ -115,9 +130,10 @@ class Polimondi:
     def moves(self, level):
         self.level = level
         if self.level == 1:
-            li1 = [[self.x111, -self.x111 / 2], [self.x111, self.x111 / 2]]
+            x111 = self.N - 1
+            li1 = [[x111, -x111 / 2], [x111, x111 / 2]]
         else:
-            x1 = self.N - (self.level)
+            x1 = self.N - self.level
             p = self.p
             if p[0] == 0 and p[1] > 0 or p[0] == 0 and p[1] < 0:
                 li1 = [[x1, -x1 / 2], [x1, x1 / 2],
@@ -130,7 +146,7 @@ class Polimondi:
 
 
 def main():
-    q = Polimondi(7)
+    q = Polimondi(9)
     b = Backtrack(q)
     if b.attempt(1):
         q.display()
