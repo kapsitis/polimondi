@@ -175,11 +175,11 @@ Nezināmi jautājumi - 2
    lauztā līnija, iespējams, nenoslēgsies. Atrast to punktu ģeometrisko vietu, kurā šī līnija var beigties? 
    Vai šī ģeometriskā vieta atkarīga no izvēlētā maģiskā $2n+1$ formas, vai arī - tikai no burtiem $X,Y$?
 5. Uzdevums - ar vienkāršu lauztu līniju (bez posmu krustošanās), 
-   kuras posmu garumi ir noteikti un jāizmanto noteiktā secībā
+   kuras posmu garumi ir doti noteiktā secībā
    (piemēram, $1,2,\ldots,2n+1$) jānokļūst no trijstūru režģa punkta $A$ uz trijstūru režģa punktu $B$,
    pārvietojoties tikai pa režģa līnijām.
    Vai eksistē efektīvs algoritms, kurš nosaka, vai to var izdarīt? Vai arī šāds uzdevums ir NP-pilns (NP-complete)?
-   Līdzīgs jautājums arī par kvadrātiņu režģi. 
+   Līdzīgs jautājums arī par kvadrātiņu režģi (varētu būt algoritmiski vieglāks).  
 6. Pēc katra no polimondiem izmērāmiem parametriem (laukums, baricentra atrašanās vieta, dažādu iekšējo leņķu skaits)
    atrast "lielākos" un "mazākos" maģiskos polimondus - un noskaidrot, vai no tiem nevar izveidot kādu periodisku konstrukciju - 
    t.i. iegūt no viena optimāla polimonda nākamo ar kaut kādu induktīvo soli (2,4,6,utt.)
@@ -194,7 +194,8 @@ Nezināmi jautājumi - 2
 11. Aplūkojam regulāru sešstūri ar malas garumu $55$ (to var uzskatīt par "riņķi" trijstūru režģa metrikā ar rādiusu $55$). 
     Šis sešstūris satur visus tos punktus, kam pietiktu ar $10$ gājieniem garumā $10,9,8,\ldots,1$, lai atgrieztos sešstūra centrā). 
     No visiem sešstūra iekšpusē un uz perimetra esošajiem punktiem atzīmējam tos, no kuriem tiešām var atgriezties centrā.
-    Kādu daļu no visiem punktiem esam atzīmējuši?
+    Kādu daļu no visiem punktiem esam atzīmējuši? Kas notiek ar atzīmēto punktu proporciju, ja malu skaitu ($k = 10$) palielina
+    līdz $11, 12,\ldots$? 
 12. Vai kādai no perfekto/maģisko polimondu pasaulē esošajām skaitļu virknēm varam atrast "ģenerējošo funkciju" (pakāpju rindas summu, kuras koeficienti 
     ir attiecīgās virknes locekļi)? Sk. [Generating functions](https://cse.iitkgp.ac.in/~animeshm/generating_funct.pdf).
     

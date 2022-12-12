@@ -84,8 +84,15 @@ class NSturisProblem:
     points = set()
     # points = []
 
-    # Ja netiek izmantots, tad jābūt []; nedrīkst likt [0]*self.N
-    # Līdz kurai vietai ir nonākts katrā no virsotnēm
+    # Ja netiek izmantots, tad jābūt []; nedrīkst likt nulles.
+    # Lielāko daļu laika, meklējot polimondus, tas masīvs stāv tukšs (initValues == []), un tad to vienkārši ignorē -
+    # meklē pirmo derīgo polimondu ar parastu backtracking algoritmu, kā Robert Noonan algoritmā.
+    #
+    # Bet dažreiz izdodas atrast atrisinājumu. Tajā gadījumā, uz derīga atrisinājuma izsauc funkciju find_indices()
+    # un noglabā rezultātu self.initValues, lai attempt(0) atkal meklētu polimondus "no pašas augšas", bet
+    # vairs nepārbaudītu jau apstaigātos variantus.
+
+
     initValues = []
 
     # aritmētisko progresiju summas. Ja n == 5, tad  series_sums = [0, 1, 3, 6, 10, 15]
@@ -110,6 +117,17 @@ class NSturisProblem:
         self.points = set()
         # self.points = list()
 
+
+
+
+    # Ja ir atrasts iepriekšējais derīgais polimonds - gājienu virknīte ar debesspusēm
+    # (piemēram, ['A', 'C', 'D', 'E', 'F', 'B', 'F']), tad šajā funkcijā atrod skaitļu virknīti
+    # (skaitļi no 0 līdz 3), kas parāda, kura no izvēlēm bija katrs burts. Šajā gadījumā tā
+    # virknīte ir [0, 0, 0, 2, 3, 1, 3].
+    # Pirmais gājiens (A) pārvēršas par 0, jo braukt pirmajā gājienā pa labi ir vienīgā iespēja.
+    # Otrais gājiens (C) arī pārvēršas par 0, jo braukt otrajā gājienā uz ziemeļrietumiem
+    # ir pirmā iespēja (savukārt gājiens B pārvērstos par 1) utt.
+    # Tas, ko atrod "find_indices()" ir būtiski atkarīgs no gājienu sakārtojuma (masīvs NEXT_MOVES).
     def find_indices(self):
         result = []
         for i in range(0, self.N):
@@ -190,11 +208,14 @@ class NSturisProblem:
         self.setPosition(move, 1)
 
 
-    # Parāpjamies atpakaļ, ja apakškokā zem šī gājiena visur bija strupceļš
+    # Parāpjamies atpakaļ, ja apakškokā zem šī gājiena visur bija strupceļš.
     def undo(self, level, move):
         move = self.directions.pop()
         self.setPosition(move, 0)
-        # self.initValues = [0]*self.N
+        # Ja pie tam izrādās, ka "initValues" nav tukšs, tad "undo" nozīmē to, ka "self.directions"
+        # jau ir savācis visas iespējamās "initValues" vērtības (un vairs neielīdīs, kur nevajag).
+        # Šajā brīdī "initValues" vajag nomest atkal uz [], lai vēlāk algoritms sevi neierobežotu
+        # attiecībā uz tiem gājieniem, kurus drīkst izdarīt zemākos līmeņos
         self.initValues = []
 
 
@@ -240,10 +261,15 @@ class NSturisProblem:
         else:
             direction = self.directions[level-1]
 
+        # Ja initValues nav tukšs saraksts, tad šī gājienu ģenerēšanas funcija moves(self, level)
+        # nepiedāvās tādus gājienus, kuri ir "pirms" jau atrastā labā polimonda (konkrētajā polimondu sakārtojumā).
         if len(self.initValues) <= level:
             return MoveEnumeration(0, direction)
         elif level < self.N-1:
             return MoveEnumeration(self.initValues[level], direction)
+        # Ja moves(self, level) ģenerē iespējas pašam pēdējam gājienam (level == self.N - 1),
+        # tad pat pieprasa, lai nākamais gājiens nesakristu ar initValues -
+        # citādi algoritms atrastu visu laiku vienu un to pašu labo polimondu un netiktu uz priekšu
         else:
             return MoveEnumeration(self.initValues[level]+1, direction)
 

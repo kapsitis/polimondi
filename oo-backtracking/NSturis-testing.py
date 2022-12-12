@@ -37,19 +37,30 @@ def test_5sturis():
 # [[0, 5], [4, -2.0], [-3, -1.5], [0, -2], [-1, 0.5]],
 
 def test_7sturis():
+    # Alfabētiskajā sakārtojumā expected1 un expected2 jāsamaina vietām.
+    expected1 = ['A', 'C', 'D', 'E', 'F', 'A', 'C']
+    expected2 = ['A', 'C', 'D', 'E', 'F', 'B', 'F']
+
     n7_problem = NSturisProblem(7)
     b = Backtrack(n7_problem)
     assert b.attempt(0)
-    assert n7_problem.directions == ['A', 'C', 'D', 'E', 'F', 'A', 'C']
+    assert n7_problem.directions == expected2
     # [[0, 7], [6, -3.0], [0, -5], [-4, -2.0], [-3, 1.5], [0, 2], [1, -0.5]]
     n7_problem.initValues = n7_problem.find_indices()
     n7_problem.reset()
     assert b.attempt(0)
-    assert n7_problem.directions == ['A', 'C', 'D', 'E', 'F', 'B', 'F']
+    assert n7_problem.directions == expected1
     # [[0, 7], [6, -3.0], [0, -5], [-4, -2.0], [-3, 1.5], [2, 1.0], [-1, 0.5]]
     n7_problem.initValues = n7_problem.find_indices()
     n7_problem.reset()
     assert not b.attempt(0)
+
+
+def test_init_values():
+    q = NSturisProblem(7)
+    q.directions = ['A', 'C', 'D', 'E', 'F', 'B', 'F']
+    assert q.find_indices() == [0, 0, 0, 2, 3, 1, 3]
+
 
 # [[0, 7], [6, -3.0], [0, -5], [-4, -2.0], [-3, 1.5], [2, 1.0], [-1, 0.5]],
 # [[0, 7], [6, -3.0], [0, -5], [-4, -2.0], [-3, 1.5], [0, 2], [1, -0.5]],
