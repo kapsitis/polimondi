@@ -153,15 +153,15 @@ Nezināmi jautājumi - 2
 ---------------------------
 
 1. Aplūkojam kādu no $(2n)!$ permutācijām, kurās var izkārtot
-   $2n+1$-stūra malu garumiem (neņemot vērā malu rotācijas). Veidojam 
-   perfektus $2n+1$-polimondus, kuros malu garumi atbilst dotajai permutācijai. 
+   $2n+1$-stūra malu garumus (variantus, kas atšķiras tikai ar ciklisku permutāciju uzskatot par identiskiem). 
+   Veidojam perfektus $2n+1$-polimondus, kuros malu garumi atbilst dotajai permutācijai. 
    Kurai no malu garumu permutācijām būs lielākais/mazākais skaits atbilstošo perfekto 
-   polimondu. Vai perfektie+maģiskie polimondi, kur permutācija ir 
+   polimondu? Vai perfektie+maģiskie polimondi, kur permutācija ir 
    tieši $1,2,\ldots,2n+1$, ir biežāk sastopami nekā nemaģiskie (vai viņu ir vairāk)?
 2. Vai jebkurai malu garumu permutācijai eksistēs perfekts $(2n+1)$-polimonds, ja
-   $n = 2, 3, 4, \ldots$. 
-3. Ar $P_n$ apzīmējam visu maģisko polimondu skaitu. (Piemēram, $S_5 = 1$, 
-   $S_7 = 2$, $S_9 = 3$, $S_11 = 21$ utt.) Savukārt ar $L_n$ apzīmējam to
+   $2n+1 = 7, 9, 11, 13, \ldots$. 
+3. Ar $P_n$ apzīmējam visu maģisko polimondu skaitu. (Piemēram, $P_5 = 1$, 
+   $P_7 = 2$, $P_9 = 3$, $P_11 = 21$ utt.) Savukārt ar $L_n$ apzīmējam to
    slēgto lauzto līniju skaitu, kur malu garumi arī atbilst permutācijai 
    $1,2,\ldots,n$, bet līnija drīkst sevi krustot, vilkt pa to pašu līniju 
    vairākas reizes vai sakrist virsotnes (mūs interesē vienīgi, lai malu vektori
