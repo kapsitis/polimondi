@@ -161,7 +161,7 @@ Nezināmi jautājumi - 2
 2. Vai jebkurai malu garumu permutācijai eksistēs perfekts $(2n+1)$-polimonds, ja
    $2n+1 = 7, 9, 11, 13, \ldots$. 
 3. Ar $P_n$ apzīmējam visu maģisko polimondu skaitu. (Piemēram, $P_5 = 1$, 
-   $P_7 = 2$, $P_9 = 3$, $P_11 = 21$ utt.) Savukārt ar $L_n$ apzīmējam to
+   $P_7 = 2$, $P_9 = 3$, $P_{11} = 21$ utt.) Savukārt ar $L_n$ apzīmējam to
    slēgto lauzto līniju skaitu, kur malu garumi arī atbilst permutācijai 
    $1,2,\ldots,n$, bet līnija drīkst sevi krustot, vilkt pa to pašu līniju 
    vairākas reizes vai sakrist virsotnes (mūs interesē vienīgi, lai malu vektori
