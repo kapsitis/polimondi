@@ -198,11 +198,18 @@ Nezināmi jautājumi - 2
     līdz $11, 12,\ldots$? 
 12. Vai kādai no perfekto/maģisko polimondu pasaulē esošajām skaitļu virknēm varam atrast "ģenerējošo funkciju" (pakāpju rindas summu, kuras koeficienti 
     ir attiecīgās virknes locekļi)? Sk. [Generating functions](https://cse.iitkgp.ac.in/~animeshm/generating_funct.pdf).
+    Atrast ģenerējošo funkciju vienkāršākam gadījumam (visām slēgtajām lauztajām līnijām ar posmu garumiem $n,n-1,\ldots,1$ ieskaitot tās, kuras 
+    sevi krusto). 
 13. (Ierosinājums no ChatGPT) Vai eksistē perfekti (maģiski?) $n$-polimondi, kuriem ir vienāds laukums, bet atšķirīgs malu skaits? 
     Cik pavisam ir perfektu (maģisku?) polimondu ar doto laukumu? 
 14. (Ierosinājums no ChatGPT) Atrast, cik daudzi no maģiskajiem polimondiem ir sagriežami identiskas formas "flīzēs" (tādos polimondos, 
-    kurus veido vairāk kā viens trijstūrītis, bet kuri paši nav perfekti/maģiski). 
+    kurus veido 2-4 mazie trijstūrīši - ar kuriem var aizpildīt plakni). 
 15. (Ierosinājums no ChatGPT) Atrast, kuriem polimondiem debesspušu kodējums ir iespējami simetrisks (sastāv no periodiski atkārtotiem identiskiem 
     burtu fragmentiem, kuriem pierakstīti klāt tikai nedaudzi "priekšperioda" simboli).   
     ![Bilde](images/ChatGPT-advice.png)
-
+16. Bezgalīgā trijstūru režģa trijstūrīšus kaut kā periodiski izkrāso 2-4 krāsās. Atrast, cik dažādu krāsu trijstūrīšu var atrasties 
+    perfekta (maģiska) polimonda iekšpusē. 
+17. Līdzīgs jautājums arī par trijstūrīša režģī novilktajiem vienības nogrieznīšiem (vai režģa krustpunktiem), kurus periodiski izkrāso 2-4 krāsās. 
+    Tad atrod, cik dažādu krāsu nogrieznīšu (krustpunktu) var atrasties perfekta/maģiska polimonda iekšpusē vai uz tā perimetra. 
+    Sal. [Pīka formula](https://en.wikipedia.org/wiki/Pick%27s_theorem).
+18. Atrast perfektus/maģiskus polimondus, kuri ir visvairāk "savērpti" (polimonda kontūrs visvairāk reižu aptinas kādam plaknes punktam). 

@@ -21,7 +21,6 @@ class Backtrack:
     def attempt(self, level):
         successful = False
         move_iterator = self.b.moves(level)
-
         for move in move_iterator:
             if self.b.valid(level, move):
                 self.b.record(level, move)

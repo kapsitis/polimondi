@@ -37,8 +37,7 @@ class PointTg:
     def __rmul__(self, other):
         return PointTg(other*self.x, other*self.y, other*self.z)
 
-    # Atgriež trijstūru režģī novilktas malas garumu (ja paralēla režģa līnijām)
-    # Vai nu arī - īsāko ceļu no PointTg virsotnes līdz sākumpunktam (ejot pa trijstūrīšu līnijām)
+    # Atgriež īsāko attālumu līdz (0,0,0), ejot pa trijstūru režģa līnijām
     def abs(self):
         return int(max(abs(self.x), abs(self.y), abs(self.z)))
 
@@ -76,23 +75,15 @@ class NSturisProblem:
     # Saraksts ar debesspusēm (A,B,C,D,E,F) - tā būs izvadāmā atbilde
     directions = []
 
-    # Polimonda virsotnes PointTg koordinātēs, kuras ir atrastas,
-    # lai no pareizās vietas zīmētu tālāk, vai parāptos atpakaļ
+    # Polimonda virsotnes PointTg koordinātēs, kuras atrastas līdz šim
     vertices = []
 
     # PointTg kopa - punkti, kuriem cauri iet polimonda perimetrs.
     points = set()
     # points = []
 
-    # Ja netiek izmantots, tad jābūt []; nedrīkst likt nulles.
-    # Lielāko daļu laika, meklējot polimondus, tas masīvs stāv tukšs (initValues == []), un tad to vienkārši ignorē -
-    # meklē pirmo derīgo polimondu ar parastu backtracking algoritmu, kā Robert Noonan algoritmā.
-    #
-    # Bet dažreiz izdodas atrast atrisinājumu. Tajā gadījumā, uz derīga atrisinājuma izsauc funkciju find_indices()
-    # un noglabā rezultātu self.initValues, lai attempt(0) atkal meklētu polimondus "no pašas augšas", bet
-    # vairs nepārbaudītu jau apstaigātos variantus.
-
-
+    # Meklējot nākamo risinājumu, atceras, no kuras vietas meklēt katrā līmenī.
+    # Ja netiek izmantots, tad jābūt []; nedrīkst likt nulles (citādi var zaudēt atrisinājumus)
     initValues = []
 
     # aritmētisko progresiju summas. Ja n == 5, tad  series_sums = [0, 1, 3, 6, 10, 15]
@@ -120,13 +111,8 @@ class NSturisProblem:
 
 
 
-    # Ja ir atrasts iepriekšējais derīgais polimonds - gājienu virknīte ar debesspusēm
-    # (piemēram, ['A', 'C', 'D', 'E', 'F', 'B', 'F']), tad šajā funkcijā atrod skaitļu virknīti
-    # (skaitļi no 0 līdz 3), kas parāda, kura no izvēlēm bija katrs burts. Šajā gadījumā tā
-    # virknīte ir [0, 0, 0, 2, 3, 1, 3].
-    # Pirmais gājiens (A) pārvēršas par 0, jo braukt pirmajā gājienā pa labi ir vienīgā iespēja.
-    # Otrais gājiens (C) arī pārvēršas par 0, jo braukt otrajā gājienā uz ziemeļrietumiem
-    # ir pirmā iespēja (savukārt gājiens B pārvērstos par 1) utt.
+    # Pārveido debespušu kodējumu (piemēram, directions = ['A', 'C', 'D', 'E', 'F', 'B', 'F']),
+    # par indeksiem, kuri rāda, kura izvēle bija attiecīgais burts (piemēram, [0, 0, 0, 2, 3, 1, 3]).
     # Tas, ko atrod "find_indices()" ir būtiski atkarīgs no gājienu sakārtojuma (masīvs NEXT_MOVES).
     def find_indices(self):
         result = []
@@ -149,8 +135,7 @@ class NSturisProblem:
         # print('{}: directions={}, vertices={}, points={}'.format(prefix, self.get_joc_koord(), self.vertices, self.points))
 
 
-    # Pielabo datu struktūras, pievienojot vai atceļot gājienu.
-    # status = 0 (ja atceļ malu ar "undo"), status = 1 (ja pievieno malu ar "record").
+    # Pielabo datu struktūras, pievienojot (status=1) vai atceļot (status=0) gājienu.
     def setPosition(self, move, status):
         sideLength = self.N - len(self.directions) + 1
 
@@ -167,7 +152,6 @@ class NSturisProblem:
             prevVertext = self.vertices.pop()
             for i in range(0, sideLength - 1):
                 currPoint = prevVertext - i*DIRECTIONS[move]
-                # print("remove currPoint = {}; prevVert = {}, i = {}, direction = {}, move = {}".format(currPoint, prevVertext, i, DIRECTIONS[move], move))
                 self.points.remove(currPoint)
 
 
@@ -212,23 +196,14 @@ class NSturisProblem:
     def undo(self, level, move):
         move = self.directions.pop()
         self.setPosition(move, 0)
-        # Ja pie tam izrādās, ka "initValues" nav tukšs, tad "undo" nozīmē to, ka "self.directions"
-        # jau ir savācis visas iespējamās "initValues" vērtības (un vairs neielīdīs, kur nevajag).
-        # Šajā brīdī "initValues" vajag nomest atkal uz [], lai vēlāk algoritms sevi neierobežotu
-        # attiecībā uz tiem gājieniem, kurus drīkst izdarīt zemākos līmeņos
+        # pārejot uz citu apakškoku, "initValues" vērtības nepielieto, bet sāk no 0.
         self.initValues = []
-
-
-
 
     # Izvada risinājumu kompaktā formā
     def display(self):
         # print('***********', end="")
         print(self.get_joc_koord(), end="")
         print(", #S = {}".format(self.get_signed_area()))
-        # print()
-
-
 
     def get_joc_koord(self):
         result = []
@@ -339,7 +314,7 @@ def findAllSolutions(n):
 
 # This is not finished - will not work for findFirstPlacement(...)
 def main():
-    findAllSolutions(9)
+    findAllSolutions(19)
 
 
 if __name__ == '__main__':
