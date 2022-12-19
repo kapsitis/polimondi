@@ -99,7 +99,7 @@ cmap = plt.cm.rainbow
 
 plt.axis('off')
 
-fig.savefig('matplotlib_hexagon.png', dpi = 300)
+fig.savefig('matplotlib_hexagon.png', dpi = 100)
 
 plt.show()
 
