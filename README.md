@@ -18,5 +18,3 @@ atšķiras tikai ar rotācijām vai spoguļattēliem, uzskatām par vienādiem.)
 
 
 
-
-
