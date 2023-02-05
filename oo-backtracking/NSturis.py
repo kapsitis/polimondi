@@ -4,54 +4,62 @@ import sys
 import time
 import math
 
-from backtrack import *
+from backtrackk import *
+from point_tg import *
 
-class PointTg:
-    def __init__(self, x=0, y=0, z=0):
-        self.x = x
-        self.y = y
-        self.z = z
+# class PointTg:
+#     def __init__(self, x=0, y=0, z=0):
+#         self.x = x
+#         self.y = y
+#         self.z = z
 
-    def __str__(self):
-        return "({},{},{})".format(self.x, self.y, self.z)
+#     def __str__(self):
+#         return "({},{},{})".format(self.x, self.y, self.z)
 
-    def __repr__(self):
-        return "({},{},{})".format(self.x, self.y, self.z)
+#     def __repr__(self):
+#         return "({},{},{})".format(self.x, self.y, self.z)
 
-    # Ar šo funkciju var pieskaitīt pašreizējam punktam izmaiņu "delta" (jauno malu)
-    def __add__(self, other):
-        x = self.x + other.x
-        y = self.y + other.y
-        z = self.z + other.z
-        return PointTg(x, y, z)
+#     # Ar šo funkciju var pieskaitīt pašreizējam punktam izmaiņu "delta" (jauno malu)
+#     def __add__(self, other):
+#         x = self.x + other.x
+#         y = self.y + other.y
+#         z = self.z + other.z
+#         return PointTg(x, y, z)
 
-    # Ar šo funkciju var pieskaitīt pašreizējam punktam izmaiņu "delta" (jauno malu)
-    def __sub__(self, other):
-        x = self.x - other.x
-        y = self.y - other.y
-        z = self.z - other.z
-        return PointTg(x, y, z)
+#     # Ar šo funkciju var pieskaitīt pašreizējam punktam izmaiņu "delta" (jauno malu)
+#     def __sub__(self, other):
+#         x = self.x - other.x
+#         y = self.y - other.y
+#         z = self.z - other.z
+#         return PointTg(x, y, z)
+
+#     def __lt__(self, other):
+#         b1 = self.x < other.x 
+#         b2 = self.x == other.x and self.y < other.y
+#         b3 = self.x == other.x and self.y == other.y and self.z < other.z
+#         return b1 or b2 or b3
 
 
-    # Reizina vektoru ar skaitli (skaitlim jābūt rakstītam pa kreisi no vektora)
-    def __rmul__(self, other):
-        return PointTg(other*self.x, other*self.y, other*self.z)
 
-    # Atgriež īsāko attālumu līdz (0,0,0), ejot pa trijstūru režģa līnijām
-    def abs(self):
-        return int(max(abs(self.x), abs(self.y), abs(self.z)))
+#     # Reizina vektoru ar skaitli (skaitlim jābūt rakstītam pa kreisi no vektora)
+#     def __rmul__(self, other):
+#         return PointTg(other*self.x, other*self.y, other*self.z)
 
-    def __eq__(self, other):
-        if isinstance(other, self.__class__):
-            return self.x == other.x and self.y == other.y and self.z == other.z
-        else:
-            return False
+#     # Atgriež īsāko attālumu līdz (0,0,0), ejot pa trijstūru režģa līnijām
+#     def abs(self):
+#         return int(max(abs(self.x), abs(self.y), abs(self.z)))
 
-    def __hash__(self):
-        return hash((self.x, self.y, self.z))
+#     def __eq__(self, other):
+#         if isinstance(other, self.__class__):
+#             return self.x == other.x and self.y == other.y and self.z == other.z
+#         else:
+#             return False
 
-    def __ne__(self, other):
-        return not self.__eq__(other)
+#     def __hash__(self):
+#         return hash((self.x, self.y, self.z))
+
+#     def __ne__(self, other):
+#         return not self.__eq__(other)
 
 DIRECTIONS = {'A': PointTg(1,0,-1), 'B': PointTg(1,-1,0), 'C': PointTg(0,-1,1),
               'D': PointTg(-1,0,1), 'E': PointTg(-1,1,0),'F': PointTg(0,1,-1)}
@@ -189,6 +197,8 @@ class NSturisProblem:
     # Pievienojam esošo gājienu
     def record(self, level, move):
         self.directions.append(move)
+        #print('RECORD() at level {} add move {} to state {}'.format(level, move, self.directions))
+        #print('    InitValues {}'.format(self.initValues))
         self.setPosition(move, 1)
 
 
@@ -202,7 +212,8 @@ class NSturisProblem:
     # Izvada risinājumu kompaktā formā
     def display(self):
         # print('***********', end="")
-        print(self.get_joc_koord(), end="")
+        # print(self.get_joc_koord(), end="")
+        print(self.directions, end="")
         print(", #S = {}".format(self.get_signed_area()))
 
     def get_joc_koord(self):
@@ -294,6 +305,7 @@ class MoveEnumeration:
             return self.next_moves[self.cursor]
         raise StopIteration
 
+        
 
 def findFirstSolution(n):
     q = NSturisProblem(n)
@@ -314,7 +326,7 @@ def findAllSolutions(n):
 
 # This is not finished - will not work for findFirstPlacement(...)
 def main():
-    findAllSolutions(19)
+    findAllSolutions(9)
 
 
 if __name__ == '__main__':

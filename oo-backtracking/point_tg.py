@@ -25,6 +25,13 @@ class PointTg:
         return PointTg(x, y, z)
 
 
+    def __lt__(self, other):
+        b1 = self.x < other.x 
+        b2 = self.x == other.x and self.y < other.y
+        b3 = self.x == other.x and self.y == other.y and self.z < other.z
+        return b1 or b2 or b3
+
+
     # Reizina vektoru ar skaitli (skaitlim jābūt rakstītam pa kreisi no vektora)
     def __rmul__(self, other):
         return PointTg(other*self.x, other*self.y, other*self.z)
@@ -46,6 +53,9 @@ class PointTg:
     def __ne__(self, other):
         return not self.__eq__(other)
 
+
+    FORBIDDEN_AFTER = {'A': ['A', 'D'], 'B': ['B', 'E'], 'C': ['C', 'F'], 
+    'D': ['A', 'D'], 'E': ['B', 'E'], 'F': ['C', 'F']}
 
     # Secība, kādā pārbaudīt nākamos gājienus (kā definēts Martas zīmējumos)
     # NEXT_MOVES = {'0': ['A'], '1': ['C', 'B'],

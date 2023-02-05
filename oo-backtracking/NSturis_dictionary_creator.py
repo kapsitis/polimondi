@@ -3,6 +3,7 @@ from point_tg import *
 import sys
 import time
 import math
+import copy
 
 from backtrack import *
 
@@ -150,6 +151,34 @@ class NSturisDictionaryCreator:
     def display(self):
         print("{}: {}".format(self.vertices[-1], self.directions))
 
+
+    def getMoveDictionary(self):
+        the_dict = dict()
+        # q = NSturisDictionaryCreator(n)
+        b = Backtrack(self)
+        n = 0
+        while b.attempt(0):
+            # self.display()
+
+            the_key = self.vertices[-1]
+            the_val = self.directions
+            if the_key in the_dict.keys():
+                the_val2 = copy.copy(the_val)
+                the_val2.reverse()
+                the_dict[the_key].append(the_val2)
+                # the_dict[the_key].append("".join(the_val))
+            else:
+                the_val2 = copy.copy(the_val)
+                the_val2.reverse()
+                the_dict[the_key] = [the_val2]
+                # the_dict[the_key] = ["".join(the_val)]
+            self.initValues = self.find_indices()
+            self.reset()
+            n += 1
+        print('{} positions found'.format(n))
+        return the_dict
+
+
 class MoveEnumeration:
     cursor = 0
     end = 0
@@ -181,50 +210,36 @@ class MoveEnumeration:
         values = values + ']'
         print('{}: {}'.format(message, values))
 
+
+
+
+
 def findFirstSolution(n):
     q = NSturisDictionaryCreator(n)
     b = Backtrack(q)
     if b.attempt(0):
         q.display()
 
-def findAllSolutions(n):
-    the_dict = dict()
+def storeMoveDictionary(n):
     q = NSturisDictionaryCreator(n)
-    b = Backtrack(q)
-    n = 0
-    while b.attempt(0):
-        q.display()
-
-        the_key = q.vertices[-1]
-        the_val = q.directions
-        if the_key in the_dict.keys():
-            the_dict[the_key].append(the_val)
-        else:
-            the_dict[the_key] = [the_val]
-
-        q.initValues = q.find_indices()
-        q.reset()
-        n += 1
-    print('{} positions found'.format(n))
-
-    with open("dict_stuff.py", 'w') as f:
+    the_dict = q.getMoveDictionary()
+    with open("dict_stuff3.py", 'w') as f:
         f.write('from point_tg import *\n\n')
         f.write('dictionary = {\n')
         is_first = True
         for kkk, vvv in the_dict.items():
             if not is_first:
                 f.write(',\n')
+            vvv.sort()
             f.write('PointTg({},{},{}):{}'.format(kkk.x, kkk.y, kkk.z, vvv))
             is_first = False
         f.write('}\n\n')
         f.write('print(len(dictionary.keys()))\n')
 
-    #print('theDict = {}'.format(the_dict))
-
 
 
 def main():
-    findAllSolutions(6)
+    storeMoveDictionary(3)
 
 if __name__ == '__main__':
     main()
