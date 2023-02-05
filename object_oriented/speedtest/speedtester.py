@@ -18,22 +18,21 @@ def get_computation_times(n1, n2, step):
         start_time = time.time()
 
         # By Marta: To get runtimes, uncomment the code section below (and comment "By Kalvis" section)
-        # q = Polimondi(n)
-        # b = Backtrack(q)
-        # if b.attempt(1):
-        #     print('Attempting n = {}'.format(n))
-        #     # q.display()
+        q = Polimondi(n)
+        b = Backtrack(q)
+        if b.attempt(1):
+            print('Attempting n = {}'.format(n))
+            # q.display()
 
         # By Kalvis
-        q = NSturisProblem(n)
-        b = Backtrack(q)
-        n = 0
-        while b.attempt(0):
-            # q.display()
-            q.initValues = q.find_indices()
-            q.reset()
-            n += 1
-        print('{} positions found'.format(n))
+        # q = NSturisProblem(n)
+        # b = Backtrack(q)
+        # n = 0
+        # while b.attempt(0):
+        #     q.initValues = q.find_indices()
+        #     q.reset()
+        #     n += 1
+        # print('{} positions found'.format(q.solution_count))
 
         end_time = time.time()
         print('---{}: {:.3f} seconds ---'.format(n, end_time - start_time))

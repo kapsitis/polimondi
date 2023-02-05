@@ -61,12 +61,23 @@ class PointTg:
     # NEXT_MOVES = {'0': ['A'], '1': ['C', 'B'],
     #     'A': ['C', 'B', 'E', 'F'], 'B': ['D', 'C', 'A', 'F'], 'C': ['D', 'B', 'A', 'E'],
     #     'D': ['C', 'B', 'E', 'F'], 'E': ['D', 'C', 'A', 'F'], 'F': ['D', 'B', 'A', 'E']}
-    # Secība, kādā pārbaudīt nākamos gājienus (alfabētiska)
-    NEXT_MOVES = {'0': ['B', 'C', 'E', 'F'], #'1': ['B', 'C'],
+    
+    # Secība, kādā pārbaudīt nākamos gājienus (alfabētiska) - ja būvē vārdnīcu
+    # NEXT_MOVES = {'0': ['B', 'C', 'E', 'F'], '1': ['B', 'C'],
+    #    'A': ['B', 'C', 'E', 'F'], 'B': ['A', 'C', 'D', 'F'], 'C': ['A', 'B', 'D', 'E'],
+    #    'D': ['B', 'C', 'E', 'F'], 'E': ['A', 'C', 'D', 'F'], 'F': ['A', 'B', 'D', 'E']}
+
+    NEXT_MOVES = {'0': ['A'], '1': ['B', 'C'],
        'A': ['B', 'C', 'E', 'F'], 'B': ['A', 'C', 'D', 'F'], 'C': ['A', 'B', 'D', 'E'],
        'D': ['B', 'C', 'E', 'F'], 'E': ['A', 'C', 'D', 'F'], 'F': ['A', 'B', 'D', 'E']}
 
 
 
-
     DIRECTIONS_JOC_KOORD = {'A': [0, 1], 'B': [1, 0.5], 'C': [1, -0.5], 'D': [0, -1], 'E': [-1, -0.5], 'F': [-1, 0.5]}
+
+
+DIRECTIONS = {'A': PointTg(1,0,-1), 'B': PointTg(1,-1,0), 'C': PointTg(0,-1,1),
+        'D': PointTg(-1,0,1), 'E': PointTg(-1,1,0),'F': PointTg(0,1,-1)}
+
+
+

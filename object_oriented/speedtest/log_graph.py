@@ -5,12 +5,13 @@ import numpy as np
 #ydata = [10 ** i for i in range(9,21,2)]
 
 xdata = [9, 11, 13, 15, 17, 19]
-ydata = [6, 23, 123, 271, 3752, 114453]
+ydata = [5, 20, 118, 250, 3389, 104753]
 # ydata = [6, 22, 124, 278, 3846, 122361]
 #        [6, 39, 314, 2065]
 # [9, 11, 13, 15, 17, 19]
-kalvis_ydata = [8, 41, 312, 2108, 14254, 115610]
-
+# kalvis_ydata = [8, 41, 312, 2108, 14254, 115610]
+# kalvis_ydata = [7, 34, 218, 1394, 9161, 71750]
+kalvis_ydata =  [7, 35, 220, 1422, 9852, 71829]
 
 # compTimes for [9, 11, 13, 15, 17, 19] are [6, 22, 124, 278, 3846, 122361]
 
@@ -42,6 +43,6 @@ ax.set_xlabel('n - the number of sides')
 
 plt.title('Enumerating Magic n-Polyiamonds')
 
-fig.savefig('speedtest.png', dpi = 100)
+# fig.savefig('speedtest.png', dpi = 100)
 
 plt.show()
