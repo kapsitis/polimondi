@@ -8,7 +8,7 @@
 #      q.display()  # display the first solution
 
 
-class Backtrack:
+class Backtrackk:
 
     # Backtracker objekts (nepabeigts šaha galdiņš, polimonds vai kas cits)
     b = None
@@ -23,8 +23,11 @@ class Backtrack:
         successful = False
         moveIterator = self.b.moves(level)
 
+        # i = 0
         for move in moveIterator:
             successful = False
+            #print('btrackk move({}), level({}), i({}) out of {}'.format(move, level, i, moveIterator))
+            #i += 1
             if self.b.valid(level, move):
                 self.b.record(level, move)
                 if self.b.done(level):
@@ -34,5 +37,5 @@ class Backtrack:
                     if not successful:
                         self.b.undo(level, move)
             if successful:
-                # self.b.display()
+                self.b.display()
                 self.b.undo(level, move)

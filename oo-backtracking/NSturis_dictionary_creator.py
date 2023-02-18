@@ -58,9 +58,9 @@ class NSturisDictionaryCreator:
         result = []
         for i in range(0, self.N):
             if i == 0:
-                result.append(PointTg.NEXT_MOVES['0'].index(self.directions[i]))
+                result.append(PointTg.NEXT_MOVES_DICT['0'].index(self.directions[i]))
             else:
-                result.append(PointTg.NEXT_MOVES[self.directions[i-1]].index(self.directions[i]))
+                result.append(PointTg.NEXT_MOVES_DICT[self.directions[i-1]].index(self.directions[i]))
         return result
 
 
@@ -102,8 +102,8 @@ class NSturisDictionaryCreator:
     # Vai var novilkt malu norādītajā virzienā?
     def valid(self, level, move):
         c1 = self.check1(level, move)
-        if not c1:
-            self.debug_full("#### VALID(level={}, move={}) = {}".format(level, move, c1))
+        #if not c1:
+        #    self.debug_full("#### VALID(level={}, move={}) = {}".format(level, move, c1))
         return c1
 
     # Vai polimonda līnija pabeigta?
@@ -185,7 +185,7 @@ class MoveEnumeration:
 
     # Konstruktors: iterators sāksies ar vērtību "initial" un beidzas ar max-1.
     def __init__(self, initial, direction):
-        self.next_moves = PointTg.NEXT_MOVES[direction]
+        self.next_moves = PointTg.NEXT_MOVES_DICT[direction]
         self.cursor = initial - 1
         self.end = len(self.next_moves)
 

@@ -63,9 +63,9 @@ class PointTg:
     #     'D': ['C', 'B', 'E', 'F'], 'E': ['D', 'C', 'A', 'F'], 'F': ['D', 'B', 'A', 'E']}
     
     # Secība, kādā pārbaudīt nākamos gājienus (alfabētiska) - ja būvē vārdnīcu
-    # NEXT_MOVES = {'0': ['B', 'C', 'E', 'F'], '1': ['B', 'C'],
-    #    'A': ['B', 'C', 'E', 'F'], 'B': ['A', 'C', 'D', 'F'], 'C': ['A', 'B', 'D', 'E'],
-    #    'D': ['B', 'C', 'E', 'F'], 'E': ['A', 'C', 'D', 'F'], 'F': ['A', 'B', 'D', 'E']}
+    NEXT_MOVES_DICT = {'0': ['B', 'C', 'E', 'F'], '1': ['B', 'C'],
+       'A': ['B', 'C', 'E', 'F'], 'B': ['A', 'C', 'D', 'F'], 'C': ['A', 'B', 'D', 'E'],
+       'D': ['B', 'C', 'E', 'F'], 'E': ['A', 'C', 'D', 'F'], 'F': ['A', 'B', 'D', 'E']}
 
     NEXT_MOVES = {'0': ['A'], '1': ['B', 'C'],
        'A': ['B', 'C', 'E', 'F'], 'B': ['A', 'C', 'D', 'F'], 'C': ['A', 'B', 'D', 'E'],
@@ -74,6 +74,28 @@ class PointTg:
 
 
     DIRECTIONS_JOC_KOORD = {'A': [0, 1], 'B': [1, 0.5], 'C': [1, -0.5], 'D': [0, -1], 'E': [-1, -0.5], 'F': [-1, 0.5]}
+
+    @staticmethod
+    def convert_divainas_dekarta(directions, lengths=[]):
+        if lengths==[]:
+            lengths = list(range(len(directions),0,-1))
+        result = []
+        for i in range(len(directions)):
+            side_length = lengths[i]
+            if directions[i] == 'A':
+                result.append([0, side_length])
+            elif directions[i] == 'B':
+                result.append([side_length, 0.5*side_length])
+            elif directions[i] == 'C':
+                result.append([side_length, -0.5*side_length])
+            elif directions[i] == 'D':
+                result.append([0, -side_length])
+            elif directions[i] == 'E':
+                result.append([-side_length, -0.5*side_length])
+            else:
+                result.append([-side_length, 0.5*side_length])
+        return result
+
 
 
 DIRECTIONS = {'A': PointTg(1,0,-1), 'B': PointTg(1,-1,0), 'C': PointTg(0,-1,1),

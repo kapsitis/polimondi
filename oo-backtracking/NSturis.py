@@ -1,5 +1,6 @@
 import math
 import itertools
+import sys
 
 from backtrackk import *
 from point_tg import *
@@ -19,10 +20,10 @@ class NSturisProblem:
         self.solution_count = 0
 
 
-    def reset(self):
-        self.directions = []
-        self.vertices = [PointTg(0, 0, 0)]
-        self.points = set()
+    # def reset(self):
+    #     self.directions = []
+    #     self.vertices = [PointTg(0, 0, 0)]
+    #     self.points = set()
 
     # Funkcijas, lai ielūkotos backtracking objekta iekšējā stāvoklī
     def debug_state(self, prefix):
@@ -163,24 +164,26 @@ class NSturisProblem:
 
 def findFirstSolution(n):
     q = NSturisProblem(n)
-    b = Backtrack(q)
+    b = Backtrackk(q)
     if b.attempt(0):
         q.display()
 
 def findAllSolutions(n):
     q = NSturisProblem(n)
-    b = Backtrack(q)
+    b = Backtrackk(q)
     n = 0
     while b.attempt(0):
-        # q.display() 
-        q.reset()
+        q.display() 
+        # q.reset()
         n += 1
     print('{} solutions found'.format(q.solution_count))
 
-# This is not finished - will not work for findFirstPlacement(...)
-def main():
-    findAllSolutions(17)
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) <= 1:
+        print('Usage: python NSturis.py <odd-number>')
+        exit(0)
+    n = int(sys.argv[1])
+    findAllSolutions(n)
+
