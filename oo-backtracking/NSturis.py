@@ -10,6 +10,14 @@ class NSturisProblem:
     def __init__(self, n):
         self.N = n
         self.directions = []
+
+        # Record the min/max area; and the min/max count of acute angles 
+        self.minArea = n**4
+        self.maxArea = 0
+        self.minAcute = n
+        self.maxAcute = 0
+        self.updateExtremes = False
+
         # Uzkrāj polimonda virsotnes
         self.vertices = [PointTg(0, 0, 0)]
         # Punkti, kurus šķērso polimonda perimetrs.
@@ -90,7 +98,6 @@ class NSturisProblem:
     # Pievienojam esošo gājienu
     def record(self, level, move):
         self.directions.append(move)
-        #print('RECORD() at level {} add move {} to state {}'.format(level, move, self.directions))
         self.setPosition(move, 1)
 
 
@@ -101,29 +108,38 @@ class NSturisProblem:
         # pārejot uz citu apakškoku, "initValues" vērtības nepielieto, bet sāk no 0.
         # self.initValues = []
 
-    # Kompakti izvada vienu risinājumu, ja polimonada zīmēšana pabeigta: done(self,level)==True
-    def display(self):
-        print(self.directions, end='')
-        print(', #S = {}'.format(self.get_signed_area()))
+    # Kompakti izvada vienu atrisinājumu kā daudzstūri, ja polimonada zīmēšana pabeigta: done(self,level)==True
+    def display(self, format='dekarta'):
+        if self.updateExtremes:
+            polyiamond_area = PointTg.get_signed_area(self.directions)
+            (a60, a120, a240, a300) = PointTg.count_angles(self.directions)
+            if self.maxArea < abs(polyiamond_area):
+                self.maxArea = abs(polyiamond_area)
+            if self.minArea > abs(polyiamond_area):
+                self.minArea = abs(polyiamond_area)
+            if self.minAcute > a60 + a300:
+                self.minAcute = a60 + a300
+            if self.maxAcute < a60 + a300:
+                self.maxAcute = a60 + a300 
 
-    def get_joc_koord(self):
-        result = []
-        side_length = self.N
-        for item in self.directions:
-            if item == 'A':
-                result.append([0, side_length])
-            elif item == 'B':
-                result.append([side_length, 0.5*side_length])
-            elif item == 'C':
-                result.append([side_length, -0.5*side_length])
-            elif item == 'D':
-                result.append([0, -side_length])
-            elif item == 'E':
-                result.append([-side_length, -0.5*side_length])
+            if format == 'letters':
+                print(self.directions, end='')
+                print(', #S = {}, acute={}, obtuse={}'.format(polyiamond_area, a60+a300, a120+a240))
+            elif format == 'dekarta':
+                print(PointTg.convert_divainas_dekarta(self.directions), end='')
+                print(', #S = {}, acute={}, obtuse={}'.format(polyiamond_area, a60+a300, a120+a240))
             else:
-                result.append([-side_length, 0.5*side_length])
-            side_length -= 1
-        return result
+                # silent mode
+                return
+        else: 
+            if format == 'letters':
+                print(self.directions)
+            elif format == 'dekarta':
+                print(PointTg.convert_divainas_dekarta(self.directions))
+            else:
+                # silent mode
+                return            
+
 
     # Atgriež iteratoru ar iespējamiem gājieniem, ja iepriekšējās malas virziens bija "direction"
     # Ja direction=='0', tad drīkst braukt tikai pa labi.
@@ -140,26 +156,6 @@ class NSturisProblem:
         return PointTg.NEXT_MOVES[direction]
 
 
-    def get_signed_area(self):
-        unit_triangle_height = math.sqrt(3)/2
-        unit_triangle_area = math.sqrt(3)/4
-        joc_koord = self.get_joc_koord()
-
-        # Summē malu vektoriņus, aprēķina virsotnes jocīgajās koordinātēs (sākas un beidzas ar [0;0])
-        partial_sums = [[0,0]]
-        for i in range(0, self.N):
-            new_pair = [partial_sums[-1][0] + joc_koord[i][0], partial_sums[-1][1] + joc_koord[i][1]]
-            partial_sums.append(new_pair)
-
-        # Pārveido jocīgās koordinātes Dekarta koordinātēs (pareizina y ar trijstūra augstumu)
-        dekartaXY = [[unit_triangle_height*y, x] for [y,x] in partial_sums]
-        summa = 0
-        for i in range(0, self.N - 1):
-            summa += dekartaXY[i][1]*dekartaXY[i+1][0] - dekartaXY[i][0]*dekartaXY[i+1][1]
-        summa += dekartaXY[self.N-1][1]*dekartaXY[0][0] - dekartaXY[self.N-1][0]*dekartaXY[0][1]
-        # summa/2 ir laukums 1*1 kvadrātiņu vienībās; pārveido to mazo trijstūrīšu vienībās.
-        result = (summa/2)/unit_triangle_area
-        return int(round(result))
  
 
 def findFirstSolution(n):
@@ -173,12 +169,12 @@ def findAllSolutions(n):
     b = Backtrackk(q)
     n = 0
     while b.attempt(0):
-        q.display() 
+        # q.display() 
         # q.reset()
         n += 1
     print('{} solutions found'.format(q.solution_count))
-
-
+    print('Area is in [{},{}]'.format(q.minArea, q.maxArea))
+    print('Acute angles in [{}, {}]'.format(q.minAcute, q.maxAcute))
 
 if __name__ == '__main__':
     if len(sys.argv) <= 1:

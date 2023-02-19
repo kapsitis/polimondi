@@ -31,9 +31,9 @@ class NSturisDictionaryCreator:
         self.N = n
         self.directions = []
         self.vertices = [PointTg(0, 0, 0)]
-        #self.points = set()
-        #self.points.add(PointTg(0,0,0))
-        self.points = [PointTg(0,0,0)]
+        self.points = set()
+        self.points.add(PointTg(0,0,0))
+        # self.points = [PointTg(0,0,0)]
 
         self.initValues = []
 
@@ -41,9 +41,9 @@ class NSturisDictionaryCreator:
     def reset(self):
         self.directions = []
         self.vertices = [PointTg(0, 0, 0)]
-        #self.points = set()
-        #self.points.add(PointTg(0,0,0))
-        self.points = [PointTg(0,0,0)]
+        self.points = set()
+        self.points.add(PointTg(0,0,0))
+        # self.points = [PointTg(0,0,0)]
 
 
     # Ja ir atrasts iepriekšējais derīgais polimonds - gājienu virknīte ar debesspusēm
@@ -81,7 +81,7 @@ class NSturisDictionaryCreator:
             nextVertex = self.vertices[-1] + nextSide
             for i in range(1, sideLength+1):
                 currPoint = self.vertices[-1] + i*DIRECTIONS[move]
-                self.points.append(currPoint)
+                self.points.add(currPoint)
             self.vertices.append(nextVertex)
 
         if status == 0:
@@ -175,7 +175,7 @@ class NSturisDictionaryCreator:
             self.initValues = self.find_indices()
             self.reset()
             n += 1
-        print('{} positions found'.format(n))
+        print('{} tails inserted in dictionary'.format(n))
         return the_dict
 
 
@@ -209,9 +209,6 @@ class MoveEnumeration:
                 values = values + ","
         values = values + ']'
         print('{}: {}'.format(message, values))
-
-
-
 
 
 def findFirstSolution(n):

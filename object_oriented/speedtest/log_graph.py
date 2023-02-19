@@ -4,14 +4,11 @@ import numpy as np
 #xdata = list(range(9,21,2))
 #ydata = [10 ** i for i in range(9,21,2)]
 
-xdata = [9, 11, 13, 15, 17, 19]
-ydata = [5, 20, 118, 250, 3389, 104753]
-# ydata = [6, 22, 124, 278, 3846, 122361]
-#        [6, 39, 314, 2065]
-# [9, 11, 13, 15, 17, 19]
-# kalvis_ydata = [8, 41, 312, 2108, 14254, 115610]
-# kalvis_ydata = [7, 34, 218, 1394, 9161, 71750]
-kalvis_ydata =  [7, 35, 220, 1422, 9852, 71829]
+xdata = [9, 11, 13, 15, 17, 19, 21]
+ydata = [5, 20, 118, 250, 3389, 104753, 1181392]
+
+kalvis_xdata = [9, 11, 13, 15, 17, 19, 21, 23]
+kalvis_ydata = [6, 32, 145, 712, 3450, 23464, 159196, 1164734]
 
 # compTimes for [9, 11, 13, 15, 17, 19] are [6, 22, 124, 278, 3846, 122361]
 
@@ -19,9 +16,9 @@ kalvis_ydata =  [7, 35, 220, 1422, 9852, 71829]
 
 fig, ax = plt.subplots()
 
-ax.plot(xdata, ydata, '--bo', label = "Marta")
+ax.plot(kalvis_xdata, kalvis_ydata, '--go', label="NSturis_dictionary_user.py")
 
-ax.plot(xdata, kalvis_ydata, '--go', label="Kalvis")
+ax.plot(xdata, ydata, '--bo', label = "polimondi.py")
 
 ax.set_yscale('log')
 
@@ -29,7 +26,7 @@ ax.set_yscale('log')
 
 # plt.xticks(np.arange(9, 21, 2.0))
 
-ax.set_xticks(list(range(9,21,2)), minor=False)
+ax.set_xticks(list(range(9,25,2)), minor=False)
 
 ax.yaxis.get_major_locator().set_params(numticks=99)
 ax.yaxis.get_minor_locator().set_params(numticks=99, subs=[.25, .5, .75])
