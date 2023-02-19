@@ -201,7 +201,7 @@ def recordRunTimes(n1, n2):
         end_time = time.time()
         print('---{}: {:.3f} seconds ---'.format(n, end_time - start_time))
         computation_times[n] = round(1000*(end_time - start_time))
-        with open('computation_times3.txt', 'a') as file_object:
+        with open('performance/queens_computation_times3.txt', 'a') as file_object:
             file_object.write("{},{}\n".format(n, computation_times[n]))
 
 

@@ -1,27 +1,26 @@
-# Šis ir universāls "backtrack" algoritmu darbinatājs.
+# Universāls "backtrack" algoritmu darbinatājs.
 # Tajā var ievietot jebkuru objektu, kurš māk ar sevi veikt backtrack darbības.
-
-# To izsauc šādi:
+# Lietojuma paraugs
+# -------------------
 # myBacktracker = SomeBacktrackerObject(...)
 # b = Backtrack(myBacktracker)
-# if b.attempt(0):  # start backtracking at level = 0
-#      q.display()  # display the first solution
+# if b.attempt(0):  # sāk backtrack koka saknē, kur level = 0
+#      q.display()  # izdrukā/saglabā uzdevuma atrisinājujmu.
 
 class Backtrack:
-    # Backtracker objekts (queens.QueenProblem, NSturis.NSturisProblem vai līdzīgs)
+    # Backtracker uzdevuma objekts (queens.QueenProblem, NSturis.NSturisProblem utml.)
     b = None
 
-    # Konstruktors iekopē padoto backtracker objektu
+    # Konstruktors iekopē padoto backtracker uzdevuma objektu
     def __init__(self, b):
         self.b = b
 
-    # Mēģina risināt uzdevumu, atrodoties koka līmenī "level" un
-    # sākumstāvoklī, kurā novietotas kaut kādas dāmas, turpina DFS apstaigāšanu
-    # un atgriež "True" tad un tikai tad, ja izdodas atrast jaunu atrisinājumu.
+    # Meklē risinājumus, atrodoties līmenī "level" backtrack kokā.
+    # Uzdevums "b" (ja level > 0) jau satur kaut kādu (nepabeigtu) atrisinājuma mēģinājumu. 
+    # Funkcija atgriež "True" tad un tikai tad, ja zem šī stāvokļa var atrast jaunu atrisinājumu.
     def attempt(self, level):
         successful = False
         move_iterator = self.b.moves(level)
-
         for move in move_iterator:
             if self.b.valid(level, move):
                 self.b.record(level, move)

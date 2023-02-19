@@ -153,15 +153,15 @@ Nezināmi jautājumi - 2
 ---------------------------
 
 1. Aplūkojam kādu no $(2n)!$ permutācijām, kurās var izkārtot
-   $2n+1$-stūra malu garumiem (neņemot vērā malu rotācijas). Veidojam 
-   perfektus $2n+1$-polimondus, kuros malu garumi atbilst dotajai permutācijai. 
+   $2n+1$-stūra malu garumus (variantus, kas atšķiras tikai ar ciklisku permutāciju uzskatot par identiskiem). 
+   Veidojam perfektus $2n+1$-polimondus, kuros malu garumi atbilst dotajai permutācijai. 
    Kurai no malu garumu permutācijām būs lielākais/mazākais skaits atbilstošo perfekto 
-   polimondu. Vai perfektie+maģiskie polimondi, kur permutācija ir 
+   polimondu? Vai perfektie+maģiskie polimondi, kur permutācija ir 
    tieši $1,2,\ldots,2n+1$, ir biežāk sastopami nekā nemaģiskie (vai viņu ir vairāk)?
 2. Vai jebkurai malu garumu permutācijai eksistēs perfekts $(2n+1)$-polimonds, ja
-   $n = 2, 3, 4, \ldots$. 
-3. Ar $P_n$ apzīmējam visu maģisko polimondu skaitu. (Piemēram, $S_5 = 1$, 
-   $S_7 = 2$, $S_9 = 3$, $S_11 = 21$ utt.) Savukārt ar $L_n$ apzīmējam to
+   $2n+1 = 7, 9, 11, 13, \ldots$. 
+3. Ar $P_n$ apzīmējam visu maģisko polimondu skaitu. (Piemēram, $P_5 = 1$, 
+   $P_7 = 2$, $P_9 = 3$, $P_{11} = 21$ utt.) Savukārt ar $L_n$ apzīmējam to
    slēgto lauzto līniju skaitu, kur malu garumi arī atbilst permutācijai 
    $1,2,\ldots,n$, bet līnija drīkst sevi krustot, vilkt pa to pašu līniju 
    vairākas reizes vai sakrist virsotnes (mūs interesē vienīgi, lai malu vektori
@@ -175,11 +175,11 @@ Nezināmi jautājumi - 2
    lauztā līnija, iespējams, nenoslēgsies. Atrast to punktu ģeometrisko vietu, kurā šī līnija var beigties? 
    Vai šī ģeometriskā vieta atkarīga no izvēlētā maģiskā $2n+1$ formas, vai arī - tikai no burtiem $X,Y$?
 5. Uzdevums - ar vienkāršu lauztu līniju (bez posmu krustošanās), 
-   kuras posmu garumi ir noteikti un jāizmanto noteiktā secībā
+   kuras posmu garumi ir doti noteiktā secībā
    (piemēram, $1,2,\ldots,2n+1$) jānokļūst no trijstūru režģa punkta $A$ uz trijstūru režģa punktu $B$,
    pārvietojoties tikai pa režģa līnijām.
    Vai eksistē efektīvs algoritms, kurš nosaka, vai to var izdarīt? Vai arī šāds uzdevums ir NP-pilns (NP-complete)?
-   Līdzīgs jautājums arī par kvadrātiņu režģi. 
+   Līdzīgs jautājums arī par kvadrātiņu režģi (varētu būt algoritmiski vieglāks).  
 6. Pēc katra no polimondiem izmērāmiem parametriem (laukums, baricentra atrašanās vieta, dažādu iekšējo leņķu skaits)
    atrast "lielākos" un "mazākos" maģiskos polimondus - un noskaidrot, vai no tiem nevar izveidot kādu periodisku konstrukciju - 
    t.i. iegūt no viena optimāla polimonda nākamo ar kaut kādu induktīvo soli (2,4,6,utt.)
@@ -194,8 +194,22 @@ Nezināmi jautājumi - 2
 11. Aplūkojam regulāru sešstūri ar malas garumu $55$ (to var uzskatīt par "riņķi" trijstūru režģa metrikā ar rādiusu $55$). 
     Šis sešstūris satur visus tos punktus, kam pietiktu ar $10$ gājieniem garumā $10,9,8,\ldots,1$, lai atgrieztos sešstūra centrā). 
     No visiem sešstūra iekšpusē un uz perimetra esošajiem punktiem atzīmējam tos, no kuriem tiešām var atgriezties centrā.
-    Kādu daļu no visiem punktiem esam atzīmējuši?
+    Kādu daļu no visiem punktiem esam atzīmējuši? Kas notiek ar atzīmēto punktu proporciju, ja malu skaitu ($k = 10$) palielina
+    līdz $11, 12,\ldots$? 
 12. Vai kādai no perfekto/maģisko polimondu pasaulē esošajām skaitļu virknēm varam atrast "ģenerējošo funkciju" (pakāpju rindas summu, kuras koeficienti 
     ir attiecīgās virknes locekļi)? Sk. [Generating functions](https://cse.iitkgp.ac.in/~animeshm/generating_funct.pdf).
-    
-    
+    Atrast ģenerējošo funkciju vienkāršākam gadījumam (visām slēgtajām lauztajām līnijām ar posmu garumiem $n,n-1,\ldots,1$ ieskaitot tās, kuras 
+    sevi krusto). 
+13. (Ierosinājums no ChatGPT) Vai eksistē perfekti (maģiski?) $n$-polimondi, kuriem ir vienāds laukums, bet atšķirīgs malu skaits? 
+    Cik pavisam ir perfektu (maģisku?) polimondu ar doto laukumu? 
+14. (Ierosinājums no ChatGPT) Atrast, cik daudzi no maģiskajiem polimondiem ir sagriežami identiskas formas "flīzēs" (tādos polimondos, 
+    kurus veido 2-4 mazie trijstūrīši - ar kuriem var aizpildīt plakni). 
+15. (Ierosinājums no ChatGPT) Atrast, kuriem polimondiem debesspušu kodējums ir iespējami simetrisks (sastāv no periodiski atkārtotiem identiskiem 
+    burtu fragmentiem, kuriem pierakstīti klāt tikai nedaudzi "priekšperioda" simboli).   
+    ![Bilde](images/ChatGPT-advice.png)
+16. Bezgalīgā trijstūru režģa trijstūrīšus kaut kā periodiski izkrāso 2-4 krāsās. Atrast, cik dažādu krāsu trijstūrīšu var atrasties 
+    perfekta (maģiska) polimonda iekšpusē. 
+17. Līdzīgs jautājums arī par trijstūrīša režģī novilktajiem vienības nogrieznīšiem (vai režģa krustpunktiem), kurus periodiski izkrāso 2-4 krāsās. 
+    Tad atrod, cik dažādu krāsu nogrieznīšu (krustpunktu) var atrasties perfekta/maģiska polimonda iekšpusē vai uz tā perimetra. 
+    Sal. [Pīka formula](https://en.wikipedia.org/wiki/Pick%27s_theorem).
+18. Atrast perfektus/maģiskus polimondus, kuri ir visvairāk "savērpti" (polimonda kontūrs visvairāk reižu aptinas kādam plaknes punktam). 
