@@ -1,6 +1,5 @@
-from backtrackk import *
+from backtrack import *
 
-import time
 
 class Polimondi:
 
@@ -147,15 +146,10 @@ class Polimondi:
 
 
 def main():
-    start_time = time.time()
-
-    q = Polimondi(21)
+    q = Polimondi(9)
     b = Backtrack(q)
     if b.attempt(1):
         q.display()
-
-    end_time = time.time()
-    print('---{}: {:.3f} seconds ---'.format(21, end_time - start_time))
 
 
 if __name__ == '__main__':

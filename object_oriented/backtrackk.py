@@ -34,5 +34,5 @@ class Backtrack:
                     if not successful:
                         self.b.undo(level, move)
             if successful:
-                # self.b.display()
+                self.b.display()
                 self.b.undo(level, move)
