@@ -124,9 +124,9 @@ lapas perimetra.)
    $1,2,\ldots,n$, kura katrā virsotnē maina virzienu,  bet šī līnija drīkst sevi krustot, vilkt pa to pašu līniju 
    vairākas reizes vai sakrist virsotnes.  
    Vai eksistē galīga robeža:  
-   $$\lim_{n \rightarrow \infty} \frac{\mathcal{M}_{2n+1}}{\mathcal{L}_{2n+1}}?$$  
+   ${\displaystyle \lim_{n \rightarrow \infty} \frac{M_{2n+1}}{L_{2n+1}}?}$  
    Vai šī robeža atškiras no robežas:  
-   $$\lim_{n \rightarrow \infty} \frac{\mathcal{M}_{2n}}{\mathcal{L}_{2n}}?$$  
+   ${\displaystyle \lim_{n \rightarrow \infty} \frac{M_{2n}}{L_{2n}}?}$  
    (Citiem vārdiem - vai nepāra maģiskie polimondi ir "retāk sastopami" nekā pāra maģiskie polimondi?)
 5. Vai virkne $M_{2n+1}$ (maģisko $2n+1$-polimondu skaits) stingri aug, ja $n$ aug?
 6. Vai kādai no perfekto/maģisko polimondu pasaulē esošajām skaitļu virknēm varam atrast "ģenerējošo funkciju" 
