@@ -150,7 +150,7 @@ lapas perimetra.)
    veido periodisku virkni, kura vismaz divreiz atkārtojas (un vēl ne vairāk kā $C$ simboli pirms vai pēc šiem periodiem)? 
 3. Vai eksistē bezgalīga maģisku polimondu virkne, kurā malu skaits aug kā ģeometriskā progresijā, 
    bet malu virzienus (A,B,C,D,E,F) 
-   var ģenerēt ar [Lindemaiera sistēmu](https://en.wikipedia.org/wiki/L-system). 
+   var ģenerēt ar [Lindenmaiera sistēmu](https://en.wikipedia.org/wiki/L-system). 
    Piemēram, vai varētu būt šaurleņķu polimondi ar malu skaitu $n = 9, 27, 81, \ldots$, kur katra 
    nākamā polimonda virzienu virknīti var iegūt, pēc kaut kādiem likumiem pārrakstot jeb aizvietojot 
    iepriekšējā polimonda virzienu virknīti?
