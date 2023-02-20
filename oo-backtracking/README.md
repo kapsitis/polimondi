@@ -1,8 +1,7 @@
-Par polimondiem
-======================
+# Par polimondiem
 
-Trijstūra režģa koordinātes
--------------------------------
+
+## Trijstūra režģa koordinātes
 
 Apzīmēsim sešas debesspuses kā sekojošus plaknes vektorus: 
 
@@ -26,8 +25,7 @@ apmierina vienu un to pašu lineāro sakarību: $x+y+z = 0$.
 ![Bilde](images/triangle-coordinates.png)
 
 
-Polimondu konstruēšana kanoniskā secībā
-------------------------------------------
+## Polimondu konstruēšana kanoniskā secībā
 
 Lai būtu vieglāk salīdzināt divu polimondu pārlases algoritmu uzvedību, 
 tos pārstaigājam vienmēr vienādā veidā: 
@@ -105,11 +103,10 @@ lapas perimetra.)
 
 
 
-Atklāti jautājumi 
------------------------
+## Atklāti jautājumi 
 
-Polimondu eksistence un skaits
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+### Polimondu eksistence un skaits
+
 
 1. Vai katrai $n$ vērtībai eksistē maģisks $2n+1$-polimonds? 
 2. Vai katrai naturālu skaitļu $1,2,\ldots,2n+1$  permutācijai 
@@ -135,8 +132,7 @@ Polimondu eksistence un skaits
    $n,n-1,\ldots,1$ ieskaitot tās, kuras sevi krusto). 
 
 
-Polimondu induktīva ģenerēšana
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+### Polimondu induktīva ģenerēšana
 
 1. Kuriem naturāliem $C$ eksistē bezgalīga maģisku $n$ polimondu virkne, kuru debesspušu kodējumā 
    var uzģenerēt ar bezkonteksta gramatiku (*context-free grammar*), kuras produkcijās katrā solī 
@@ -158,8 +154,7 @@ Polimondu induktīva ģenerēšana
 
 
 
-Polimondu laukumi 
-^^^^^^^^^^^^^^^^^^
+### Polimondu laukumi 
 
 1. Kādas vērtības var (vai noteikti nevar) pieņemt maģiska $2n+1$-polimonda laukums?
 2. Kādas vērtības var (vai noteikti nevar) pieņemt perfekta $2n+1$-polimonda laukums?
@@ -176,8 +171,7 @@ Polimondu laukumi
    Sal.  [Pīka formula](https://en.wikipedia.org/wiki/Pick%27s_theorem).
     
 
-Dažādi ģeometriski raksturlielumi
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+### Dažādi ģeometriski raksturlielumi
 
 1. Kādos punktos var atrasties maģiska (pefekta?) $2n+1$-polimonda baricentrs (smaguma centrs)? 
    Kāda ir visu iespējamo baricentru ģeometriskā vieta, ja tos paralēli pārnes tā paša mazā trijstūrīša iekšpusē. 
@@ -198,8 +192,7 @@ Dažādi ģeometriski raksturlielumi
    (t.i. melno un balto trijstūrīšu skaits ir līdzsvarā). 
 
 
-Citi jautājumi
-^^^^^^^^^^^^^^^^^^^^^^^^^    
+### Citi jautājumi
 
 1. Uzdevums - ar vienkāršu lauztu līniju (bez posmu krustošanās), 
    kuras posmu garumi ir doti noteiktā secībā
