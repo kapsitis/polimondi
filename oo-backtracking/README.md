@@ -116,19 +116,21 @@ lapas perimetra.)
    Kurai no malu garumu permutācijām būs lielākais/mazākais skaits tai atbilstošo perfekto 
    polimondu? Vai perfektie+maģiskie polimondi, kur permutācija ir 
    tieši $1,2,\ldots,2n+1$, ir biežāk (vai arī retāk?) sastopami nekā citām permutācijām?
-4. Ar $\mathcal{M}_n$ apzīmējam visu maģisko polimondu skaitu. (Piemēram, $\mathcal{M}_5 = 1$, 
-   $\mathcal{M}_7 = 2$, $\mathcal{M}_9 = 3$, $\mathcal{M}_{11} = 21$ utt.) Savukārt ar $\mathcal{L}_n$ apzīmējam to
+4. Ar $\mathcal{M}_{2n+1}$ apzīmējam visu maģisko $2n+1$-polimondu skaitu.  
+   Piemēram, $\mathcal{M}_{5} = 1$, 
+   $\mathcal{M}_{7} = 2$, $\mathcal{M}_{9} = 3$, $\mathcal{M}_{11} = 21$ utt.  
+   Ar $\mathcal{L}_{n}$ apzīmējam to
    slēgto lauzto līniju skaitu, kur malu garumi arī atbilst permutācijai 
    $1,2,\ldots,n$, kura katrā virsotnē maina virzienu,  bet šī līnija drīkst sevi krustot, vilkt pa to pašu līniju 
    vairākas reizes vai sakrist virsotnes.  
-   Vai eksistē galīga robeža $\lim_{n \rightarrow \infty} \frac{\mathcal{M}_{2n+1}}{\mathcal{L}_{2n+1}}$. 
-   Vai šī robeža atškiras no $\lim_{n \rightarrow \infty} \frac{\mathcal{M}_{2n}}{\mathcal{L}_{2n}}$. 
+   Vai eksistē galīga robeža $\lim_{n \rightarrow \infty} \frac{\mathcal{M}_{2n+1}}{\mathcal{L}_{2n+1}}$?
+   Vai šī robeža atškiras no $\lim_{n \rightarrow \infty} \frac{\mathcal{M}_{2n}}{\mathcal{L}_{2n}}$? 
    (Citiem vārdiem - vai nepāra maģiskie polimondi ir "retāk sastopami" nekā pāra maģiskie polimondi?)
 5. Vai virkne $\mathcal{M}_{2n+1}$ (maģisko $2n+1$-polimondu skaits) stingri aug, ja $n$ aug?
 6. Vai kādai no perfekto/maģisko polimondu pasaulē esošajām skaitļu virknēm varam atrast "ģenerējošo funkciju" 
    (pakāpju rindas summu, kuras koeficienti 
    ir attiecīgās virknes locekļi)? Sk. [Generating functions](https://cse.iitkgp.ac.in/~animeshm/generating_funct.pdf).
-7. Atrast ģenerējošo funkciju virknei $\mathcal{L}$ (visām slēgtajām lauztajām līnijām ar posmu garumiem 
+7. Atrast ģenerējošo funkciju virknei $\mathcal{L}_n$ (visām slēgtajām lauztajām līnijām ar posmu garumiem 
    $n,n-1,\ldots,1$ ieskaitot tās, kuras sevi krusto). 
 
 
