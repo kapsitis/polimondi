@@ -108,7 +108,10 @@ lapas perimetra.)
 ### Polimondu eksistence un skaits
 
 
-1. Vai katrai $n$ vērtībai eksistē maģisks $2n+1$-polimonds? 
+1. Vai katrai $n$ vērtībai eksistē maģisks $2n+1$-polimonds?  
+   **Atbilde:** Gandrīz noteikti atbilde ir "Jā". Induktīvās konstrukcijas $4n+1 \rightarrow (4n+1) + 4$ un 
+   $4n+3 \rightarrow (4n+1)+4$ ir atrodamas direktorijā "konstrukcijas", bet pagaidām vēl nav vienkāršu pierādījumu,
+   ka šādi konstruētas līnijas sevi nekrusto.
 2. Vai katrai naturālu skaitļu $1,2,\ldots,2n+1$  permutācijai 
    eksistē perfekts polimonds, kurā malu garumu secība atbilst šai permutācijai, bet malu virzieni var būt jebkādi? 
 3. Aplūkojam kādu no $(2n)!$ permutācijām, kurās var izkārtot
@@ -154,7 +157,7 @@ lapas perimetra.)
 4. $2n+1$-polimondu $P_1$ un $2n+3$-polimondu $P_2$ saucam par *dvīņu polimondiem*, ja 
    $P_2$ debespušu kodējumu var iegūt, iespraužot $P_1$ debespušu kodējumā divus jaunus virzienu burtus. 
    Vai eksistē bezgalīgi daudzi dvīņu polimondu pāri? Vai eksistē cik patīk garas virknes, kurās 
-   katri divi blakusesoši locekļi ir dvīņu polimondi. 
+   katri divi blakusesoši locekļi ir dvīņu polimondi? 
 
 
 
