@@ -123,9 +123,9 @@ lapas perimetra.)
    slēgto lauzto līniju skaitu, kur malu garumi arī atbilst permutācijai 
    $1,2,\ldots,n$, kura katrā virsotnē maina virzienu,  bet šī līnija drīkst sevi krustot, vilkt pa to pašu līniju 
    vairākas reizes vai sakrist virsotnes.  
-   Vai eksistē galīga robeža:  
+   Vai eksistē galīga robeža:
    ${\displaystyle \lim_{n \rightarrow \infty} \frac{M_{2n+1}}{L_{2n+1}}?}$  
-   Vai šī robeža atškiras no robežas:  
+   Vai šī robeža atškiras no robežas:
    ${\displaystyle \lim_{n \rightarrow \infty} \frac{M_{2n}}{L_{2n}}?}$  
    (Citiem vārdiem - vai nepāra maģiskie polimondi ir "retāk sastopami" nekā pāra maģiskie polimondi?)
 5. Vai virkne $M_{2n+1}$ (maģisko $2n+1$-polimondu skaits) stingri aug, ja $n$ aug?
