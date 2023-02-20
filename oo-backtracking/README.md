@@ -111,14 +111,14 @@ lapas perimetra.)
 1. Vai katrai $n$ vērtībai eksistē maģisks $2n+1$-polimonds?  
    **Atbilde:** Gandrīz noteikti atbilde ir "Jā". Induktīvās konstrukcijas $4n+1 \rightarrow (4n+1) + 4$ un 
    $4n+3 \rightarrow (4n+1)+4$ ir atrodamas direktorijā "konstrukcijas", bet pagaidām vēl nav vienkāršu pierādījumu,
-   ka šādi konstruētas līnijas sevi nekrusto.
+   ka šīs lauztās līnijas sevi nekrusto.
 2. Vai katrai naturālu skaitļu $1,2,\ldots,2n+1$  permutācijai 
    eksistē perfekts polimonds, kurā malu garumu secība atbilst šai permutācijai, bet malu virzieni var būt jebkādi? 
 3. Aplūkojam kādu no $(2n)!$ permutācijām, kurās var izkārtot
    $2n+1$-stūra malu garumus (variantus, kas atšķiras tikai ar ciklisku permutāciju uzskatot par identiskiem). 
    Kurai no malu garumu permutācijām būs lielākais/mazākais skaits tai atbilstošo perfekto 
-   polimondu? Vai perfektie+maģiskie polimondi, kur permutācija ir 
-   tieši $1,2,\ldots,2n+1$, ir biežāk (vai arī retāk?) sastopami nekā citām permutācijām?
+   polimondu? Vai maģiskie polimondi, kuros izmantota *identiskā permutācija*  
+   (tieši malu garumu virknīte $1,2,\ldots,2n+1$), ir biežāk sastopami nekā polimondi ar citām malu garumu permutācijām?
 4. Ar $M_{2n+1}$ apzīmējam visu maģisko $2n+1$-polimondu skaitu.  
    Piemēram, $M_{5} = 1$, 
    $M_{7} = 2$, $M_{9} = 3$, $M_{11} = 21$ utt.  
@@ -144,8 +144,8 @@ lapas perimetra.)
 1. Kuriem naturāliem $C$ eksistē bezgalīga maģisku $n$ polimondu virkne, kuru debesspušu kodējumā 
    var uzģenerēt ar bezkonteksta gramatiku (*context-free grammar*), kuras produkcijās katrā solī 
    pievieno ne vairāk kā $C$ jaunus simbolus?  
-   **Atbilde:** Martas induktīvās konstrukcijas parāda, ka var izvēlēties $C=4$ un $C=8$. 
-   Par $C=2$ vai $C=6$ attiecīgā konstrukcija vēl nav zināma.
+   **Atbilde:** Induktīvās konstrukcijas parāda, ka var izvēlēties $C=4$ un $C=8$. 
+   Par $C=2$ vai $C=6$ attiecīgās konstrukcijas nav zināmas.
 2. Vai eksistē konstante $C$ un bezgalīgi daudzi polimondi, kuriem debesspušu kodējums 
    veido periodisku virkni, kura vismaz divreiz atkārtojas (un vēl ne vairāk kā $C$ simboli pirms vai pēc šiem periodiem)? 
 3. Vai eksistē bezgalīga maģisku polimondu virkne, kurā malu skaits aug kā ģeometriskā progresijā, 
