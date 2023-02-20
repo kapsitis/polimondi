@@ -192,6 +192,12 @@ Nezināmi jautājumi
     Sal. [Pīka formula](https://en.wikipedia.org/wiki/Pick%27s_theorem).
 28. Atrast perfektus/maģiskus polimondus, kuri ir visvairāk "savērpti" 
     (polimonda kontūrs visvairāk reižu "aptinas" polimonda sākumpunktam vai citam 
-    plaknes punktam pirms tas sāk tīties atpakaļ). 
+    plaknes punktam pirms tas sāk tīties atpakaļ).
+29. Vai eksistē bezgalīga maģisku polimondu virkne, kurā malu skaits aug kā ģeometriskā progresijā, 
+    bet malu virzienus (A,B,C,D,E,F) 
+    var ģenerēt ar [Lindemaiera sistēmu](https://en.wikipedia.org/wiki/L-system). 
+    Piemēram, vai varētu būt šaurleņķu polimondi ar malu skaitu $n = 9, 27, 81, \ldots$, kur katra 
+    nākamā polimonda virzienu virknīti var iegūt, pēc kaut kādiem likumiem pārrakstot jeb aizvietojot 
+    iepriekšējā polimonda virzienu virknīti?
 
 ![Bilde](images/ChatGPT-advice.png)
