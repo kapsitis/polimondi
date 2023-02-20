@@ -124,92 +124,74 @@ Nezināmi jautājumi
 9. Kāds ir lielākais un mazākais laukums laba $2n+1$ polimonda izliektajai čaulai (mazākajam izliektajam daudzstūrim, kurš 
    satur šo polimondu)? 
 10. Kāds var būt lielākais un mazākais malas garums regulāram minimālajam sešstūrim, kurš pilnībā satur savā iekšpusē 
-   $2n+1$ polimondu? 
-
-
-
-Backtracking un DFS uzdevumi
---------------------------------
-
-Te var apkopot dažus derīgus jautājumus, kas risināmi ar kādu mēģinājumu/kļūdu metodi, piemēram, pielāgojot 
-esošo universālo "backtracking" algoritmu. 
-
-1. Pieņemsim, ka plaknes punktā ar trijstūra režģu koordinātēm $(x,y,z)$ no kādas debesspuses (A,B,C,D,E, vai F) 
-   nonākusi lauzta līnija. Pieņemsim, ka to turpina kā vienkāršu lauztu līniju, izmantojot malu garumus $k,k-1,\ldots,1$. 
-   Kurās vietās var nonākt šī lauztā līnija pēc visu $k$ posmu uzzīmēšanas? (Atbildes norādīt kā relatīvos pārvietojumus trijstūra 
-   režģu koordinātēs.)   
-   (Šo uzdevumu var izmantot, lai paātrināti atrastu labos polimondus ar pietiekami lielu malu garumu -- 
-   ja izrādās, ka ar pēdējiem $k$ posmiem nevarēs veikt vajadzīgo pārvietojumu (pat neņemot vērā iespējamos konfliktus
-   ar agrāk novilktajām malām), tad attiecīgo apakškoku neaplūko.)
-2. Dots labs $(2n+1)$-polimonds ar debesspušu kodējumu. Atrast visus veidus, kuros to var turpināt, ievietojot debespušu kodējumā 
-   $2$ vai $4$ jaunas malas/debesspuses?
-3. Skaitīt tikai tos labos polimondus, kuri apmierina kādu ierobežojumu. Piemēram, ar noteiktu laukumu, ar fiksētu/nelielu skaitu 
-   pagriezienu pa šauru/asu leņķi vai citu īpašību, kas ļautu vieglāk tos pēc tam analizēt - piemēram, pamatot, ka induktīvais 
-   solis (divu jaunu malu pievienošana) allaž noved pie derīga polimonda, kam nav malu krustošanās.
-
-
-
-Nezināmi jautājumi - 2
----------------------------
-
-1. Aplūkojam kādu no $(2n)!$ permutācijām, kurās var izkārtot
-   $2n+1$-stūra malu garumus (variantus, kas atšķiras tikai ar ciklisku permutāciju uzskatot par identiskiem). 
-   Veidojam perfektus $2n+1$-polimondus, kuros malu garumi atbilst dotajai permutācijai. 
-   Kurai no malu garumu permutācijām būs lielākais/mazākais skaits atbilstošo perfekto 
-   polimondu? Vai perfektie+maģiskie polimondi, kur permutācija ir 
-   tieši $1,2,\ldots,2n+1$, ir biežāk sastopami nekā nemaģiskie (vai viņu ir vairāk)?
-2. Vai jebkurai malu garumu permutācijai eksistēs perfekts $(2n+1)$-polimonds, ja
-   $2n+1 = 7, 9, 11, 13, \ldots$. 
-3. Ar $P_n$ apzīmējam visu maģisko polimondu skaitu. (Piemēram, $P_5 = 1$, 
-   $P_7 = 2$, $P_9 = 3$, $P_{11} = 21$ utt.) Savukārt ar $L_n$ apzīmējam to
-   slēgto lauzto līniju skaitu, kur malu garumi arī atbilst permutācijai 
-   $1,2,\ldots,n$, bet līnija drīkst sevi krustot, vilkt pa to pašu līniju 
-   vairākas reizes vai sakrist virsotnes (mūs interesē vienīgi, lai malu vektori
-   būtu kādā no sešiem virzieniem un to summa būtu nulles vektors). 
-   Vai eksistē galīga robeža $\lim_{n \rightarrow \infty} \frac{P_{2n+1}}{L_{2n+1}}$
-4. Aplūkojam maģisku $(2n+1)$-polimondu un 
-   divus debesspušu burtus ($X,Y \in \{A,B,C,D,E,F \}$), kuri varētu būt kandidāti, lai 
-   veidotu "dvīņu polimondus" (pēc divu burtu iespraušanas debesspušu kodējumā no 
-   maģiskā $(2n+1)$-polimonda varētu rasties maģisks $(2n+3)$-polimonds.
-   Aplūkojam visas iespējamās vietas, kur dotajā maģiskajā $2n+1$-polimondā var iespraust šos $X,Y$ - tādā gadījumā 
-   lauztā līnija, iespējams, nenoslēgsies. Atrast to punktu ģeometrisko vietu, kurā šī līnija var beigties? 
-   Vai šī ģeometriskā vieta atkarīga no izvēlētā maģiskā $2n+1$ formas, vai arī - tikai no burtiem $X,Y$?
-5. Uzdevums - ar vienkāršu lauztu līniju (bez posmu krustošanās), 
-   kuras posmu garumi ir doti noteiktā secībā
-   (piemēram, $1,2,\ldots,2n+1$) jānokļūst no trijstūru režģa punkta $A$ uz trijstūru režģa punktu $B$,
-   pārvietojoties tikai pa režģa līnijām.
-   Vai eksistē efektīvs algoritms, kurš nosaka, vai to var izdarīt? Vai arī šāds uzdevums ir NP-pilns (NP-complete)?
-   Līdzīgs jautājums arī par kvadrātiņu režģi (varētu būt algoritmiski vieglāks).  
-6. Pēc katra no polimondiem izmērāmiem parametriem (laukums, baricentra atrašanās vieta, dažādu iekšējo leņķu skaits)
-   atrast "lielākos" un "mazākos" maģiskos polimondus - un noskaidrot, vai no tiem nevar izveidot kādu periodisku konstrukciju - 
-   t.i. iegūt no viena optimāla polimonda nākamo ar kaut kādu induktīvo soli (2,4,6,utt.)
-7. Vai polimondu skaits $P_{2n+1}$ stingri aug, ja $n$ aug?
-8. Vai eksistē sakarība, kas ļauj pēc maģiska polimonda iekšējo leņķu skaita (cik tur ir 60, 120, 240 vai 300 grādu leņķi) 
-   noteikt, kādas vērtības var pieņemt polimonda laukums?
-9. Kurām $n$ vērtībām eksistē maģiski $(2n+1)$-polimondi, kuros ir tikai $60$ vai $300$ leņķi?
-   Maģisks $9$-polimonds ar šo īpašību redzams zīmējumā.    
-   ![Bilde](images/polimonds-9.png)
-10. Vai eksistē bezgalīga maģisku polimondu virkne, kuru debesspušu kodējumā 
+    $2n+1$ polimondu? 
+11. Aplūkojam kādu no $(2n)!$ permutācijām, kurās var izkārtot
+    $2n+1$-stūra malu garumus (variantus, kas atšķiras tikai ar ciklisku permutāciju uzskatot par identiskiem). 
+    Veidojam perfektus $2n+1$-polimondus, kuros malu garumi atbilst dotajai permutācijai. 
+    Kurai no malu garumu permutācijām būs lielākais/mazākais skaits atbilstošo perfekto 
+    polimondu? Vai perfektie+maģiskie polimondi, kur permutācija ir 
+    tieši $1,2,\ldots,2n+1$, ir biežāk sastopami nekā nemaģiskie (vai viņu ir vairāk)?
+12. Vai jebkurai malu garumu permutācijai eksistēs perfekts $(2n+1)$-polimonds, ja
+    $2n+1 = 7, 9, 11, 13, \ldots$. 
+13. Ar $P_n$ apzīmējam visu maģisko polimondu skaitu. (Piemēram, $P_5 = 1$, 
+    $P_7 = 2$, $P_9 = 3$, $P_{11} = 21$ utt.) Savukārt ar $L_n$ apzīmējam to
+    slēgto lauzto līniju skaitu, kur malu garumi arī atbilst permutācijai 
+    $1,2,\ldots,n$, bet līnija drīkst sevi krustot, vilkt pa to pašu līniju 
+    vairākas reizes vai sakrist virsotnes (mūs interesē vienīgi, lai malu vektori
+    būtu kādā no sešiem virzieniem un to summa būtu nulles vektors). 
+    Vai eksistē galīga robeža $\lim_{n \rightarrow \infty} \frac{P_{2n+1}}{L_{2n+1}}$
+14. Aplūkojam maģisku $(2n+1)$-polimondu un 
+    divus debesspušu burtus ($X,Y \in \{A,B,C,D,E,F \}$), kuri varētu būt kandidāti, lai 
+    veidotu "dvīņu polimondus" (pēc divu burtu iespraušanas debesspušu kodējumā no 
+    maģiskā $(2n+1)$-polimonda varētu rasties maģisks $(2n+3)$-polimonds.
+    Aplūkojam visas iespējamās vietas, kur dotajā maģiskajā $2n+1$-polimondā var iespraust šos $X,Y$ - tādā gadījumā 
+    lauztā līnija, iespējams, nenoslēgsies. Atrast to punktu ģeometrisko vietu, kurā šī līnija var beigties? 
+    Vai šī ģeometriskā vieta atkarīga no izvēlētā maģiskā $2n+1$ formas, vai arī - tikai no burtiem $X,Y$?
+15. Uzdevums - ar vienkāršu lauztu līniju (bez posmu krustošanās), 
+    kuras posmu garumi ir doti noteiktā secībā
+    (piemēram, $1,2,\ldots,2n+1$) jānokļūst no trijstūru režģa punkta $A$ uz trijstūru režģa punktu $B$,
+    pārvietojoties tikai pa režģa līnijām.
+    Vai eksistē efektīvs algoritms, kurš nosaka, vai to var izdarīt? Vai arī šāds uzdevums ir NP-pilns (NP-complete)?
+    Līdzīgs jautājums arī par kvadrātiņu režģi (varētu būt algoritmiski vieglāks).  
+16. Pēc katra no polimondiem izmērāmiem parametriem (laukums, baricentra atrašanās vieta, dažādu iekšējo leņķu skaits)
+    atrast "lielākos" un "mazākos" maģiskos polimondus - un noskaidrot, vai no tiem nevar izveidot kādu periodisku konstrukciju - 
+    t.i. iegūt no viena optimāla polimonda nākamo ar kaut kādu induktīvo soli (2,4,6,utt.)
+17. Vai polimondu skaits $P_{2n+1}$ stingri aug, ja $n$ aug?
+18. Vai eksistē sakarība, kas ļauj pēc maģiska polimonda iekšējo leņķu skaita (cik tur ir 60, 120, 240 vai 300 grādu leņķi) 
+    noteikt, kādas vērtības var pieņemt polimonda laukums?
+19. Kurām $n$ vērtībām eksistē maģiski $(2n+1)$-polimondi, kuros ir tikai $60$ vai $300$ leņķi?
+    Maģisks $9$-polimonds ar šo īpašību redzams zīmējumā.    
+    ![Bilde](images/polimonds-9.png)  
+    **Atbilde:** Līdz šim atrastās vērtības ir $n=9$, $n=27$, $n=29$. 
+20. Vai eksistē bezgalīga maģisku polimondu virkne, kuru debesspušu kodējumā 
     apraksta ar bezkonteksta gramatiku (*context-free grammar*)?
-11. Aplūkojam regulāru sešstūri ar malas garumu $55$ (to var uzskatīt par "riņķi" trijstūru režģa metrikā ar rādiusu $55$). 
+21. Aplūkojam regulāru sešstūri ar malas garumu $55$ (to var uzskatīt par "riņķi" trijstūru režģa metrikā ar rādiusu $55$). 
     Šis sešstūris satur visus tos punktus, kam pietiktu ar $10$ gājieniem garumā $10,9,8,\ldots,1$, lai atgrieztos sešstūra centrā). 
     No visiem sešstūra iekšpusē un uz perimetra esošajiem punktiem atzīmējam tos, no kuriem tiešām var atgriezties centrā.
     Kādu daļu no visiem punktiem esam atzīmējuši? Kas notiek ar atzīmēto punktu proporciju, ja malu skaitu ($k = 10$) palielina
     līdz $11, 12,\ldots$? 
-12. Vai kādai no perfekto/maģisko polimondu pasaulē esošajām skaitļu virknēm varam atrast "ģenerējošo funkciju" (pakāpju rindas summu, kuras koeficienti 
+22. Vai kādai no perfekto/maģisko polimondu pasaulē esošajām skaitļu virknēm varam atrast "ģenerējošo funkciju" 
+    (pakāpju rindas summu, kuras koeficienti 
     ir attiecīgās virknes locekļi)? Sk. [Generating functions](https://cse.iitkgp.ac.in/~animeshm/generating_funct.pdf).
-    Atrast ģenerējošo funkciju vienkāršākam gadījumam (visām slēgtajām lauztajām līnijām ar posmu garumiem $n,n-1,\ldots,1$ ieskaitot tās, kuras 
-    sevi krusto). 
-13. (Ierosinājums no ChatGPT) Vai eksistē perfekti (maģiski?) $n$-polimondi, kuriem ir vienāds laukums, bet atšķirīgs malu skaits? 
+    Atrast ģenerējošo funkciju vienkāršākam gadījumam (visām slēgtajām lauztajām līnijām ar posmu garumiem 
+    $n,n-1,\ldots,1$ ieskaitot tās, kuras sevi krusto). 
+23. (Ierosinājums no ChatGPT) Vai eksistē perfekti (maģiski?) $n$-polimondi, kuriem ir vienāds laukums, bet atšķirīgs malu skaits? 
     Cik pavisam ir perfektu (maģisku?) polimondu ar doto laukumu? 
-14. (Ierosinājums no ChatGPT) Atrast, cik daudzi no maģiskajiem polimondiem ir sagriežami identiskas formas "flīzēs" (tādos polimondos, 
+24. (Ierosinājums no ChatGPT) Atrast, cik daudzi no maģiskajiem polimondiem ir sagriežami identiskas formas "flīzēs" (tādos polimondos, 
     kurus veido 2-4 mazie trijstūrīši - ar kuriem var aizpildīt plakni). 
-15. (Ierosinājums no ChatGPT) Atrast, kuriem polimondiem debesspušu kodējums ir iespējami simetrisks (sastāv no periodiski atkārtotiem identiskiem 
+25. (Ierosinājums no ChatGPT) Atrast, kuriem polimondiem debesspušu kodējums ir iespējami simetrisks 
+    (sastāv no periodiski atkārtotiem identiskiem 
     burtu fragmentiem, kuriem pierakstīti klāt tikai nedaudzi "priekšperioda" simboli).   
-    ![Bilde](images/ChatGPT-advice.png)
-16. Bezgalīgā trijstūru režģa trijstūrīšus kaut kā periodiski izkrāso 2-4 krāsās. Atrast, cik dažādu krāsu trijstūrīšu var atrasties 
-    perfekta (maģiska) polimonda iekšpusē. 
-17. Līdzīgs jautājums arī par trijstūrīša režģī novilktajiem vienības nogrieznīšiem (vai režģa krustpunktiem), kurus periodiski izkrāso 2-4 krāsās. 
+26. Bezgalīgā trijstūru režģa trijstūrīšus izkrāso 2 krāsās (paritātes krāsojums). Atrast, cik dažādu 
+    krāsu trijstūrīšu var atrasties perfekta (maģiska) polimonda iekšpusē. Kurām $n$ vērtībām atrodas 
+    maģiski $n$-polimondi, kurus var sagriezt rombiņos, kurus veido divi mazie trijstūrīši 
+    (t.i. melno un balto trijstūrīšu skaits ir līdzsvarā). 
+27. Līdzīgs jautājums arī par trijstūrīša režģī novilktajiem vienības nogrieznīšiem (vai režģa krustpunktiem), 
+    kurus periodiski izkrāso. 
     Tad atrod, cik dažādu krāsu nogrieznīšu (krustpunktu) var atrasties perfekta/maģiska polimonda iekšpusē vai uz tā perimetra. 
     Sal. [Pīka formula](https://en.wikipedia.org/wiki/Pick%27s_theorem).
-18. Atrast perfektus/maģiskus polimondus, kuri ir visvairāk "savērpti" (polimonda kontūrs visvairāk reižu aptinas kādam plaknes punktam). 
+28. Atrast perfektus/maģiskus polimondus, kuri ir visvairāk "savērpti" 
+    (polimonda kontūrs visvairāk reižu "aptinas" polimonda sākumpunktam vai citam 
+    plaknes punktam pirms tas sāk tīties atpakaļ). 
+
+![Bilde](images/ChatGPT-advice.png)
