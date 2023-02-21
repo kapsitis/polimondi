@@ -110,7 +110,7 @@ lapas perimetra.)
 
 1. Vai katrai $n$ vērtībai eksistē maģisks $2n+1$-polimonds?  
    **Atbilde:** Gandrīz noteikti atbilde ir "Jā". Induktīvās konstrukcijas $4n+1 \rightarrow (4n+1) + 4$ un 
-   $4n+3 \rightarrow (4n+1)+4$ ir atrodamas direktorijā "konstrukcijas", bet pagaidām vēl nav vienkāršu pierādījumu,
+   $4n+3 \rightarrow (4n+3)+4$ ir atrodamas direktorijā "konstrukcijas", bet pagaidām vēl nav vienkāršu pierādījumu,
    ka šīs lauztās līnijas sevi nekrusto.
 2. Vai katrai naturālu skaitļu $1,2,\ldots,2n+1$  permutācijai 
    eksistē perfekts polimonds, kurā malu garumu secība atbilst šai permutācijai, bet malu virzieni var būt jebkādi? 
@@ -118,7 +118,7 @@ lapas perimetra.)
    $2n+1$-stūra malu garumus (variantus, kas atšķiras tikai ar ciklisku permutāciju uzskatot par identiskiem). 
    Kurai no malu garumu permutācijām būs lielākais/mazākais skaits tai atbilstošo perfekto 
    polimondu? Vai maģiskie polimondi, kuros izmantota *identiskā permutācija*  
-   (tieši malu garumu virknīte $1,2,\ldots,2n+1$), ir biežāk sastopami nekā polimondi ar citām malu garumu permutācijām?
+   (tieši malu garumu virknīte $1,2,\ldots,2n+1$), ir biežāk sastopami nekā perfektie polimondi ar citām malu garumu permutācijām?
 4. Ar $M_{2n+1}$ apzīmējam visu maģisko $2n+1$-polimondu skaitu.  
    Piemēram, $M_{5} = 1$, 
    $M_{7} = 2$, $M_{9} = 3$, $M_{11} = 21$ utt.  
@@ -130,16 +130,22 @@ lapas perimetra.)
    ${\displaystyle \lim_{n \rightarrow \infty} \frac{M_{2n+1}}{L_{2n+1}}?}$  
    Vai šī robeža atškiras no robežas:
    ${\displaystyle \lim_{n \rightarrow \infty} \frac{M_{2n}}{L_{2n}}?}$  
-   (Citiem vārdiem - vai nepāra maģiskie polimondi ir "retāk sastopami" nekā pāra maģiskie polimondi?). 
+   (Citiem vārdiem - vai maģiskie polimondi ar nepāra malu skaitu ir "retāk sastopami" nekā pāra maģiskie polimondi?).  
    **Hipotēze:** Abas robežas, visticamāk, ir $0$ - sevis krustošana ir ļoti biežs iemesls polimonda "izbrāķēšanai" algoritmos arī maziem $n$. 
    No otras puses, atļaujot gan pāra, gan nepāra malu skaitu, virkne $M_5, M_6, M_7, M_8\ldots$ varētu nebūt monotoni augoša, bet virkne 
-   $L_5, L_6, L_7, L8\ldots$, visticamāk ir augoša.
+   $L_5, L_6, L_7, L_8\ldots$, visticamāk ir augoša.
 5. Vai virkne $M_{2n+1}$ (maģisko $2n+1$-polimondu skaits) stingri aug, ja $n$ aug?
 6. Vai kādai no perfekto/maģisko polimondu pasaulē esošajām skaitļu virknēm varam atrast "ģenerējošo funkciju" 
    (pakāpju rindas summu, kuras koeficienti 
    ir attiecīgās virknes locekļi)? Sk. [Generating functions](https://cse.iitkgp.ac.in/~animeshm/generating_funct.pdf).
 7. Atrast ģenerējošo funkciju virknei $L_n$ (visām slēgtajām lauztajām līnijām ar posmu garumiem 
-   $n,n-1,\ldots,1$ ieskaitot tās, kuras sevi krusto). 
+   $n,n-1,\ldots,1$ ieskaitot tās, kuras sevi krusto).  
+   **Iesildīšanās uzdevums:** Aplūkojam skaitļu virkni $1,2,3,\ldots,n$. Saskaitām visus veidus, kā šajā virknē var
+   salikt "+" un "-" zīmes tā, lai rezultāts būtu $0$. Visticamāk, šim jautājumam ir kombinatorikā zināma atbilde. 
+   Uzdevums atrast formulu $L_n$ (cik trijstūru režģī ir lauztu līniju, kuras atgriežas sākumpunktā, ja līniju garumi ir 
+   $1,2,3,\ldots,n$) ir sava veida vispārinājums, bet vēl joprojām pietiekami "algebrisks", lai to būtu ērti saskaitīt. 
+   Iegūstot novērtējumu virknei $L_n$ (un zinot, ka maģisko polimondu nevar būt vairāk kā $L_n$), būsim ieguvuši 
+   novērtējumu virknei $M_n$ no augšas. 
 
 
 ### Polimondu induktīva ģenerēšana
