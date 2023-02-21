@@ -202,7 +202,8 @@ lapas perimetra.)
    Maģisks $9$-polimonds ar šo īpašību redzams zīmējumā.    
    ![Bilde](images/polimonds-9.png)  
    **Atbilde:** Līdz šim atrastās vērtības ir $n=9$, $n=27$, $n=29$. 
-5. Bezgalīgā trijstūru režģa trijstūrīšus izkrāso 2 krāsās (paritātes krāsojums). Atrast, cik dažādu 
+5. Bezgalīgā trijstūru režģa trijstūrīšus izkrāso 2 krāsās (paritātes krāsojums -- trijstūrīši ar kopīgu
+   malu allaž nokrāsoti pretējās krāsās). Atrast, cik dažādu 
    krāsu trijstūrīšu var atrasties perfekta (maģiska) polimonda iekšpusē. Kurām $n$ vērtībām atrodas 
    maģiski $n$-polimondi, kurus var sagriezt rombiņos, kurus veido divi mazie trijstūrīši 
    (t.i. melno un balto trijstūrīšu skaits ir līdzsvarā). 
@@ -211,15 +212,20 @@ lapas perimetra.)
 ### Citi jautājumi
 
 1. Uzdevums - ar vienkāršu lauztu līniju (bez posmu krustošanās), 
-   kuras posmu garumi ir doti noteiktā secībā
+   kuras posmu garumi ir jāizvēlas noteiktā secībā
    (piemēram, $1,2,\ldots,2n+1$) jānokļūst no trijstūru režģa punkta $A$ uz trijstūru režģa punktu $B$,
    pārvietojoties tikai pa režģa līnijām.  
-   Vai eksistē efektīvs algoritms, kurš nosaka, vai to var izdarīt? Vai arī šāds uzdevums ir NP-pilns (NP-complete)?
+   Vai eksistē efektīvs algoritms, kurš nosaka, vai to var izdarīt? Vai arī šāds uzdevums prasa pilno pārlasi vai 
+   ir pierādāmi NP-pilns (NP-complete)?
    Līdzīgs jautājums arī par kvadrātiņu režģi (varētu būt algoritmiski vieglāks).  
 2. Aplūkojam regulāru sešstūri ar malas garumu $55$ (to var uzskatīt par "riņķi" trijstūru režģa metrikā ar rādiusu $55$). 
    Šis sešstūris satur visus tos punktus, kam pietiktu ar $10$ gājieniem garumā $10,9,8,\ldots,1$, lai atgrieztos sešstūra centrā). 
    No visiem sešstūra iekšpusē un uz perimetra esošajiem punktiem atzīmējam tos, no kuriem tiešām var atgriezties centrā.
-   Kādu daļu no visiem punktiem esam atzīmējuši? Kas notiek ar atzīmēto punktu proporciju, ja malu skaitu ($k = 10$) palielina?
+   Kādu daļu no visiem punktiem esam atzīmējuši? Kas notiek ar atzīmēto punktu proporciju, ja malu skaitu ($k = 10$) palielina?  
+   Vispārīgā gadījumā -- ja mums dots naturāls $n$ un esam nonākuši kādā punktā, kuru pēc rūtiņu režģa attālumu formulas 
+   (punkta PointTg(x,y,z) attālums līdz PointTg(0,0,0) ir $\max(|x|,|y|,|z|)$) šis attālums nepārsniedz $1+2+\ldots+n$, 
+   kāda ir varbūtība, ka tiešām varēsim atgriezties koordinātu sākumpunktā ar vienkāršu lauztu līniju, kas ir maģiska
+   polimonda "aste"?
 
 
 
