@@ -222,8 +222,8 @@ lapas perimetra.)
    Šis sešstūris satur visus tos punktus, kam pietiktu ar $10$ gājieniem garumā $10,9,8,\ldots,1$, lai atgrieztos sešstūra centrā). 
    No visiem sešstūra iekšpusē un uz perimetra esošajiem punktiem atzīmējam tos, no kuriem tiešām var atgriezties centrā.
    Kādu daļu no visiem punktiem esam atzīmējuši? Kas notiek ar atzīmēto punktu proporciju, ja malu skaitu ($k = 10$) palielina?  
-   Vispārīgā gadījumā -- ja mums dots naturāls $n$ un esam nonākuši kādā punktā, kuru pēc rūtiņu režģa attālumu formulas 
-   (punkta PointTg(x,y,z) attālums līdz PointTg(0,0,0) ir $\max(|x|,|y|,|z|)$) šis attālums nepārsniedz $1+2+\ldots+n$, 
+   Vispārīgā gadījumā -- ja mums dots naturāls $n$ un esam nonākuši kādā punktā, kuru pēc rūtiņu režģa attālumu formulas, kur
+   punkta PointTg(x,y,z) attālums līdz PointTg(0,0,0) ir $\max(|x|,|y|,|z|)$, un šis attālums nepārsniedz $1+2+\ldots+n$, 
    kāda ir varbūtība, ka tiešām varēsim atgriezties koordinātu sākumpunktā ar vienkāršu lauztu līniju, kas ir maģiska
    polimonda "aste"?
 
