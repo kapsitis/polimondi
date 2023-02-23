@@ -1,4 +1,4 @@
-from backtrack import *
+from backtrackk import *
 
 
 class Polimondi:
@@ -146,7 +146,7 @@ class Polimondi:
 
 
 def main():
-    q = Polimondi(9)
+    q = Polimondi(23)
     b = Backtrack(q)
     if b.attempt(1):
         q.display()
