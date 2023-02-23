@@ -108,14 +108,17 @@ lapas perimetra.)
 ### Polimondu eksistence un skaits
 
 
-1. Vai katrai $n$ vērtībai eksistē maģisks $2n+1$-polimonds? 
+1. Vai katrai $n$ vērtībai eksistē maģisks $2n+1$-polimonds?  
+   **Atbilde:** Gandrīz noteikti atbilde ir "Jā". Induktīvās konstrukcijas $4n+1 \rightarrow (4n+1) + 4$ un 
+   $4n+3 \rightarrow (4n+3)+4$ ir atrodamas direktorijā "konstrukcijas", bet pagaidām vēl nav vienkāršu pierādījumu,
+   ka šīs lauztās līnijas sevi nekrusto.
 2. Vai katrai naturālu skaitļu $1,2,\ldots,2n+1$  permutācijai 
    eksistē perfekts polimonds, kurā malu garumu secība atbilst šai permutācijai, bet malu virzieni var būt jebkādi? 
 3. Aplūkojam kādu no $(2n)!$ permutācijām, kurās var izkārtot
    $2n+1$-stūra malu garumus (variantus, kas atšķiras tikai ar ciklisku permutāciju uzskatot par identiskiem). 
    Kurai no malu garumu permutācijām būs lielākais/mazākais skaits tai atbilstošo perfekto 
-   polimondu? Vai perfektie+maģiskie polimondi, kur permutācija ir 
-   tieši $1,2,\ldots,2n+1$, ir biežāk (vai arī retāk?) sastopami nekā citām permutācijām?
+   polimondu? Vai maģiskie polimondi, kuros izmantota *identiskā permutācija*  
+   (tieši malu garumu virknīte $1,2,\ldots,2n+1$), ir biežāk sastopami nekā perfektie polimondi ar citām malu garumu permutācijām?
 4. Ar $M_{2n+1}$ apzīmējam visu maģisko $2n+1$-polimondu skaitu.  
    Piemēram, $M_{5} = 1$, 
    $M_{7} = 2$, $M_{9} = 3$, $M_{11} = 21$ utt.  
@@ -127,13 +130,22 @@ lapas perimetra.)
    ${\displaystyle \lim_{n \rightarrow \infty} \frac{M_{2n+1}}{L_{2n+1}}?}$  
    Vai šī robeža atškiras no robežas:
    ${\displaystyle \lim_{n \rightarrow \infty} \frac{M_{2n}}{L_{2n}}?}$  
-   (Citiem vārdiem - vai nepāra maģiskie polimondi ir "retāk sastopami" nekā pāra maģiskie polimondi?)
+   (Citiem vārdiem - vai maģiskie polimondi ar nepāra malu skaitu ir "retāk sastopami" nekā pāra maģiskie polimondi?).  
+   **Hipotēze:** Abas robežas, visticamāk, ir $0$ - sevis krustošana ir ļoti biežs iemesls polimonda "izbrāķēšanai" algoritmos arī maziem $n$. 
+   No otras puses, atļaujot gan pāra, gan nepāra malu skaitu, virkne $M_5, M_6, M_7, M_8\ldots$ varētu nebūt monotoni augoša, bet virkne 
+   $L_5, L_6, L_7, L_8\ldots$, visticamāk ir augoša.
 5. Vai virkne $M_{2n+1}$ (maģisko $2n+1$-polimondu skaits) stingri aug, ja $n$ aug?
 6. Vai kādai no perfekto/maģisko polimondu pasaulē esošajām skaitļu virknēm varam atrast "ģenerējošo funkciju" 
    (pakāpju rindas summu, kuras koeficienti 
    ir attiecīgās virknes locekļi)? Sk. [Generating functions](https://cse.iitkgp.ac.in/~animeshm/generating_funct.pdf).
 7. Atrast ģenerējošo funkciju virknei $L_n$ (visām slēgtajām lauztajām līnijām ar posmu garumiem 
-   $n,n-1,\ldots,1$ ieskaitot tās, kuras sevi krusto). 
+   $n,n-1,\ldots,1$ ieskaitot tās, kuras sevi krusto).  
+   **Iesildīšanās uzdevums:** Aplūkojam skaitļu virkni $1,2,3,\ldots,n$. Saskaitām visus veidus, kā šajā virknē var
+   salikt "+" un "-" zīmes tā, lai rezultāts būtu $0$. Visticamāk, šim jautājumam ir kombinatorikā zināma atbilde. 
+   Uzdevums atrast formulu $L_n$ (cik trijstūru režģī ir lauztu līniju, kuras atgriežas sākumpunktā, ja līniju garumi ir 
+   $1,2,3,\ldots,n$) ir sava veida vispārinājums, bet vēl joprojām pietiekami "algebrisks", lai to būtu ērti saskaitīt. 
+   Iegūstot novērtējumu virknei $L_n$ (un zinot, ka maģisko polimondu nevar būt vairāk kā $L_n$), būsim ieguvuši 
+   novērtējumu virknei $M_n$ no augšas. 
 
 
 ### Polimondu induktīva ģenerēšana
@@ -141,20 +153,20 @@ lapas perimetra.)
 1. Kuriem naturāliem $C$ eksistē bezgalīga maģisku $n$ polimondu virkne, kuru debesspušu kodējumā 
    var uzģenerēt ar bezkonteksta gramatiku (*context-free grammar*), kuras produkcijās katrā solī 
    pievieno ne vairāk kā $C$ jaunus simbolus?  
-   **Atbilde:** Martas induktīvās konstrukcijas parāda, ka var izvēlēties $C=4$ un $C=8$. 
-   Par $C=2$ vai $C=6$ attiecīgā konstrukcija vēl nav zināma.
+   **Atbilde:** Induktīvās konstrukcijas parāda, ka var izvēlēties $C=4$ un $C=8$. 
+   Par $C=2$ vai $C=6$ attiecīgās konstrukcijas nav zināmas.
 2. Vai eksistē konstante $C$ un bezgalīgi daudzi polimondi, kuriem debesspušu kodējums 
    veido periodisku virkni, kura vismaz divreiz atkārtojas (un vēl ne vairāk kā $C$ simboli pirms vai pēc šiem periodiem)? 
 3. Vai eksistē bezgalīga maģisku polimondu virkne, kurā malu skaits aug kā ģeometriskā progresijā, 
    bet malu virzienus (A,B,C,D,E,F) 
-   var ģenerēt ar [Lindemaiera sistēmu](https://en.wikipedia.org/wiki/L-system). 
+   var ģenerēt ar [Lindenmaiera sistēmu](https://en.wikipedia.org/wiki/L-system). 
    Piemēram, vai varētu būt šaurleņķu polimondi ar malu skaitu $n = 9, 27, 81, \ldots$, kur katra 
    nākamā polimonda virzienu virknīti var iegūt, pēc kaut kādiem likumiem pārrakstot jeb aizvietojot 
    iepriekšējā polimonda virzienu virknīti?
 4. $2n+1$-polimondu $P_1$ un $2n+3$-polimondu $P_2$ saucam par *dvīņu polimondiem*, ja 
    $P_2$ debespušu kodējumu var iegūt, iespraužot $P_1$ debespušu kodējumā divus jaunus virzienu burtus. 
    Vai eksistē bezgalīgi daudzi dvīņu polimondu pāri? Vai eksistē cik patīk garas virknes, kurās 
-   katri divi blakusesoši locekļi ir dvīņu polimondi. 
+   katri divi blakusesoši locekļi ir dvīņu polimondi? 
 
 
 
@@ -190,7 +202,8 @@ lapas perimetra.)
    Maģisks $9$-polimonds ar šo īpašību redzams zīmējumā.    
    ![Bilde](images/polimonds-9.png)  
    **Atbilde:** Līdz šim atrastās vērtības ir $n=9$, $n=27$, $n=29$. 
-5. Bezgalīgā trijstūru režģa trijstūrīšus izkrāso 2 krāsās (paritātes krāsojums). Atrast, cik dažādu 
+5. Bezgalīgā trijstūru režģa trijstūrīšus izkrāso 2 krāsās (paritātes krāsojums -- trijstūrīši ar kopīgu
+   malu allaž nokrāsoti pretējās krāsās). Atrast, cik dažādu 
    krāsu trijstūrīšu var atrasties perfekta (maģiska) polimonda iekšpusē. Kurām $n$ vērtībām atrodas 
    maģiski $n$-polimondi, kurus var sagriezt rombiņos, kurus veido divi mazie trijstūrīši 
    (t.i. melno un balto trijstūrīšu skaits ir līdzsvarā). 
@@ -199,15 +212,20 @@ lapas perimetra.)
 ### Citi jautājumi
 
 1. Uzdevums - ar vienkāršu lauztu līniju (bez posmu krustošanās), 
-   kuras posmu garumi ir doti noteiktā secībā
+   kuras posmu garumi ir jāizvēlas noteiktā secībā
    (piemēram, $1,2,\ldots,2n+1$) jānokļūst no trijstūru režģa punkta $A$ uz trijstūru režģa punktu $B$,
    pārvietojoties tikai pa režģa līnijām.  
-   Vai eksistē efektīvs algoritms, kurš nosaka, vai to var izdarīt? Vai arī šāds uzdevums ir NP-pilns (NP-complete)?
+   Vai eksistē efektīvs algoritms, kurš nosaka, vai to var izdarīt? Vai arī šāds uzdevums prasa pilno pārlasi vai 
+   ir pierādāmi NP-pilns (NP-complete)?
    Līdzīgs jautājums arī par kvadrātiņu režģi (varētu būt algoritmiski vieglāks).  
 2. Aplūkojam regulāru sešstūri ar malas garumu $55$ (to var uzskatīt par "riņķi" trijstūru režģa metrikā ar rādiusu $55$). 
    Šis sešstūris satur visus tos punktus, kam pietiktu ar $10$ gājieniem garumā $10,9,8,\ldots,1$, lai atgrieztos sešstūra centrā). 
    No visiem sešstūra iekšpusē un uz perimetra esošajiem punktiem atzīmējam tos, no kuriem tiešām var atgriezties centrā.
-   Kādu daļu no visiem punktiem esam atzīmējuši? Kas notiek ar atzīmēto punktu proporciju, ja malu skaitu ($k = 10$) palielina?
+   Kādu daļu no visiem punktiem esam atzīmējuši? Kas notiek ar atzīmēto punktu proporciju, ja malu skaitu ($k = 10$) palielina?  
+   Vispārīgā gadījumā -- ja mums dots naturāls $n$ un esam nonākuši kādā punktā, kuru pēc rūtiņu režģa attālumu formulas, kur
+   punkta PointTg(x,y,z) attālums līdz PointTg(0,0,0) ir $\max(|x|,|y|,|z|)$, un šis attālums nepārsniedz $1+2+\ldots+n$, 
+   kāda ir varbūtība, ka tiešām varēsim atgriezties koordinātu sākumpunktā ar vienkāršu lauztu līniju, kas ir maģiska
+   polimonda "aste"?
 
 
 
