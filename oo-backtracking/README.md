@@ -41,7 +41,7 @@ Ir spēkā trīs gadījumi (sk. zīmējumu):
 * Ja iepriekšējais gājiens bijis virzienā B vai E, tad nākamais var būt 
   virzienos virzienos D, C, A, F (šādā secībā).
 
-Labus polimondus konstruē, vispirms veicot gājienu virzienā A par $N$ garuma vienībām, 
+Perfektus polimondus konstruē, vispirms veicot gājienu virzienā A par $N$ garuma vienībām, 
 kur $N$ ir iepriekš uzdotais polimonda malu skaits.
 Pēc tam veic otro gājienu (obligāti virzienos C vai B -- lai pirmais pagrieziens būtu 
 pa kreisi). Ja pirmais pagrieziens būtu pa labi, tad aplūkojam polimonda 
@@ -52,21 +52,21 @@ pirmais gājiens vienmēr būtu pa labi).
 **Definīcija:** Par $n$-*polimondu* sauc vienkāršu slēgtu lauztu līniju (jeb daudzstūri) no $n$ posmiem, 
 kam visas virsotnes atrodas trijstūru režģa virsotnēs, bet malas iet pa trijstūru režģa līnijām. 
 
-**Definīcija:** $n$-polimondu sauc par *labu*, ja tā malu garumi, sākot skaitīt no kādas virsotnes, 
+**Definīcija:** $n$-polimondu sauc par *perfektu*, ja tā malu garumi, sākot skaitīt no kādas virsotnes, 
 ir skaitļi $n,n-1,n-2,\ldots,3,2,1$ tieši šādā secībā.
 
 **Definīcija:** $n$-polimonda *kodējums ar debesspusēm* ir virknīte garumā $n$, kura 
 sastāv no 6 burtiem (`A`,`B`,`C`,`D`,`E`,`F`), kas norāda uz malu virzieniem, kuros tiek vilktas secīgas
-polimonda malas. (Labiem polimondiem malu garumi ir secībā  $n,n-1,n-2,\ldots,3,2,1$, 
+polimonda malas. (Perfektiem polimondiem malu garumi ir secībā  $n,n-1,n-2,\ldots,3,2,1$, 
 bet citiem polimondiem kopā ar debespusi kodējumā norāda arī attiecīgās malas garumu.)
 
 **Definīcija:** Polimondu virkni garumā $k$, kas satur polimondus ar 
-$n, n+2, \ldots, n+2(k-1)$ malām sauc par *labu polimondu virkni
+$n, n+2, \ldots, n+2(k-1)$ malām sauc par *perfektu polimondu virkni
 ar indukcijas soli 2*, ja 
 katriem diviem blakusesošiem polimondiem (ar $n+2i$ un $n+2i+2$ malām, $i = 0,\ldots,k-2$) 
 to debesspušu kodējumi sakrīt, izņemot to, ka polimonda ar $n+2i+2$ malām 
 kodējumā ir iesprausti divi jauni debesspušu burti (jebkurās divās vietās).  
-Līdzīgi definē arī labu polimondu virknes ar indukcijas soli $4, 6, 8$ utml. 
+Līdzīgi definē arī perfektu polimondu virknes ar indukcijas soli $4, 6, 8$ utml. 
 
 (Vai polimondu virknē malu iespraušanai jānotiek pēc kādas regulāras shēmas, piemēram, 
 debesspušu kodējumiem jābūt ģenerējamiem ar *bezkonteksta gramatiku* vai ar 
@@ -92,7 +92,7 @@ sastāv no 4 burtiem (`a`,`b`,`c`,`d`). Pirmo malu novelk jebkurā izvēlētā v
 * burtu "c" raksta kodējumā tad, ja nākamā mala pret iepriekšējo veic platleņķa pagriezienu pa labi ($120^{\circ}$ leņķis); 
 * burtu "d" raksta kodējumā tad, ja nākamā mala pret iepriekšējo veic asu/šaurleņķa pagriezienu pa labi ($60^{\circ}$ grādu leņķis). 
 
-Labiem polimondiem pieņemam, ka malu garumi ir secībā  $n,n-1,n-2,\ldots,3,2,1$, 
+Perfektiem polimondiem pieņemam, ka malu garumi ir secībā  $n,n-1,n-2,\ldots,3,2,1$, 
 bet citiem polimondiem kopā ar relatīvo virzienu (a,b,c,d) norāda arī attiecīgās malas garumu.
 
 
@@ -108,17 +108,16 @@ lapas perimetra.)
 ### Polimondu eksistence un skaits
 
 
-1. Vai katrai $n$ vērtībai eksistē maģisks $2n+1$-polimonds?  
+1. Vai katram nepāra skaitlim $n$ eksistē perfekts $n$-polimonds?  
    **Atbilde:** Gandrīz noteikti atbilde ir "Jā". Induktīvās konstrukcijas $4n+1 \rightarrow (4n+1) + 4$ un 
    $4n+3 \rightarrow (4n+3)+4$ ir atrodamas direktorijā "konstrukcijas", bet pagaidām vēl nav vienkāršu pierādījumu,
    ka šīs lauztās līnijas sevi nekrusto.
 2. Vai katrai naturālu skaitļu $1,2,\ldots,2n+1$  permutācijai 
-   eksistē perfekts polimonds, kurā malu garumu secība atbilst šai permutācijai, bet malu virzieni var būt jebkādi? 
+   eksistē maģisks polimonds, kurā malu garumu secība atbilst šai permutācijai, bet malu virzienus var izvēlēties jebkādi? 
 3. Aplūkojam kādu no $(2n)!$ permutācijām, kurās var izkārtot
    $2n+1$-stūra malu garumus (variantus, kas atšķiras tikai ar ciklisku permutāciju uzskatot par identiskiem). 
-   Kurai no malu garumu permutācijām būs lielākais/mazākais skaits tai atbilstošo perfekto 
-   polimondu? Vai maģiskie polimondi, kuros izmantota *identiskā permutācija*  
-   (tieši malu garumu virknīte $1,2,\ldots,2n+1$), ir biežāk sastopami nekā perfektie polimondi ar citām malu garumu permutācijām?
+   Kurai no malu garumu permutācijām būs lielākais/mazākais skaits tai atbilstošo maģisko 
+   polimondu? Vai perfektie polimondi ir biežāk (vai arī retāk?) sastopami nekā maģiski polimondi ar citām malu garumu permutācijām?
 4. Ar $M_{2n+1}$ apzīmējam visu maģisko $2n+1$-polimondu skaitu.  
    Piemēram, $M_{5} = 1$, 
    $M_{7} = 2$, $M_{9} = 3$, $M_{11} = 21$ utt.  
