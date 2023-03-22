@@ -5,10 +5,10 @@
 Polimondiem ar nelieliem malu garumiem apkopojam pamatinformāciju: 
 
 **Skaits:** 
-  Cik maģisko polimondu ir dažādiem malu garumiem? (Polimondus, kuri 
+  Cik perfekto polimondu ir dažādiem malu garumiem? (Polimondus, kuri 
   atšķiras tikai ar rotācijām vai spoguļattēliem, uzskatām par vienādiem.)
 **Max laukums:** 
-  Starp visiem maģiskajiem polimondiem atrasts lielākais iespējamais laukums izteikts
+  Starp visiem perfektajiem polimondiem atrasts lielākais iespējamais laukums izteikts
   mazo trijstūrīšu laukuma vienībās.
 
 
@@ -35,7 +35,7 @@ visi to posmi iet pa trijstūra režģu līnijām un ir augošā garumā - $1,2,
 Vārdnīcā glabājas lauztās līnijas posmu virzieni un galapunkts, kurā tā nonākusi. 
 
 Šī vārdnīca var būt noderīga, jo tajā kā "kešatmiņā" glabājas visi veidi, kā var pabeigt 
-maģisko polimondu (uzzīmēt tā asti jeb pēdējos $m$ posmus) - atliek vien uzzīmēt pirmos $n-m$ posmus, 
+perfekto polimondu (uzzīmēt tā asti jeb pēdējos $m$ posmus) - atliek vien uzzīmēt pirmos $n-m$ posmus, 
 tad apskatīties vārdnīcā 
 visas lauztās līnijas, kuras atgriežas koordinātu sākumpunktā no tās vietas, kurā esam nonākuši. 
 Un zīmēt vārdnīcā esošās "astes" no otra gala (ar posmu garumiem $m,\ldots,1$). 
@@ -53,9 +53,9 @@ Dažos gadījumos tas ļauj paātrināt polimondu pārlases algoritma ātrumu.
 | 8        | 44472   | 
 
 
-## Maģiskie polimondu eži
+## Perfektie polimondu eži
 
-Ir tādi maģiski polimondi, kuri sastāv tikai no šauriem leņķiem (60 vai 300 grādi - atkarībā no tā,
+Ir tādi perfekti polimondi, kuri sastāv tikai no šauriem leņķiem (60 vai 300 grādi - atkarībā no tā,
 vai lauztā līnija ir izliekta uz iekšu vai uz āru). Tos ģenerē programma: 
 
 ```
@@ -86,8 +86,8 @@ Lai iegūtu šīs koordinātes, var ierakstīt NSturis.py programmas 111.rindiņ
 format='dekarta'. 
 
 
-**Hipotēze:** Neeksistē tādi maģiski polimondi ar nepāra malu skaitu, 
-kuriem ir tieši viens plats leņķis (120 vai 240 grādi). 
+**Hipotēze:** Neeksistē tādi perfekti polimondi ar nepāra malu skaitu, 
+kuros ir tieši viens plats leņķis (120 vai 240 grādi). 
 
 
 
