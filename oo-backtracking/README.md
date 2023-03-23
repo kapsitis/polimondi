@@ -217,9 +217,9 @@ lapas perimetra.)
    **Hipotēze:** Pietiekami lielām $n$ vērtībām šauro leņķu skaits perfektā $2n+1$-polimondā ir skaitlis intervālā $[1;2n-1]$ 
    vai intervālā $[1; 2n+1]$ (šajā gadījumā visi leņķi būs šauri). 
 4. Kurām $n$ vērtībām eksistē perfekti $(2n+1)$-polimondi, kuros ir tikai $60$ vai $300$ leņķi?
-   Maģisks $9$-polimonds ar šo īpašību redzams zīmējumā.    
+   Perfekts $9$-polimonds ar šo īpašību redzams zīmējumā.    
    ![Bilde](images/polimonds-9.png)  
-   **Atbilde:** Līdz šim atrastās vērtības ir $n=9$, $n=27$, $n=29$.  
+   **Atbilde:** Līdz šim atrastās vērtības ir $n=9$, $n=27$, $n=29$. Viens no perfektajiem polimondu ežiem pie $n=27$:  
    ![Bilde](images/hedgehog27a.png)
 5. Bezgalīgā trijstūru režģa trijstūrīšus izkrāso 2 krāsās (paritātes krāsojums -- trijstūrīši ar kopīgu
    malu allaž nokrāsoti pretējās krāsās). Atrast, cik dažādu 
