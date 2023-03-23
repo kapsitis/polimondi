@@ -166,7 +166,7 @@ lapas perimetra.)
    pievieno ne vairāk kā $C$ jaunus simbolus?  
    **Atbilde:** Līdz šim zināmās konstrukcijas, kur pefektam polimondam var induktīvi pieaudzēt $C=4$ vai $C=8$
    jaunas malas, nav aprakstāmas ar bezkonteksta gramatikām (var pierādīt ar "pumpēšanas lemmu"). 
-   Tās ir "kontekstjūtīgas gramatikas", jo jaunus burtus iesprauž uzreiz četrās vietās.|
+   Tās ir "kontekstjūtīgas gramatikas", jo jaunus burtus iesprauž uzreiz četrās vietās.
    Atbilde pie $C=2$ nav zināma; nav zināma arī bezkonteksta gramatika, kura vienā solī pieaudzē vairāk nekā divas malas.
 2. Vai eksistē konstante $C$ un bezgalīgi daudzi perfekti polimondi, kuriem debesspušu kodējums 
    veido periodisku virkni, kura vismaz divreiz atkārtojas (un vēl ne vairāk kā $C$ simboli pirms vai pēc šiem periodiem)? 
@@ -244,7 +244,10 @@ lapas perimetra.)
    Vispārīgā gadījumā -- ja mums dots naturāls $n$ un esam nonākuši kādā punktā, kuru pēc rūtiņu režģa attālumu formulas, kur
    punkta PointTg(x,y,z) attālums līdz PointTg(0,0,0) ir $\max(|x|,|y|,|z|)$, un šis attālums nepārsniedz $1+2+\ldots+n$, 
    kāda ir varbūtība, ka tiešām varēsim atgriezties koordinātu sākumpunktā ar vienkāršu lauztu līniju, kas ir perfekta
-   polimonda "aste"?
+   polimonda "aste"?  
+   Sk. [Sešstūri pie n=36](https://github.com/kapsitis/polimondi/blob/main/oo-backtracking/matplotlib_hexagon.png) -- 
+   jo tumšākā krāsā nokrāsots kāds punkts, jo vairāk dažādu lauztu līniju ar posmu garumiem $8,7,\ldots,1$, kas noved 
+   koordinātu sākumpunktā.
 
 
 ![Bilde](images/ChatGPT-advice.png)
