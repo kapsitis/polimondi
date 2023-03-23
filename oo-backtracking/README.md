@@ -147,6 +147,16 @@ lapas perimetra.)
    novērtējumu virknei $M_n$ no augšas.  
    **Atbilde:** Abos gadījumos (gan viendimensiju uzdevumam, gan arī "perfekto lauzto līniju" uzdevumam trijstūru režģī)
    eksistē dinamiskās programmēšanas algoritms, kas ļauj tos saskaitīt polinomiālā laikā.
+8. Pierādīt vai apgāzt sekojošu apgalvojumu: Slēgtā lauztā līnijā ar posmu garumiem $1,2,\ldots,n$, 
+   kas iet pa trijstūru režģa līnijām, posmu vektorus var saskaitīt citā secībā (nemainot posmu garumus un virzienus) tā, 
+   lai iegūtu maģisku polimondu tad un tikai tad, ja šajā lauztajā līnijā nevienā no trim virzieniem 
+   nav novilkts vairāk par pusi no visiem posmiem. 
+   (Ja divi vektori ir paralēli, bet pretēji vērsti, uzskatām, ka to virzieni sakrīt. 
+   Piemēram, austrumu virziens (A) un rietumu virziens (D) ir vienādi. 
+   Tāpat arī ziemeļaustrumu (B) vai dienvidrietumu (E) virzieni, 
+   vai ziemeļrietumu (C) un dienvidaustrumu (F) virzieni.). 
+
+
 
 
 ### Polimondu induktīva ģenerēšana
@@ -188,7 +198,12 @@ lapas perimetra.)
    uz maģiska polimonda perimetra (parametrs $b$) un  
    trijstūru režģa punktu skaits šī polimonda iekšpusē (parametrs $i$). 
    Sal.  [Pīka formula](https://en.wikipedia.org/wiki/Pick%27s_theorem).
-    
+8. Definējam sekojošu "rijīgu" algoritmu maģiska polimonda laukuma palielināšanai - izsakām esoša
+   maģiska polimonda malas ar vektoriem, kuri summā dod 0. Ja kādus divus vektorus šajā summā var samainīt tā, 
+   ka polimonda laukums palielinās, tad samainām šos vektorus. Atkārtojam šo darbību, līdzkamēr 
+   nekādu divu malu vektoru samainīšana laukumu nepalielina. Vai šādā "rijīgā" veidā noteikti atradīsim 
+   polimondu ar maksimālo laukumu, kuru var izveidot no malu vektoriem? (Vai arī ir risks atrast "lokālu maksimumu"?)
+ 
 
 ### Dažādi ģeometriski raksturlielumi
 
