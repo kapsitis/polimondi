@@ -176,7 +176,7 @@ lapas perimetra.)
    Piemēram, vai varētu būt šaurleņķu polimondi ar malu skaitu $n = 9, 27, 81, \ldots$, kur katra 
    nākamā polimonda virzienu virknīti var iegūt, pēc kaut kādiem likumiem pārrakstot jeb aizvietojot 
    iepriekšējā polimonda virzienu virknīti?
-4. $2n+1$-polimondu $P_1$ un $2n+3$-polimondu $P_2$ saucam par *dvīņu polimondiem*, ja 
+4. Perfektu $2n+1$-polimondu $P_1$ un perfektu $2n+3$-polimondu $P_2$ saucam par *dvīņu polimondiem*, ja 
    $P_2$ debespušu kodējumu var iegūt, iespraužot $P_1$ debespušu kodējumā divus jaunus virzienu burtus. 
    Vai eksistē bezgalīgi daudzi dvīņu polimondu pāri? Vai eksistē cik patīk garas virknes, kurās 
    katri divi blakusesoši locekļi ir dvīņu polimondi? 
@@ -219,7 +219,8 @@ lapas perimetra.)
 4. Kurām $n$ vērtībām eksistē perfekti $(2n+1)$-polimondi, kuros ir tikai $60$ vai $300$ leņķi?
    Maģisks $9$-polimonds ar šo īpašību redzams zīmējumā.    
    ![Bilde](images/polimonds-9.png)  
-   **Atbilde:** Līdz šim atrastās vērtības ir $n=9$, $n=27$, $n=29$. 
+   **Atbilde:** Līdz šim atrastās vērtības ir $n=9$, $n=27$, $n=29$.  
+   ![Bilde](images/hedgehog27a.png)
 5. Bezgalīgā trijstūru režģa trijstūrīšus izkrāso 2 krāsās (paritātes krāsojums -- trijstūrīši ar kopīgu
    malu allaž nokrāsoti pretējās krāsās). Atrast, cik dažādu 
    krāsu trijstūrīšu var atrasties perfekta (maģiska) polimonda iekšpusē. Kurām $n$ vērtībām atrodas 
