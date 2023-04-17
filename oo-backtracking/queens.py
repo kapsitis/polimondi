@@ -9,6 +9,11 @@ import time
 
 from backtrack import *
 
+
+GLOBAL_MIN = 1000000
+GLOBAL_MAX = 0
+
+
 # Mazliet izmainīts šaha dāmu algoritms - rindas un kolonnas numurētas, sākot ar 0.
 class QueenProblem:
     # Galdiņa izmēru faktiski uzstāda __init__
@@ -114,7 +119,16 @@ class QueenProblem:
 
     # Izvada risinājumu kompaktā formā
     def display(self):
-        print('rowPos={}'.format(self.rowPos))
+        global GLOBAL_MIN, GLOBAL_MAX
+        total = 0
+        for i in range(len(self.rowPos)): 
+            total += (i+1)*(self.rowPos[i]+1)
+        if total > GLOBAL_MAX:
+            GLOBAL_MAX = total
+        if total < GLOBAL_MIN: 
+            GLOBAL_MIN = total
+        
+        print('rowPos={}, {}'.format(self.rowPos, total % 11))
 
     def displayBoard(self):
         level = len(self.rowPos)
@@ -208,12 +222,24 @@ def recordRunTimes(n1, n2):
 
 
 def main():
-    if len(sys.argv) <= 2:
-        print('Usage: python queens.py <n1> <n2>')
+    global GLOBAL_MIN, GLOBAL_MAX
+
+    if len(sys.argv) <= 1:
+        print('Usage: python queens.py <n1>')
         exit(0)
-    n1 = int(sys.argv[1])
-    n2 = int(sys.argv[2])
-    recordRunTimes(n1, n2)
+    n = int(sys.argv[1])
+    # n2 = int(sys.argv[2])
+    # recordRunTimes(n1, n2)
+
+
+    findAllPlacements(n)
+    print('GLOBAL_MIN = {}, GLOBAL_MAX = {}'.format(GLOBAL_MIN, GLOBAL_MAX))
+    # if len(sys.argv) <= 2:
+    #     print('Usage: python queens.py <n1>')
+    #     exit(0)
+    # n1 = int(sys.argv[1])
+    # n2 = int(sys.argv[2])
+    # recordRunTimes(n1, n2)
 
 
 

@@ -22,7 +22,7 @@ def plus_minus(n):
             if j+i+HALF <= 2*HALF:
                 P[i][j+HALF] += P[i-1][j+i+HALF]
     result = [P[i][HALF] for i in range(0,n+1)]
-    nice_output(P,n)
+    # nice_output(P,n)
     return result
 
 if __name__ == '__main__':
@@ -30,4 +30,10 @@ if __name__ == '__main__':
         print('Usage: python plus_minus_problem.py <n>')
         exit(0)
     n = int(sys.argv[1])
-    print(plus_minus(n))
+    aa = plus_minus(n)
+    pairs = [(i,aa[i] % 4) for i in range(len(aa))]
+    for pair in pairs:
+        if pair[1] == 2: 
+            print(pair)
+
+
