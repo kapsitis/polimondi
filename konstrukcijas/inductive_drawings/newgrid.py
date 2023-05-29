@@ -1,19 +1,14 @@
-# import math
 import matplotlib.pyplot as plt
 import matplotlib.path as mpath
 import matplotlib.patches as mpatches
 import numpy as np
 
+from konstrukcijas.inductive_drawings import poly_seq
+
 # Triangle height
 TH = np.sqrt(3)/2
 
-SEQUENCE_A = [
-    ['A', 'C', 'B', 'C', 'D', 'F', 'E', 'F', 'D', 'F', 'E', 'F', 'A', 'C', 'B'],
-    ['A', 'C', 'B', 'C', 'B', 'D', 'F', 'E', 'F', 'E', 'D', 'F', 'E', 'F', 'E', 'A', 'C', 'B', 'C'],
-    ['A', 'C', 'B', 'C', 'B', 'C', 'D', 'F', 'E', 'F', 'E', 'F', 'D', 'F', 'E', 'F', 'E', 'F', 'A', 'C', 'B', 'C', 'B'],
-    ['A', 'C', 'B', 'C', 'B', 'C', 'B', 'D', 'F', 'E', 'F', 'E', 'F', 'E', 'D', 'F', 'E', 'F', 'E', 'F', 'E', 'A', 'C', 'B', 'C', 'B', 'C'],
-    ['A', 'C', 'B', 'C', 'B', 'C', 'B', 'C', 'D', 'F', 'E', 'F', 'E', 'F', 'E', 'F', 'D', 'F', 'E', 'F', 'E', 'F', 'E', 'F', 'A', 'C', 'B', 'C', 'B', 'C', 'B']
-    ]
+
 
 def direction_to_vector(d):    
     if d == 'A':
@@ -43,10 +38,8 @@ def draw_seq(ax, seq, color, dd):
 
 def create_rectangle_path(left, bottom, m, n):
     vertices = np.array([ [left, bottom], [left+m, bottom], [left+m, (n + bottom) * TH], [left, (n + bottom) * TH], [0, 0] ])
-
     codes = [
-        mpath.Path.MOVETO, 
-        mpath.Path.LINETO, mpath.Path.LINETO, mpath.Path.LINETO,
+        mpath.Path.MOVETO, mpath.Path.LINETO, mpath.Path.LINETO, mpath.Path.LINETO,
         mpath.Path.CLOSEPOLY
     ]
     path = mpath.Path(vertices, codes)
@@ -58,9 +51,9 @@ def draw_triangle_grid(left, bottom, m, n, color, linestyle, linewidth):
     fig, ax = plt.subplots()
     ax.axis('equal')
     ax.axis('off')
-    # fig.set_size_inches(8, 12)
+    fig.set_size_inches(8, 13)
     ax.set_xlim(-20,60)
-    ax.set_ylim(-20,100)
+    ax.set_ylim(-20,110)
 
     path = create_rectangle_path(left, bottom, m,n)
     patch = mpatches.PathPatch(path, transform=ax.transData)
@@ -83,12 +76,13 @@ def draw_triangle_grid(left, bottom, m, n, color, linestyle, linewidth):
         line, = ax.plot([left + i, left + i - n * TH / np.sqrt(3)], [bottom*TH, (bottom + n) * TH], color=color, linestyle=linestyle, linewidth=linewidth)
         line.set_clip_path(patch)
 
-    draw_seq(ax, SEQUENCE_A[0], 'r', [0.0,0.0])
-    draw_seq(ax, SEQUENCE_A[2], 'b', [0.1,0.1])
+    draw_seq(ax, poly_seq.SEQUENCE_8_5_A[0], 'r', [0.0,0.0])
+    draw_seq(ax, poly_seq.SEQUENCE_8_5_A[1], 'b', [0.1, 0.1])
+
     
     plt.savefig('triangle_grid.svg', format='svg')
-    plt.show()
+    # plt.show()
 
-draw_triangle_grid(-20, -20, 80, 120, 'black', 'solid', 0.25)
+draw_triangle_grid(-20, -20, 80, 130, 'black', 'solid', 0.25)
 
 

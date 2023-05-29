@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>My Pale Yellow Page</title>
+<style>
+		body {
+			background-color: #FFFFE0;
+		}
+	</style>
+<script>
+		function changeImage() {
+			var selectElement = document.getElementById("selectSvg");
+			var selectedOption = selectElement.options[selectElement.selectedIndex].value;
+			const imgParams = selectedOption.split(";");
+
+			var imageElement = document.getElementById("svgImage")
+			console.log("imgParams[1] = " + imgParams[1])
+			console.log("imgParams[2] = " + imgParams[2])
+			imageElement.src = imgParams[0];
+			imageElement.width = imgParams[1];
+			imageElement.height = imgParams[2];
+		}
+
+		// Add an event listener for the DOMContentLoaded event
+    	document.addEventListener("DOMContentLoaded", function () {
+        	// Call the changeImage function when the page loads
+        	changeImage();
+    	});
+	</script>
+</head>
+<body>
+<select id="selectSvg" onchange="changeImage()">
+<option value="SEQUENCE_4_3_A.svg;576;576">SEQUENCE_4_3_A</option>
+<option value="SEQUENCE_4_3_B.svg;936;936">SEQUENCE_4_3_B</option>
+<option value="SEQUENCE_4_1_A.svg;936;936">SEQUENCE_4_1_A</option>
+<option value="SEQUENCE_8_7_A.svg;1152;576">SEQUENCE_8_7_A</option>
+<option value="SEQUENCE_8_7_B.svg;1152;1584">SEQUENCE_8_7_B</option>
+<option value="SEQUENCE_8_7_C.svg;1152;1584">SEQUENCE_8_7_C</option>
+<option value="SEQUENCE_8_7_D.svg;1440;1584">SEQUENCE_8_7_D</option>
+<option value="SEQUENCE_8_5_A.svg;1008;576">SEQUENCE_8_5_A</option>
+<option value="SEQUENCE_8_5_B.svg;1584;2160">SEQUENCE_8_5_B</option>
+<option value="SEQUENCE_8_3_A.svg;1296;1152">SEQUENCE_8_3_A</option>
+<option value="SEQUENCE_8_3_B.svg;1152;720">SEQUENCE_8_3_B</option>
+<option value="SEQUENCE_8_3_C.svg;1152;1296">SEQUENCE_8_3_C</option>
+<option value="SEQUENCE_8_3_D.svg;1152;1296">SEQUENCE_8_3_D</option>
+<option value="SEQUENCE_8_3_E.svg;1152;1296">SEQUENCE_8_3_E</option>
+<option value="SEQUENCE_8_1_A.svg;1584;1296">SEQUENCE_8_1_A</option>
+<option value="SEQUENCE_8_1_B.svg;1440;1728">SEQUENCE_8_1_B</option>
+</select>
+<br/>
+<img alt="My SVG Image" height="1772" id="svgImage" src="SEQUENCE_4_3_A.svg" style="border: 1px solid blue" width="1076"/>
+</body>
+</html>
+<!--
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Pale Yellow Page</title>
+	<style>
+		body {
+			background-color: #FFFFE0; /* Pale yellow color code */
+		}
+	</style>
+</head>
+<body>
+	<img src="sequence_4_3_a.svg" alt="My SVG Image"  width="1076" height="1872"/>
+</body>
+</html>
+-->
