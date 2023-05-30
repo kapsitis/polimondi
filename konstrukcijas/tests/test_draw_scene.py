@@ -88,10 +88,10 @@ def test_generate_sequence_8_3_a():
     scene.insertOption("SEQUENCE_8_3_A.svg")
 
 def test_generate_sequence_8_3_b():
-    scene = draw_scene(-10, -10, 160, 100, '#999999', 'solid', 0.25)
+    scene = draw_scene(-10, -20, 160, 160, '#999999', 'solid', 0.25)
     scene.draw_seq(poly_seq.SEQUENCE_8_3_B[0], 'b', [0.0,0.0])
     scene.draw_seq(poly_seq.SEQUENCE_8_3_B[1], 'b', [50.0,0.0])
-    scene.draw_seq(poly_seq.SEQUENCE_8_3_B[1], 'b', [100.0,0.0])
+    scene.draw_seq(poly_seq.SEQUENCE_8_3_B[2], 'b', [100.0,0.0])
     scene.create_grid('SEQUENCE_8_3_B.svg')
     scene.insertOption("SEQUENCE_8_3_B.svg")
 

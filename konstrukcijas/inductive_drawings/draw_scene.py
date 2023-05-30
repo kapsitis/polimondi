@@ -56,12 +56,6 @@ def trim_svg_whitespace(file_path):
 
 
 
-# # Example usage
-# input_file = "input.svg"
-# output_file = "trimmed_output.svg"
-# trim_svg_whitespace(input_file, output_file)
-
-
 
 
 class draw_scene:
@@ -115,7 +109,7 @@ class draw_scene:
 
 
         # Read the existing HTML file
-        with open("data/polyiamonds.html", "r") as file:
+        with open("../docs/inductive_sequences.html", "r") as file:
             html_content = file.read()
 
         # Parse the HTML using Beautiful Soup
@@ -152,7 +146,7 @@ class draw_scene:
             select_element.append(newline)
 
         # Write the modified HTML back to the file
-        with open("data/polyiamonds.html", "w") as file:
+        with open("../docs/inductive_sequences.html", "w") as file:
             file.write(str(soup))
 
 
@@ -184,4 +178,4 @@ class draw_scene:
                             color=self.lcolor, linestyle=self.lstyle, linewidth=self.lwidth)
             line.set_clip_path(patch)
 
-        plt.savefig('data/{}'.format(output_file), format='svg', bbox_inches='tight', transparent="True", pad_inches=0)
+        plt.savefig('../docs/inductive_sequences/{}'.format(output_file), format='svg', bbox_inches='tight', transparent="True", pad_inches=0)
