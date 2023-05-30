@@ -251,3 +251,18 @@ lapas perimetra.)
 
 
 ![Bilde](images/ChatGPT-advice.png)
+
+
+## Līdzīgas problēmas
+
+**LV.NO.2016.9.5:**
+Doti $2016$ skaitļi: $1^2$; $2^2$; $3^2$; $\ldots$; $2015^2$; $2016^2$.
+Vai starp šiem skaitļiem var salikt "+" un "−" zīmes tā,
+lai iegūtās izteiksmes vērtība būtu $0$? 
+
+*Ilustrācija tam, kā summu vienādu ar $0$ var iegūt ar induktīvu konstrukciju.*
+Sk. [NO, 2016.g. uzdevumi, atrisinājumi](https://www.nms.lu.lv/fileadmin/user_upload/lu_portal/projekti/nms.lu.lv/Arhivs/Olimpiades/NOL/NOV_66_atr.pdf). 
+
+
+
+
