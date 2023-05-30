@@ -2,10 +2,13 @@
 
 <html>
 <head>
-<title>My Pale Yellow Page</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+<title>Induktīvi veidojamas virknes</title>
 <style>
 		body {
-			background-color: #FFFFE0;
+			background-color: #FFFFFF;
+			font-family: Calibri, sans-serif;
+			margin: 1% 2% 1% 2%;
 		}
 	</style>
 <script>
@@ -17,7 +20,7 @@
 			var imageElement = document.getElementById("svgImage")
 			console.log("imgParams[1] = " + imgParams[1])
 			console.log("imgParams[2] = " + imgParams[2])
-			imageElement.src = imgParams[0];
+			imageElement.src = "inductive_sequences/" + imgParams[0];
 			imageElement.width = imgParams[1];
 			imageElement.height = imgParams[2];
 		}
@@ -47,9 +50,9 @@
 <option value="SEQUENCE_8_3_E.svg;1152;1296">SEQUENCE_8_3_E</option>
 <option value="SEQUENCE_8_1_A.svg;1584;1296">SEQUENCE_8_1_A</option>
 <option value="SEQUENCE_8_1_B.svg;1440;1728">SEQUENCE_8_1_B</option>
-</select>
+</select>&nbsp;&nbsp;<a href="index.html">Uz sākumu</a>
 <br/>
-<img alt="My SVG Image" height="1772" id="svgImage" src="SEQUENCE_4_3_A.svg" style="border: 1px solid blue" width="1076"/>
+<img alt="My SVG Image" height="1772" id="svgImage" src="inductive_sequences/SEQUENCE_4_3_A.svg" style="border: none; background-color: #FFFFE0;" width="1076"/>
 </body>
 </html>
 <!--
