@@ -8,10 +8,10 @@ Pierakstīsim šos polimondus ar virzienu vektoriem (šoreiz lietojam mazos burt
 lai tie būtu neterminālie simboli). 
 
 ``` plain
-A CB D FE D FE A C
-A CBC D FEF D FEF A CB
-A CBCB D FEFE D FEFE A CBC
-A CBCBC D FEFEF D FEFEF A CBCB
+a cb d fe d fe a c
+a cbc d fef d fef a cb
+a cbcb d fefe d fefe a cbc
+a cbcbc d fefef d fefef a cbcb
 ```
 
 Aprakstīsim šo virkni ar [kontekstjūtīgu gramatiku](https://en.wikipedia.org/wiki/Context-sensitive_grammar). 
