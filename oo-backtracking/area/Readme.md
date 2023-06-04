@@ -1,5 +1,22 @@
 # Laukumu novērtējumi
 
+Katrai no $n$ vērtībām intervālā $[5;12]$ dots maksimālais maģiska polimonda laukums ar $n$ malām 
+(izteikts vienības trijstūrīšu laukumos). Līdzās tam - polimonda perimetrs un arī 
+cik liels būtu riņķa laukums ar attiecīgo perimetru (un arī pa trijstūra režģa līnijām tuvināta 
+riņķa laukums ar šo perimetru). 
+
+Izmantotas šādas formulas: 
+
+* ${\displaystyle S_{\mbox{unit}} = \frac{\sqrt{3}}{4}}$ - mazā trijstūrīša laukums. 
+* ${\displaystyle P = 1+2+3+\ldots +n = \frac{n(n+1)}{2}}$ - maģiska $n$-polimonda perimetrs. 
+* ${\displaystyle s_{\mbox{circle}} = \frac{P^2}{4 \pi \cdot S_{\mbox{unit}}$
+* ${\displaystyle s_{\mbox{grid-circle}} = \frac{P^2 \cdot \pi}{48 \cdot S_{\mbox{unit}}$
+
+Šeit ar lielo burtu $S$ apzīmēts laukums vienības kvadrātos, bet ar 
+mazo burtu $s$ apzīmēti laukumi vienības trijstūrīšos.
+
+
+
 | $n$      | Laukums | Perimetrs  | Riņķa laukums | "Režģa riņķa" laukums |
 | -------- | ------- | ---------- | ------------- | --------------------- |
 | 5        | 31      | 15         | 41.3          | 34.0                  |
