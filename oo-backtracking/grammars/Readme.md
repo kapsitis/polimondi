@@ -2,7 +2,7 @@
 
 Aplūkosim polimondu virkni malu skaitam $m=11, 15, 19, \ldots$:
 
-![Bilde](docs/inductive_sequences/SEQUENCE_4_3_A.svg)
+![Bilde](https://kapsitis.github.io/polimondi/inductive_sequences/SEQUENCE_4_3_A.svg)
 
 Pierakstīsim šos polimondus ar virzienu vektoriem (šoreiz lietojam mazos burtus, 
 lai tie būtu neterminālie simboli). 
