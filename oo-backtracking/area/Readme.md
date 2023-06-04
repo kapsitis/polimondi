@@ -9,8 +9,8 @@ Izmantotas šādas formulas:
 
 * ${\displaystyle S_{\mbox{unit}} = \frac{\sqrt{3}}{4}}$ - mazā trijstūrīša laukums. 
 * ${\displaystyle P = 1+2+3+\ldots +n = \frac{n(n+1)}{2}}$ - maģiska $n$-polimonda perimetrs. 
-* ${\displaystyle s_{\mbox{circle}} = \frac{P^2}{4 \pi \cdot S_{\mbox{unit}}}$
-* ${\displaystyle s_{\mbox{grid-circle}} = \frac{P^2 \cdot \pi}{48 \cdot S_{\mbox{unit}}$
+* ${\displaystyle s_{\mbox{circle}} = \frac{P^2}{4 \pi \cdot S_{\mbox{unit}}}}$
+* ${\displaystyle s_{\mbox{grid-circle}} = \frac{P^2 \cdot \pi}{48 \cdot S_{\mbox{unit}}}}$
 
 Šeit ar lielo burtu $S$ apzīmēts laukums vienības kvadrātos, bet ar 
 mazo burtu $s$ apzīmēti laukumi vienības trijstūrīšos.
