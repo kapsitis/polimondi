@@ -5,17 +5,21 @@ areas = [(5, 31), (6, 67), (7, 116), (8, 208), (9, 315), (10, 483), (11, 670), (
 perimeters = []
 circle_areas = []
 grid_areas = []
+hexagon_areas = []
 unit_area = math.sqrt(3)/4
 for n in range(5, 13):
     P = n*(n+1)//2
     perimeters.append((n, n*(n+1)//2))
     circle_areas.append((n, round(P*P/(4*math.pi*unit_area), 1)))
     grid_areas.append((n, round(P*P*math.pi/(48*unit_area), 1)))
+    hexagon_areas.append((n, round(P*P*math.sqrt(3)/(24*unit_area), 1)))
 
 print('areas =   {}'.format(areas))
 print('perimeters = {}'.format(perimeters))
 print('circle_areas = {}'.format(circle_areas))
 print('grid_areas = {}'.format(grid_areas))
+print('hexagon_areas = {}'.format(hexagon_areas))
+
 
 print("| $n$      | Laukums | Perimetrs  | Riņķa laukums | \"Režģa riņķa\" laukums |")
 print("| -------- | ------- | ---------- | ------------- | --------------------- |")
