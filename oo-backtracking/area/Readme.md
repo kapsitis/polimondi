@@ -11,7 +11,7 @@ Izmantotas šādas formulas:
 * ${\displaystyle P = 1+2+3+\ldots +n = \frac{n(n+1)}{2}}$ - maģiska $n$-polimonda perimetrs. 
 * ${\displaystyle s_{\mbox{circle}} = \frac{P^2}{4 \pi \cdot S_{\mbox{unit}}}}$ - laukums riņķim ar perimetru $P$ (nesasniedzams maksimums)
 * ${\displaystyle s_{\mbox{grid-circle}} = \frac{P^2 \cdot \pi}{48 \cdot S_{\mbox{unit}}}}$ - laukums "riņķim" ar perimetru $P$, ja tuvina īstu riņķi ar trijstūru režģa līnijām.
-* ${\displaystyle s_{\mbox{grid-circle}} = \frac{P^2 \cdot \sqrt{3}}{24 \cdot S_{\mbox{unit}}}}$ - laukums regulāram sešstūrim ar perimetru $P$
+* ${\displaystyle s_{\mbox{hexagon}} = \frac{P^2 \cdot \sqrt{3}}{24 \cdot S_{\mbox{unit}}}}$ - laukums regulāram sešstūrim ar perimetru $P$
 
 Šeit ar lielo burtu $S$ apzīmēts laukums vienības kvadrātos, bet ar 
 mazo burtu $s$ apzīmēti laukumi vienības trijstūrīšos.
