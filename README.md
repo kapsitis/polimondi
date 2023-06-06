@@ -1,5 +1,7 @@
 # polimondi
 
+<a href="https://kapsitis.github.io/polimondi/">SVG attēli par polimondiem (GitHub Pages)</a>
+
 ## Faktu apkopojums
 
 Polimondiem ar nelieliem malu garumiem apkopojam pamatinformāciju: 
