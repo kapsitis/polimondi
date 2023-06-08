@@ -5,9 +5,9 @@
 
 Apzīmēsim sešas debesspuses kā sekojošus plaknes vektorus: 
 
-$$A = (1,0),\; B = (1/2, \sqrt{3}/2),\; C = (-1/2, \sqrt{3}/2),$$
+$$A = (1,0),\  B = (1/2, \sqrt{3}/2),\  C = (-1/2, \sqrt{3}/2),$$
 
-$$D = (-1,0),\; E = (-1/2, -\sqrt{3}/2),\; F = (1/2, -\sqrt{3}/{2}).$$
+$$D = (-1,0),\  E = (-1/2, -\sqrt{3}/2),\  F = (1/2, -\sqrt{3}/{2}).$$
 
 Lai nebūtu jāstrādā ar daļskaitļiem un kvadrātsaknēm (un lai koordinātes 
 neatšķirtos pēc režģa mērvienībām), ieviešam trijstūra režģa koordinātes 
