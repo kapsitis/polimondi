@@ -7,6 +7,8 @@ from point_tg import *
 
 class NSturisProblem:
 
+
+
     def __init__(self, n):
         self.N = n
         self.directions = []
@@ -17,6 +19,8 @@ class NSturisProblem:
         self.minAcute = n
         self.maxAcute = 0
         self.updateExtremes = False
+
+        self.outfile = open("../konstrukcijas/editing_distance/acute_{}.txt".format(n), "w")
 
         # Uzkrāj polimonda virsotnes
         self.vertices = [PointTg(0, 0, 0)]
@@ -109,7 +113,7 @@ class NSturisProblem:
         # self.initValues = []
 
     # Kompakti izvada vienu atrisinājumu kā daudzstūri, ja polimonada zīmēšana pabeigta: done(self,level)==True
-    def display(self, format='dekarta'):
+    def display(self, format='file'):
         if self.updateExtremes:
             polyiamond_area = PointTg.get_signed_area(self.directions)
             (a60, a120, a240, a300) = PointTg.count_angles(self.directions)
@@ -136,6 +140,10 @@ class NSturisProblem:
                 print(self.directions)
             elif format == 'dekarta':
                 print(PointTg.convert_divainas_dekarta(self.directions))
+            elif format == 'file':
+                self.outfile.write("".join(self.directions))
+                self.outfile.write("\n")
+
             else:
                 # silent mode
                 return            
@@ -162,7 +170,7 @@ def findFirstSolution(n):
     q = NSturisProblem(n)
     b = Backtrackk(q)
     if b.attempt(0):
-        q.display()
+        q.display('file')
 
 def findAllSolutions(n):
     q = NSturisProblem(n)
@@ -175,11 +183,15 @@ def findAllSolutions(n):
     print('{} solutions found'.format(q.solution_count))
     print('Area is in [{},{}]'.format(q.minArea, q.maxArea))
     print('Acute angles in [{}, {}]'.format(q.minAcute, q.maxAcute))
+    q.outfile.close()
 
 if __name__ == '__main__':
-    if len(sys.argv) <= 1:
-        print('Usage: python NSturis.py <odd-number>')
+    if len(sys.argv) <= 2:
+        print('Usage: python NSturis.py <n1> <n2')
         exit(0)
-    n = int(sys.argv[1])
-    findAllSolutions(n)
+    n1 = int(sys.argv[1])
+    n2 = int(sys.argv[2])
+    for n in range(n1,n2):
+        if n % 2 == 1:
+            findAllSolutions(n)
 

@@ -138,7 +138,7 @@ def findAllSolutions(n, m):
     q = NSturisDictionaryUserProblem(n, m)
     b = Backtrackk(q)
     if b.attempt(0):
-        q.display()
+        q.display('file')
         
     print('{} positions found'.format(q.solution_count))
 
