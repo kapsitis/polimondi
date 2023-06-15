@@ -248,7 +248,9 @@ lapas perimetra.)
    Sk. [Sešstūri pie n=36](https://github.com/kapsitis/polimondi/blob/main/oo-backtracking/matplotlib_hexagon.png) -- 
    jo tumšākā krāsā nokrāsots kāds punkts, jo vairāk dažādu lauztu līniju ar posmu garumiem $8,7,\ldots,1$, kas noved 
    koordinātu sākumpunktā.
-
+3. Ja polimonda malu vektorus sašķiro $6$ grupās (atkarībā no virziena) un katrā virzienā vektoru garumus saskaita, 
+   kādas ir iespējamās iegūto sešu vektoru kombinācijas dotajam $n$? Vai to vidū ir tādas sešu vektoru kombinācijas, kurām 
+   piemīt papildu simetrija? Viens piemērs ir šaurleņķu polimondi, kuriem ir tikai trīs dažādi vektori. 
 
 ![Bilde](images/ChatGPT-advice.png)
 
