@@ -135,4 +135,12 @@ def test_generate_sequence_8_1_b():
     scene.create_grid('SEQUENCE_8_1_B.svg')
     scene.insertOption("SEQUENCE_8_1_B.svg")
 
-
+def test_generate_sequence_6_5_a():
+    scene = draw_scene(-20, -24, 200, 240, '#999999', 'solid', 0.25)
+    scene.draw_seq(poly_seq.SEQUENCE_6_5_A[0], 'b', [0.0,0.0])
+    scene.draw_seq(poly_seq.SEQUENCE_6_5_A[1], 'b', [60.0,0.0])
+    scene.draw_seq(poly_seq.SEQUENCE_6_5_A[2], 'b', [120.0,0.0])
+    scene.draw_seq(poly_seq.SEQUENCE_6_5_A[3], 'b', [200.0,0.0])
+    scene.draw_seq(poly_seq.SEQUENCE_6_5_A[4], 'b', [300.0,0.0])
+    scene.create_grid('SEQUENCE_6_5_A.svg')
+    scene.insertOption("SEQUENCE_6_5_A.svg")
