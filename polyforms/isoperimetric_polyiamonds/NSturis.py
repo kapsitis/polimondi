@@ -1,6 +1,7 @@
 import math
 import itertools
 import sys
+import copy
 
 from backtrackk import *
 from point_tg import *
@@ -9,9 +10,11 @@ class NSturisProblem:
 
 
 
-    def __init__(self, n):
+    def __init__(self, n, perm):
+        print("creating NSturisProblem({},{})".format(n,perm))
         self.N = n
         self.directions = []
+        self.perm = perm
 
         # Record the min/max area; and the min/max count of acute angles 
         self.minArea = n**4
@@ -20,14 +23,17 @@ class NSturisProblem:
         self.maxAcute = 0
         self.updateExtremes = False
 
-        self.outfile = open("../konstrukcijas/editing_distance/acute_{}.txt".format(n), "w")
+        self.outfile = open("poly_{}_{}.txt".format(n, self.perm), "w")
 
         # Uzkrāj polimonda virsotnes
         self.vertices = [PointTg(0, 0, 0)]
         # Punkti, kurus šķērso polimonda perimetrs.
         self.points = set()
         # aritmētisko progresiju summas. Ja n == 5, tad  series_sums = [0, 1, 3, 6, 10, 15]
-        self.series_sums  = list(itertools.accumulate(range(0, n+1)))
+        perm_rev = copy.deepcopy(self.perm)
+        perm_rev.reverse()
+        perm_rev.insert(0,0)
+        self.series_sums  = list(itertools.accumulate(perm_rev))
         # līdz šim atrasto atrisinājumu skaits
         self.solution_count = 0
 
@@ -47,8 +53,9 @@ class NSturisProblem:
 
     # Pielabo datu struktūras, pievienojot (status=1) vai atceļot (status=0) gājienu.
     def setPosition(self, move, status):
-        # self.debug_full(prefix='({},{})'.format(move, status))
-        sideLength = self.N - len(self.directions) + 1
+        # self.debug_full(prefix='({},{})'.format(move,status))
+        # sideLength = self.N - len(self.directions) + 1
+        sideLength = self.perm[len(self.directions) - 1]
 
         if status == 1:
             nextSide = sideLength*DIRECTIONS[move]
@@ -62,8 +69,11 @@ class NSturisProblem:
             prevVertext = self.vertices.pop()
             for i in range(0, sideLength - 1):
                 currPoint = prevVertext - i*DIRECTIONS[move]
+                if move == 'A' and status == 0 and self.directions == []:
+                    print('Feeling sad; points = {}, removing {}'.format(self.points, currPoint))
                 self.points.remove(currPoint)
-
+                if move == 'A' and status == 0 and self.directions == []:
+                    print('Feeling sadder; points = {}'.format(self.points))
 
     # Vai nekrustojas ar agrāk novilktām malām
     def check1(self, level, move):
@@ -77,6 +87,7 @@ class NSturisProblem:
     def check2(self, level, move):
         nextSide = (self.N - level) * DIRECTIONS[move]
         nextVertex = self.vertices[-1] + nextSide
+        # print('check2(level={}, move={}, nextSide={}, nextVertex={}, abs={}, sums={})'.format(level, move, nextSide, nextVertex, nextVertex.abs(), self.series_sums[self.N - level - 1]))
         return nextVertex.abs() <= self.series_sums[self.N - level - 1]
 
     # Pēdējā/īsākā polimonda mala nedrīkst būt horizontāla, jo pirmā ir horizontāls.
@@ -169,13 +180,15 @@ class NSturisProblem:
  
 
 def findFirstSolution(n):
-    q = NSturisProblem(n)
+    q = NSturisProblem(n, list(range(1,n+1)))
     b = Backtrackk(q)
     if b.attempt(0):
         q.display('file')
 
 def findAllSolutions(n):
-    q = NSturisProblem(n)
+    permutation = list(range(1,n+1))
+    permutation.reverse()
+    q = NSturisProblem(n, permutation)
     b = Backtrackk(q)
     n = 0
     while b.attempt(0):
@@ -189,7 +202,7 @@ def findAllSolutions(n):
 
 if __name__ == '__main__':
     if len(sys.argv) <= 2:
-        print('Usage: python NSturis.py <n1> <n2')
+        print('Usage: python NSturis.py <n1> <n2>')
         exit(0)
     n1 = int(sys.argv[1])
     n2 = int(sys.argv[2])
