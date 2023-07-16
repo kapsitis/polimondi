@@ -144,3 +144,4 @@ def test_generate_sequence_6_5_a():
     scene.draw_seq(poly_seq.SEQUENCE_6_5_A[4], 'b', [300.0,0.0])
     scene.create_grid('SEQUENCE_6_5_A.svg')
     scene.insertOption("SEQUENCE_6_5_A.svg")
+
