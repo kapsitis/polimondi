@@ -15,6 +15,7 @@ These commands are used to build package (and to install in pip).
 ```
 virtualenv env
 source env/bin/activate
+```
 
 pip uninstall -y polyforms
 pip install ../polyforms/dist/polyforms-0.1.0-py3-none-any.whl
@@ -24,10 +25,25 @@ pip install ../polyforms/dist/polyforms-0.1.0-py3-none-any.whl
 ```
 python setup.py sdist bdist_wheel
 pip install dist/polyforms-0.1-py3-none-any.whl
+```
+
 
 # Development mode (Editable) install
-pip install --editable ../polyforms
+
 ```
+pip uninstall -y polyforms
+pip install --editable ../
+```
+
+
+# Making a new release
+
+git tag v0.1.0
+git push --tags
+Create new release. 
+
+
+
 
 
 
