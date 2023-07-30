@@ -12,7 +12,6 @@ def main():
     for perm in permutations:
         if perm[0] == n and perm[1] > perm[n-1]:
             # print(perm)
-
         else:
             continue
 

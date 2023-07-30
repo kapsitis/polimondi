@@ -1,4 +1,4 @@
-from ..core.perfect_seq import *
+from core.perfect_seq import *
 
 class SeqStorage:
     all_sequences = None
@@ -30,7 +30,7 @@ class SeqStorage:
         self.dict_init()
 
     def get_names(self):
-        return self.all_sequences.keys
+        return self.all_sequences.keys()
 
     def get_sequence(self, name):
         if name in self.all_sequences:

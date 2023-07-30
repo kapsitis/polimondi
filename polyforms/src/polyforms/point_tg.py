@@ -1,5 +1,9 @@
 import math
 
+# Matrix from PointTg (x,y,_) to Cartesian (x,y) in row-first order
+T2D_MATRIX = [[1.0, 0.5], [0.0, -0.5*math.sqrt(3)]]
+
+
 # This class deals with the triangle grid coordinates (x,y,z) such that x+y+z = 0. 
 # It also has some static methods describing the geometry of the triangular grid. 
 class PointTg:
@@ -45,6 +49,12 @@ class PointTg:
     def abs(self):
         return int(max(abs(self.x), abs(self.y), abs(self.z)))
 
+    # Return regular Cartesian (x,y) coordinates of the point
+    def get_xy(self):
+        new_x = T2D_MATRIX[0][0]*self.x + T2D_MATRIX[0][1]*self.y
+        new_y = T2D_MATRIX[1][0]*self.x + T2D_MATRIX[1][1]*self.y
+        return (new_x, new_y)
+
     def __eq__(self, other):
         if isinstance(other, self.__class__):
             return self.x == other.x and self.y == other.y and self.z == other.z
@@ -74,8 +84,6 @@ class PointTg:
     NEXT_MOVES = {'0': ['A'], '1': ['B', 'C'],
        'A': ['B', 'C', 'E', 'F'], 'B': ['A', 'C', 'D', 'F'], 'C': ['A', 'B', 'D', 'E'],
        'D': ['B', 'C', 'E', 'F'], 'E': ['A', 'C', 'D', 'F'], 'F': ['A', 'B', 'D', 'E']}
-
-
 
     DIRECTIONS_JOC_KOORD = {'A': [0, 1], 'B': [1, 0.5], 'C': [1, -0.5], 'D': [0, -1], 'E': [-1, -0.5], 'F': [-1, 0.5]}
 
@@ -158,11 +166,14 @@ class PointTg:
         angle = abs(PointTg.ANGLES[(d1,d2)])
         return (angle == 60)
 
+AA = PointTg(1, 0, -1)
+BB = PointTg(1, -1, 0)
+CC = PointTg(0, -1, 1)
+DD = PointTg(-1, 0, 1)
+EE = PointTg(-1, 1, 0)
+FF = PointTg(0, 1, -1)
 
-
-
-DIRECTIONS = {'A': PointTg(1,0,-1), 'B': PointTg(1,-1,0), 'C': PointTg(0,-1,1),
-        'D': PointTg(-1,0,1), 'E': PointTg(-1,1,0),'F': PointTg(0,1,-1)}
+DIRECTIONS = {'A': PointTg(1,0,-1), 'B': PointTg(1,-1,0), 'C': PointTg(0,-1,1), 'D': PointTg(-1,0,1), 'E': PointTg(-1,1,0),'F': PointTg(0,1,-1)}
 
 
 
