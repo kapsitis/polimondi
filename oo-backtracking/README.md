@@ -265,6 +265,12 @@ lai iegūtās izteiksmes vērtība būtu $0$?
 *Ilustrācija tam, kā summu vienādu ar $0$ var iegūt ar induktīvu konstrukciju.*
 Sk. [NO, 2016.g. uzdevumi, atrisinājumi](https://www.nms.lu.lv/fileadmin/user_upload/lu_portal/projekti/nms.lu.lv/Arhivs/Olimpiades/NOL/NOV_66_atr.pdf). 
 
+## Problēmas kopš 08.2023
 
+1. Dota kaut kāda malu garumu $[1;n]$ permutācija. Kāds ir lielākais skaits ar dažādiem maģiskiem polimondiem, kuri izmanto šo permutāciju un kuriem visiem ir maksimālais laukums?
+2. Vai eksistē indeksu gramatika, ar kuru var izveidot bezgalīgu valodu ar vārdiem alfabētā $\{ A,B,C,D,E,F \}$ tā, ka jebkurš vārds šajā valodā ir perfekta polimonda kodējums ar virzienu burtiem?
+3. Vai visas iespējamās induktīvās pārejas, kas saistītas ar $4,6,8$ jaunu virziena burtu iespraušanu, ir aprakstāmas ar kaut kādu kopīgu īpašību (piemēram, virzienu burti ir noteiktā skaitā vai attiecīgo vienības vektoru summa ir noteikta)?
+4. Kāda daļa no perfektajiem polimondiem ir tādi, kuriem var pielietot kādu no jau zināmajām induktīvajām pārejām (piemēram, $k \rightarrow k+4$)? 
+5. Vai eksistē induktīva pāreja no viena šaurleņķu perfekta polimonda (tikai virzienu burti A,C,E) uz citu šaurleņķu polimondu?
 
 
