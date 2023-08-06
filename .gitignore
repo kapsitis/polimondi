@@ -9,3 +9,4 @@ konstrukcijas/editing_distance/sort_file
 poetry.lock
 polyforms/tests/*.txt
 polyforms/dist/*.tar.gz
+**/.ipynb_checkpoints/

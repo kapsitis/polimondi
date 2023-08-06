@@ -6,10 +6,14 @@ build-backend = "poetry.core.masonry.api"
 name = "polyforms"
 version = "0.1.0"
 description = "Code to list polyiamonds, to find their properties and to create images."
-authors = ["Kalvis Apsitis <kalvis.apsitis@gmail.com>"]
+authors = ["University of Latvia <kalvis.apsitis@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+matplotlib = "*"
+numpy = "*"
+scipy = "*"
+shapely = "*"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.2"

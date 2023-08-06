@@ -140,31 +140,37 @@ class PointTg:
         intResult = int(round(result))
         return intResult
 
-    # Saskaita N-polimonda iekšējos leņķus, sadalot pa izmēriem (60, 120, 240, 300 grādi) 
-    @staticmethod
-    def count_angles(directions):
-        (a60, a120, a240, a300) = (0,0,0,0)
-        N = len(directions)
-        signed_area = PointTg.get_signed_area(directions)
-        orientation = int(abs(signed_area)/signed_area)
-        for i in range(0, N):
-            side1 = directions[i]
-            side2 = directions[(i+1) % N]
-            signed_angle = orientation*PointTg.ANGLES[(side1, side2)]
-            if signed_angle == 60:
-                a60 += 1
-            elif signed_angle == 120: 
-                a120 += 1
-            elif signed_angle == -120: 
-                a240 += 1
-            else:
-                a300 += 1
-        return (a60, a120, a240, a300)
+    # # Saskaita N-polimonda iekšējos leņķus, sadalot pa izmēriem (60, 120, 240, 300 grādi)
+    # @staticmethod
+    # def count_angles(directions):
+    #     (a60, a120, a240, a300) = (0,0,0,0)
+    #     N = len(directions)
+    #     signed_area = PointTg.get_signed_area(directions)
+    #     orientation = int(abs(signed_area)/signed_area)
+    #     for i in range(0, N):
+    #         side1 = directions[i]
+    #         side2 = directions[(i+1) % N]
+    #         signed_angle = orientation*PointTg.ANGLES[(side1, side2)]
+    #         if signed_angle == 60:
+    #             a60 += 1
+    #         elif signed_angle == 120:
+    #             a120 += 1
+    #         elif signed_angle == -120:
+    #             a240 += 1
+    #         else:
+    #             a300 += 1
+    #     return (a60, a120, a240, a300)
 
     @staticmethod
     def is_acute(d1, d2): 
         angle = abs(PointTg.ANGLES[(d1,d2)])
         return (angle == 60)
+
+    @staticmethod
+    def get_direction(direction):
+        assert len(direction) == 1 and ord(direction) >= ord('A') and ord(direction) <= ord('F')
+        idx = ord(direction) - ord('A')
+        return [PointTg(1, 0, -1), PointTg(1, -1, 0), PointTg(0, -1, 1), PointTg(-1, 0, 1), PointTg(-1, 1, 0), PointTg(0, 1, -1)][idx]
 
 AA = PointTg(1, 0, -1)
 BB = PointTg(1, -1, 0)

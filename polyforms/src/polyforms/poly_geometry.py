@@ -51,7 +51,7 @@ class PolyGeometry:
         if not hasattr(self, 'vertices'):
             self.vertices = [PointTg(0, 0, 0)]
             for (side_length, direction) in self.sides:
-                new_vertex = self.vertices[-1] + side_length * DIRECTIONS[direction]
+                new_vertex = self.vertices[-1] + side_length * PointTg.get_direction(direction)
                 if len(self.vertices) < len(self.sides):
                     self.vertices.append(new_vertex)
         return self.vertices
@@ -98,12 +98,12 @@ class PolyGeometry:
         if not hasattr(self, 'signed_area'):
             self.get_descartes()
             N = len(self.descartes)
-            array = 0
+            area = 0
             for i in range(0, N - 1):
-                array += self.descartes[i][0]*self.descartes[i+1][1] - self.descartes[i][1]*self.descartes[i+1][0]
-            array += self.descartes[N-1][0]*self.descartes[0][1] - self.descartes[N-1][1]*self.descartes[0][0]
-            # array/2 būtu laukums vienības kvadrātiņu vienībās; pārveido to mazo trijstūrīšu vienībās.
-            result = (array/2)/unit_triangle_area
+                area += self.descartes[i][0]*self.descartes[i+1][1] - self.descartes[i][1]*self.descartes[i+1][0]
+            area += self.descartes[N-1][0]*self.descartes[0][1] - self.descartes[N-1][1]*self.descartes[0][0]
+            # convert from square units into the small triangle units
+            result = (area/2)/unit_triangle_area
             self.signed_area = int(round(result))
         return self.signed_area
 
@@ -158,7 +158,7 @@ class PolyGeometry:
         curr_point = PointTg(0,0,0)
         result = []
         for (L, D) in self.sides:
-            vect = DIRECTIONS[D]
+            vect = PointTg.get_direction(D)
             for i in range(L):
                 curr_point += vect
                 result.append(curr_point)
@@ -281,8 +281,8 @@ class PolyGeometry:
 
         return min_width, seg_min_width
 
-    # Return all internal points as [PointTg, PointTg, ...]
-    def list_internal(self):
+    # Return all internal points together with the perimeter as [PointTg, PointTg, ...]
+    def list_contents(self):
         # Cache answers to avoid computing anything twice
         good_points = set()
         bad_points = set()
@@ -292,5 +292,25 @@ class PolyGeometry:
     def list_triangles(self):
         return []
 
+    def black_white(self):
+        return (0,0)
+
+    def internal_angles(self):
+        (a60, a120, a240, a300) = (0,0,0,0)
+        signed_area = self.get_signed_area()
+        orientation = int(abs(signed_area)/signed_area)
+        for i in range(0, len(self.sides)):
+            side1 = self.sides[i][1]
+            side2 = self.sides[(i+1) % len(self.sides)][1]
+            signed_angle = orientation*PointTg.ANGLES[(side1, side2)]
+            if signed_angle == 60:
+                a60 += 1
+            elif signed_angle == 120:
+                a120 += 1
+            elif signed_angle == -120:
+                a240 += 1
+            else:
+                a300 += 1
+        return (a60, a120, a240, a300)
 
 

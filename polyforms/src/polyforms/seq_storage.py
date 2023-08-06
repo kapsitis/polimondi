@@ -1,4 +1,4 @@
-from core.perfect_seq import *
+from polyforms.perfect_seq import *
 
 class SeqStorage:
     all_sequences = None

@@ -1,6 +1,5 @@
 import math
 import itertools
-import sys
 import copy
 from enum import Enum
 

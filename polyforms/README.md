@@ -8,27 +8,44 @@
 * Library to draw vector-graphic pictures on triangle grid.
 * Static data representing some useful families of polyiamonds.
 
-## Notes
 
-These commands are used to build package (and to install in pip). 
+# Setting up the environment
 
-```
-virtualenv env
-source env/bin/activate
-```
-
-pip uninstall -y polyforms
-pip install ../polyforms/dist/polyforms-0.1.0-py3-none-any.whl
-```
-
+It seems that `base` is already installed as you install Conda.
+Later on you can list all the environments, deactivate the current environment and finally - activate the 
+virtual environment you need: 
 
 ```
-python setup.py sdist bdist_wheel
-pip install dist/polyforms-0.1-py3-none-any.whl
+conda info --envs
+# OR just "conda env list"
+conda deactivate
+conda activate base
+```
+
+Once your Conda environment is activated you can use pip to show the packages currently installed. 
+You also can uninstall the (previous) version of `polyforms` and install the newest one from a Wheel file. 
+
+```
+conda list
+pip list | grep polyforms
+pip uninstall polyforms
+pip install dist/polyforms-0.1.0-py3-none-any.whl
 ```
 
 
-# Development mode (Editable) install
+
+Install a package in development (editable) mode:
+
+```
+cd polyforms
+pip uninstall polyforms
+pip install -e .
+```
+
+Unlike installing a wheel file, this enables to do edits in this directory - and they are immediately effective 
+without reinstalling the package. 
+We assume that the directory "polyforms" contains "src" subdirectory. 
+
 
 ```
 pip uninstall -y polyforms
@@ -36,11 +53,44 @@ pip install --editable ../
 ```
 
 
-# Making a new release
+# Making a new "polyforms" release
 
+Before creating a new release, you need to run all the unit tests like this: 
+
+```
+cd polyforms/tests
+pytest
+# Sometimes you may want to test just one pytest file:
+pytest test_poly_gemoetry.py 
+# Or even a single test method in that file:
+pytest test_poly_gemoetry.py::test_long_perimeter_points
+```
+
+You also may want to edit a file `docs/Release-Notes.md` -- just explain what has been 
+added to the package since last release. 
+
+
+After that you can tag the release like this:
+
+```
 git tag v0.1.0
 git push --tags
-Create new release. 
+```
+
+In the version number `v0.1.0` the first digit (0) is the major release number (reserved if there
+are major refactorings or fundamentally new features); the second digit (1) is the minor release number 
+(any time you add some change in functionality). The last digit (0) is for hotfixes, if we
+do not want to change the functionality, just to fix some mistakes introduced during a major or 
+minor release. 
+
+Then use Poetry to create a Wheel package and publish it back to Git: 
+
+```
+cd polymonds
+rm -fr dist
+poetry build
+
+```
 
 
 
@@ -84,3 +134,9 @@ In this code, `output_function` is a context manager that will handle opening an
 (if a filename is provided). This allows your `list_polyforms` function to just use this context 
 manager's output function (`do_output`) without worrying about whether it's using 
 `print` or writing to a file, as the context manager takes care of file cleanup.
+
+
+
+
+
+
