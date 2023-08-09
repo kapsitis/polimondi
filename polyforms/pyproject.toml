@@ -14,6 +14,7 @@ matplotlib = "*"
 numpy = "*"
 scipy = "*"
 shapely = "*"
+beautifulsoup4 = "*"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.2"
