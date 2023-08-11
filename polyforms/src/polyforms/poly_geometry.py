@@ -25,11 +25,22 @@ class PolyGeometry:
     # Side directions are always one of the following: 'A', 'B', 'C', 'D', 'E', 'F'.
     def __init__(self, sides):
         self.sides = sides
-        self.setup()
+        if not self.is_valid():
+            pass
+            # raise ValueError("Polyiamond {} cannot exist".format(sides))
+        else:
+            self.setup()
+
+    # The 1st check: The last side should return back to (0,0,0)
+    # The 2nd check: The line segments must not cross themselves (not implemented)
+    def is_valid(self):
+        self.get_vertices()
+        (side_length, direction) = self.sides[-1]
+        new_vertex = self.vertices[-1] + side_length * PointTg.get_direction(direction)
+        return new_vertex == PointTg(0,0,0)
 
     # This method will do custom initializations
     def setup(self):
-        self.get_vertices()
         self.get_mod_descartes()
         self.get_descartes()
         self.get_signed_area()
@@ -314,3 +325,9 @@ class PolyGeometry:
         return (a60, a120, a240, a300)
 
 
+
+# A function that returns those polygons which have minimal-size bounding hexagons from polylist.
+def get_minimal_bounding_sizes(polylist):
+    min_item = min(polylist, key=lambda ai: ai.get_bounding_sizes())
+    f_list = [ai for ai in polylist if ai.get_bounding_sizes() == min_item.get_bounding_sizes()]
+    return f_list

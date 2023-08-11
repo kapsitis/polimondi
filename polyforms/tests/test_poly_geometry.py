@@ -1,4 +1,5 @@
 from polyforms.poly_geometry import PolyGeometry
+from polyforms.poly_geometry import get_minimal_bounding_sizes
 from polyforms.point_tg import *
 
 def test_bounding_hexagon():
@@ -69,3 +70,24 @@ def test_large_polygon():
     pt = PointTg(51, -3, -48)
     pmond = PolyGeometry(list(zip(range(len(pp), 0, -1), list(pp))))
     assert not pmond.is_inside(pt)
+
+
+def test_get_min_bounding_box():
+    perfect_nine_dir = ['ABFDEDCDC', 'ACECEAEAC', 'ACEDEABAC']
+    perfect_nine_poly = [PolyGeometry(list(zip(range(len(pp), 0, -1), list(pp)))) for pp in perfect_nine_dir]
+    sublist = get_minimal_bounding_sizes(perfect_nine_poly)
+    sublist_codes = [''.join([t[1] for t in poly.sides]) for poly in sublist]
+    assert sublist_codes == ['ACECEAEAC']
+
+def test_polyiamond_isvalid():
+    seq0 = 'ACBACBDFEDFEDFEDFEACBAC'
+    p0 = PolyGeometry(list(zip(range(len(seq0), 0, -1), list(seq0))))
+    assert p0.is_valid()
+
+    seq1 = 'ACBABCBDFEDFDFEDFEDEFEACBFCFC'
+    p1 = PolyGeometry(list(zip(range(len(seq1), 0, -1), list(seq1))))
+    assert not p1.is_valid()
+
+    seq2 = 'ACBACBACBDFEDFDEFEDFEDFEDFEACBACFBC'
+    p2= PolyGeometry(list(zip(range(len(seq2), 0, -1), list(seq2))))
+    assert not p2.is_valid()

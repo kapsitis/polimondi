@@ -58,7 +58,7 @@ def trim_svg_whitespace(file_path):
 
 
 
-class draw_scene:
+class DrawScene:
 
     def __init__(self, left, bottom, width, height, lcolor, lstyle, lwidth):
         self.left = left
@@ -148,6 +148,44 @@ class draw_scene:
         # Write the modified HTML back to the file
         with open("../docs/inductive_sequences.html", "w") as file:
             file.write(str(soup))
+
+
+
+    def set_size_in(self, width, height):
+        self.fig.set_size_inches(width, height)
+
+
+
+    def show_grid(self):
+        # self.fig.set_size_inches(round(self.width / 218, 2), round(self.height / 218, 2))
+        self.fig.set_size_inches(self.width/10 ,self.height/10)
+        self.ax.set_xlim(self.left, self.left + self.width)
+        self.ax.set_ylim(self.bottom, self.left+self.height)
+
+        path = self.create_rectangle_path()
+        patch = mpatches.PathPatch(path, transform=self.ax.transData)
+
+        # Horizontal lines
+        for i in range(0, self.height + 1):
+            plus_minus = 0 if i % 2 == 0 else 0.5
+            line, = self.ax.plot([self.left + plus_minus, self.left + self.width - plus_minus], [(self.bottom + i) * TH, (self.bottom + i) * TH],
+                            color=self.lcolor, linestyle=self.lstyle, linewidth=self.lwidth)
+            line.set_clip_path(patch)
+
+        # Slanted-upwards lines
+        for i in range(-self.height // 2, self.width + 1):
+            line, = self.ax.plot([self.left + i, self.left + i + self.height * TH / np.sqrt(3)], [self.bottom * TH, (self.bottom + self.height) * TH],
+                            color=self.lcolor, linestyle=self.lstyle, linewidth=self.lwidth)
+            line.set_clip_path(patch)
+
+        # Slanted-downwards lines
+        for i in range(0, self.width + self.height // 2 + 1):
+            line, = self.ax.plot([self.left + i, self.left + i - self.height * TH / np.sqrt(3)], [self.bottom * TH, (self.bottom + self.height) * TH],
+                            color=self.lcolor, linestyle=self.lstyle, linewidth=self.lwidth)
+            line.set_clip_path(patch)
+
+        # plt.savefig('../docs/inductive_sequences/{}'.format(output_file), format='svg', bbox_inches='tight', transparent="True", pad_inches=0)
+
 
 
     def create_grid(self, output_file):

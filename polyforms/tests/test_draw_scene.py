@@ -1,6 +1,6 @@
 import os
 from polyforms.draw_scene import *
-from polyforms.seq_storage import *
+from polyforms.perfect_seq import *
 
 import numpy as np
 
