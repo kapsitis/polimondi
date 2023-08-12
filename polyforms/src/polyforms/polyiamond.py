@@ -18,7 +18,7 @@ DESCARTES = {'A': (1.0, 0.0), 'B': (0.5, 1.0), 'C': (-0.5, 1.0), 'D': (-1.0, 0.0
 unit_triangle_height = math.sqrt(3) / 2
 unit_triangle_area = math.sqrt(3) / 4
 
-class PolyGeometry:
+class Polyiamond:
     # "sides" is a list of tuples for a polyiamond
     # such as [(5,'A'), (4,'C'), (3,'E'), (2,'D'), (1,'F')].
     # It does not need to be perfect or even magic, so the side lengths can be any integers.

@@ -68,6 +68,7 @@ class DrawScene:
         self.lcolor = lcolor
         self.lstyle = lstyle
         self.lwidth = lwidth
+        self.polygons = dict()
 
         plt.figure()
         self.fig, self.ax = plt.subplots()
@@ -90,7 +91,9 @@ class DrawScene:
         path = mpath.Path(vertices, codes)
         return path
 
-    def draw_seq(self, seq, color, dd):
+    def draw_seq(self, label, seq, color, dd):
+        # Remember where the polygon was added
+        self.polygons[label] = (seq, color, dd)
         # Draw polyline
         x, y = [0 + dd[0]], [dd[1]]
         for i, d in enumerate(seq):
@@ -100,7 +103,17 @@ class DrawScene:
 
         self.ax.plot(x, y, '{}-'.format(color), linewidth=0.8)
 
+    def highlight(self, label, sides, color):
+        curr_polygon = self.polygons[label][0]
+        curr_dd = self.polygons[label][2]
+        v = direction_to_vector(curr_polygon[0])
+        x, y = [curr_dd[0]], [curr_dd[1]]
 
+        # Should do this in loop
+        x.append(x[-1] + len(curr_polygon) * v[0])
+        y.append(y[-1] + len(curr_polygon) * v[1])
+        self.ax.plot(x, y, '-', color=color, linewidth=3)
+        #return True
 
     def insertOption(self, key, width = 0, height = 0):
         if width == 0 or height == 0:

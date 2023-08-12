@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-from polyforms.poly_geometry import PolyGeometry
+from polyforms.polyiamond import Polyiamond
 from polyforms.point_tg import *
 
 STEP = 20
@@ -10,7 +10,7 @@ def mul_step(arg):
 def test_poly51():
     dir = "ACACACACAEAEAEAEAECECECECEAECECECECECECECACAEACAEAC"
     llen = range(len(dir),0,-1)
-    p1 = PolyGeometry(list(zip(llen, list(dir))))
+    p1 = Polyiamond(list(zip(llen, list(dir))))
     descartes = p1.get_descartes()
     expected = [(0.0, 0.0), (51.0, 0.0), (26.0, 43.30127018922193), (75.0, 43.30127018922193),
                 (51.0, 84.87048957087498), (98.0, 84.87048957087498), (75.0, 124.70765814495915),
