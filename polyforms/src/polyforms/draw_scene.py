@@ -5,58 +5,8 @@ import numpy as np
 from bs4 import BeautifulSoup
 import xml.etree.ElementTree as ET
 
-
-# from konstrukcijas.inductive_drawings import poly_seq
-
 # Triangle height
 TH = np.sqrt(3)/2
-
-def direction_to_vector(d):
-    if d == 'A':
-        return np.array([1, 0])
-    elif d == 'B':
-        return np.array([1/2, np.sqrt(3)/2])
-    elif d == 'C':
-        return np.array([-1/2, np.sqrt(3)/2])
-    elif d == 'D':
-        return np.array([-1, 0])
-    elif d == 'E':
-        return np.array([-1/2, -np.sqrt(3)/2])
-    elif d == 'F':
-        return np.array([1/2, -np.sqrt(3)/2])
-
-def trim_svg_whitespace(file_path):
-    # Parse SVG file
-    with open(file_path, 'r') as input_file:
-        tree = ET.parse(input_file)
-
-    root = tree.getroot()
-
-    # Find the first group element <g>
-    group = root.find(".//{http://www.w3.org/2000/svg}g")
-
-    # Find the viewBox attribute in the SVG root element
-    viewBox = root.attrib["viewBox"]
-    viewBox_values = [float(value) for value in viewBox.split()]
-
-    # Calculate the new viewBox values without extra padding
-    new_viewBox_values = [
-        viewBox_values[0] + group.attrib["transform"].translate.x,
-        viewBox_values[1] + group.attrib["transform"].translate.y,
-        viewBox_values[2] - group.attrib["transform"].translate.x,
-        viewBox_values[3] - group.attrib["transform"].translate.y,
-    ]
-
-    # Update the viewBox attribute with the new values
-    root.attrib["viewBox"] = " ".join(str(value) for value in new_viewBox_values)
-
-    # Write the modified SVG back to the same file
-    with open(file_path, "wb") as output_file:
-        tree.write(output_file)
-
-
-
-
 
 class DrawScene:
 
@@ -77,6 +27,8 @@ class DrawScene:
         plt.margins(x=0)
         plt.margins(y=0)
 
+
+
     def create_rectangle_path(self):
         vertices = np.array([
                 [self.left, self.bottom],
@@ -91,29 +43,39 @@ class DrawScene:
         path = mpath.Path(vertices, codes)
         return path
 
-    def draw_seq(self, label, seq, color, dd):
-        # Remember where the polygon was added
-        self.polygons[label] = (seq, color, dd)
-        # Draw polyline
-        x, y = [0 + dd[0]], [dd[1]]
-        for i, d in enumerate(seq):
-            v = direction_to_vector(d)
-            x.append(x[-1] + (len(seq) - i) * v[0])
-            y.append(y[-1] + (len(seq) - i) * v[1])
+    # "offset" is given in "modified Descartes" coordinates:
+    # Namely, it is prior to multiplying "y" coordinate with the unit triangle height.
+    # Normally we do not draw rectangles around polyiamonds
+    # May be used if they do not pack neatly.
+    def draw_polyiamond(self, label, poly, color = 'k', linewidth=0.8, offset = (0.0, 0.0), bound_box = False):
+        self.polygons[label] = (poly, offset)
+        vert2d = poly.get_mod_descartes()
+        x = [vv[0] + offset[0] for vv in vert2d]
+        x.append(x[0])
+        y = [vv[1] + offset[1] for vv in vert2d]
+        y.append(y[0])
+        y = [yy * TH for yy in y]
+        self.ax.plot(x,y,'-', color=color, linewidth=0.8)
+        if bound_box:
+            (xmin, xmax, ymin, ymax) = poly.get_rect_box()
+            x1 = [xmin, xmax, xmax, xmin, xmin]
+            y1 = [ymin, ymin, ymax, ymax, ymin]
+            x1 = [offset[0] + xx for xx in x1]
+            y1 = [(offset[1] + yy) * TH for yy in y1]
+            self.ax.plot(x1, y1, '-', color='#ff0000', linewidth=0.8)
 
-        self.ax.plot(x, y, '{}-'.format(color), linewidth=0.8)
 
+    # Draw some highlighted "sides" in a polyiamond that is already drawn
     def highlight(self, label, sides, color):
         curr_polygon = self.polygons[label][0]
-        curr_dd = self.polygons[label][2]
-        v = direction_to_vector(curr_polygon[0])
-        x, y = [curr_dd[0]], [curr_dd[1]]
-
-        # Should do this in loop
-        x.append(x[-1] + len(curr_polygon) * v[0])
-        y.append(y[-1] + len(curr_polygon) * v[1])
-        self.ax.plot(x, y, '-', color=color, linewidth=3)
-        #return True
+        (off_x, off_y) = self.polygons[label][1]
+        vert2d = curr_polygon.get_mod_descartes()
+        N = len(vert2d)
+        for side in sides:
+            x = [off_x + vert2d[side][0], off_x + vert2d[(side + 1) % N][0]]
+            y = [off_y + vert2d[side][1], off_y + vert2d[(side + 1) % N][1]]
+            y = [yy * TH for yy in y]
+            self.ax.plot(x, y, '-', color=color, linewidth=3)
 
     def insertOption(self, key, width = 0, height = 0):
         if width == 0 or height == 0:

@@ -85,7 +85,14 @@ class Polyiamond:
             self.descartes = [(x, unit_triangle_height*y) for (x,y) in self.mod_descartes]
         return self.descartes
 
-
+    def get_rect_box(self):
+        if not hasattr(self, 'descartes'):
+            self.get_mod_descartes()
+        min_x = min([uu[0] for uu in self.mod_descartes])
+        max_x = max([uu[0] for uu in self.mod_descartes])
+        min_y = min([uu[1] for uu in self.mod_descartes])
+        max_y = max([uu[1] for uu in self.mod_descartes])
+        return (min_x, max_x, min_y, max_y)
 
     # @staticmethod
     # def stretched_descartes(sides):
