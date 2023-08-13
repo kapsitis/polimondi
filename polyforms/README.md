@@ -153,3 +153,73 @@ if __name__ == '__main__':
     main()
 ```
 
+
+# Instrukcijas Windows mašīnai
+
+## Anaconda instrukcijas
+
+Anaconda ir viena no čūsku iedvesmotajām valodas Python vidēm; tajā labi darbojas arī Jupyter Notebook; 
+var vienlaikus darbināt dažādas Python versijas un vides, kas cita citai netraucē. 
+
+1. Uzstāda Anaconda vidi (tā ir PowerShell vide ar Python).
+   [https://docs.anaconda.com/free/anaconda/install/windows/]
+2. Atver Anaconda termināli: **Start > Anaconda3 (64 bit) > Anaconda Prompt**. 
+3. Terminālī var ierakstīt komandu `python` un izpildīt tur dažas komandas.
+
+Var ievērot, ka Anaconda "neatceras" tās pakas, kas ir uzstādītas citās Python vidēs
+(piemēram PyCharm). Pašai Anaconda ir virtuālā vide (pilna Python saimniecība), 
+kas saucas "base". To var aktivēt un deaktivēt. Ja tā ir aktivēta, tad termināļa lodziņā 
+visu laiku parādās vārds "(base)" rakstīts iekavās.
+
+
+## Poetry rīks
+
+Poetry ļauj taisīt pašiem savas Python pakotnes. Mums pagaidām noder viena šāda pakotne - "polyforms". 
+Tur ir par polimondiem un, iespējams, nākotnē varētu būt vēl citas figūriņas, kas saliktas no vienādiem 
+gabaliņiem - kvadrātiņiem, sešstūrīšiem, kubiņiem.
+
+1. Atver Android termināli, uzstāda tajā Python pakotņu pārvaldības rīku `poetry`: 
+   ```
+   curl -sSL https://install.python-poetry.org | python -
+   ```
+2. Aiziet uz polyforms; izpilda `poetry install`
+3. Tad palaiž `poetry shell`
+4. Ja grib uzzināt, kur ir Python virtuālā vide, kurā ieinstalējusies jaunā pakotne:
+   `poetry env info --path`
+5. Darbina vienības testus: 
+   ```
+   cd tests
+   pytest
+   # Ja gribas palaist vienu atsevišķu (pašai savu) testa failiņu:
+   pytest test_mytests.py
+   #  (vai pat var palaist vienu metodi)
+   pytest test_mytests.py#test_abc
+   
+   # Parasti vienības testi nedrukā tās print komandas, kas tiek izsauktas testos un viņu funkcijās.
+   # Bet, ja gribas redzēt izdrukāto informāciju:
+   pytest -s test_mytests.py
+   ```
+
+
+# Jupyter Notebook
+
+1. Aiziet uz apakšdirektoriju `docs`, palaiž `jupyter notebook`
+2. Pārlūkprogrammā pagaida, kamēr jaunā cilne (tab) atveras - redzami `docs` direktorijā esošie faili.
+3. Atver kādu no `ipynb` failiem. 
+
+
+
+
+
+
+`poetry shell`
+
+This spawns a shell with the virtual environment activated.
+
+If you want to know the path to the virtual environment that Poetry has created, use:
+
+`poetry env info -p`
+
+or
+
+ 
