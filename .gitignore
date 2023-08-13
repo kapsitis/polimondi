@@ -8,5 +8,5 @@ konstrukcijas/editing_distance/perfect_23.txt
 konstrukcijas/editing_distance/sort_file
 poetry.lock
 polyforms/tests/*.txt
-polyforms/dist/*.tar.gz
+polyforms/dist/
 **/.ipynb_checkpoints/
