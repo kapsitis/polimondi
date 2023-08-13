@@ -24,6 +24,8 @@ class Polyiamond:
     # It does not need to be perfect or even magic, so the side lengths can be any integers.
     # Side directions are always one of the following: 'A', 'B', 'C', 'D', 'E', 'F'.
     def __init__(self, sides):
+        if isinstance(sides, str):
+            sides = list(zip(range(len(sides), 0, -1), list(sides)))
         self.sides = sides
         if not self.is_valid():
             pass
@@ -93,24 +95,6 @@ class Polyiamond:
         min_y = min([uu[1] for uu in self.mod_descartes])
         max_y = max([uu[1] for uu in self.mod_descartes])
         return (min_x, max_x, min_y, max_y)
-
-    # @staticmethod
-    # def stretched_descartes(sides):
-    #     result = []
-    #     for (side_length, direction) in sides:
-    #         if direction == 'A':
-    #             result.append((side_length, 0))
-    #         elif direction == 'B':
-    #             result.append((0.5*side_length, side_length))
-    #         elif direction == 'C':
-    #             result.append((-0.5*side_length, side_length))
-    #         elif direction == 'D':
-    #             result.append((-side_length, 0))
-    #         elif direction == 'E':
-    #             result.append((-0.5*side_length, -side_length))
-    #         else:
-    #             result.append((0.5*side_length, -side_length))
-    #     return result
 
     def get_signed_area(self):
         if not hasattr(self, 'signed_area'):
@@ -285,7 +269,6 @@ class Polyiamond:
             # rotated_line = rotate(line, 180, sorted_vertices[i])
             rotated_line = affinity.rotate(line, 180, sorted_vertices[i])
 
-
             # Find the closest point on the rotated line to the opposite vertex
             closest_point = rotated_line.interpolate(rotated_line.project(Point(sorted_vertices[(i + n // 2) % n])))
 
@@ -330,8 +313,6 @@ class Polyiamond:
             else:
                 a300 += 1
         return (a60, a120, a240, a300)
-
-
 
 # A function that returns those polygons which have minimal-size bounding hexagons from polylist.
 def get_minimal_bounding_sizes(polylist):

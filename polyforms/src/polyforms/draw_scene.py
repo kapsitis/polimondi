@@ -4,28 +4,58 @@ import matplotlib.patches as mpatches
 import numpy as np
 from bs4 import BeautifulSoup
 import xml.etree.ElementTree as ET
+from enum import Enum
+import math
 
 # Triangle height
 TH = np.sqrt(3)/2
 
+
+class Align(Enum):
+    TOP = 'top'
+    BOTTOM = 'bottom'
+    CENTER = 'center'
+    BASELINE = 'baseline'
+
+
 class DrawScene:
 
-    def __init__(self, left, bottom, width, height, lcolor, lstyle, lwidth):
-        self.left = left
-        self.bottom = bottom
-        self.width = width
-        self.height = height
-        self.lcolor = lcolor
-        self.lstyle = lstyle
-        self.lwidth = lwidth
+    def __init__(self, alignment):
+        self.align = alignment
+        self.left = 0
+        self.bottom = 0
+        self.width = 0
+        self.height = 0
+        self.lcolor = '#999999'
+        self.lstyle = 'solid'
+        self.lwidth = 0.25
+        # Redundant `self.labels` (refactor as list of longer tuples?)
         self.polygons = dict()
-
+        self.labels = []
         plt.figure()
         self.fig, self.ax = plt.subplots()
         self.ax.axis('equal')
         self.ax.axis('off')
         plt.margins(x=0)
         plt.margins(y=0)
+
+
+    # def __init__(self, left, bottom, width, height, lcolor, lstyle, lwidth):
+    #     self.left = left
+    #     self.bottom = bottom
+    #     self.width = width
+    #     self.height = height
+    #     self.lcolor = lcolor
+    #     self.lstyle = lstyle
+    #     self.lwidth = lwidth
+    #     self.polygons = dict()
+    #
+    #     plt.figure()
+    #     self.fig, self.ax = plt.subplots()
+    #     self.ax.axis('equal')
+    #     self.ax.axis('off')
+    #     plt.margins(x=0)
+    #     plt.margins(y=0)
 
 
 
@@ -47,7 +77,9 @@ class DrawScene:
     # Namely, it is prior to multiplying "y" coordinate with the unit triangle height.
     # Normally we do not draw rectangles around polyiamonds
     # May be used if they do not pack neatly.
-    def draw_polyiamond(self, label, poly, color = 'k', linewidth=0.8, offset = (0.0, 0.0), bound_box = False):
+    def draw_polyiamond(self, label, poly, color = 'k', offset = (0.0, 0.0), box = False):
+        # print('draw_polyiamond({},offset={}'.format(label,offset))
+        # Redefine offset
         self.polygons[label] = (poly, offset)
         vert2d = poly.get_mod_descartes()
         x = [vv[0] + offset[0] for vv in vert2d]
@@ -56,7 +88,7 @@ class DrawScene:
         y.append(y[0])
         y = [yy * TH for yy in y]
         self.ax.plot(x,y,'-', color=color, linewidth=0.8)
-        if bound_box:
+        if box:
             (xmin, xmax, ymin, ymax) = poly.get_rect_box()
             x1 = [xmin, xmax, xmax, xmin, xmin]
             y1 = [ymin, ymin, ymax, ymax, ymin]
@@ -64,6 +96,39 @@ class DrawScene:
             y1 = [(offset[1] + yy) * TH for yy in y1]
             self.ax.plot(x1, y1, '-', color='#ff0000', linewidth=0.8)
 
+    def add_polyiamond(self, label, poly, offset = (0.0, 0.0), box = False):
+        self.polygons[label] = (poly, offset, box)
+        self.labels.append(label)
+
+    # Baseline alignment (offset_y = 0)
+    def pack(self):
+        bounding = []
+        for label in self.labels:
+            nums = self.polygons[label][0].get_rect_box()
+            numbers = nums
+            bounding.append((numbers[0], numbers[1], numbers[2], numbers[3]))
+        self.bottom = int(round(min([item[2] for item in bounding]))) - 1
+        if self.bottom % 2 == 1:
+            self.bottom -= 1
+        self.left = int(round(bounding[0][0]))
+        self.width = int(round(sum([item[1] - item[0] for item in bounding]) + 4*len(bounding) - 2))
+        self.height = int(round(max([item[3] - item[2] for item in bounding]))) + 3
+        if self.height % 2 == 1:
+            self.height += 1
+
+        offset_x = 1
+        N = len(bounding)
+        for idx,label in enumerate(self.labels):
+            (off_x, off_y) = self.polygons[label][1]
+            self.draw_polyiamond(label, self.polygons[label][0], 'k', offset = (off_x + offset_x, off_y), box = self.polygons[label][2])
+            # print("{} = {} + ({} - {})+2".format(offset_x, offset_x, bounding[(idx+1) % N][1], bounding[(idx+1) % N][0]))
+            offset_x = offset_x + (bounding[(idx+1) % N][1] - bounding[(idx+1) % N][0])
+
+    def get_offset(self, label):
+        if label not in self.polygons:
+            return (0,0)
+        else:
+            return self.polygons[label][1]
 
     # Draw some highlighted "sides" in a polyiamond that is already drawn
     def highlight(self, label, sides, color):
@@ -160,7 +225,6 @@ class DrawScene:
             line.set_clip_path(patch)
 
         # plt.savefig('../docs/inductive_sequences/{}'.format(output_file), format='svg', bbox_inches='tight', transparent="True", pad_inches=0)
-
 
 
     def create_grid(self, output_file):

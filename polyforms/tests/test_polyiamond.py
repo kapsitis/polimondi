@@ -95,7 +95,7 @@ def test_polyiamond_isvalid():
 
 def test_polyseq6_isvalid():
     storage = PerfectSeq()
-    sequences = storage.get_sequence('SEQ_6_5_B')
+    sequences = storage.get_series('SEQ_6_5_B')
     for seq in sequences:
         p = Polyiamond(list(zip(range(len(seq), 0, -1), list(seq))))
         assert p.is_valid()

@@ -14,6 +14,6 @@ def test_get_name_size(setup_teardown):
    assert len(setup_teardown.get_names()) >= 17
 
 def test_seq_start(setup_teardown):
-    seq1 = setup_teardown.get_sequence('SEQ_4_3_A')[0]
+    seq1 = setup_teardown.get_series('SEQ_4_3_A')[0]
     assert list(seq1[:3]) == ['A', 'C', 'B']
 

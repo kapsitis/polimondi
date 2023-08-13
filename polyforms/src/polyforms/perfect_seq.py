@@ -164,8 +164,6 @@ SEQ_6_5_B = [
 
 # Blue color: 2D9BF0
 # Green color: 8FD14E
-# [1, 10, 11, 16, 25, 26]
-
 
 class PerfectSeq:
     all_sequences = None
@@ -200,7 +198,7 @@ class PerfectSeq:
     def get_names(self):
         return self.all_sequences.keys()
 
-    def get_sequence(self, name):
+    def get_series(self, name):
         if name in self.all_sequences:
             return self.all_sequences[name]
         else:
