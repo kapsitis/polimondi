@@ -18,18 +18,31 @@ DESCARTES = {'A': (1.0, 0.0), 'B': (0.5, 1.0), 'C': (-0.5, 1.0), 'D': (-1.0, 0.0
 unit_triangle_height = math.sqrt(3) / 2
 unit_triangle_area = math.sqrt(3) / 4
 
-class PolyGeometry:
+class Polyiamond:
     # "sides" is a list of tuples for a polyiamond
     # such as [(5,'A'), (4,'C'), (3,'E'), (2,'D'), (1,'F')].
     # It does not need to be perfect or even magic, so the side lengths can be any integers.
     # Side directions are always one of the following: 'A', 'B', 'C', 'D', 'E', 'F'.
     def __init__(self, sides):
+        if isinstance(sides, str):
+            sides = list(zip(range(len(sides), 0, -1), list(sides)))
         self.sides = sides
-        self.setup()
+        if not self.is_valid():
+            pass
+            # raise ValueError("Polyiamond {} cannot exist".format(sides))
+        else:
+            self.setup()
+
+    # The 1st check: The last side should return back to (0,0,0)
+    # The 2nd check: The line segments must not cross themselves (not implemented)
+    def is_valid(self):
+        self.get_vertices()
+        (side_length, direction) = self.sides[-1]
+        new_vertex = self.vertices[-1] + side_length * PointTg.get_direction(direction)
+        return new_vertex == PointTg(0,0,0)
 
     # This method will do custom initializations
     def setup(self):
-        self.get_vertices()
         self.get_mod_descartes()
         self.get_descartes()
         self.get_signed_area()
@@ -74,25 +87,14 @@ class PolyGeometry:
             self.descartes = [(x, unit_triangle_height*y) for (x,y) in self.mod_descartes]
         return self.descartes
 
-
-
-    # @staticmethod
-    # def stretched_descartes(sides):
-    #     result = []
-    #     for (side_length, direction) in sides:
-    #         if direction == 'A':
-    #             result.append((side_length, 0))
-    #         elif direction == 'B':
-    #             result.append((0.5*side_length, side_length))
-    #         elif direction == 'C':
-    #             result.append((-0.5*side_length, side_length))
-    #         elif direction == 'D':
-    #             result.append((-side_length, 0))
-    #         elif direction == 'E':
-    #             result.append((-0.5*side_length, -side_length))
-    #         else:
-    #             result.append((0.5*side_length, -side_length))
-    #     return result
+    def get_rect_box(self):
+        if not hasattr(self, 'descartes'):
+            self.get_mod_descartes()
+        min_x = min([uu[0] for uu in self.mod_descartes])
+        max_x = max([uu[0] for uu in self.mod_descartes])
+        min_y = min([uu[1] for uu in self.mod_descartes])
+        max_y = max([uu[1] for uu in self.mod_descartes])
+        return (min_x, max_x, min_y, max_y)
 
     def get_signed_area(self):
         if not hasattr(self, 'signed_area'):
@@ -267,7 +269,6 @@ class PolyGeometry:
             # rotated_line = rotate(line, 180, sorted_vertices[i])
             rotated_line = affinity.rotate(line, 180, sorted_vertices[i])
 
-
             # Find the closest point on the rotated line to the opposite vertex
             closest_point = rotated_line.interpolate(rotated_line.project(Point(sorted_vertices[(i + n // 2) % n])))
 
@@ -313,4 +314,8 @@ class PolyGeometry:
                 a300 += 1
         return (a60, a120, a240, a300)
 
-
+# A function that returns those polygons which have minimal-size bounding hexagons from polylist.
+def get_minimal_bounding_sizes(polylist):
+    min_item = min(polylist, key=lambda ai: ai.get_bounding_sizes())
+    f_list = [ai for ai in polylist if ai.get_bounding_sizes() == min_item.get_bounding_sizes()]
+    return f_list

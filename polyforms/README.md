@@ -97,6 +97,20 @@ poetry build
 
 
 
+1. Navigate to the main page of the repository in GitHub.
+2. Click the `releases` link.
+3. Click `Draft a new release` or `Create a new release`.
+4. In the `Tag version` field, type the version number for this release (which usually matches your package version).
+5. Type a title and description for the release.
+6. Click `Attach binaries by dropping them here or selecting them`, and upload your `polyforms-0.1.0.tar.gz` and `polyforms-0.1.0-py3-none-any.whl` files.
+7. Click `Publish release`.
+
+
+
+
+
+
+
 
 Yes, in Python it is possible to make a comparison like `out_func == print` to check if the 
 output is going to the console or a file. However, keep in mind this only works if `out_func` 
