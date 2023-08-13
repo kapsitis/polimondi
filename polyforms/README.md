@@ -209,9 +209,6 @@ gabaliņiem - kvadrātiņiem, sešstūrīšiem, kubiņiem.
 
 
 
-
-
-
 `poetry shell`
 
 This spawns a shell with the virtual environment activated.
@@ -219,7 +216,3 @@ This spawns a shell with the virtual environment activated.
 If you want to know the path to the virtual environment that Poetry has created, use:
 
 `poetry env info -p`
-
-or
-
- 
