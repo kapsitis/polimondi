@@ -1,17 +1,36 @@
 import math
 import itertools
-import sys
+import copy
+from enum import Enum
 
-from backtrackk import *
-from point_tg import *
+from .backtrackk import *
+from .point_tg import *
 
-class NSturisProblem:
+class Format(Enum):
+    DESCARTES = 'descartes'
+    LETTERS = 'letters'
+    COMPACT = 'compact'
+
+class FileWriter:
+    def __init__(self, filename):
+        self.file = open(filename, 'w')
+
+    def write(self, text):
+        print(text, file=self.file)
+
+    def close(self):
+        self.file.close()
 
 
+class NGonProblem:
 
-    def __init__(self, n):
+    def __init__(self, n, perm, format, file_writer):
+        print("creating NGonProblem({},{})".format(n,perm))
         self.N = n
         self.directions = []
+        self.perm = perm
+        self.format = format
+        self.file_writer = file_writer
 
         # Record the min/max area; and the min/max count of acute angles 
         self.minArea = n**4
@@ -20,14 +39,17 @@ class NSturisProblem:
         self.maxAcute = 0
         self.updateExtremes = False
 
-        self.outfile = open("../konstrukcijas/editing_distance/acute_{}.txt".format(n), "w")
+        #self.outfile = open("poly_{}_{}.txt".format(n, self.perm), "w")
 
         # Uzkrāj polimonda virsotnes
         self.vertices = [PointTg(0, 0, 0)]
         # Punkti, kurus šķērso polimonda perimetrs.
         self.points = set()
         # aritmētisko progresiju summas. Ja n == 5, tad  series_sums = [0, 1, 3, 6, 10, 15]
-        self.series_sums  = list(itertools.accumulate(range(0, n+1)))
+        perm_rev = copy.deepcopy(self.perm)
+        perm_rev.reverse()
+        perm_rev.insert(0,0)
+        self.series_sums  = list(itertools.accumulate(perm_rev))
         # līdz šim atrasto atrisinājumu skaits
         self.solution_count = 0
 
@@ -47,8 +69,9 @@ class NSturisProblem:
 
     # Pielabo datu struktūras, pievienojot (status=1) vai atceļot (status=0) gājienu.
     def setPosition(self, move, status):
-        # self.debug_full(prefix='({},{})'.format(move, status))
-        sideLength = self.N - len(self.directions) + 1
+        # self.debug_full(prefix='({},{})'.format(move,status))
+        # sideLength = self.N - len(self.directions) + 1
+        sideLength = self.perm[len(self.directions) - 1]
 
         if status == 1:
             nextSide = sideLength*DIRECTIONS[move]
@@ -62,8 +85,11 @@ class NSturisProblem:
             prevVertext = self.vertices.pop()
             for i in range(0, sideLength - 1):
                 currPoint = prevVertext - i*DIRECTIONS[move]
+                if move == 'A' and status == 0 and self.directions == []:
+                    print('Feeling sad; points = {}, removing {}'.format(self.points, currPoint))
                 self.points.remove(currPoint)
-
+                if move == 'A' and status == 0 and self.directions == []:
+                    print('Feeling sadder; points = {}'.format(self.points))
 
     # Vai nekrustojas ar agrāk novilktām malām
     def check1(self, level, move):
@@ -77,6 +103,7 @@ class NSturisProblem:
     def check2(self, level, move):
         nextSide = (self.N - level) * DIRECTIONS[move]
         nextVertex = self.vertices[-1] + nextSide
+        # print('check2(level={}, move={}, nextSide={}, nextVertex={}, abs={}, sums={})'.format(level, move, nextSide, nextVertex, nextVertex.abs(), self.series_sums[self.N - level - 1]))
         return nextVertex.abs() <= self.series_sums[self.N - level - 1]
 
     # Pēdējā/īsākā polimonda mala nedrīkst būt horizontāla, jo pirmā ir horizontāls.
@@ -115,7 +142,12 @@ class NSturisProblem:
         # self.initValues = []
 
     # Kompakti izvada vienu atrisinājumu kā daudzstūri, ja polimonada zīmēšana pabeigta: done(self,level)==True
-    def display(self, format='file'):
+    def display(self):
+        if self.file_writer is None:
+            out_func = print
+        else:
+            out_func = self.file_writer.write
+
         if self.updateExtremes:
             polyiamond_area = PointTg.get_signed_area(self.directions)
             (a60, a120, a240, a300) = PointTg.count_angles(self.directions)
@@ -128,23 +160,23 @@ class NSturisProblem:
             if self.maxAcute < a60 + a300:
                 self.maxAcute = a60 + a300 
 
-            if format == 'letters':
-                print(self.directions, end='')
-                print(', #S = {}, acute={}, obtuse={}'.format(polyiamond_area, a60+a300, a120+a240))
-            elif format == 'dekarta':
-                print(PointTg.convert_divainas_dekarta(self.directions), end='')
-                print(', #S = {}, acute={}, obtuse={}'.format(polyiamond_area, a60+a300, a120+a240))
+            if self.format == Format.LETTERS:
+                out_func(self.directions, end='')
+                out_func(', #S = {}, acute={}, obtuse={}'.format(polyiamond_area, a60+a300, a120+a240))
+            elif self.format == Format.DESCARTES:
+                out_func(PointTg.convert_divainas_dekarta(self.directions), end='')
+                out_func(', #S = {}, acute={}, obtuse={}'.format(polyiamond_area, a60+a300, a120+a240))
             else:
                 # silent mode
                 return
         else: 
-            if format == 'letters':
-                print(self.directions)
-            elif format == 'dekarta':
-                print(PointTg.convert_divainas_dekarta(self.directions))
-            elif format == 'file':
-                self.outfile.write("".join(self.directions))
-                self.outfile.write("\n")
+            if self.format == Format.LETTERS:
+                out_func(self.directions)
+            elif self.format == Format.DESCARTES:
+                out_func(PointTg.convert_divainas_dekarta(self.directions))
+            elif self.format == Format.COMPACT:
+                out_func("".join(self.directions))
+                out_func("\n")
 
             else:
                 # silent mode
@@ -169,31 +201,42 @@ class NSturisProblem:
  
 
 def findFirstSolution(n):
-    q = NSturisProblem(n)
+    q = NGonProblem(n, list(range(1,n+1)))
     b = Backtrackk(q)
     if b.attempt(0):
-        q.display('file')
+        q.display(Format.COMPACT)
 
-def findAllSolutions(n):
-    q = NSturisProblem(n)
+def findAllSolutions(perm, format, file_name):
+    if file_name != '':
+        file_writer = FileWriter(file_name)
+        out_func = file_writer.write
+    else:
+        file_writer = None
+        out_func = print
+    q = NGonProblem(len(perm), perm, format, file_writer)
     b = Backtrackk(q)
-    n = 0
-    while b.attempt(0):
-        q.display()
-        q.reset()
-        n += 1
-    print('{} solutions found'.format(q.solution_count))
-    print('Area is in [{},{}]'.format(q.minArea, q.maxArea))
-    print('Acute angles in [{}, {}]'.format(q.minAcute, q.maxAcute))
-    q.outfile.close()
+    # total = 0
+    try:
+        while b.attempt(0):
+            q.display()
+            q.reset()
+            # total += 1
+        out_func('Solutions found: {} '.format(q.solution_count))
+        out_func('Area belongs to: [{},{}]'.format(q.minArea, q.maxArea))
+        out_func('Acute angles belong to: [{}, {}]'.format(q.minAcute, q.maxAcute))
+    finally:
+        if file_name != '':
+            file_writer.close()
 
-if __name__ == '__main__':
-    if len(sys.argv) <= 2:
-        print('Usage: python NSturis.py <n1> <n2')
-        exit(0)
-    n1 = int(sys.argv[1])
-    n2 = int(sys.argv[2])
-    for n in range(n1,n2):
-        if n % 2 == 1:
-            findAllSolutions(n)
+    # q.outfile.close()
+
+# if __name__ == '__main__':
+#     if len(sys.argv) <= 2:
+#         print('Usage: python NSturis.py <n1> <n2>')
+#         exit(0)
+#     n1 = int(sys.argv[1])
+#     n2 = int(sys.argv[2])
+#     for n in range(n1,n2):
+#         if n % 2 == 1:
+#             findAllSolutions(n)
 

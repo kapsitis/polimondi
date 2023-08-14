@@ -1,0 +1,40 @@
+[build-system]
+requires = ["poetry-core>=1.5.1"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "polyforms"
+version = "0.1.0"
+description = "Code to list polyiamonds, to find their properties and to create images."
+authors = ["University of Latvia <kalvis.apsitis@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+matplotlib = "*"
+numpy = "*"
+scipy = "*"
+shapely = "*"
+beautifulsoup4 = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.2"
+
+
+#[tool.poetry.scripts]
+#test = "pytest"
+[tool.poe.tasks]
+test = "pytest -v"
+
+
+[build]
+packages = [
+    { include = "polyforms", from = "src" },
+    { include = "core", from = "src" },
+]
+
+
+# this is needed when you're using a src directory
+#[tool.poetry.layout]
+#packages = [
+#    { include = "polyforms", from = "src" }
+#]

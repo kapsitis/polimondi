@@ -93,4 +93,13 @@ kuros ir tieši viens plats leņķis (120 vai 240 grādi).
 
 
 
+## Maģisko polimondu neiespējamās permutācijas
+
+Permutācijas pierakstām sākot ar elementu $1$. Otrajā pozīcijā rakstām skaitļa $1$ mazāko kaimiņu.
+Tādējādi var analizēt permutācijas bez gadījumu atkārtošanās -- ievērojot rotācijas simetriju (un arī iespēju 
+maģisko polimondu apstaigāt abos virzienos). 
+
+
+
+
 
