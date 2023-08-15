@@ -12,9 +12,11 @@ class PointTg:
         self.y = y
         self.z = z
 
+    # Just display a point on triangle grid
     def __str__(self):
         return "({},{},{})".format(self.x, self.y, self.z)
 
+    # Same as `__str__()`.
     def __repr__(self):
         return "({},{},{})".format(self.x, self.y, self.z)
 
@@ -32,7 +34,7 @@ class PointTg:
         z = self.z - other.z
         return PointTg(x, y, z)
 
-
+    # Divu trijnieku (režģa punktu) leksikogrāfiska salīdzināšana
     def __lt__(self, other):
         b1 = self.x < other.x 
         b2 = self.x == other.x and self.y < other.y
@@ -55,19 +57,22 @@ class PointTg:
         new_y = T2D_MATRIX[1][0]*self.x + T2D_MATRIX[1][1]*self.y
         return (new_x, new_y)
 
+    # Two points are equal iff all their coordinates are pairwise equal.
     def __eq__(self, other):
         if isinstance(other, self.__class__):
             return self.x == other.x and self.y == other.y and self.z == other.z
         else:
             return False
 
+    # Enables efficient storage of such points in sets and dictionaries (they can be dictionary keys)
     def __hash__(self):
         return hash((self.x, self.y, self.z))
 
+    # When two points are not equal (to support the `!=` comparison)
     def __ne__(self, other):
         return not self.__eq__(other)
 
-
+    # Cannot draw the next line in the same direction as the previous one.
     FORBIDDEN_AFTER = {'A': ['A', 'D'], 'B': ['B', 'E'], 'C': ['C', 'F'], 
     'D': ['A', 'D'], 'E': ['B', 'E'], 'F': ['C', 'F']}
 
@@ -85,8 +90,11 @@ class PointTg:
        'A': ['B', 'C', 'E', 'F'], 'B': ['A', 'C', 'D', 'F'], 'C': ['A', 'B', 'D', 'E'],
        'D': ['B', 'C', 'E', 'F'], 'E': ['A', 'C', 'D', 'F'], 'F': ['A', 'B', 'D', 'E']}
 
+    # Transforms direction letters into unit vectors (modified Cartesian coordinates).
+    # Actual 2D coordinates can be obtained when multiplying the height (1st coordinate by sqrt(3)/2.
     DIRECTIONS_JOC_KOORD = {'A': [0, 1], 'B': [1, 0.5], 'C': [1, -0.5], 'D': [0, -1], 'E': [-1, -0.5], 'F': [-1, 0.5]}
 
+    # Finds an angle from two consecutive side directions.
     ANGLES = {('A','B'): 120, ('A','C'): 60, ('A','E'): -60, ('A','F'): -120,
     ('B','C'): 120, ('B','D'): 60, ('B','F'): -60, ('B','A'): -120,
     ('C','D'): 120, ('C','E'): 60, ('C','A'): -60, ('C','B'): -120,
@@ -139,27 +147,6 @@ class PointTg:
         result = (summa/2)/unit_triangle_area
         intResult = int(round(result))
         return intResult
-
-    # # Saskaita N-polimonda iekšējos leņķus, sadalot pa izmēriem (60, 120, 240, 300 grādi)
-    # @staticmethod
-    # def count_angles(directions):
-    #     (a60, a120, a240, a300) = (0,0,0,0)
-    #     N = len(directions)
-    #     signed_area = PointTg.get_signed_area(directions)
-    #     orientation = int(abs(signed_area)/signed_area)
-    #     for i in range(0, N):
-    #         side1 = directions[i]
-    #         side2 = directions[(i+1) % N]
-    #         signed_angle = orientation*PointTg.ANGLES[(side1, side2)]
-    #         if signed_angle == 60:
-    #             a60 += 1
-    #         elif signed_angle == 120:
-    #             a120 += 1
-    #         elif signed_angle == -120:
-    #             a240 += 1
-    #         else:
-    #             a300 += 1
-    #     return (a60, a120, a240, a300)
 
     @staticmethod
     def is_acute(d1, d2): 

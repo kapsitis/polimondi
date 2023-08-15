@@ -53,74 +53,142 @@ pip install --editable ../
 ```
 
 
-# Making a new "polyforms" release
-
-Before creating a new release, you need to run all the unit tests like this: 
+# Cleaning out notebook files
 
 ```
+for nb in *.ipynb; do jupyter nbconvert --to notebook --ClearOutputPreprocessor.enabled=True --inplace "$nb"; done
+```
+
+or 
+
+```
+pip install nbstripout
+nbstripout your_notebook.ipynb
+```
+
+and also add this as a Github filter.
+
+```bash
+nbstripout --install
+```
+This will ensure that outputs are stripped from your notebooks each time you commit to your repository.
+
+# Procedure: Using Google Colab
+
+1. Visit an URL like this: [https://drive.google.com/drive/my-drive]. Connect to "My Drive"
+2. Upload the wheel file e.g. `polyforms-0.1.0-py3-none-any.whl` to that drive (subdirectory `packages`)
+3. Mount the drive (if it asks for permissions, agree)
+```
+from google.colab import drive
+drive.mount('/content/drive')
+```
+4. Install the package:
+```
+!pip install '/content/drive/MyDrive/Colab Notebooks/polyforms-0.1.0-py3-none-any.whl'
+```
+5. Upload some script like this:
+```python
+from polyforms.draw_scene import *
+from polyforms.perfect_seq import *
+from polyforms.polyiamond import Polyiamond
+import numpy as np
+
+p1 = Polyiamond('ACEDF')
+scene = DrawScene(Align.BASELINE)
+scene.add_polyiamond('p1', p1)
+
+scene.pack()
+scene.show_grid()
+(off_x, off_y) = scene.get_offset('p1')
+
+perimeter = p1.list_perimeter()
+perimeter2d = [pp.get_xy() for pp in perimeter]
+for (x,y) in perimeter2d:
+    scene.ax.plot(x+off_x, y, marker='o', color='blue')
+
+scene.set_size_in(6,3)
+```
+6. Run this and observe the image.
+
+
+
+
+
+
+
+# Procedure: How to create a new "polyforms" release
+
+**Step 1 (Unit tests):**  
+Before creating a new release, you need to run all the unit tests like this:  
+```bash 
 cd polyforms/tests
 pytest
-# Sometimes you may want to test just one pytest file:
+```
+
+If something fails, you may want to run one pytest file or even one method in a testfile:
+```bash
 pytest test_poly_gemoetry.py 
-# Or even a single test method in that file:
 pytest test_poly_gemoetry.py::test_long_perimeter_points
 ```
 
-You also may want to edit a file `docs/Release-Notes.md` -- just explain what has been 
-added to the package since last release. 
+**Step 2 (System/Jupyter tests):**  
+Do some of the above experiments -- check that Jupyter notebooks 
+under `polyforms/docs` can run. They should also 
 
 
-After that you can tag the release like this:
+**Step 3 (Update Release Notes):**  
+Edit the file `docs/Release-Notes.md` -- explain what has been 
+added to the package since last release, error fixes and other improvements. 
 
-```
-git tag v0.1.0
+
+**Step 4 (Check in and tag):** 
+Check all the code in repository.
+After that you can tag the release like this:  
+```bash
+git status
+# If status is not empty; keep adding files (or remove dependent files)
+# After everything locally is clean, commit with a message:
+git commit -m "Release v0.1.0-beta2"
+git tag v0.1.0-beta2
 git push --tags
 ```
 
+**Note:**  
 In the version number `v0.1.0` the first digit (0) is the major release number (reserved if there
 are major refactorings or fundamentally new features); the second digit (1) is the minor release number 
 (any time you add some change in functionality). The last digit (0) is for hotfixes, if we
 do not want to change the functionality, just to fix some mistakes introduced during a major or 
 minor release. 
 
-Then use Poetry to create a Wheel package and publish it back to Git: 
+**Step 5 (Build Wheel file):**  
+Use Poetry to create a Wheel package and publish it back to Git: 
 
-```
+```bash
 cd polymonds
 rm -fr dist
 poetry build
-
 ```
 
+**Step 6 (Publish the release):** 
+
+* Navigate to the main page of the repository in GitHub.
+* Click the `releases` link.
+* Click `Create a new release`.
+* In the `Tag version` field, type the version (such as `v0.1.0-beta2`)
+* Type a title and description for the release.
+* Click `Attach binaries by dropping them here or selecting them`, and upload your `polyforms-0.1.0.tar.gz` and `polyforms-0.1.0-py3-none-any.whl` files.
+* Click `Publish release`.
 
 
 
 
+# Note: Using Different output streams
 
-1. Navigate to the main page of the repository in GitHub.
-2. Click the `releases` link.
-3. Click `Draft a new release` or `Create a new release`.
-4. In the `Tag version` field, type the version number for this release (which usually matches your package version).
-5. Type a title and description for the release.
-6. Click `Attach binaries by dropping them here or selecting them`, and upload your `polyforms-0.1.0.tar.gz` and `polyforms-0.1.0-py3-none-any.whl` files.
-7. Click `Publish release`.
+Sometimes you need to have flexible output from your polymond methods
+(for example, to decide, if they will write to a file or print to a console). 
 
-
-
-
-
-
-
-
-Yes, in Python it is possible to make a comparison like `out_func == print` to check if the 
-output is going to the console or a file. However, keep in mind this only works if `out_func` 
-is directly assigned the `print` function, not when it's assigned a different function that happens to use `print`.
-
-That being said, it's usually not the best practice to rely on comparing functions to determine 
-behavior in this way, as it can lead to confusing and error-prone code.
-
-In this case, rather than checking whether `out_func == print`, a more idiomatic Python solution 
-might be to use a context manager, which can handle the file cleanup for you, whether 
+If you need to have flexibility (which output stream to use), 
+one can employ a "context manager", which can handle the file cleanup for you, whether 
 you're using `print` or writing to a file. Here's an example:
 
 ```python
@@ -151,19 +219,4 @@ manager's output function (`do_output`) without worrying about whether it's usin
 
 
 
-
-```python
-from polyforms.mag_enum import MagEnum
-from polyforms.n_gon import Format
-
-def main():
-    n = 5
-    permutation = list(range(1,n+1))
-    permutation.reverse()
-    me = MagEnum(Format.LETTERS)
-    me.list_iamonds(permutation)
-
-if __name__ == '__main__':
-    main()
-```
 

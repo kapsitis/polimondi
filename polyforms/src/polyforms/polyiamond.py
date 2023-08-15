@@ -282,8 +282,8 @@ class Polyiamond:
 
         return min_width, seg_min_width
 
-    # Return all internal points together with the perimeter as [PointTg, PointTg, ...]
-    def list_contents(self):
+    # Return all internal+perimeter points as [PointTg, PointTg, ...]
+    def list_inside(self):
         # Cache answers to avoid computing anything twice
         good_points = set()
         bad_points = set()
@@ -293,9 +293,15 @@ class Polyiamond:
     def list_triangles(self):
         return []
 
+    # Assuming that polyiamond is 2-colored (usual parity coloring),
+    # Return pair (black, white) -- the count of black and white triangles.
+    # The following equality should be satisfied: black+white == area.
     def black_white(self):
         return (0,0)
 
+    # Return a quadruplet (a,b,c,d) representing the
+    # counts of internal angles by their size. They can be 60 or 120 degrees;
+    # as well as -120 or -60 degrees (for vertices where polyiamond is not convex).
     def internal_angles(self):
         (a60, a120, a240, a300) = (0,0,0,0)
         signed_area = self.get_signed_area()

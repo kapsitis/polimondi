@@ -1,8 +1,8 @@
 # Release Notes
 
-## Release 0.1.0 
+## Release v0.1.0-beta1
 
-**Release Date:** August 6, 2023
+**Release Date:** August 13, 2023
 
 * The following modules are created within the `polyforms` package: 
     * `n_gon.py`, `backtrackk.py` -- list magic/perfect polyiamonds for the given permutation. 

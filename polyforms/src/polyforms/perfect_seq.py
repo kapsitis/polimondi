@@ -162,9 +162,8 @@ SEQ_6_5_B = [
     'ACBABCBACBACBDFEDFDFEDFEDFEDFEDEFEDFEDFEACBACACBACBAC',
 ]
 
-# Blue color: 2D9BF0
-# Green color: 8FD14E
 
+# This class returns known inductive sequences of perfect polyiamonds
 class PerfectSeq:
     all_sequences = None
 
@@ -195,9 +194,11 @@ class PerfectSeq:
     def __init__(self):
         self.dict_init()
 
+    # Get the names of all sequences
     def get_names(self):
         return self.all_sequences.keys()
 
+    # Get the polyiamonds corresponding to the given sequence name.
     def get_series(self, name):
         if name in self.all_sequences:
             return self.all_sequences[name]
