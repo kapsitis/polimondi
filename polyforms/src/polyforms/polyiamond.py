@@ -1,6 +1,7 @@
 import math
 from .point_tg import PointTg
 from .point_tg import DIRECTIONS
+from .point_tg import AA,BB,CC,DD,EE,FF
 from .geom_utilities import L2_dist
 
 from shapely.geometry import Point, Polygon, LineString
@@ -8,6 +9,7 @@ from shapely.geometry import Point, Polygon, LineString
 from shapely import affinity
 from scipy.spatial import ConvexHull
 import numpy as np
+import copy as cp
 
 
 #DIRECTIONS = {'A': PointTg(1,0,-1), 'B': PointTg(1,-1,0), 'C': PointTg(0,-1,1),
@@ -28,6 +30,7 @@ class Polyiamond:
             sides = list(zip(range(len(sides), 0, -1), list(sides)))
         self.sides = sides
         if not self.is_valid():
+            print("WARNING: Polyiamond is not valid - line segments do not close!")
             pass
             # raise ValueError("Polyiamond {} cannot exist".format(sides))
         else:
@@ -250,8 +253,7 @@ class Polyiamond:
     def min_width(self):
         vertices = [vv.get_xy() for vv in self.vertices]
         hull = ConvexHull(vertices)
-        # Create a Polygon from the convex hull vertices
-        convex_vertices = vertices[hull.vertices]
+        convex_vertices = [vertices[i] for i in hull.vertices]
         pol = Polygon(convex_vertices)
 
         # the rotating calipers algorithm needs the vertices ordered by angle
@@ -285,8 +287,24 @@ class Polyiamond:
     # Return all internal+perimeter points as [PointTg, PointTg, ...]
     def list_inside(self):
         # Cache answers to avoid computing anything twice
-        good_points = set()
+        black_points = set()
         bad_points = set()
+        gray_points = cp.copy(self.list_perimeter())
+        while len(gray_points) > 0:
+            current = gray_points.pop(0)
+            # print('current = {}; len(gray_points) = {}'.format(current, len(gray_points)))
+            for v in [AA,BB,CC,DD,EE,FF]:
+                new_point = current + v
+                if (new_point not in gray_points) and (new_point not in bad_points) and (new_point not in black_points):
+                    if self.is_inside(new_point):
+                        gray_points.append(new_point)
+                    else:
+                        bad_points.add(new_point)
+            black_points.add(current)
+        return sorted(black_points)
+
+
+
 
     # Return all contained triangles as list of triplets:
     # [(PointTg, PointTg, PointTg), (PointTg, PointTg, PointTg), ...]

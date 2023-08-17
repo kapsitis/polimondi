@@ -99,3 +99,8 @@ def test_polyseq6_isvalid():
     for seq in sequences:
         p = Polyiamond(list(zip(range(len(seq), 0, -1), list(seq))))
         assert p.is_valid()
+
+def test_list_inside():
+    pp = Polyiamond('ACEDF')
+    result = pp.list_inside()
+    assert len(result) == 18

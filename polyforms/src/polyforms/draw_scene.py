@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import xml.etree.ElementTree as ET
 from enum import Enum
 import math
+from .point_tg import PointTg
 
 # Triangle height
 TH = np.sqrt(3)/2
@@ -135,6 +136,12 @@ class DrawScene:
             return (0,0)
         else:
             return self.polygons[label][1]
+
+    def get_offset_tg(self, label):
+        if label not in self.polygons:
+            return PointTg(0,0,0)
+        else:
+            return PointTg(self.polygons[label][1][0], 0, -(self.polygons[label][1][0]))
 
     # Draw some highlighted/colored "sides" in a polyiamond that is already drawn
     # 'label' is the name of the polygon added to a picture.
