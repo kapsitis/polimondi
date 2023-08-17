@@ -309,11 +309,25 @@ class Polyiamond:
     # Return all contained triangles as list of triplets:
     # [(PointTg, PointTg, PointTg), (PointTg, PointTg, PointTg), ...]
     def list_triangles(self):
-        return []
+        inside_points = self.list_inside()
+        queue = cp.copy(inside_points)
+        result = set()
+        while len(queue) > 0:
+            curr0 = queue.pop(0)
+            curr1 = curr0 + FF
+            curr2 = curr0 + AA
+            if curr1 in inside_points and curr2 in inside_points:
+                result.add((curr0, curr1, curr2))
+            curr3 = curr0 + BB
+            if curr2 in inside_points and curr3 in inside_points:
+                result.add((curr0, curr3, curr2))
+        return sorted(result)
+
 
     # Assuming that polyiamond is 2-colored (usual parity coloring),
     # Return pair (black, white) -- the count of black and white triangles.
     # The following equality should be satisfied: black+white == area.
+    # TODO: Should use list_trianles()
     def black_white(self):
         return (0,0)
 
