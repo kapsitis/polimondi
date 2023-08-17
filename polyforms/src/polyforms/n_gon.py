@@ -13,14 +13,17 @@ class Format(Enum):
 
 class FileWriter:
     def __init__(self, filename):
-        self.file = open(filename, 'w')
+        self.filename = filename
+        if self.filename != '__list__':
+            self.file = open(filename, 'w')
 
     def write(self, text):
-        print(text, file=self.file)
+        if self.filename != '__list__':
+            print(text, file=self.file)
 
     def close(self):
-        self.file.close()
-
+        if self.filename != '__list__':
+            self.file.close()
 
 class NGonProblem:
 
@@ -37,7 +40,8 @@ class NGonProblem:
         self.maxArea = 0
         self.minAcute = n
         self.maxAcute = 0
-        self.updateExtremes = False
+        # self.updateExtremes = False
+        self.all_results = []
 
         #self.outfile = open("poly_{}_{}.txt".format(n, self.perm), "w")
 
@@ -58,6 +62,9 @@ class NGonProblem:
     #     self.directions = []
     #     self.vertices = [PointTg(0, 0, 0)]
     #     self.points = set()
+
+
+
 
     # Funkcijas, lai ielūkotos backtracking objekta iekšējā stāvoklī
     def debug_state(self, prefix):
@@ -143,44 +150,48 @@ class NGonProblem:
 
     # Kompakti izvada vienu atrisinājumu kā daudzstūri, ja polimonada zīmēšana pabeigta: done(self,level)==True
     def display(self):
-        if self.file_writer is None:
-            out_func = print
-        else:
-            out_func = self.file_writer.write
-
-        if self.updateExtremes:
-            polyiamond_area = PointTg.get_signed_area(self.directions)
-            (a60, a120, a240, a300) = PointTg.count_angles(self.directions)
-            if self.maxArea < abs(polyiamond_area):
-                self.maxArea = abs(polyiamond_area)
-            if self.minArea > abs(polyiamond_area):
-                self.minArea = abs(polyiamond_area)
-            if self.minAcute > a60 + a300:
-                self.minAcute = a60 + a300
-            if self.maxAcute < a60 + a300:
-                self.maxAcute = a60 + a300 
-
+        if self.file_writer == '__list__':
             if self.format == Format.LETTERS:
-                out_func(self.directions, end='')
-                out_func(', #S = {}, acute={}, obtuse={}'.format(polyiamond_area, a60+a300, a120+a240))
+                self.all_results.append(self.directions)
             elif self.format == Format.DESCARTES:
-                out_func(PointTg.convert_divainas_dekarta(self.directions), end='')
-                out_func(', #S = {}, acute={}, obtuse={}'.format(polyiamond_area, a60+a300, a120+a240))
+                self.all_results.append(PointTg.convert_divainas_dekarta(self.directions))
+            elif self.format == Format.COMPACT:
+                self.all_results.append("".join(self.directions))
+
+        else:
+            if self.file_writer is None:
+                out_func = print
             else:
-                # silent mode
-                return
-        else: 
+                out_func = self.file_writer.write
+            # if self.updateExtremes:
+            #     polyiamond_area = PointTg.get_signed_area(self.directions)
+            #     (a60, a120, a240, a300) = PointTg.count_angles(self.directions)
+            #     if self.maxArea < abs(polyiamond_area):
+            #         self.maxArea = abs(polyiamond_area)
+            #     if self.minArea > abs(polyiamond_area):
+            #         self.minArea = abs(polyiamond_area)
+            #     if self.minAcute > a60 + a300:
+            #         self.minAcute = a60 + a300
+            #     if self.maxAcute < a60 + a300:
+            #         self.maxAcute = a60 + a300
+            #
+            #     if self.format == Format.LETTERS:
+            #         out_func(self.directions, end='')
+            #         # out_func(', #S = {}, acute={}, obtuse={}'.format(polyiamond_area, a60+a300, a120+a240))
+            #     elif self.format == Format.DESCARTES:
+            #         out_func(PointTg.convert_divainas_dekarta(self.directions), end='')
+            #         # out_func(', #S = {}, acute={}, obtuse={}'.format(polyiamond_area, a60+a300, a120+a240))
+            #     else:
+            #         # silent mode
+            #         return
+
             if self.format == Format.LETTERS:
                 out_func(self.directions)
             elif self.format == Format.DESCARTES:
                 out_func(PointTg.convert_divainas_dekarta(self.directions))
             elif self.format == Format.COMPACT:
                 out_func("".join(self.directions))
-                out_func("\n")
 
-            else:
-                # silent mode
-                return            
 
 
     # Atgriež iteratoru ar iespējamiem gājieniem, ja iepriekšējās malas virziens bija "direction"
@@ -206,8 +217,11 @@ def findFirstSolution(n):
     if b.attempt(0):
         q.display(Format.COMPACT)
 
-def findAllSolutions(perm, format, file_name):
-    if file_name != '':
+def print_all_solutions(perm, format, file_name):
+    if file_name == '__list__':
+        file_writer = FileWriter(file_name)
+        out_func = file_writer.write
+    elif file_name != '':
         file_writer = FileWriter(file_name)
         out_func = file_writer.write
     else:
@@ -219,24 +233,20 @@ def findAllSolutions(perm, format, file_name):
     try:
         while b.attempt(0):
             q.display()
-            q.reset()
+            # q.reset()
             # total += 1
-        out_func('Solutions found: {} '.format(q.solution_count))
-        out_func('Area belongs to: [{},{}]'.format(q.minArea, q.maxArea))
-        out_func('Acute angles belong to: [{}, {}]'.format(q.minAcute, q.maxAcute))
+        #out_func('Solutions found: {} '.format(q.solution_count))
+        #out_func('Area belongs to: [{},{}]'.format(q.minArea, q.maxArea))
+        #out_func('Acute angles belong to: [{}, {}]'.format(q.minAcute, q.maxAcute))
     finally:
         if file_name != '':
             file_writer.close()
 
-    # q.outfile.close()
 
-# if __name__ == '__main__':
-#     if len(sys.argv) <= 2:
-#         print('Usage: python NSturis.py <n1> <n2>')
-#         exit(0)
-#     n1 = int(sys.argv[1])
-#     n2 = int(sys.argv[2])
-#     for n in range(n1,n2):
-#         if n % 2 == 1:
-#             findAllSolutions(n)
-
+def get_all_solutions(perm, format):
+    q = NGonProblem(len(perm), perm, format, '__list__')
+    b = Backtrackk(q)
+    while b.attempt(0):
+        q.display()
+        # q.reset()
+    return q.all_results

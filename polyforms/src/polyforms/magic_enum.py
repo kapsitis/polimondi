@@ -1,4 +1,4 @@
-from .n_gon import findAllSolutions
+from .n_gon import print_all_solutions
 from .n_gon import Format
 from itertools import permutations
 
