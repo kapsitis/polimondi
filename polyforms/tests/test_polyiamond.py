@@ -106,7 +106,8 @@ def test_list_inside():
     assert len(result) == 18
 
 def test_list_triangles():
-    pp = Polyiamond('ACDCEAEACAEAECEAEAC')
+    # pp = Polyiamond('ACDCEAEACAEAECEAEAC')
+    pp = Polyiamond('ACEDF')
     area = pp.get_area()
     triangles = pp.list_triangles()
     assert len(triangles) == area
