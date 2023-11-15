@@ -10,3 +10,4 @@ poetry.lock
 polyforms/tests/*.txt
 polyforms/dist/
 **/.ipynb_checkpoints/
+source-material/
