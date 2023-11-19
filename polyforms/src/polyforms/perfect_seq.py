@@ -227,11 +227,5 @@ class PerfectSeq:
 
     # Get the names of all sequences
     def get_names(self):
-        return self.all_sequences.keys()
+        return self.pseq.keys()
 
-    # Get the polyiamonds corresponding to the given sequence name.
-    # def get_series(self, name):
-    #     if name in self.all_sequences:
-    #         return self.all_sequences[name]
-    #     else:
-    #         return None
