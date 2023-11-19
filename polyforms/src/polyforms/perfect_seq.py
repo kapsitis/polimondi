@@ -169,9 +169,9 @@ SEQ_6_5_B = [
 
 
 class PSequence:
-    def __init__(self, template, lists):
+    def __init__(self, template, rules):
         self.template = template
-        self.lists = lists
+        self.rules = rules
         # if param is not None:
 
     # Izrēķina un atgriež polimondu virknes n-to locekli
@@ -180,13 +180,13 @@ class PSequence:
         # Sākumstāvoklis - īsākais polimonds ar punktiņiem
         current = self.template
         # Ievietojamie fragmenti var būt ikreiz tie paši vai arī veidot 2 gājienu ciklu
-        cycle = len(self.lists)
+        cycle = len(self.rules)
         # Atkārto n reizes
         for i in range(0, n):
-            curr_list = self.lists[i % cycle]
+            current_rulelist = self.rules[i % cycle]
             list_s = current.split('.')
             next = [list_s[0]]
-            for idx,seq in enumerate(curr_list):
+            for idx,seq in enumerate(current_rulelist):
                 next.append(seq + list_s[idx+1])
             current = ''.join(next)
         return current.replace('.', '')
