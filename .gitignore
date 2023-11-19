@@ -3,14 +3,7 @@
 backtracking/*.txt
 __pycache__
 puzzle_cross/images/cross-duboux.png
-konstrukcijas/editing_distance/perfect_20.txt
-konstrukcijas/editing_distance/perfect_21.txt
-konstrukcijas/editing_distance/perfect_22.txt
-konstrukcijas/editing_distance/perfect_23.txt
-konstrukcijas/editing_distance/perfect_24.txt
-konstrukcijas/editing_distance/acute_59.txt
-konstrukcijas/editing_distance/acute_6*
-konstrukcijas/editing_distance/sort_file
+konstrukcijas/editing_distance/*.txt
 poetry.lock
 polyforms/tests/*.txt
 polyforms/dist/
