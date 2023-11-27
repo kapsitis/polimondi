@@ -9,3 +9,4 @@ polyforms/tests/*.txt
 polyforms/dist/
 **/.ipynb_checkpoints/
 source-material/
+docs/polimondi
