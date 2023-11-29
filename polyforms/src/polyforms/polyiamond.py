@@ -2,7 +2,7 @@ import math
 from .point_tg import PointTg
 from .point_tg import DIRECTIONS
 from .point_tg import AA,BB,CC,DD,EE,FF
-from .geom_utilities import L2_dist
+from .geom_utilities import *
 from .inductive_splits import InductiveSplits
 
 from shapely.geometry import Point, Polygon, LineString
@@ -300,6 +300,11 @@ class Polyiamond:
                 seg_min_width = [sorted_vertices[i], (closest_point.x, closest_point.y)]
 
         return min_width, seg_min_width
+
+    def width(self):
+        vertices = [vv.get_xy() for vv in self.vertices]
+        vertice_lists = [[x,y] for (x,y) in vertices]
+        return minimum_width(np.array(vertice_lists))
 
     # Return all internal+perimeter points as [PointTg, PointTg, ...]
     def list_inside(self):

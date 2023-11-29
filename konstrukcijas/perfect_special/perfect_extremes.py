@@ -27,20 +27,26 @@ def f(line, metric):
         return p.get_area()
     elif metric == 'diameter':
         return p.diameter()[0]
+    elif metric == 'width':
+        return p.width()
+
+
+
 
 def main(lower, upper):
-    metric = 'diameter'
+    metric = 'width'
     max_array = dict()
     max_value = dict()
     min_array = dict()
     min_value = dict()
     for i in range(lower, upper):
-        print(f"Processing {i}...")
+        print(f"Processing {i}")
         max_value[i] = 0
         max_array[i] = []
         min_value[i] = 10000000000
         min_array[i] = []
         fileName = f'../../docs/polimondi/perfect_{i}.txt'
+        line_count = 0
         with open(fileName, 'r') as file:
             for line in file:
                 line = line.rstrip('\n')
@@ -56,15 +62,27 @@ def main(lower, upper):
                 if val == min_value[i]:
                     min_array[i].append(line)
 
-    for i in range(lower, upper):
-        print(f'{i}-polyiamond(s) with max {metric} {max_value[i]}:')
+        file = open(f'max_{metric}.txt', 'a')
+        file.write(f'{i}-polyiamond(s) with max {metric} {max_value[i]}:\n')
         for pp in max_array[i]:
-            print(pp)
-    print()
-    for i in range(lower, upper):
-        print(f'{i}-polyiamond(s) with min {metric} {min_value[i]}:')
+            file.write(f'{pp}\n')
+        file.close()
+
+        file = open(f'min_{metric}.txt', 'a')
+        file.write(f'{i}-polyiamond(s) with min {metric} {min_value[i]}:\n')
         for pp in min_array[i]:
-            print(pp)
+            file.write(f'{pp}\n')
+        file.close()
+
+    # for i in range(lower, upper):
+    #     print(f'{i}-polyiamond(s) with max {metric} {max_value[i]}:')
+    #     for pp in max_array[i]:
+    #         print(pp)
+    # print()
+    # for i in range(lower, upper):
+    #     print(f'{i}-polyiamond(s) with min {metric} {min_value[i]}:')
+    #     for pp in min_array[i]:
+    #         print(pp)
 
 
 

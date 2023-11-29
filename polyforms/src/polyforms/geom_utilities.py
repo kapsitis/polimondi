@@ -24,3 +24,33 @@ def set_diameter(pt_set):
 
     # return the maximum pairwise distance
     return np.max(dist_mat)
+
+
+def point_line_distance(point, line_point1, line_point2):
+    return np.abs(np.cross(line_point2 - line_point1, point - line_point1)) / np.linalg.norm(line_point2 - line_point1)
+
+
+def minimum_width(points):
+    # Compute the convex hull of the set of points
+    hull = ConvexHull(points)
+    hull_points = points[hull.vertices]
+
+    min_width = float('inf')
+
+    # Rotating Calipers: Iterate over hull edges to find minimum width
+    for i in range(len(hull_points)):
+        # Define the edge points
+        p1 = hull_points[i]
+        p2 = hull_points[(i + 1) % len(hull_points)]
+
+        # Store max distance for the current edge
+        max_distance = 0
+        # Find the point farthest from the current edge
+        for j in range(len(hull_points)):
+            if j != i and j != (i + 1) % len(hull_points):
+                max_distance = max(max_distance, point_line_distance(hull_points[j], p1, p2))
+
+        # Update the minimum width found so far
+        min_width = min(min_width, max_distance)
+
+    return min_width
