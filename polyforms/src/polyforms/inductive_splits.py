@@ -28,8 +28,9 @@ files2 = [
     'acute_41.txt',
     'acute_45.txt',
     'acute_47.txt',
-    'acute_5.txt',
-    'acute_51.txt'
+    'acute_51.txt',
+    'acute_53.txt',
+
 ]
 
 class InductiveSplits:

@@ -2,7 +2,7 @@ import math
 from .point_tg import PointTg
 from .point_tg import DIRECTIONS
 from .point_tg import AA,BB,CC,DD,EE,FF
-from .geom_utilities import L2_dist
+from .geom_utilities import *
 from .inductive_splits import InductiveSplits
 
 from shapely.geometry import Point, Polygon, LineString
@@ -28,11 +28,12 @@ class Polyiamond:
     # It does not need to be perfect or even magic, so the side lengths can be any integers.
     # Side directions are always one of the following: 'A', 'B', 'C', 'D', 'E', 'F'.
     def __init__(self, sides):
+        self.compact_sides = sides
         if isinstance(sides, str):
             sides = list(zip(range(len(sides), 0, -1), list(sides)))
         self.sides = sides
         if not self.is_valid():
-            print("WARNING: Polyiamond is not valid - line segments do not close!")
+            print(f"WARNING: Polyiamond {self.compact_sides} is not valid - line segments do not close!")
             pass
             # raise ValueError("Polyiamond {} cannot exist".format(sides))
         else:
@@ -44,7 +45,21 @@ class Polyiamond:
         self.get_vertices()
         (side_length, direction) = self.sides[-1]
         new_vertex = self.vertices[-1] + side_length * PointTg.get_direction(direction)
-        return new_vertex == PointTg(0,0,0)
+        check1 = (new_vertex == PointTg(0,0,0))
+
+        currVertex = PointTg(0,0,0)
+        check2 = True  # assume the sides do not intersect
+        points = set()
+        for (sidelen,dir) in self.sides:
+            for i in range(1, sidelen+1):
+                currPoint = currVertex + i*DIRECTIONS[dir]
+                if currPoint in points:
+                    check2 = False
+                else:
+                    points.add(currPoint)
+            nextSide = sidelen*DIRECTIONS[dir]
+            currVertex = currVertex + nextSide
+        return check1 and check2
 
     # This method will do custom initializations
     def setup(self):
@@ -285,6 +300,11 @@ class Polyiamond:
                 seg_min_width = [sorted_vertices[i], (closest_point.x, closest_point.y)]
 
         return min_width, seg_min_width
+
+    def width(self):
+        vertices = [vv.get_xy() for vv in self.vertices]
+        vertice_lists = [[x,y] for (x,y) in vertices]
+        return minimum_width(np.array(vertice_lists))
 
     # Return all internal+perimeter points as [PointTg, PointTg, ...]
     def list_inside(self):
