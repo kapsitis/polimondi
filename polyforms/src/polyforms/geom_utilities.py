@@ -1,6 +1,7 @@
 from math import sqrt
 from scipy.spatial import ConvexHull, distance_matrix
 import numpy as np
+from difflib import SequenceMatcher
 
 ##########################################################
 ## This contains some real-valued 2D geometry utilities.
@@ -24,3 +25,12 @@ def set_diameter(pt_set):
 
     # return the maximum pairwise distance
     return np.max(dist_mat)
+
+
+# Levenstein distance
+   
+
+def longest_common_subsequence(str1, str2):
+    match = SequenceMatcher(None, str1, str2).find_longest_match(0, len(str1), 0, len(str2))
+    return str1[match.a: match.a + match.size]
+
