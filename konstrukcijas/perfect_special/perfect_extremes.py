@@ -34,7 +34,7 @@ def f(line, metric):
 
 
 def main(lower, upper):
-    metric = 'width'
+    metric = 'array'
     max_array = dict()
     max_value = dict()
     min_array = dict()
