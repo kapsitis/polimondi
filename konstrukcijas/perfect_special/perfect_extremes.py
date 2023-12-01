@@ -23,7 +23,7 @@ files = [
 
 def f(line, metric):
     p = Polyiamond(line)
-    if metric == 'array':
+    if metric == 'area':
         return p.get_area()
     elif metric == 'diameter':
         return p.diameter()[0]
@@ -34,7 +34,7 @@ def f(line, metric):
 
 
 def main(lower, upper):
-    metric = 'array'
+    metric = 'area'
     max_array = dict()
     max_value = dict()
     min_array = dict()
