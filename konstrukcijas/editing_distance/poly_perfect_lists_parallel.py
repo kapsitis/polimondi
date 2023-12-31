@@ -12,6 +12,7 @@ def process_prefix(n, prefix):
     while b.attempt(0):
         q.display()
     print(f'Found {q.solution_count} solutions for prefix {prefix}')
+    return q.solution_count
 
 
 def main(n):
@@ -37,7 +38,12 @@ def main(n):
     # Create a multiprocessing pool with desired number of processes
     with Pool(num_processes) as pool:
         # Map each prefix to be processed in parallel
-        pool.starmap(process_prefix, [(n, prefix) for prefix in prefixes4])
+        results = pool.starmap(process_prefix, [(n, prefix) for prefix in prefixes4])
+
+    # Compute and print the sum of results
+    total = sum(results)
+    print('Total polyiamonds found: {}'.format(total))
+    print(results)
 
 
 if __name__ == '__main__':
