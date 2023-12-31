@@ -5,7 +5,7 @@ from polyforms.n_gon import Format
 from polyforms.backtrackk import Backtrackk
 
 def main(n):
-    q = NGonProblem(n, list(range(n, 0, -1)), Format.COMPACT, FileWriter(f'perfect_{n}.txt'))
+    q = NGonProblem(n, list(range(n, 0, -1)), "", Format.COMPACT, FileWriter(f'perfect_{n}.txt'))
     b = Backtrackk(q)
     while b.attempt(0):
         q.display()

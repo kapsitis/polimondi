@@ -9,6 +9,105 @@
 * Static data representing some useful families of polyiamonds.
 
 
+# Some 3.8 Python notes
+
+```buildoutcfg
+cd konstrukcijas/editing_distance
+export PYTHONPATH="../../polyforms/src"
+python poly_perfect_lists.py 13
+
+
+du -sh /home/kalvis
+df 
+
+```
+
+
+
+grep "^ABA" perfect_24.txt | wc
+ 1655084 1655084 41377100
+grep "^ABC" perfect_24.txt | wc
+ 1976710 1976710 49417750
+grep "^ABD" perfect_24.txt | wc
+ 1560193 1560193 39004825
+grep "^ABF" perfect_24.txt | wc
+ 1751151 1751151 43778775
+grep "^ACA" perfect_24.txt | wc
+ 1858038 1858038 46450950
+grep "^ACB" perfect_24.txt | wc
+ 1867195 1867195 46679875
+grep "^ACD" perfect_24.txt | wc
+ 1412787 1412787 35319675
+grep "^ACE" perfect_24.txt | wc
+  539868  539868 13496700
+
+1655084 + 1976710 + 1560193 + 1751151 + 1858038 + 1867195 + 1412787 + 539868
+12621026
+
+
+grep "^ACE" perfect_13.txt | wc
+      18      18     252
+grep "^ACD" perfect_13.txt | wc
+      42      42     588
+grep "^ACB" perfect_13.txt | wc
+      26      26     364
+grep "^ACA" perfect_13.txt | wc
+      19      19     266
+grep "^ABA" perfect_13.txt | wc
+       2       2      28
+grep "^ABC" perfect_13.txt | wc
+      52      52     728
+grep "^ABD" perfect_13.txt | wc
+      46      46     644
+grep "^ABF" perfect_13.txt | wc
+      23      23     322
+
+18 + 42 + 26 + 19 + 2 + 52 + 46 + 23 
+228
+
+
+ 
+
+# Pastmarka - 1
+grep -Er "^A(CA)*(EA)*(EC)*(AC)*$" --include="acute_*.txt"
+acute_27.txt:ACAEAEAECECECECECACACACACAC
+acute_35.txt:ACACAEAEAEAECECECECECECECACACACACAC
+
+# Pastmarka - 2
+grep -Er "^A(CA)*(CE)*(AE)*(AC)*$" --include="acute_*.txt"
+./acute_9.txt:ACECEAEAC
+
+# Gandrīz Pastmarka - 2b
+grep -Er "^A(CA)*(CE)*(AE)*CE(AE)*(AC)*$" --include="acute_*.txt"
+./acute_33.txt:ACACACECECECEAEAECEAEAEAEAEACACAC
+./acute_39.txt:ACACECECECEAECEAEAEAEAEACACACACACACACAC
+./acute_57.txt:ACACACACACECECECECECECEAEAEAEAEAEAEAECEAEAEAEAEACACACACAC
+
+# Gandrīz Pastmarka - 2bc
+grep -Er "^A(CA)*(CE)*(AE)*CE(AE)*(AC)*AE(AC)*$" --include="acute_*.txt"
+
+
+
+
+
+
+
+
+def main(n):
+    prefixes = ['ABA', 'ABC', 'ABD', 'ABE', 'ACA', 'ACB', 'ACD', 'ACE']
+    for prefix in prefixes:
+        q = NGonProblem(n, list(range(n, 0, -1)), prefix, Format.COMPACT, FileWriter(f'perfect_{n}_{prefix}.txt'))
+        b = Backtrackk(q)
+        while b.attempt(0):
+            q.display()
+        print(f'Found {q.solution_count} polyiamonds')
+
+
+
+
+
+
+
 # Setting up the environment
 
 It seems that `base` is already installed as you install Conda.
