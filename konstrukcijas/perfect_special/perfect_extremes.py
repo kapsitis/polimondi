@@ -40,12 +40,14 @@ def main(lower, upper):
     min_array = dict()
     min_value = dict()
     for i in range(lower, upper):
+        if not (i % 6 in [3,5]):
+            continue
         print(f"Processing {i}")
         max_value[i] = 0
         max_array[i] = []
         min_value[i] = 10000000000
         min_array[i] = []
-        fileName = f'../../docs/polimondi/perfect_{i}.txt'
+        fileName = f'../../docs/polimondi/acute_{i}.txt'
         line_count = 0
         with open(fileName, 'r') as file:
             for line in file:
@@ -62,13 +64,13 @@ def main(lower, upper):
                 if val == min_value[i]:
                     min_array[i].append(line)
 
-        file = open(f'max_{metric}.txt', 'a')
+        file = open(f'maxacute_{metric}.txt', 'a')
         file.write(f'{i}-polyiamond(s) with max {metric} {max_value[i]}:\n')
         for pp in max_array[i]:
             file.write(f'{pp}\n')
         file.close()
 
-        file = open(f'min_{metric}.txt', 'a')
+        file = open(f'minacute_{metric}.txt', 'a')
         file.write(f'{i}-polyiamond(s) with min {metric} {min_value[i]}:\n')
         for pp in min_array[i]:
             file.write(f'{pp}\n')
