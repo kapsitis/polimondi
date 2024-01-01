@@ -76,7 +76,7 @@ def main(ptype, n, metric):
     with Pool(num_processes) as pool:
         results = pool.starmap(process_prefix, [(ptype, n, metric, prefix) for prefix in prefixes4])
 
-    file0 = open(f'mmsummary_{ptype}_{n}_{metric}.txt', 'a')
+    file0 = open(f'mmsummary_{ptype}_{n}_{metric}_F.txt', 'a')
     for result in results:
         csv_string = ','.join(str(item) for item in result)
         file0.write(f'{csv_string}\n')

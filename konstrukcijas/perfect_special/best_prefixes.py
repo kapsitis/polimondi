@@ -80,8 +80,8 @@ def filter_good_prefixes(infile, good_prefixes, outfile):
 
 # You call the function with the filename
 def main(ptype, n, metric):
-    min_prefixes = smallest_prefixes(f'mmsummary_{ptype}_{n}_{metric}.txt', 2)
-    max_prefixes = largest_prefixes(f'mmsummary_{ptype}_{n}_{metric}.txt', 4)
+    min_prefixes = smallest_prefixes(f'mmsummary_{ptype}_{n}_{metric}_F.txt', 2)
+    max_prefixes = largest_prefixes(f'mmsummary_{ptype}_{n}_{metric}_F.txt', 4)
     print(f'min_prefixes = {min_prefixes}, max_prefixes = {max_prefixes}')
     filter_good_prefixes(f'minall_{ptype}_{n}_{metric}.txt', min_prefixes, f'minall_{ptype}_{n}_{metric}_F.txt')
     filter_good_prefixes(f'maxall_{ptype}_{n}_{metric}.txt', max_prefixes, f'maxall_{ptype}_{n}_{metric}_F.txt')
