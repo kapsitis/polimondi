@@ -45,25 +45,8 @@ grep "^ACE" perfect_24.txt | wc
 12621026
 
 
-grep "^ACE" perfect_13.txt | wc
-      18      18     252
-grep "^ACD" perfect_13.txt | wc
-      42      42     588
-grep "^ACB" perfect_13.txt | wc
-      26      26     364
-grep "^ACA" perfect_13.txt | wc
-      19      19     266
-grep "^ABA" perfect_13.txt | wc
-       2       2      28
-grep "^ABC" perfect_13.txt | wc
-      52      52     728
-grep "^ABD" perfect_13.txt | wc
-      46      46     644
-grep "^ABF" perfect_13.txt | wc
-      23      23     322
-
-18 + 42 + 26 + 19 + 2 + 52 + 46 + 23 
-228
+Total polyiamonds found: 35662687
+[1017696, 1520413, 1120012, 1050761, 1058979, 1375118, 1918028, 1288091, 1580584, 1706631, 646748, 287784, 1210590, 1277438, 1066756, 1578034, 1370096, 1631126, 942032, 1235502, 1005663, 1724213, 1837993, 887874, 1245346, 1451309, 912743, 221520, 0, 1087833, 405774, 0]
 
 
  
