@@ -16,7 +16,7 @@ def f(line, metric):
         return min(p.get_bounding_sizes())
 
 
-def process_prefix(type, n, metric, write_all, prefix):
+def process_prefix(type, n, metric, prefix):
     print(f"Processing {type} {n}-polyiamonds, prefix {prefix} with metric {metric}")
     max_value = 0
     max_array = []
@@ -38,29 +38,32 @@ def process_prefix(type, n, metric, write_all, prefix):
             if val == min_value:
                 min_array.append(line)
 
-    file1 = open(f'max_{type}_{metric}.txt', 'a')
-    file2 = open(f'min_{type}_{metric}.txt', 'a')
-    if write_all.lower() == 'true' or write_all == '1':
-        for pp in max_array:
-            file1.write(f'{pp},{max_value}\n')
-        for pp in min_array:
-            file2.write(f'{pp},{min_value}\n')
-    else:
-        if len(max_array) > 0:
-            pp = max_array[0]
-            file1.write(f'{pp},{max_value}\n')
-        if len(min_array) > 0:
-            pp = min_array[0]
-            file2.write(f'{pp},{min_value}\n')
+    file1 = open(f'maxall_{type}_{n}_{metric}.txt', 'a')
+    file2 = open(f'minall_{type}_{n}_{metric}.txt', 'a')
+    file3 = open(f'maxone_{type}_{n}_{metric}.txt', 'a')
+    file4 = open(f'minone_{type}_{n}_{metric}.txt', 'a')
+
+    for pp in max_array:
+        file1.write(f'{pp},{max_value}\n')
+    for pp in min_array:
+        file2.write(f'{pp},{min_value}\n')
+    if len(max_array) > 0:
+        pp = max_array[0]
+        file3.write(f'{pp},{max_value}\n')
+    if len(min_array) > 0:
+        pp = min_array[0]
+        file4.write(f'{pp},{min_value}\n')
 
     file1.close()
     file2.close()
-    return (len(min_array), len(max_array))
+    file3.close()
+    file4.close()
+    return (prefix,len(min_array), min_value, len(max_array), max_value)
 
 
 
 
-def main(type, n, metric, write_all):
+def main(type, n, metric):
 
     prefixes4 = ['ABAB', 'ABAC', 'ABAE', 'ABAF',
                  'ABCA', 'ABCB', 'ABCD', 'ABCE',
@@ -73,24 +76,29 @@ def main(type, n, metric, write_all):
 
     num_processes = min(cpu_count(), len(prefixes4))
     with Pool(num_processes) as pool:
-        results = pool.starmap(process_prefix, [(type, n, metric, write_all, prefix) for prefix in prefixes4])
-    print(results)
+        results = pool.starmap(process_prefix, [(type, n, metric, prefix) for prefix in prefixes4])
+
+    file0 = open(f'mmsummary_{type}_{n}_{metric}.txt', 'a')
+    for result in results:
+        csv_string = ','.join(str(item) for item in result)
+        file0.write(f'{csv_string}\n')
+    file0.close()
+
 
 
 # python perfect_extremes_parallel.py perfect 25 area
 if __name__ == '__main__':
-    if len(sys.argv) < 5:
-        print("Usage: python perfect_extremes_parallel.py <type> <n> <correct> <write_all='true|false'>")
+    if len(sys.argv) < 4:
+        print("Usage: python perfect_extremes_parallel.py <poly-type> <n> <metric>")
         sys.exit(1)
-    type = sys.argv[1]
+    ptype = sys.argv[1]
     n = int(sys.argv[2])
     metric = sys.argv[3]
-    write_all = sys.argv[4]
-    if not type in ['perfect', 'acute', 'obtuse']:
-        print("Type must be 'perfect', 'acute', or 'obtuse'")
+    if not ptype in ['perfect', 'acute', 'obtuse']:
+        print("Poly-type must be 'perfect', 'acute', or 'obtuse'")
         sys.exit(1)
     if not metric in ['area', 'diameter', 'width', 'dimension']:
-        print("Type must be 'perfect', 'acute', or 'obtuse'")
+        print("Metric must be 'area', 'diameter', 'width', or 'dimension'")
         sys.exit(1)
 
-    main(type, n, metric, write_all)
+    main(ptype, n, metric)
