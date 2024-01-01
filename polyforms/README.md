@@ -16,7 +16,11 @@ cd konstrukcijas/editing_distance
 export PYTHONPATH="../../polyforms/src"
 python poly_perfect_lists.py 13
 
-nohup python perfect_extremes_parallel.py perfect 25 width false
+nohup python perfect_extremes_parallel.py perfect 25 width
+
+ps -ef | grep parallel
+jobs
+
 
 du -sh /home/kalvis
 df 

@@ -16,13 +16,13 @@ def f(line, metric):
         return min(p.get_bounding_sizes())
 
 
-def process_prefix(type, n, metric, prefix):
-    print(f"Processing {type} {n}-polyiamonds, prefix {prefix} with metric {metric}")
+def process_prefix(ptype, n, metric, prefix):
+    print(f"Processing {ptype} {n}-polyiamonds, prefix {prefix} with metric {metric}")
     max_value = 0
     max_array = []
     min_value = 10000000000
     min_array = []
-    fileName = f'../editing_distance/{type}_{n}_{prefix}.txt'
+    fileName = f'../editing_distance/{ptype}_{n}_{prefix}.txt'
     with open(fileName, 'r') as file:
         for line in file:
             line = line.rstrip('\n')
@@ -38,10 +38,10 @@ def process_prefix(type, n, metric, prefix):
             if val == min_value:
                 min_array.append(line)
 
-    file1 = open(f'maxall_{type}_{n}_{metric}.txt', 'a')
-    file2 = open(f'minall_{type}_{n}_{metric}.txt', 'a')
-    file3 = open(f'maxone_{type}_{n}_{metric}.txt', 'a')
-    file4 = open(f'minone_{type}_{n}_{metric}.txt', 'a')
+    file1 = open(f'maxall_{ptype}_{n}_{metric}.txt', 'a')
+    file2 = open(f'minall_{ptype}_{n}_{metric}.txt', 'a')
+    file3 = open(f'maxone_{ptype}_{n}_{metric}.txt', 'a')
+    file4 = open(f'minone_{ptype}_{n}_{metric}.txt', 'a')
 
     for pp in max_array:
         file1.write(f'{pp},{max_value}\n')
@@ -61,9 +61,7 @@ def process_prefix(type, n, metric, prefix):
     return (prefix,len(min_array), min_value, len(max_array), max_value)
 
 
-
-
-def main(type, n, metric):
+def main(ptype, n, metric):
 
     prefixes4 = ['ABAB', 'ABAC', 'ABAE', 'ABAF',
                  'ABCA', 'ABCB', 'ABCD', 'ABCE',
@@ -76,9 +74,9 @@ def main(type, n, metric):
 
     num_processes = min(cpu_count(), len(prefixes4))
     with Pool(num_processes) as pool:
-        results = pool.starmap(process_prefix, [(type, n, metric, prefix) for prefix in prefixes4])
+        results = pool.starmap(process_prefix, [(ptype, n, metric, prefix) for prefix in prefixes4])
 
-    file0 = open(f'mmsummary_{type}_{n}_{metric}.txt', 'a')
+    file0 = open(f'mmsummary_{ptype}_{n}_{metric}.txt', 'a')
     for result in results:
         csv_string = ','.join(str(item) for item in result)
         file0.write(f'{csv_string}\n')
