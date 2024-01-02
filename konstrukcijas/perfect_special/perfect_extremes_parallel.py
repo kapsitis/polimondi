@@ -21,7 +21,7 @@ def process_prefix(ptype, n, metric, prefix):
     # print('XX n = {}'.format(n))
     # print('XX prefix = {}'.format(prefix))
     # print('XX metric = {}'.format(metric))
-    print(f"Processing {ptype} {n}-polyiamonds, prefix {prefix} with metric {metric}")
+    print(f"Finding extreme {ptype} {n}-polyiamonds, prefix '{prefix}', order by '{metric}'")
     max_value = 0
     max_array = []
     min_value = 10000000000
