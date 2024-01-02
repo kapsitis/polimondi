@@ -17,6 +17,10 @@ def f(line, metric):
 
 
 def process_prefix(ptype, n, metric, prefix):
+    # print('XX ptype = {}'.format(ptype))
+    # print('XX n = {}'.format(n))
+    # print('XX prefix = {}'.format(prefix))
+    # print('XX metric = {}'.format(metric))
     print(f"Processing {ptype} {n}-polyiamonds, prefix {prefix} with metric {metric}")
     max_value = 0
     max_array = []
@@ -40,24 +44,14 @@ def process_prefix(ptype, n, metric, prefix):
 
     file1 = open(f'maxall_{ptype}_{n}_{metric}.txt', 'a')
     file2 = open(f'minall_{ptype}_{n}_{metric}.txt', 'a')
-    file3 = open(f'maxone_{ptype}_{n}_{metric}.txt', 'a')
-    file4 = open(f'minone_{ptype}_{n}_{metric}.txt', 'a')
 
     for pp in max_array:
         file1.write(f'{pp},{max_value}\n')
     for pp in min_array:
         file2.write(f'{pp},{min_value}\n')
-    if len(max_array) > 0:
-        pp = max_array[0]
-        file3.write(f'{pp},{max_value}\n')
-    if len(min_array) > 0:
-        pp = min_array[0]
-        file4.write(f'{pp},{min_value}\n')
 
     file1.close()
     file2.close()
-    file3.close()
-    file4.close()
     return (prefix,len(min_array), min_value, len(max_array), max_value)
 
 
