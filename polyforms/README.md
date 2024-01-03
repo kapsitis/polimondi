@@ -24,81 +24,48 @@ jobs
 
 du -sh /home/kalvis
 df 
-
 ```
-
-
-
-grep "^ABA" perfect_24.txt | wc
- 1655084 1655084 41377100
-grep "^ABC" perfect_24.txt | wc
- 1976710 1976710 49417750
-grep "^ABD" perfect_24.txt | wc
- 1560193 1560193 39004825
-grep "^ABF" perfect_24.txt | wc
- 1751151 1751151 43778775
-grep "^ACA" perfect_24.txt | wc
- 1858038 1858038 46450950
-grep "^ACB" perfect_24.txt | wc
- 1867195 1867195 46679875
-grep "^ACD" perfect_24.txt | wc
- 1412787 1412787 35319675
-grep "^ACE" perfect_24.txt | wc
-  539868  539868 13496700
-
-1655084 + 1976710 + 1560193 + 1751151 + 1858038 + 1867195 + 1412787 + 539868
-12621026
-
-
-
-## n = 21
-[10240, 21050, 15403, 11915, 12552, 17470, 35545, 23471, 23347, 27617, 11530, 5729, 13352, 15565, 17772, 25095, 16872, 24492, 13640, 16381, 11028, 27534, 31305, 10394, 18187, 22981, 16482, 4130, 0, 18017, 7598, 0]
-
-## n = 22
-Total polyiamonds found: 1464978
-[32828, 62614, 44419, 37710, 36995, 50548, 90267, 60592, 65241, 77505, 30604, 14501, 41360, 43808, 47598, 65095, 52502, 67846, 39118, 46659, 33044, 72411, 85167, 30480, 51157, 63609, 43270, 10550, 0, 47846, 19634, 0]
-
-## n = 23
-Total polyiamonds found: 4284617
-[110907, 187304, 138326, 116882, 107404, 157496, 234533, 169454, 196319, 226409, 87219, 39008, 116880, 139245, 124770, 192562, 160010, 208085, 115682, 151491, 96636, 209723, 218929, 94682, 154709, 187072, 125117, 29828, 0, 138581, 49354, 0]
-
-## n = 24
-Total polyiamonds found: 12621026
-[350436, 541904, 405352, 357392, 336545, 485962, 671277, 482926, 584325, 621935, 246371, 107562, 370181, 437814, 360697, 582459, 477742, 601270, 336715, 442311, 312430, 619985, 628053, 306727, 443387, 542397, 341850, 85153, 0, 398088, 141780, 0]
-
-## n = 25
-Total polyiamonds found: 35662687
-[1017696, 1520413, 1120012, 1050761, 1058979, 1375118, 1918028, 1288091, 1580584, 1706631, 646748, 287784, 1210590, 1277438, 1066756, 1578034, 1370096, 1631126, 942032, 1235502, 1005663, 1724213, 1837993, 887874, 1245346, 1451309, 912743, 221520, 0, 1087833, 405774, 0]
 
 
 
  
 
 # Pastmarka - 1
+
+```
 grep -Er "^A(CA)*(EA)*(EC)*(AC)*$" --include="acute_*.txt"
 acute_27.txt:ACAEAEAECECECECECACACACACAC
 acute_35.txt:ACACAEAEAEAECECECECECECECACACACACAC
+```
 
 # Pastmarka - 2
+
+```
 grep -Er "^A(CA)*(CE)*(AE)*(AC)*$" --include="acute_*.txt"
 ./acute_9.txt:ACECEAEAC
+```
 
 # Gandrīz Pastmarka - 2b
+
+```
 grep -Er "^A(CA)*(CE)*(AE)*CE(AE)*(AC)*$" --include="acute_*.txt"
 ./acute_33.txt:ACACACECECECEAEAECEAEAEAEAEACACAC
 ./acute_39.txt:ACACECECECEAECEAEAEAEAEACACACACACACACAC
 ./acute_57.txt:ACACACACACECECECECECECEAEAEAEAEAEAEAECEAEAEAEAEACACACACAC
+```
 
 # Gandrīz Pastmarka - 2bc
+
+```
 grep -Er "^A(CA)*(CE)*(AE)*CE(AE)*(AC)*AE(AC)*$" --include="acute_*.txt"
+```
 
 
 
 
 
 
-
-
+```
 def main(n):
     prefixes = ['ABA', 'ABC', 'ABD', 'ABE', 'ACA', 'ACB', 'ACD', 'ACE']
     for prefix in prefixes:
@@ -107,7 +74,7 @@ def main(n):
         while b.attempt(0):
             q.display()
         print(f'Found {q.solution_count} polyiamonds')
-
+```
 
 
 

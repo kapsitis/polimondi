@@ -67,18 +67,27 @@ def process_prefix(ptype, n, metric, prefix):
 
 def main(ptype, n, metric):
 
-    prefixes4 = ['ABAB', 'ABAC', 'ABAE', 'ABAF',
-                 'ABCA', 'ABCB', 'ABCD', 'ABCE',
-                 'ABDB', 'ABDC', 'ABDE', 'ABDF',
-                 'ABFA', 'ABFB', 'ABFD', 'ABFE',
-                 'ACAB', 'ACAC', 'ACAE', 'ACAF',
-                 'ACBA', 'ACBC', 'ACBD', 'ACBF',
-                 'ACDB', 'ACDC', 'ACDE', 'ACDF',
-                 'ACEA', 'ACEC', 'ACED', 'ACEF']
+    # prefixes4 = ['ABAB', 'ABAC', 'ABAE', 'ABAF',
+    #              'ABCA', 'ABCB', 'ABCD', 'ABCE',
+    #              'ABDB', 'ABDC', 'ABDE', 'ABDF',
+    #              'ABFA', 'ABFB', 'ABFD', 'ABFE',
+    #              'ACAB', 'ACAC', 'ACAE', 'ACAF',
+    #              'ACBA', 'ACBC', 'ACBD', 'ACBF',
+    #              'ACDB', 'ACDC', 'ACDE', 'ACDF',
+    #              'ACEA', 'ACEC', 'ACED', 'ACEF']
 
-    num_processes = min(cpu_count(), len(prefixes4))
+    prefixes = ['ABABA', 'ABABC', 'ABABD', 'ABABF', 'ABACA', 'ABACB', 'ABACD', 'ABACE', 'ABAEA', 'ABAEC', 'ABAED', 'ABAEF', 'ABAFA', 'ABAFB', 'ABAFD', 'ABAFE',
+                'ABCAB', 'ABCAC', 'ABCAE', 'ABCAF', 'ABCBA', 'ABCBC', 'ABCBD', 'ABCBF', 'ABCDB', 'ABCDC', 'ABCDE', 'ABCDF', 'ABCEA', 'ABCEC', 'ABCED', 'ABCEF',
+                'ABDBA', 'ABDBC', 'ABDBD', 'ABDBF', 'ABDCA', 'ABDCB', 'ABDCD', 'ABDCE', 'ABDEA', 'ABDEC', 'ABDED', 'ABDEF', 'ABDFA', 'ABDFB', 'ABDFD', 'ABDFE',
+                'ABFAB', 'ABFAC', 'ABFAE', 'ABFAF', 'ABFBA', 'ABFBC', 'ABFBD', 'ABFBF', 'ABFDB', 'ABFDC', 'ABFDE', 'ABFDF', 'ABFEA', 'ABFEC', 'ABFED', 'ABFEF']
+                # 'ACABA', 'ACABC', 'ACABD', 'ACABF', 'ACACA', 'ACACB', 'ACACD', 'ACACE', 'ACAEA', 'ACAEC', 'ACAED', 'ACAEF', 'ACAFA', 'ACAFB', 'ACAFD', 'ACAFE',
+                # 'ACBAB', 'ACBAC', 'ACBAE', 'ACBAF', 'ACBCA', 'ACBCB', 'ACBCD', 'ACBCE', 'ACBDB', 'ACBDC', 'ACBDE', 'ACBDF', 'ACBFA', 'ACBFB', 'ACBFD', 'ACBFE',
+                # 'ACDBA', 'ACDBC', 'ACDBD', 'ACDBF', 'ACDCA', 'ACDCB', 'ACDCD', 'ACDCE', 'ACDEA', 'ACDEC', 'ACDED', 'ACDEF', 'ACDFA', 'ACDFB', 'ACDFD', 'ACDFE',
+                # 'ACEAB', 'ACEAC', 'ACEAE', 'ACEAF', 'ACECA', 'ACECB', 'ACECD', 'ACECE', 'ACEDB', 'ACEDC', 'ACEDE', 'ACEDF', 'ACEFA', 'ACEFB', 'ACEFD', 'ACEFE']
+
+    num_processes = min(cpu_count(), len(prefixes))
     with Pool(num_processes) as pool:
-        results = pool.starmap(process_prefix, [(ptype, n, metric, prefix) for prefix in prefixes4])
+        results = pool.starmap(process_prefix, [(ptype, n, metric, prefix) for prefix in prefixes])
 
     file0 = open(f'mmsummary_{ptype}_{n}_{metric}_F.txt', 'a')
     for result in results:

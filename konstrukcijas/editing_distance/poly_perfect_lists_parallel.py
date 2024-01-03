@@ -20,25 +20,35 @@ def main(n):
     # 18 + 42 + 26 + 19 + 2 + 52 + 46 + 23 = 228
     # prefixes3 = ['ABA', 'ABC', 'ABD', 'ABF', 'ACA', 'ACB', 'ACD', 'ACE']
 
-    prefixes4 = ['ABAB', 'ABAC', 'ABAE', 'ABAF',
-                 'ABCA', 'ABCB', 'ABCD', 'ABCE',
-                 'ABDB', 'ABDC', 'ABDE', 'ABDF',
-                 'ABFA', 'ABFB', 'ABFD', 'ABFE',
-                 'ACAB', 'ACAC', 'ACAE', 'ACAF',
-                 'ACBA', 'ACBC', 'ACBD', 'ACBF',
-                 'ACDB', 'ACDC', 'ACDE', 'ACDF',
-                 'ACEA', 'ACEC', 'ACED', 'ACEF']
+    # prefixes4 = ['ABAB', 'ABAC', 'ABAE', 'ABAF',
+    #              'ABCA', 'ABCB', 'ABCD', 'ABCE',
+    #              'ABDB', 'ABDC', 'ABDE', 'ABDF',
+    #              'ABFA', 'ABFB', 'ABFD', 'ABFE',
+    #              'ACAB', 'ACAC', 'ACAE', 'ACAF',
+    #              'ACBA', 'ACBC', 'ACBD', 'ACBF',
+    #              'ACDB', 'ACDC', 'ACDE', 'ACDF',
+    #              'ACEA', 'ACEC', 'ACED', 'ACEF']
+
+
+    prefixes = ['ABABA', 'ABABC', 'ABABD', 'ABABF', 'ABACA', 'ABACB', 'ABACD', 'ABACE', 'ABAEA', 'ABAEC', 'ABAED', 'ABAEF', 'ABAFA', 'ABAFB', 'ABAFD', 'ABAFE',
+                'ABCAB', 'ABCAC', 'ABCAE', 'ABCAF', 'ABCBA', 'ABCBC', 'ABCBD', 'ABCBF', 'ABCDB', 'ABCDC', 'ABCDE', 'ABCDF', 'ABCEA', 'ABCEC', 'ABCED', 'ABCEF',
+                'ABDBA', 'ABDBC', 'ABDBD', 'ABDBF', 'ABDCA', 'ABDCB', 'ABDCD', 'ABDCE', 'ABDEA', 'ABDEC', 'ABDED', 'ABDEF', 'ABDFA', 'ABDFB', 'ABDFD', 'ABDFE',
+                'ABFAB', 'ABFAC', 'ABFAE', 'ABFAF', 'ABFBA', 'ABFBC', 'ABFBD', 'ABFBF', 'ABFDB', 'ABFDC', 'ABFDE', 'ABFDF', 'ABFEA', 'ABFEC', 'ABFED', 'ABFEF']
+                # 'ACABA', 'ACABC', 'ACABD', 'ACABF', 'ACACA', 'ACACB', 'ACACD', 'ACACE', 'ACAEA', 'ACAEC', 'ACAED', 'ACAEF', 'ACAFA', 'ACAFB', 'ACAFD', 'ACAFE',
+                # 'ACBAB', 'ACBAC', 'ACBAE', 'ACBAF', 'ACBCA', 'ACBCB', 'ACBCD', 'ACBCE', 'ACBDB', 'ACBDC', 'ACBDE', 'ACBDF', 'ACBFA', 'ACBFB', 'ACBFD', 'ACBFE',
+                # 'ACDBA', 'ACDBC', 'ACDBD', 'ACDBF', 'ACDCA', 'ACDCB', 'ACDCD', 'ACDCE', 'ACDEA', 'ACDEC', 'ACDED', 'ACDEF', 'ACDFA', 'ACDFB', 'ACDFD', 'ACDFE',
+                # 'ACEAB', 'ACEAC', 'ACEAE', 'ACEAF', 'ACECA', 'ACECB', 'ACECD', 'ACECE', 'ACEDB', 'ACEDC', 'ACEDE', 'ACEDF', 'ACEFA', 'ACEFB', 'ACEFD', 'ACEFE']
 
 
 
     # Determine the number of processes based on available CPU cores and prefixes count
-    print('CPU count = {}; prefixes = {}'.format(cpu_count(), prefixes4))
-    num_processes = min(cpu_count(), len(prefixes4))
+    print('CPU count = {}; prefixes = {}'.format(cpu_count(), prefixes))
+    num_processes = min(cpu_count(), len(prefixes))
 
     # Create a multiprocessing pool with desired number of processes
     with Pool(num_processes) as pool:
         # Map each prefix to be processed in parallel
-        results = pool.starmap(process_prefix, [(n, prefix) for prefix in prefixes4])
+        results = pool.starmap(process_prefix, [(n, prefix) for prefix in prefixes])
 
     # Compute and print the sum of results
     total = sum(results)
