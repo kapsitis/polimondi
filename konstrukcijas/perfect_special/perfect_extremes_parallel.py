@@ -76,14 +76,14 @@ def main(ptype, n, metric):
     #              'ACDB', 'ACDC', 'ACDE', 'ACDF',
     #              'ACEA', 'ACEC', 'ACED', 'ACEF']
 
-    prefixes = ['ABABA', 'ABABC', 'ABABD', 'ABABF', 'ABACA', 'ABACB', 'ABACD', 'ABACE', 'ABAEA', 'ABAEC', 'ABAED', 'ABAEF', 'ABAFA', 'ABAFB', 'ABAFD', 'ABAFE',
-                'ABCAB', 'ABCAC', 'ABCAE', 'ABCAF', 'ABCBA', 'ABCBC', 'ABCBD', 'ABCBF', 'ABCDB', 'ABCDC', 'ABCDE', 'ABCDF', 'ABCEA', 'ABCEC', 'ABCED', 'ABCEF',
-                'ABDBA', 'ABDBC', 'ABDBD', 'ABDBF', 'ABDCA', 'ABDCB', 'ABDCD', 'ABDCE', 'ABDEA', 'ABDEC', 'ABDED', 'ABDEF', 'ABDFA', 'ABDFB', 'ABDFD', 'ABDFE',
-                'ABFAB', 'ABFAC', 'ABFAE', 'ABFAF', 'ABFBA', 'ABFBC', 'ABFBD', 'ABFBF', 'ABFDB', 'ABFDC', 'ABFDE', 'ABFDF', 'ABFEA', 'ABFEC', 'ABFED', 'ABFEF']
-                # 'ACABA', 'ACABC', 'ACABD', 'ACABF', 'ACACA', 'ACACB', 'ACACD', 'ACACE', 'ACAEA', 'ACAEC', 'ACAED', 'ACAEF', 'ACAFA', 'ACAFB', 'ACAFD', 'ACAFE',
-                # 'ACBAB', 'ACBAC', 'ACBAE', 'ACBAF', 'ACBCA', 'ACBCB', 'ACBCD', 'ACBCE', 'ACBDB', 'ACBDC', 'ACBDE', 'ACBDF', 'ACBFA', 'ACBFB', 'ACBFD', 'ACBFE',
-                # 'ACDBA', 'ACDBC', 'ACDBD', 'ACDBF', 'ACDCA', 'ACDCB', 'ACDCD', 'ACDCE', 'ACDEA', 'ACDEC', 'ACDED', 'ACDEF', 'ACDFA', 'ACDFB', 'ACDFD', 'ACDFE',
-                # 'ACEAB', 'ACEAC', 'ACEAE', 'ACEAF', 'ACECA', 'ACECB', 'ACECD', 'ACECE', 'ACEDB', 'ACEDC', 'ACEDE', 'ACEDF', 'ACEFA', 'ACEFB', 'ACEFD', 'ACEFE']
+#    prefixes = ['ABABA', 'ABABC', 'ABABD', 'ABABF', 'ABACA', 'ABACB', 'ABACD', 'ABACE', 'ABAEA', 'ABAEC', 'ABAED', 'ABAEF', 'ABAFA', 'ABAFB', 'ABAFD', 'ABAFE',
+#                'ABCAB', 'ABCAC', 'ABCAE', 'ABCAF', 'ABCBA', 'ABCBC', 'ABCBD', 'ABCBF', 'ABCDB', 'ABCDC', 'ABCDE', 'ABCDF', 'ABCEA', 'ABCEC', 'ABCED', 'ABCEF',
+#                'ABDBA', 'ABDBC', 'ABDBD', 'ABDBF', 'ABDCA', 'ABDCB', 'ABDCD', 'ABDCE', 'ABDEA', 'ABDEC', 'ABDED', 'ABDEF', 'ABDFA', 'ABDFB', 'ABDFD', 'ABDFE',
+#                'ABFAB', 'ABFAC', 'ABFAE', 'ABFAF', 'ABFBA', 'ABFBC', 'ABFBD', 'ABFBF', 'ABFDB', 'ABFDC', 'ABFDE', 'ABFDF', 'ABFEA', 'ABFEC', 'ABFED', 'ABFEF']
+    prefixes = ['ACABA', 'ACABC', 'ACABD', 'ACABF', 'ACACA', 'ACACB', 'ACACD', 'ACACE', 'ACAEA', 'ACAEC', 'ACAED', 'ACAEF', 'ACAFA', 'ACAFB', 'ACAFD', 'ACAFE',
+                'ACBAB', 'ACBAC', 'ACBAE', 'ACBAF', 'ACBCA', 'ACBCB', 'ACBCD', 'ACBCE', 'ACBDB', 'ACBDC', 'ACBDE', 'ACBDF', 'ACBFA', 'ACBFB', 'ACBFD', 'ACBFE',
+                'ACDBA', 'ACDBC', 'ACDBD', 'ACDBF', 'ACDCA', 'ACDCB', 'ACDCD', 'ACDCE', 'ACDEA', 'ACDEC', 'ACDED', 'ACDEF', 'ACDFA', 'ACDFB', 'ACDFD', 'ACDFE',
+                'ACEAB', 'ACEAC', 'ACEAE', 'ACEAF', 'ACECA', 'ACECB', 'ACECD', 'ACECE', 'ACEDB', 'ACEDC', 'ACEDE', 'ACEDF', 'ACEFA', 'ACEFB', 'ACEFD', 'ACEFE']
 
     num_processes = min(cpu_count(), len(prefixes))
     with Pool(num_processes) as pool:
