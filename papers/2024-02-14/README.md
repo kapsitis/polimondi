@@ -1,4 +1,4 @@
-#  Families of Perfect Polyiamonds as Formal Languages
+# Notes for the 'Families of Perfect Polyiamonds'
 
 *A supplementary material for a conference article presented in University of 
 Latvia on 2024-02-14.*
@@ -13,7 +13,14 @@ Perfect polyiamonds can be represented as strings over the alphabet
 $\Sigma = \{ \mathtt{a}, \mathtt{b}, \mathtt{c}, \mathtt{d}, \mathtt{e}, \mathtt{f} \}$ 
 listing their side directions in decreasing length order. 
 
-<img src="polyiamond-examples.png" width="400" alt="polyiamond-examples">
+<img src="polyiamond-examples.png" width="400" alt="polyiamond-examples">  
+*Fig.1: Perfect polyiamonds.* 
+
+In the above figure, all three types of polyiamonds are given: 
+
+* A perfect polyiamond with $n=5$ and string representation $\mathtt{acedf}$,
+* A perfect acute polyiamond with $n=9$ and string representation $\mathtt{aceceaeac}$,
+* A perfect obtuse polyiamond with $n=12$ and string representation $\mathtt{abcdedefafab}$.
 
 **Proposition 2:** 
 There is no infinite set of perfect polyiamonds that is a regular language. 
@@ -71,3 +78,6 @@ We need to provide grammars for both cases:
 * $P \rightarrow \mathtt{aececacece}P(\mathtt{caea})^5$,
 * $P \rightarrow \mathtt{cecececa}$.
 
+(2) Here is a TAG grammar to generate another infinite family of polyiamonds: 
+
+<img src="tag-grammar.png" alt="TAG grammar" width="600">
