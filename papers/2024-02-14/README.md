@@ -13,7 +13,7 @@ Perfect polyiamonds can be represented as strings over the alphabet
 $\Sigma = \{ \mathtt{a}, \mathtt{b}, \mathtt{c}, \mathtt{d}, \mathtt{e}, \mathtt{f} \}$ 
 listing their side directions in decreasing length order. 
 
-<img src="polyiamond-examples.png" width="100" alt="polyiamond-examples">
+<img src="polyiamond-examples.png" width="400" alt="polyiamond-examples">
 
 **Proposition 2:** 
 There is no infinite set of perfect polyiamonds that is a regular language. 
