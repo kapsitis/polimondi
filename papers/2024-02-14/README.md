@@ -47,7 +47,7 @@ sufficiently many times, one of the following will happen:
 distances between corresponding sides in subsequent iterations are 
 constant - and for sufficiently many iterations of this spyral, one 
 cannot get out of it using a finite number of remaining sides in the polygonal chain. 
-$\square$
+$\blacksquare$
 
 
 
