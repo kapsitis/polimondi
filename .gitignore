@@ -16,3 +16,4 @@ konstrukcijas/ccc
 **/build/
 *.aux
 *.log
+source-data/
