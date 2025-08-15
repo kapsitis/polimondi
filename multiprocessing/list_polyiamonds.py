@@ -9,7 +9,7 @@ from multiprocessing import Pool, cpu_count
 
 def process_prefix(ptype, n, prefix):
     time.sleep(randrange(100)/100)
-    print(f"Finding {n}-polyiamonds of type {ptype}, prefix '{prefix}'")
+    print(f"Finding {n}-polyiamonds of type {ptype}, prefix '{prefix}', PID: {os.getpid()}")
     return (prefix, n, ptype, os.getpid())
 
 
@@ -22,7 +22,8 @@ def main(ptype, n, n_cpu):
 
     num_processes = 4
     with Pool(num_processes) as pool:
-        results = pool.starmap(process_prefix, [(ptype, n, prefix) for prefix in prefixes])
+        results = pool.starmap(process_prefix, 
+                               [(ptype, n, prefix) for prefix in prefixes])
 
     file0 = open(f'mmsummary_{ptype}_{n}.txt', 'a')
     for result in results:
