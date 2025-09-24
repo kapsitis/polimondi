@@ -14,34 +14,32 @@ Atsevišķi aplūkojam vēl šādas polimondu klases:
 3. Visi polimondi ar doto perimetru $P=\frac{n(n+1)}{2}$ un dažāda garuma malām 
    (malu skaits var būt jebkurš). Vai arī patvaļīgam perimetram $P$. 
 4. Visi maģiskie polimondi ar $n$ malām. 
-
-
-E. Visi maģiskie polimondi, kam (pie dotās $n$ vērtības) ir maksimāli daudz 
+5. Visi maģiskie polimondi, kam (pie dotās $n$ vērtības) ir maksimāli daudz 
    šauru leņķu. 
-F. Visi maģiskie polimondi, kam (dotajai $n$ vērtībai) ir maksimāli daudz 
+6. Visi maģiskie polimondi, kam (dotajai $n$ vērtībai) ir maksimāli daudz 
    platu leņķu.
-G. Visi maģiskie polimondi, kuru kontūrs (dotajai $n$ vērtībai) 
+7. Visi maģiskie polimondi, kuru kontūrs (dotajai $n$ vērtībai) 
    visretāk veic "ieliekumu" (t.i. pagriezienu pretēji polimonda kopīgajai orientācijai). 
-H. Visi maģiskie polimondi, kuru kontūrs (dotajai $n$ vērtībai) 
+8. Visi maģiskie polimondi, kuru kontūrs (dotajai $n$ vērtībai) 
    visbiežāk veic "ieliekumu" (t.i. pagriezienu pretēji polimonda kopīgajai orientācijai). 
-I. Visi maģiskie polimondi, kam malu garumu virknes diferencēm 
+9. Visi maģiskie polimondi, kam malu garumu virknes diferencēm 
    $\Delta_i = a_{i+1} - a_{i}$ 
    ir ne vairāk 2 cikliskās zīmju maiņas (*cyclic alternation number* nepārsniedz $2$). 
    Piemēram, identiskajai permutācijai $(1,2,3,4,5)$ un permutācijai 
    $(1,3,5,4,2)$ abām ir tieši divas zīmju maiņas, ja pa apli izrēķina 
    visas starpības - t.i. virkne no augošas kļūst dilstoša un atpakaļ. 
-J. Visi maģiskie polimondi, kuriem cikliskās blakusesošo malu garumu
+10. Visi maģiskie polimondi, kuriem cikliskās blakusesošo malu garumu
    starpības pēc moduļa ir $1$, izņemot vienā vai divās vietās. 
-K. Visi maģiskie polimondi, kuru malu garumi, izrakstot tos apskatot pa apli, 
+11. Visi maģiskie polimondi, kuru malu garumi, izrakstot tos apskatot pa apli, 
    veido permutāciju $(p_1,p_2,\ldots,p_n)$ tā, ka 
    $p_i \equiv i$ pēc moduļa $m$, kur $m \in \{ 2,3,4,5,6 \}$
-L. Visi perfektie polimondi.
-M. Visi perfektie polimondi, kuru kontūrs (dotajai $n$ vērtībai) 
+12. Visi perfektie polimondi.
+13. Visi perfektie polimondi, kuru kontūrs (dotajai $n$ vērtībai) 
    visretāk veic "ieliekumu".
-N. Visi perfektie polimondi, kuru kontūrs (dotajai $n$ vērtībai) 
+14. Visi perfektie polimondi, kuru kontūrs (dotajai $n$ vērtībai) 
    visbiežāk veic "ieliekumu".
-O. Visi perfektie polimondi, kuriem visi leņķi ir šauri. 
-P. Visi perfektie polimondi, kuriem visi leņķi ir plati. 
+15. Visi perfektie polimondi, kuriem visi leņķi ir šauri. 
+16. Visi perfektie polimondi, kuriem visi leņķi ir plati. 
 
 Šādām polimondu klasēm var aplūkot dažādas 
 ģeometriskās īpašības (laukums, ievilktā/apvilktā riņķa
