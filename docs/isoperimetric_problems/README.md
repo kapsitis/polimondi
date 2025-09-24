@@ -9,10 +9,8 @@ perimetrs (skaitļu summa $1+2+\ldots+n = \frac{n(n+1)}{2}$).
 
 Atsevišķi aplūkojam vēl šādas polimondu klases: 
 
-a. Visi polimondi ar doto perimetru $P=\frac{n(n+1)}{2}$ vai arī patvaļīgam 
-   perimetram $P$. 
-b. Visi polimondi ar tieši $n$ malām un doto perimetru $P=\frac{n(n+1)}{2}$
-   vai arī patvaļīgam perimetram $P$. 
+a. Visi polimondi ar doto perimetru $P=\frac{n(n+1)}{2}$ vai arī patvaļīgam perimetram $P$. 
+b. Visi polimondi ar tieši $n$ malām un doto perimetru $P=\frac{n(n+1)}{2}$ vai arī patvaļīgam perimetram $P$. 
 
 C. Visi polimondi ar doto perimetru $P=\frac{n(n+1)}{2}$ un dažāda garuma malām 
    (malu skaits var būt jebkurš). Vai arī patvaļīgam perimetram $P$. 
