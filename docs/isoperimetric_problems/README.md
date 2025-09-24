@@ -11,10 +11,11 @@ Atsevišķi aplūkojam vēl šādas polimondu klases:
 
 1. Visi polimondi ar doto perimetru $P=\frac{n(n+1)}{2}$ vai arī patvaļīgam perimetram $P$. 
 2. Visi polimondi ar tieši $n$ malām un doto perimetru $P=\frac{n(n+1)}{2}$ vai arī patvaļīgam perimetram $P$. 
-
-C. Visi polimondi ar doto perimetru $P=\frac{n(n+1)}{2}$ un dažāda garuma malām 
+3. Visi polimondi ar doto perimetru $P=\frac{n(n+1)}{2}$ un dažāda garuma malām 
    (malu skaits var būt jebkurš). Vai arī patvaļīgam perimetram $P$. 
-D. Visi maģiskie polimondi ar $n$ malām. 
+4. Visi maģiskie polimondi ar $n$ malām. 
+
+
 E. Visi maģiskie polimondi, kam (pie dotās $n$ vērtības) ir maksimāli daudz 
    šauru leņķu. 
 F. Visi maģiskie polimondi, kam (dotajai $n$ vērtībai) ir maksimāli daudz 
