@@ -1,3 +1,7 @@
+---
+layout: default
+title: Izoperimetriskie uzdevumi
+---
 # Izoperimetriskie uzdevumi
 
 Fiksētai $n$ vērtībai trijstūru režģī kā parasti definējam 
