@@ -14,7 +14,6 @@ h1, h2 {
 
 h1, h2 {
     font-family: "Calibri Light", Calibri, "Carlito", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    font-weight: 300;
     line-height: 1.2;
     margin: 0.6em 0 0.3em;
 }
@@ -27,4 +26,20 @@ h1 {
 h2 {
     font-size: 13pt;
     color: #4472C4;      
+}
+
+table {
+    border-left: 1px solid black;
+    border-top: 1px solid black; 
+}
+
+table thead tr th {
+    font-weight: bold;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black; 
+}
+
+table tbody tr td {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black; 
 }
