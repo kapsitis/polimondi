@@ -1,17 +1,11 @@
+---
+layout: default
+title: Perfekto polimondu dati
+---
+# Perfektie polimondi
 
-<html>
-<head>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-<title>Perfektie polimondi</title>
-</head>
-
-<body>
-
-
-
-<h2>Visi perfektie polimondi</h2>
-
-<p>Teksta faili ar perfektiem polimondiem alfabētiskā secībā. Tie eksistē katram malu skaitam, sākot ar 5.</p>
+Perfektie polimondi ar malu kodējumiem pēc alfabēta. 
+Tie uzkrāti visiem malu skaitiem no 5 līdz 24. 
 
 <table border="1" cellspacing="0">
 <tr><th>Polimondu fails</th><th>Skaits</th></tr>
@@ -39,31 +33,32 @@
 <tr><td>perfect_26.txt</td><td>102848450</td></tr>
 </table>
 
-<p>Failus, sākot ar <tt>perfect_25.txt</tt> neglabājam uz servera, jo tie ir ļoti lieli (884MiB un vairāk)</p>
+Failus, sākot ar `perfect_25.txt` neglabājam uz servera, jo tie ir ļoti lieli (884MiB un vairāk).
 
 
 
-<h2>Šaurleņķu perfektie polimondi</h2>
+## Šaurleņķu perfektie polimondi
 
-<p>Visi polimondi šajos sarakstos ir perfekti un arī pierakstāmi ar burtiem A,C,E.
-Tādi eksistē pie n=9 un arī katram nepāra n, sākot ar 27, ja n(n+1) dalās ar 3.</p>
+Visi polimondi šajos sarakstos ir perfekti; visi to leņķi (izliektie vai ieliektie)
+ir šauri - jeb $60^{\circ}$ un $300^{\circ}$. 
+Šādu polimondu malas pierakstāmas ar burtiem A,C,E.
+Šaurleņķu perfektie polimondi eksistē pie $n=9$ un arī katram 
+nepāra $n$, sākot ar 27, ja $n(n+1)$ dalās ar 3.
 
-<table>
-<tr><th>Polimondu fails</th><th>Skaits</th></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/acute_9.txt">acute_9.txt</a></td><td>1</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/acute_27.txt">acute_27.txt</a></td><td>5</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/acute_29.txt">acute_29.txt</a></td><td>3</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/acute_33.txt">acute_33.txt</a></td><td>8</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/acute_35.txt">acute_35.txt</a></td><td>15</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/acute_39.txt">acute_39.txt</a></td><td>94</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/acute_41.txt">acute_41.txt</a></td><td>141</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/acute_45.txt">acute_45.txt</a></td><td>750</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/acute_47.txt">acute_47.txt</a></td><td>1064</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/acute_51.txt">acute_51.txt</a></td><td>5658</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/acute_53.txt">acute_53.txt</a></td><td>9447</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/acute_57.txt">acute_57.txt</a></td><td>40393</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/acute_59.txt">acute_59.txt</a></td><td>78417</td></tr>
-</table>
 
-</body>
-</html>
+| Polimondu fails | Skaits |
+| --------------- | ------ |
+| [acute_9.txt](http://www.dudajevagatve.lv/static/polimondi/acute_9.txt) | 1 | 
+| [acute_27.txt](http://www.dudajevagatve.lv/static/polimondi/acute_27.txt) | 5 | 
+| [acute_29.txt](http://www.dudajevagatve.lv/static/polimondi/acute_29.txt) | 3 | 
+| [acute_33.txt](http://www.dudajevagatve.lv/static/polimondi/acute_33.txt) | 8 | 
+| [acute_35.txt](http://www.dudajevagatve.lv/static/polimondi/acute_35.txt) | 15 | 
+| [acute_39.txt](http://www.dudajevagatve.lv/static/polimondi/acute_39.txt) | 94 | 
+| [acute_41.txt](http://www.dudajevagatve.lv/static/polimondi/acute_41.txt) | 141 | 
+| [acute_45.txt](http://www.dudajevagatve.lv/static/polimondi/acute_45.txt) | 750 | 
+| [acute_47.txt](http://www.dudajevagatve.lv/static/polimondi/acute_47.txt) | 1064 | 
+| [acute_51.txt](http://www.dudajevagatve.lv/static/polimondi/acute_51.txt) | 5658 | 
+| [acute_53.txt](http://www.dudajevagatve.lv/static/polimondi/acute_53.txt) | 9447 | 
+| [acute_57.txt](http://www.dudajevagatve.lv/static/polimondi/acute_57.txt) | 40393 | 
+| [acute_59.txt](http://www.dudajevagatve.lv/static/polimondi/acute_59.txt) | 78417 | 
+
