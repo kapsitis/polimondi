@@ -1,0 +1,8 @@
+- title: Home
+  url: /
+- title: Examples
+  children:
+    - title: Isoperimetric
+      url: /isoperimetric_problems/
+    - title: Acute
+      url: /acute_examples/

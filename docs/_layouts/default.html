@@ -17,6 +17,28 @@
 <script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body>
+
+<nav class="nav">
+  <ul class="nav__list">
+    {% for item in site.data.nav %}
+      <li class="nav__item {% if item.children %}has-children{% endif %}">
+        {% if item.url %}
+          <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+        {% else %}
+          <span class="nav__label">{{ item.title }}</span>
+        {% endif %}
+        {% if item.children %}
+          <ul class="nav__submenu">
+            {% for child in item.children %}
+              <li><a href="{{ child.url | relative_url }}">{{ child.title }}</a></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</nav>
+
 {{ content }}
 </body>
 </html>
