@@ -1,4 +1,12 @@
-  markdown: kramdown
-  kramdown:
-    input: GFM
-    math_engine: mathjax
+markdown: kramdown
+kramdown:
+  input: GFM
+# no math_engine here when using MathJax v3
+url: https://kapsitis.github.io
+baseurl: /polimondi
+# markdown: kramdown
+# kramdown:
+#   input: GFM
+#   math_engine: mathjax
+
+# baseurl: /polimondi
