@@ -86,9 +86,15 @@ class PointTg:
        'A': ['B', 'C', 'E', 'F'], 'B': ['A', 'C', 'D', 'F'], 'C': ['A', 'B', 'D', 'E'],
        'D': ['B', 'C', 'E', 'F'], 'E': ['A', 'C', 'D', 'F'], 'F': ['A', 'B', 'D', 'E']}
 
-    NEXT_MOVES = {'0': ['A'], '1': ['B', 'C'],
-       'A': ['B', 'C', 'E', 'F'], 'B': ['A', 'C', 'D', 'F'], 'C': ['A', 'B', 'D', 'E'],
-       'D': ['B', 'C', 'E', 'F'], 'E': ['A', 'C', 'D', 'F'], 'F': ['A', 'B', 'D', 'E']}
+    # NEXT_MOVES = {'0': ['A'], '1': ['B', 'C'],
+    #    'A': ['B', 'C', 'E', 'F'], 'B': ['A', 'C', 'D', 'F'], 'C': ['A', 'B', 'D', 'E'],
+    #    'D': ['B', 'C', 'E', 'F'], 'E': ['A', 'C', 'D', 'F'], 'F': ['A', 'B', 'D', 'E']}
+    
+    # This is for obtuse polyiamonds only
+    NEXT_MOVES = {'0': ['A'], '1': ['B'],
+       'A': ['B', 'F'], 'B': ['A', 'C'], 'C': ['B', 'D'],
+       'D': ['C', 'E'], 'E': ['D', 'F'], 'F': ['A', 'E']}
+
 
     # Transforms direction letters into unit vectors (modified Cartesian coordinates).
     # Actual 2D coordinates can be obtained when multiplying the height (1st coordinate by sqrt(3)/2.
