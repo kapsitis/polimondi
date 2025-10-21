@@ -24,6 +24,7 @@ def display_area(s):
 
 
 def main(filename):
+    histogram = dict()
     lines = read_as_list(filename)
     min = 1000000
     max = 0
@@ -33,12 +34,19 @@ def main(filename):
         line = line.strip()
         pp = Polyiamond(line)
         arr =pp.get_area()
+        if arr in histogram.keys():
+            histogram[arr] += 1
+        else:
+            histogram[arr] = 1
         if arr < min: 
             min = arr
             currmin = line
         if arr > max:
             max = arr
             currmax = line
+    with open("myhistogram.txt", 'w') as f:
+        for key in histogram.keys():
+            f.write(f"{key},{histogram[key]}\n")
     return (currmin, currmax)
 
 if __name__=='__main__':
