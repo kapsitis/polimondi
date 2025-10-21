@@ -8,7 +8,17 @@ title: Polimondi: Perfekti platleņķu polimondi
 **Definīcija:**
 Par *perfektu platleņķu* $n$-*polimondu* sauc perfektu $n$-polimondu, 
 kura visi iekšējie leņķi ir plati -- vai nu $120^{\circ}$ vai 
-$240^{\circ}$. 
+$240^{\circ}$.
+
+*1.attēls: Polimondu piemēri $n=12,18,24,30$.*
+
+![12,18,24,30 polimondi]({{ '/images/poly_12_18_24_30.png' | relative_url }}){: width="400" }
+
+*2.attēls: Polimondu piemēri $n=36,42,48$.*
+
+![12,18,24,30 polimondi]({{ '/images/poly_12_18_24_30.png' | relative_url }}){: width="400" }
+
+
 
 **Apgalvojums:** 
 Lai eksistētu perfekts platleņķu $n$-polimonds, ir nepieciešami, 
