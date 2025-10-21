@@ -1,8 +1,10 @@
-- title: Home
+- title: Sākums
   url: /
-- title: Examples
+- title: Piemēri
   children:
-    - title: Isoperimetric
+    - title: Izoperimetriski uzdevumi
       url: /isoperimetric_problems/
-    - title: Acute
-      url: /acute_examples/
+    - title: Šaurleņķu polimondi
+      url: /perfect_acute/
+    - title: Platleņķu polimondi
+      url: /perfect_obtuse/
