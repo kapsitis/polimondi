@@ -23,5 +23,15 @@ title: Induktīvi veidotas virknes
 <option value="SEQUENCE_8_1_B.svg;1440;1728">SEQUENCE_8_1_B</option>
 </select>  <a href="index.html">Uz sākumu</a>
 <br/>
-<img alt="My SVG Image" height="1772" id="svgImage" src="{{ 'SEQUENCE_4_3_A.svg' | relative_url }}" style="border: none; background-color: #FFFFE0;" width="1076"/>
+
+<img
+  id="svgImage"
+  alt="My SVG Image"
+  src="{{ '/inductive_sequences/SEQUENCE_4_3_A.svg' | relative_url }}"
+  width="1076"
+  height="1772"
+  style="border:none; background-color:#FFFFE0;"
+/>
+
+
 

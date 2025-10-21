@@ -14,26 +14,23 @@
     options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
     };
 </script>
+
 <script>
-		function changeImage() {
-			var selectElement = document.getElementById("selectSvg");
-			var selectedOption = selectElement.options[selectElement.selectedIndex].value;
-			const imgParams = selectedOption.split(";");
+  const base = "{{ '/inductive_sequences/' | relative_url }}"; // e.g. "/REPO/inductive_sequences/" or "/inductive_sequences/"
 
-			var imageElement = document.getElementById("svgImage")
-			console.log("imgParams[1] = " + imgParams[1])
-			console.log("imgParams[2] = " + imgParams[2])
-			imageElement.src = "inductive_sequences/" + imgParams[0];
-			imageElement.width = imgParams[1];
-			imageElement.height = imgParams[2];
-		}
+  function changeImage() {
+    const select = document.getElementById("selectSvg");
+    const [file, w, h] = select.value.split(";");
+    const img = document.getElementById("svgImage");
+    img.src = base + file; 
+    if (w) img.width = parseInt(w, 10);
+    if (h) img.height = parseInt(h, 10);
+  }
 
-		// Add an event listener for the DOMContentLoaded event
-    	document.addEventListener("DOMContentLoaded", function () {
-        	// Call the changeImage function when the page loads
-        	changeImage();
-    	});
-	</script>
+  document.addEventListener("DOMContentLoaded", changeImage);
+
+</script>
+
 
 <script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
