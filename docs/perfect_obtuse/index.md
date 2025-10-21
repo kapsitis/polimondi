@@ -5,7 +5,7 @@ title: Polimondi: Perfekti platleņķu polimondi
 
 ## Perfekti platleņķu polimondi
 
-
+![Alt text]({{ '/images/polyiamond42.png' | relative_url }}){: width="200" }
 
 <table class="csv-table">
   <thead>
@@ -16,7 +16,7 @@ title: Polimondi: Perfekti platleņķu polimondi
     </tr>
   </thead>
   <tbody>
-    {% for r in site.data.polygons %}
+    {% for r in site.data.obtuse %}
     <tr>
       <td>{{ r.n }}</td>
       <td class="mono">{{ r.sequence }}</td>
