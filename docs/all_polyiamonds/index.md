@@ -7,31 +7,31 @@ title: Perfekto polimondu dati
 Perfektie polimondi ar malu kodējumiem pēc alfabēta. 
 Tie uzkrāti visiem malu skaitiem no 5 līdz 24. 
 
-<table border="1" cellspacing="0">
-<tr><th>Polimondu fails</th><th>Skaits</th></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_5.txt">perfect_5.txt</a></td><td>1</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_6.txt">perfect_6.txt</a></td><td>1</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_7.txt">perfect_7.txt</a></td><td>2</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_8.txt">perfect_8.txt</a></td><td>7</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_9.txt">perfect_9.txt</a></td><td>3</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_10.txt">perfect_10.txt</a></td><td>4</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_11.txt">perfect_11.txt</a></td><td>21</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_12.txt">perfect_12.txt</a></td><td>87</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_13.txt">perfect_13.txt</a></td><td>228</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_14.txt">perfect_14.txt</a></td><td>477</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_15.txt">perfect_15.txt</a></td><td>1335</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_16.txt">perfect_16.txt</a></td><td>4026</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_17.txt">perfect_17.txt</a></td><td>8599</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_18.txt">perfect_18.txt</a></td><td>22326</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_19.txt">perfect_19.txt</a></td><td>67068</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_20.txt">perfect_20.txt</a></td><td>193445</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_21.txt">perfect_21.txt</a></td><td>526694</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_22.txt">perfect_22.txt</a></td><td>1464978</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_23.txt">perfect_23.txt</a></td><td>4284617</td></tr>
-<tr><td><a href="http://www.dudajevagatve.lv/static/polimondi/perfect_24.txt">perfect_24.txt</a></td><td>12621026</td></tr>
-<tr><td>perfect_25.txt</td><td>35662687</td></tr>
-<tr><td>perfect_26.txt</td><td>102848450</td></tr>
-</table>
+| Polimondu fails | Skaits |
+| --------------- | ------ |
+| [perfect_5.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_5.txt) | 1 | 
+| [perfect_6.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_6.txt) | 1 |
+| [perfect_7.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_7.txt) | 2 |
+| [perfect_8.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_8.txt) | 7 |
+| [perfect_9.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_9.txt) | 3 |
+| [perfect_10.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_10.txt) | 4 |
+| [perfect_11.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_11.txt) | 21 |
+| [perfect_12.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_12.txt) | 87 |
+| [perfect_13.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_13.txt) | 228 |
+| [perfect_14.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_14.txt) | 477 |
+| [perfect_15.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_15.txt) | 1335 |
+| [perfect_16.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_16.txt) | 4026 |
+| [perfect_17.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_17.txt) | 8599 |
+| [perfect_18.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_18.txt) | 22326 |
+| [perfect_19.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_19.txt) | 67068 |
+| [perfect_20.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_20.txt) | 193445 |
+| [perfect_21.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_21.txt) | 526694 |
+| [perfect_22.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_22.txt) | 1464978 |
+| [perfect_23.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_23.txt) | 4284617 |
+| [perfect_24.txt](http://www.dudajevagatve.lv/static/polimondi/perfect_24.txt) | 12621026 |
+| perfect_25.txt | 35662687 |
+| perfect_26.txt | 102848450 |
+
 
 Failus, sākot ar `perfect_25.txt` neglabājam uz servera, jo tie ir ļoti lieli (884MiB un vairāk).
 
