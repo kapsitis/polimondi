@@ -3,7 +3,7 @@ layout: default
 title: Sākumlapa
 ---
 
-* [Uz šo GitHub projektu](https://github.com/kapsitis/polimondi)
+* [GitHub projekts](https://github.com/kapsitis/polimondi)
 * [Induktīvi konstruētas polimondu virknes](inductive_sequences/) - 
   Vairākas virknes, ar kurām var parādīt 
   perfektu polimondu eksistenci katram naturālam $n \geq 5$.

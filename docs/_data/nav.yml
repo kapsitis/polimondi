@@ -1,9 +1,13 @@
 - title: Sākums
   url: /
-- title: Piemēri
+- title: Ievads
   children:
     - title: Izoperimetriski uzdevumi
       url: /isoperimetric_problems/
+- title: Perfektie polimondi
+  children:
+    - title: Induktīvas virknes
+      url: /inductive_sequences/
     - title: Šaurleņķu polimondi
       url: /perfect_acute/
     - title: Platleņķu polimondi
