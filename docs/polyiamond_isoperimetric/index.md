@@ -4,10 +4,6 @@ title: Izoperimetriskie uzdevumi
 ---
 # Izoperimetriskie uzdevumi
 
-Fiksētai $n$ vērtībai trijstūru režģī kā parasti definējam 
-*maģisku* $n$-polimondu (kura malu garumi ir visi skaitļi no $[1;n]$
-patvaļīgā secībā) un *perfektu* $n$-polimondu (kura malu garumi 
-ir visi skaitļi $[1;n]$, kuri pēc kārtas seko viens otram).
 Gan maģiskiem, gan perfektiem polimondiem ir viens un tas pats 
 perimetrs (skaitļu summa $1+2+\ldots+n = \frac{n(n+1)}{2}$).
 

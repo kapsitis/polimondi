@@ -1,14 +1,30 @@
 - title: Sākums
   url: /
-- title: Ievads
+- title: Polimondu jēdzieni
   children:
+    - title: Kas ir polimondi
+      url: /polyiamond_concepts/
     - title: Izoperimetriski uzdevumi
-      url: /isoperimetric_problems/
+      url: /polyiamond_isoperimetric/
 - title: Perfektie polimondi
   children:
     - title: Induktīvas virknes
-      url: /inductive_sequences/
+      url: /perfect_inductive/
+    - title: Piemēru galerija
+      url: /perfect_examples/
     - title: Šaurleņķu polimondi
       url: /perfect_acute/
     - title: Platleņķu polimondi
       url: /perfect_obtuse/
+- title: Python paka polyforms
+  children:
+    - title: Vides uzstādīšana
+      url: /polyforms_setup/
+    - title: API klases un funkcijas
+      url: /polyforms_api/
+    - title: Piemēri
+      url: /examples/
+- title: Spēles ar polimondiem
+  children: 
+    - title: Kastītes aizpildīšana
+      url: /game_box_filling/

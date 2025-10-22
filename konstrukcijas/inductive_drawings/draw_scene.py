@@ -102,14 +102,14 @@ class draw_scene:
 
 
 
-    def insertOption(self, key, width = 0, height = 0):
+    def insertOption(self, file_path,key, width = 0, height = 0):
         if width == 0 or height == 0:
             width = round(self.width * 7.2)
             height = round(self.height * 7.2)
 
 
         # Read the existing HTML file
-        with open("../docs/inductive_sequences.html", "r") as file:
+        with open(file_path, "r") as file:
             html_content = file.read()
 
         # Parse the HTML using Beautiful Soup
@@ -146,7 +146,7 @@ class draw_scene:
             select_element.append(newline)
 
         # Write the modified HTML back to the file
-        with open("../docs/inductive_sequences.html", "w") as file:
+        with open(file_path, "w") as file:
             file.write(str(soup))
 
 
