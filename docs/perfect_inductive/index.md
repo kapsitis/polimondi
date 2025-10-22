@@ -4,7 +4,7 @@ title: Induktīvi veidotas virknes
 ---
 # Induktīvi veidotas virknes
 
-<select id="selectSvg" onchange="changeImage()">
+<select id="selectSvg" onchange="changeImage('/perfect_inductive/')">
 <option value="SEQUENCE_4_3_A.svg;576;576">SEQUENCE_4_3_A</option>
 <option value="SEQUENCE_4_3_B.svg;936;936">SEQUENCE_4_3_B</option>
 <option value="SEQUENCE_4_1_A.svg;936;936">SEQUENCE_4_1_A</option>
@@ -27,7 +27,7 @@ title: Induktīvi veidotas virknes
 <img
   id="svgImage"
   alt="My SVG Image"
-  src="{{ '/inductive_sequences/SEQUENCE_4_3_A.svg' | relative_url }}"
+  src="{{ '/perfect_inductive/SEQUENCE_4_3_A.svg' | relative_url }}"
   width="1076"
   height="1772"
   style="border:none; background-color:#FFFFE0;"

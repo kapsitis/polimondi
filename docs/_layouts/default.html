@@ -16,9 +16,10 @@
 </script>
 
 <script>
-  const base = "{{ '/inductive_sequences/' | relative_url }}"; // e.g. "/REPO/inductive_sequences/" or "/inductive_sequences/"
+  // const base = "{{ '/inductive_sequences/' | relative_url }}"; // e.g. "/REPO/inductive_sequences/" or "/inductive_sequences/"
 
-  function changeImage() {
+  function changeImage(subdirectory) {
+    base = "{{ {} | relative_url }}".format(subdirectory);
     const select = document.getElementById("selectSvg");
     const [file, w, h] = select.value.split(";");
     const img = document.getElementById("svgImage");
