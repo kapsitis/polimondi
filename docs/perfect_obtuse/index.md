@@ -9,12 +9,12 @@ Definīcijas sk.  [Kas ir polimondi]({{ '/perfect_acute/' | relative_url }}).
 
 <select id="selectSvg" data-base="{{ '/perfect_obtuse/' | relative_url }}">
 <option value="MAX_OBTUSE_12.svg;216;216">MAX_OBTUSE_12</option>
-<option value="MAX_OBTUSE_18.svg;432;432">MAX_OBTUSE_18</option>
-<option value="MAX_OBTUSE_24.svg;720;792">MAX_OBTUSE_24</option>
-<option value="MAX_OBTUSE_30.svg;1224;1152">MAX_OBTUSE_30</option>
-<option value="MAX_OBTUSE_36.svg;1440;1800">MAX_OBTUSE_36</option>
-<option value="MAX_OBTUSE_42.svg;1944;2520">MAX_OBTUSE_42</option>
-<option value="MAX_OBTUSE_48.svg;2736;3456">MAX_OBTUSE_48</option>
+<option value="MAX_OBTUSE_18.svg;400;500">MAX_OBTUSE_18</option>
+<option value="MAX_OBTUSE_24.svg;400;500">MAX_OBTUSE_24</option>
+<option value="MAX_OBTUSE_30.svg;400;500">MAX_OBTUSE_30</option>
+<option value="MAX_OBTUSE_36.svg;400;500">MAX_OBTUSE_36</option>
+<option value="MAX_OBTUSE_42.svg;400;500">MAX_OBTUSE_42</option>
+<option value="MAX_OBTUSE_48.svg;400;500">MAX_OBTUSE_48</option>
 </select>
 
 <img
