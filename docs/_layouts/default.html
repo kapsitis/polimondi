@@ -16,20 +16,34 @@
 </script>
 
 <script>
-  // const base = "{{ '/inductive_sequences/' | relative_url }}"; // e.g. "/REPO/inductive_sequences/" or "/inductive_sequences/"
-
-  function changeImage(subdirectory) {
-    base = "{{ {} | relative_url }}".format(subdirectory);
+  function changeImage(base) {
     const select = document.getElementById("selectSvg");
-    const [file, w, h] = select.value.split(";");
     const img = document.getElementById("svgImage");
-    img.src = base + file; 
+    if (!select || !img) return;
+
+    const [file, w, h] = (select.value || '').split(";");
+    const prefix = base.endsWith('/') ? base : base + '/';
+    img.src = prefix + file;
     if (w) img.width = parseInt(w, 10);
     if (h) img.height = parseInt(h, 10);
   }
 
-  document.addEventListener("DOMContentLoaded", changeImage);
+  document.addEventListener("DOMContentLoaded", function () {
+    const select = document.getElementById("selectSvg");
+    const img = document.getElementById("svgImage");
+    if (!select || !img) return;
 
+    // Prefer a data-base on the select; else fall back to img src directory
+    let base = select.dataset.base || img.dataset.base;
+    if (!base) {
+      const p = new URL(img.getAttribute('src'), document.baseURI).pathname;
+      base = p.replace(/[^/]+$/, ''); // strip filename
+    }
+
+    const handler = () => changeImage(base);
+    select.addEventListener("change", handler);
+    handler(); // initialize once at load
+  });
 </script>
 
 
