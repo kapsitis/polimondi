@@ -8,6 +8,8 @@
       url: /polyiamond_isoperimetric/
 - title: Perfektie polimondi
   children:
+    - title: Polimondu saraksti
+      url: /polyiamond_lists/
     - title: Induktīvas virknes
       url: /perfect_inductive/
     - title: Piemēru galerija
