@@ -4,6 +4,7 @@ import matplotlib.patches as mpatches
 import numpy as np
 from bs4 import BeautifulSoup
 import xml.etree.ElementTree as ET
+import os
 
 
 from konstrukcijas.inductive_drawings import poly_seq
@@ -102,7 +103,7 @@ class draw_scene:
 
 
 
-    def insertOption(self, file_path,key, width = 0, height = 0):
+    def insertOption(self, file_path, key, width = 0, height = 0):
         if width == 0 or height == 0:
             width = round(self.width * 7.2)
             height = round(self.height * 7.2)
@@ -150,7 +151,7 @@ class draw_scene:
             file.write(str(soup))
 
 
-    def create_grid(self, output_file):
+    def create_grid(self, subdirectory, output_file):
         # self.fig.set_size_inches(round(self.width / 218, 2), round(self.height / 218, 2))
         self.fig.set_size_inches(self.width/10 ,self.height/10)
         self.ax.set_xlim(self.left, self.left + self.width)
@@ -178,4 +179,4 @@ class draw_scene:
                             color=self.lcolor, linestyle=self.lstyle, linewidth=self.lwidth)
             line.set_clip_path(patch)
 
-        plt.savefig('../docs/inductive_sequences/{}'.format(output_file), format='svg', bbox_inches='tight', transparent="True", pad_inches=0)
+        plt.savefig(os.path.join(subdirectory, output_file), format='svg', bbox_inches='tight', transparent="True", pad_inches=0)
