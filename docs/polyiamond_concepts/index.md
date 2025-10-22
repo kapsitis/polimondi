@@ -24,7 +24,7 @@ sauc perfektu $n$-polimondu,
 kura visi iekšējie leņķi ir šauri -- vai nu $60^{\circ}$ vai 
 $300^{\circ}$.
 
-Vairāk par [šaurleņķu polimondiem]({{ /perfect_acute/ | relative_url }}).
+Vairāk par [šaurleņķu polimondiem]({{ '/perfect_acute/' | relative_url }}).
 
 **Definīcija:**
 Par *perfektu platleņķu* $n$-*polimondu* 
@@ -33,4 +33,4 @@ sauc perfektu $n$-polimondu,
 kura visi iekšējie leņķi ir plati -- vai nu $120^{\circ}$ vai 
 $240^{\circ}$.
 
-Vairāk par [platleņķu polimondiem]({{ /perfect_obtuse/ | relative_url }}).
+Vairāk par [platleņķu polimondiem]({{ '/perfect_obtuse/' | relative_url }}).
