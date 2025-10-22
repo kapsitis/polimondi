@@ -7,7 +7,7 @@ title: Polimondi: Perfekti platleņķu polimondi
 
 Definīcijas sk.  [Kas ir polimondi]({{ '/perfect_acute/' | relative_url }}).
 
-<select id="selectSvg" data-base="{{ '/polyiamond_concepts/' | relative_url }}">
+<select id="selectSvg" data-base="{{ '/perfect_obtuse/' | relative_url }}">
 <option value="MAX_OBTUSE_12.svg;216;216">MAX_OBTUSE_12</option>
 <option value="MAX_OBTUSE_18.svg;432;432">MAX_OBTUSE_18</option>
 <option value="MAX_OBTUSE_24.svg;720;792">MAX_OBTUSE_24</option>
