@@ -16,7 +16,7 @@
       url: /perfect_acute/
     - title: Platleņķu polimondi
       url: /perfect_obtuse/
-- title: Python paka polyforms
+- title: Paka 'polyforms'
   children:
     - title: Vides uzstādīšana
       url: /polyforms_setup/
@@ -24,7 +24,7 @@
       url: /polyforms_api/
     - title: Piemēri
       url: /examples/
-- title: Spēles ar polimondiem
+- title: Spēles
   children: 
     - title: Kastītes aizpildīšana
       url: /game_box_filling/
