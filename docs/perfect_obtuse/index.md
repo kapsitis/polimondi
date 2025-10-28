@@ -32,7 +32,21 @@ Lai eksistētu perfekts platleņķu $n$-polimonds, ir nepieciešami,
 lai $n \geq 12$ un $n \equiv 0 \pmod{6}$. 
 
 **Pierādījums:**
-TBD
+Vērtībai $n=6$ eksistē tikai viens perfekts polimonds un tas nav 
+platleņķu. 
+
+**Apgalvojums:** Ja daudzstūrī visi iekšējie leņķi ir 
+$120^{\circ}$ un $240^{\circ}$, tad 
+tā malu skaits ir pāra skaitlis.   
+*Pamatojums:* Daudzstūra iekšējo leņķu summa ir $180^{\circ}(n-2)$. 
+No otras puses, šī summa ir $a \cdot 120^{\circ} + b \cdot 240^{\circ}$, 
+ja daudzstūrī ir $a$ leņķi $120^{\circ}$ un $b$ leņķi $240^{\circ}$. 
+Pielīdzinot abas puses un saīsinot ar $60^{\circ}$, ieūstam vienādību: 
+$3(n-2) = 2a + 4b$. Labā puse ir pāra skaitlis, tāpēc arī kreisā 
+puse ir pāra skaitlis. Tādēļ arī $n-2$ un $n$ ir pāra skaitļi.
+
+
+
 
 <table class="csv-table">
   <thead>
