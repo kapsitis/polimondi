@@ -4,6 +4,8 @@
   children:
     - title: Kas ir polimondi
       url: /polyiamond_concepts/
+    - title: Neatbildēti jautājumi
+      url: /open_questions/
     - title: Izoperimetriski uzdevumi
       url: /polyiamond_isoperimetric/
 - title: Perfektie polimondi
