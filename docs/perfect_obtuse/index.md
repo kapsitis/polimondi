@@ -95,21 +95,20 @@ pārlasi.
 
 
 <select id="selectSvg" data-base="{{ '/perfect_obtuse/' | relative_url }}">
-<option value="MAX_OBTUSE_12.svg;216;216">MAX_OBTUSE_12</option>
-<option value="MAX_OBTUSE_18.svg;400;500">MAX_OBTUSE_18</option>
-<option value="MAX_OBTUSE_24.svg;600;700">MAX_OBTUSE_24</option>
-<option value="MAX_OBTUSE_30.svg;700;900">MAX_OBTUSE_30</option>
-<option value="MAX_OBTUSE_36.svg;800;1000">MAX_OBTUSE_36</option>
-<option value="MAX_OBTUSE_42.svg;800;1000">MAX_OBTUSE_42</option>
-<option value="MAX_OBTUSE_48.svg;800;1000">MAX_OBTUSE_48</option>
+<option value="MAX_OBTUSE_12.svg;240">MAX_OBTUSE_12</option>
+<option value="MAX_OBTUSE_18.svg;360">MAX_OBTUSE_18</option>
+<option value="MAX_OBTUSE_24.svg;420">MAX_OBTUSE_24</option>
+<option value="MAX_OBTUSE_30.svg;480">MAX_OBTUSE_30</option>
+<option value="MAX_OBTUSE_36.svg;540">MAX_OBTUSE_36</option>
+<option value="MAX_OBTUSE_42.svg;600">MAX_OBTUSE_42</option>
+<option value="MAX_OBTUSE_48.svg;600">MAX_OBTUSE_48</option>
 </select>
 
 <img
   id="svgImage"
   alt="My SVG Image"
   src="{{ '/perfect_obtuse/MAX_OBTUSE_12.svg' | relative_url }}"
-  width="216"
-  height="216"
+  width="240"
   style="border:none; background-color:#FFFFE0;"
 />
 

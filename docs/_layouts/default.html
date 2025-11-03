@@ -21,11 +21,10 @@
     const img = document.getElementById("svgImage");
     if (!select || !img) return;
 
-    const [file, w, h] = (select.value || '').split(";");
+    const [file, w] = (select.value || '').split(";");
     const prefix = base.endsWith('/') ? base : base + '/';
     img.src = prefix + file;
     if (w) img.width = parseInt(w, 10);
-    if (h) img.height = parseInt(h, 10);
   }
 
   document.addEventListener("DOMContentLoaded", function () {
