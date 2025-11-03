@@ -5,17 +5,7 @@ title: Polimondi: Perfekti platleņķu polimondi
 
 # Perfekti platleņķu polimondi
 
-Definīcijas sk.  [Kas ir polimondi]({{ '/perfect_acute/' | relative_url }}).
-
-<select id="selectSvg" data-base="{{ '/perfect_obtuse/' | relative_url }}">
-<option value="MAX_OBTUSE_12.svg;216;216">MAX_OBTUSE_12</option>
-<option value="MAX_OBTUSE_18.svg;400;500">MAX_OBTUSE_18</option>
-<option value="MAX_OBTUSE_24.svg;600;700">MAX_OBTUSE_24</option>
-<option value="MAX_OBTUSE_30.svg;700;900">MAX_OBTUSE_30</option>
-<option value="MAX_OBTUSE_36.svg;800;1000">MAX_OBTUSE_36</option>
-<option value="MAX_OBTUSE_42.svg;800;1000">MAX_OBTUSE_42</option>
-<option value="MAX_OBTUSE_48.svg;800;1000">MAX_OBTUSE_48</option>
-</select>
+Definīcijas sk.  [Kas ir polimondi]({{ '/polyiamond_concepts/' | relative_url }}).
 
 <img
   id="svgImage0"
@@ -115,7 +105,7 @@ pārlasi.
 </select>
 
 <img
-  id="svgImage0"
+  id="svgImage"
   alt="My SVG Image"
   src="{{ '/perfect_obtuse/MAX_OBTUSE_12.svg' | relative_url }}"
   width="216"
@@ -141,7 +131,7 @@ pārlasi.
       <td class="mono">{{ r.sequence }}</td>
       <td>{{ r.area }}</td>
       <td>{{ r.asymptotics }}</td>
-      <td>{{ r.ratio }}
+      <td>{{ r.ratio }}</td>
     </tr>
     {% endfor %}
   </tbody>
