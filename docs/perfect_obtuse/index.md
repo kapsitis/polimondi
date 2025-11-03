@@ -32,6 +32,7 @@ skaits strauji pieaug.
   <thead>
     <tr>
       <th>n</th>
+      <th>Fails</th>
       <th>Skaits</th>
     </tr>
   </thead>
@@ -39,6 +40,7 @@ skaits strauji pieaug.
     {% for r in site.data.obtuse_count %}
     <tr>
       <td>{{ r.n }}</td>
+      <td>[obtuse_{{ r.n }}.txt]({{ http://www.dudajevagatve.lv/static/polimondi/obtuse_{{ r.n }}.txt }})</td>
       <td>{{ r.count }}</td>
     </tr>
     {% endfor %}
