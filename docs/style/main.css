@@ -45,6 +45,13 @@ table tbody tr td {
 }
 
 
+.csv-table { border-collapse: collapse; width: 100%; }
+.csv-table th, .csv-table td { border: 1px solid #ccc; padding: 4px 8px; vertical-align: top; }
+.csv-table thead th { background: #f6f8fa; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+
+
 .nav { background:#f7f7f7; padding:.5rem 1rem; }
 .nav__list { display:flex; gap:1rem; list-style:none; margin:0; padding:0; align-items:center; }
 .nav__item { position:relative; }
