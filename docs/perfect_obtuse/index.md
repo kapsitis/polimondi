@@ -25,7 +25,9 @@ lai $n \geq 12$ un $n \equiv 0 \pmod{6}$.
 izgājis peer-review. Publicēšana atlikta aptuveni uz mēnesi.)
 Pie $n=12$ un $n=18$ eksistē tikai pa vienam perfektam platleņķa polimondam, 
 (sk. piemērus lapas apakšā), bet pie $n \geq 24$ šādu polimondu 
-skaits strauji pieaug.
+skaits strauji pieaug. Tabulā doti lejupielādējami faili 
+ar šiem polimondiem - tie pierakstīti kā malu vektoru virzieni,
+sākot ar visgarāko polimonda malu līdz visīsākajai.
 
 
 <table class="csv-table">
@@ -40,7 +42,7 @@ skaits strauji pieaug.
     {% for r in site.data.obtuse_count %}
     <tr>
       <td>{{ r.n }}</td>
-      <td>[obtuse_{{ r.n }}.txt]({{ http://www.dudajevagatve.lv/static/polimondi/obtuse_{{ r.n }}.txt }})</td>
+      <td><a href="http://www.dudajevagatve.lv/static/polimondi/obtuse_{{ r.n }}.txt">obtuse_{{ r.n }}.txt</a></td>
       <td>{{ r.count }}</td>
     </tr>
     {% endfor %}
