@@ -21,13 +21,15 @@ Definīcijas sk.  [Kas ir polimondi]({{ '/polyiamond_concepts/' | relative_url }
 Lai eksistētu perfekts platleņķu $n$-polimonds, ir nepieciešami, 
 lai $n \geq 12$ un $n \equiv 0 \pmod{6}$. 
 
-(Pierādījums agrāk bija ļoti neprecīzs, tagad ir labāks un arī 
-izgājis peer-review. Publicēšana atlikta aptuveni uz mēnesi.)
 Pie $n=12$ un $n=18$ eksistē tikai pa vienam perfektam platleņķa polimondam, 
 (sk. piemērus lapas apakšā), bet pie $n \geq 24$ šādu polimondu 
 skaits strauji pieaug. Tabulā doti lejupielādējami faili 
 ar šiem polimondiem - tie pierakstīti kā malu vektoru virzieni,
 sākot ar visgarāko polimonda malu līdz visīsākajai.
+Polimondi skaitīti, uzskatot figūras, kas atšķiras tikai ar rotāciju 
+vai ass simetriju par vienādām. (Platleņķu polimondiem tas nozīmē, ka 
+pirmie divi virzienu burti vienmēr ir "AB" - uz austrumiem un tad 
+uz ziemeļaustrumiem.)
 
 
 <table class="csv-table">
