@@ -147,9 +147,9 @@ Tabulas kolonnu paskaidrojumi:
 * "Malas" apzīmē to virzienu virknīti, kas ļauj iegūt 
   polimondu ar maksimālo laukumu. 
 * "Laukums" ir šī maksimālā polimonda laukums (vienības trijstūrīšos). 
-* "Asimptotika" ir laukums "robainajam sešstūrim", kurš ir regulārs,  
-  un kura perimetru faktiski veido zigzagveida lauzta līnija, 
-  kuras posmi ir $30^{\circ}$ leņķī pret lielā sešstūra malām.
+* "Asimptotika" ir laukums "robainajam sešstūrim" $(n^2(n+1)^2)/32$, kurš ir regulārs,  
+  un kura perimetru veido zigzagveida lauzta līnija ar posmiem 
+  $30^{\circ}$ leņķī pret lielā sešstūra malām.
 * "Attiecība" ir maksimālā polimonda un asimptotikas attiecība
   noapaļota līdz 6 cipariem aiz komata.
 
