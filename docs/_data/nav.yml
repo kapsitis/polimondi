@@ -1,0 +1,18 @@
+- title: Sākums
+  url: /
+- title: Polimondu jēdzieni
+  children:
+    - title: Kas ir polimondi
+      url: /polyiamond_concepts/
+    - title: Izoperimetriski uzdevumi
+      url: /polyiamond_isoperimetric/
+- title: Perfektie polimondi
+  children:
+    - title: Polimondu saraksti
+      url: /polyiamond_lists/
+    - title: Induktīvas virknes
+      url: /perfect_inductive/
+    - title: Šaurleņķu polimondi
+      url: /perfect_acute/
+    - title: Platleņķu polimondi
+      url: /perfect_obtuse/
