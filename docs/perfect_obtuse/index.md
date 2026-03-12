@@ -157,5 +157,8 @@ Tabulas kolonnu paskaidrojumi:
 
 
 
+**Literatūra:** 
+
+1. [Olimpādes uzdevums](https://problems.ru/view_problem_details_new.php?id=97895)
 
 
