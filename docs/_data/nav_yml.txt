@@ -4,6 +4,8 @@
   children:
     - title: Kas ir polimondi
       url: /polyiamond_concepts/
+    - title: Neatbildēti jautājumi
+      url: /open_questions/
     - title: Izoperimetriski uzdevumi
       url: /polyiamond_isoperimetric/
 - title: Perfektie polimondi
@@ -12,12 +14,12 @@
       url: /polyiamond_lists/
     - title: Induktīvas virknes
       url: /perfect_inductive/
+    - title: Piemēru galerija
+      url: /perfect_examples/
     - title: Šaurleņķu polimondi
       url: /perfect_acute/
     - title: Platleņķu polimondi
       url: /perfect_obtuse/
-    - title: Platleņķu regex meklēšana
-      url: /perfect_obtuse_boring/
 - title: Paka 'polyforms'
   children:
     - title: Vides uzstādīšana
