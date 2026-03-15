@@ -33,7 +33,7 @@ details summary:hover { text-decoration: underline; }
 
 ## Detailed Results
 
-<details>
+<details markdown="1">
 <summary>Pattern: <code>^(AB|AF|CB|ED)*$</code> — 211 matches</summary>
 
 ### Pattern: `^(AB|AF|CB|ED)*$`
@@ -274,7 +274,7 @@ details summary:hover { text-decoration: underline; }
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Pattern: <code>^(AB|AF|CD|EF)*$</code> — 1720 matches</summary>
 
 ### Pattern: `^(AB|AF|CD|EF)*$`
@@ -2019,7 +2019,7 @@ details summary:hover { text-decoration: underline; }
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Pattern: <code>^(AB|CB|CD|EF)*$</code> — 176 matches</summary>
 
 ### Pattern: `^(AB|CB|CD|EF)*$`
@@ -2225,7 +2225,7 @@ details summary:hover { text-decoration: underline; }
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Pattern: <code>^(AB|CD|ED|EF)*$</code> — 250 matches</summary>
 
 ### Pattern: `^(AB|CD|ED|EF)*$`
