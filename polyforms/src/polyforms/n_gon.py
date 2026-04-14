@@ -212,6 +212,9 @@ class NGonProblem:
             return PointTg.NEXT_MOVES[direction]
 
 
+    @staticmethod
+    def say_hello():
+        return "Sveiks18!"
  
 
 # def findFirstSolution(n):
