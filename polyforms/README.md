@@ -126,9 +126,9 @@ pip install dist/polyforms-0.1.0-py3-none-any.whl
 
 Install a package in development (editable) mode:
 
-```
+```bash
 cd polyforms
-pip uninstall polyforms
+pip uninstall -y polyforms
 pip install -e .
 ```
 
@@ -136,11 +136,13 @@ Unlike installing a wheel file, this enables to do edits in this directory - and
 without reinstalling the package. 
 We assume that the directory "polyforms" contains "src" subdirectory. 
 
+### Editable Install Troubleshooting & Setup
 
-```
-pip uninstall -y polyforms
-pip install --editable ../
-```
+If running `pip install -e .` fails with an error stating that the directory `does not appear to be a Python project`, this is usually because standard local installations require a `setup.py` file to map the `src/` directory properly in older `pip` versions, or if Poetry's backend isn't natively available.
+
+To fix this, we have provided a `setup.py` file alongside the `pyproject.toml`. 
+
+With the `setup.py` file in place, a standard `pip install -e .` will properly build the editable package and correctly map your local edits in the `src/polyforms` directory.
 
 
 # Cleaning out notebook files
