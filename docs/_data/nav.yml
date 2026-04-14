@@ -16,3 +16,17 @@
       url: /perfect_acute/
     - title: Platleņķu polimondi
       url: /perfect_obtuse/
+    - title: Platleņķu regex meklēšana
+      url: /perfect_obtuse_boring/
+- title: Paka 'polyforms'
+  children:
+    - title: Vides uzstādīšana
+      url: /polyforms_setup/
+    - title: API klases un funkcijas
+      url: /polyforms_api/
+    - title: Piemēri
+      url: /examples/
+- title: Spēles
+  children: 
+    - title: Kastītes aizpildīšana
+      url: /game_box_filling/
