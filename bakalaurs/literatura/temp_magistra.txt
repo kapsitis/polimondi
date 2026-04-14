@@ -1,0 +1,1181 @@
+LATVIJAS UNIVERSITĀTE
+FIZIKAS UN MATEMĀTIKAS FAKULTĀTE
+MATEMĀTIKAS NODAĻA
+
+MAĢISKIE POLIMONDI UN TO ĪPAŠĪBAS
+MAĢISTRA DARBS
+
+Autors: Elīna Buliņa
+Studenta apliecības Nr.: eb12030
+Darba vadītājs: prof. Dr. math. Andrejs Cibulis
+
+RĪGA 2018
+
+Anotācija
+Darbā pētītas plaknes figūras – maģiskie polimondi. Iegūti vairāki rezultāti par šādu
+polimondu laukumu ekstremālajām vērtībām, kā arī maģisko polimondu eksistences
+nepieciešamais un pietiekamais nosacījums. Uzrādīta perfektu polimondu praktiska
+konstrukcija jebkuram malu skaitam 𝑛 = 8𝑘 − 2.
+Atslēgas vārdi: laukums, maģiskie polimondi, perfektie polimondi, polimondi.
+
+2
+
+Abstract
+In this paper plane shapes – magic polyiamonds are examined. Several results about
+extremal values of polyiamond area have been obtained, as well as the necessary and
+sufficient condition of existence of magic polyiamonds has been obtained. Practical
+construction of perfect polyiamonds has been presented for every number of edges n = 8k – 2.
+
+Keywords: area, magic polyiamonds, perfect polyiamonds, polyiamonds.
+
+3
+
+Satura rādītājs
+Anotācija..................................................................................................................................... 2
+Abstract ....................................................................................................................................... 3
+Ievads .......................................................................................................................................... 5
+1. Minimālie un maksimālie polimondi ...................................................................................... 7
+1.1. Minimālie polimondi ....................................................................................................... 7
+1.2. Maksimālie polimondi ..................................................................................................... 8
+2. Maģiskie polimondi .............................................................................................................. 13
+3. Perfektie polimondi .............................................................................................................. 16
+4. Maģisko polimondu laukuma vērtības ................................................................................. 21
+Nobeigums ................................................................................................................................ 27
+Izmantotās literatūras saraksts .................................................................................................. 28
+Pielikumi................................................................................................................................... 29
+
+4
+
+Ievads
+Maģistra darbā ir turpināta bakalaura darba tēma par maģiskajiem daudzstūriem.
+Ar maģiskajiem daudzstūriem saprot tādus n-stūrus, kuriem malu garumi ir dažādi
+naturāli skaitļi no 1 līdz n, un kuru malas iet pa režģa līnijām. Atšķirībā no tā, kādu režģi –
+kvadrāta vai trīsstūra – aplūko, rodas divu tipu daudzstūri, kuri pieder attiecīgi polimino vai
+polimondu klasei. Definēsim šos jēdzienus.
+Plaknes figūru sauc par polimino, ja tā sastāv no vienības kvadrātiem, kas pievienoti
+viens otram pa vesela garuma malām. Ja polimino sastāv tieši no 𝑛 kvadrātiem, to sauc par
+n-mino, Pirmos sešus n-mino sauc attiecīgi par monomino, domino, trimino, tetramino,
+pentamino un heksamino. Analoģiski definē polimondus un n-mondus.
+Plaknes figūru sauc par polimondu, ja tā sastāv no regulāriem vienības trijstūriem, kas
+pievienoti viens otram pa vesela garuma malām. Ja polimonds sastāv tieši no n trīsstūriem, to
+sauc par n-mondu. Pirmos sešus n-mondus sauc attiecīgi, par monomondu, dimondu,
+trimondu, tetramondu, pentamondu un heksamondu.
+Ja daudzstūra (polimino vai polimonda) visi malu garumi, sākot ar vienu virsotni iet
+pēc kārtas augošā vai dilstošā secībā, tad tādu daudzstūri sauc par perfektu.
+Klasisks avots par polimino ir Solomona Golomba grāmata [1], kas tulkota vairākās
+valodās. Vēl par polimino ir minamas divas grāmatas [2], [3], bet par polimondiem, cik
+zināms, pagaidām nav atsevišķu grāmatu, bet ir publikācijas, piemēram, [4], [5].
+Atzīmēsim, ka maģiskie polimondi eksistē visiem 𝑛 ≥ 5, bet maģiskajiem polimino šī
+īpašība neizpildās, maģiskajiem polimondiem ir cits nepieciešamais un pietiekamais
+nosacījums, kurš ir minēts autores publikācijā [6] un izvērsti izklāstīts maģistra darba
+2. nodaļā. Maģisko polimino eksistences nepieciešamais un pietiekamais nosacījums (n = 4k)
+tika iegūts bakalaura darbā [7].
+Darbā sniegts ieskats par to, kas ir minimālie un maksimālie polimondi, kur ar
+minimālo vai maksimālo polimondu attiecīgi saprot tādu polimondu, kuram ir vismazākā
+vai vislielākā laukuma vērtība fiksētam perimetram. Darbā galvenā uzmanība ir pievērsta tieši
+maksimālajiem polimondiem. Interesanti, ka maksimālajiem polimondiem ir seši veidi, par
+tiem var gūt informāciju, piemēram šādos avotos [8], [9], [10]. Makimālos polimondus
+pētījuši arī skolēni savos zinātniski-pētnieciskajos darbos (ZPD) [9], [11]. Darbā [9] ir aizgūta
+ideja no [10] par to, kā konstruējami maksimālie polimondi uzdotam perimetram, bet tajā nav
+jaunu matemātisku rezultātu. Interesanta un maz pētīta ir problēma par maģisko polimondu
+laukumu maksimālajām vērtībām. Šajā tēmā pirmos rezultātus ir guvuši Rīgas 92. vidusskolas
+skolēni Edvards Jānis Rečickis un Aleksandrs Jakovļevs, kuri ar savu ZPD [11] ne tikai
+5
+
+guvuši augstāko novērtējumu Latvijas 41. skolēnu zinātniskajā konferencē matemātikas
+sekcijā, bet arī tikuši izvirzīti uz Eiropas līmeņa konkursu “European Union Contest For
+Young Scientists” [12]. Maģistra darba ietvaros maksimālo laukumu noteikšanai ir izstrādāta
+datorprogramma datorvalodā Object Pascal. Ar tās palīdzību (pagaidām) ir atrasti visi
+maksimālie polimondi fiksētam perimetram, ja polimonda malu skaits nepārsniedz 9.
+Pētot uzdevumus, kas saistīti ar maģiskajiem polimondiem (n-stūriem) var ievērot, ka
+laukumiem saglabājas paritāte, proti, polimondiem gan laukums (vienības trīsstūru skaits),
+gan perimetrs abi vienlaicīgi ir vai nu pārskaitļi vai arī nepārskaitļi. Šī rezultāta elegants
+pierādījums ir dots 1. nodaļā.
+Darbā ir uzrādītas divas maģisko polimondu iegūšanas konstrukcijas. Viena no tām
+dod maģisko polimondu fiksētam malu skaitam n, n > 5, bet otra dod perfektu polimondu, ja
+𝑛 = 8𝑘 − 2.
+Darbs satur piecus pielikumus, kuros ir uzrādīti maģiskie polimondi ‘lielam’ malu
+skaitam, proti, n = 23, 24, 25, 26. Piektajā pielikumā dots datorprogrammas kods.
+Darbs satur 45 attēlus un 17 literatūras avotus, kas sakārtoti atsaukšanās secībā.
+
+6
+
+1. Minimālie un maksimālie polimondi
+Šajā nodaļā sīkāk aplūkoti minimālie un maksimālie polimondi (daudzstūri) ar fiksētu
+perimetru P.
+
+1.1. Minimālie polimondi
+Minimālo polimondu problēma, vispārīgi runājot, nav tik sarežģīta kā maksimālo
+polimondu problēma, tomēr tā nav triviāla.
+Ja 𝑃 = 3, 4 un 5, minimālais un maksimālais polimonds sakrīt, jo šādam perimetram
+ir tikai viens atbilstošais polimonds, sk. 1.1.att..
+
+1.1. attēls. Maksimālie polimondi ar P = 3, 4 un 5
+
+Minimālo polimondu problēmai, ja P > 6, ir vairāk nekā viens atrisinājums. Lai polimondam
+būtu vismazākais laukums, tam jāsastāv no pēc iespējas mazāk regulāriem vienības
+trijstūriem. Līdz ar to, tas nozīmē, ka minimālajam polimondam iekšējo malu (sk., 1.2. att.)
+skaits būs vismazākais.
+
+1.2. attēls. Viena no polimonda iekšējām malām
+
+Piemēram, ja P = 6, tad ir trīs minimālie polimondi, sk. 1.3. att..
+
+1.3. attēls. Trīs miniālie 6-stūri
+
+Perimetra vērtībai pieaugot, pieaug arī minimālo polimondu skaits. Viens no minimālo
+1
+
+polimondu veidiem ir paralelograms ar malu garumiem 1 un 2 (𝑃 − 2), kad P ir pāra, un
+1
+
+1
+
+trapece ar sānu malām 1 un pamatiem 2 (𝑃 − 1) un 2 (𝑃 − 3), ja P- nepāra, sk. 1.4. att..
+
+1.4. attēls. Minimālie polimondi
+
+7
+
+1.2. Maksimālie polimondi
+Var ievērot, ka ir seši dažāda veida izliekti sešstūri, sk. (1.5. att.), kuri var pretendēt uz
+maksimālajiem polimondiem.
+
+1.5. attēls. Seši izliektu polimondu veidi
+
+Tiem visi iekšējie leņķi ir vienādi jeb 120𝑜 , izņemot gadījumu, kad 𝑃 = 7. Gadījumā, kad
+𝑃 = 7 viens no šī polimonda leņķiem ir 60𝑜 , kamēr pārējie ir 120𝑜 . Lai pamatotu, ka 1.5. att.
+dotie daudzstūri ir maksimālie polimondi, jāpierāda, ka to laukums tiešām ir lielākais
+iespējamais dotam perimetram, ko Vinstons C. Jangs un Roberts R. Meijers savā rakstā [12] ir
+arī pierādījuši. Minētie autori savā rakstā arī sniedz maksimālo polimondu konstruēšanas
+algoritmu. Ar to iespējams uzkonstruēt visu 1.5. att. aplūkojamo veidu maksimālos
+polimondus. Aplūkosim detalizētāk kā ar šī algoritma (kas rakstā nosaukts par spirāles
+metodi) palīdzību uzkonstruēt dažus no maksimālajiem polimondiem.
+Konstrukciju sāk ar regulāru vienības trijstūri, kuram katrā solī pa spirāli klāt tiek likts
+regulārs vienības trijstūris (sk., 1.6. att.). Katrs izliektais polimonds, kas iegūts ar šīs
+konstrukcijas palīdzību ir maksimālais polimonds, piemēram, 1.6. att. 𝑎), 𝑏), 𝑐), 𝑓), 𝑔), 𝑗),
+𝑚), 𝑝), 𝑠) un 𝑥), kur attiecīgi 𝑎), 𝑏), 𝑐), 𝑔) ir trijstūris, paralelograms, trapece un piecstūris,
+savukārt pārējie ir sešstūri.
+
+8
+
+)
+=
+=
+
+=
+=
+
+=
+=
+
+=
+=
+
+)
+
+=
+=
+
+)
+
+)
+
+= 10
+= 14
+
+)
+
+= 11
+= 15
+
+)
+
+=
+=
+
+= 12
+= 18
+
+= 11
+= 17
+)
+
+)
+
+=
+=
+
+)
+
+= 12
+= 20
+
+= 13
+= 21
+
+)
+
+= 13
+= 23
+
+)
+
+=
+=
+
+)
+
+)
+
+=
+=
+
+)
+
+= 10
+= 12
+
+=
+= 11
+
+)
+
+)
+
+=8
+=8
+
+=
+=
+
+=
+=
+
+=7
+=5
+
+)
+
+)
+
+)
+
+)
+
+)
+
+)
+
+)
+
+)
+
+= 12
+= 22
+
+)
+
+)
+
+= 13
+= 25
+
+=
+=
+
+= 14
+= 26
+
+1.6. attēls. Polimondi, kas iegūti ar spirāles metodi
+
+Var ievērot, ka arī šajā algoritmā rodas visi seši maksimālo polimondu veidi, sk. 1.5. att.,
+kuri minēti rakstā [8]. Katram no šiem polimondu veidiem nav grūti uzrakstīt laukuma
+aprēķināšanas formulu vispārīgā gadījumā:
+Ja 𝑃 = 6𝑘, tad 𝑆 = 6𝑘 2 ;
+9
+
+Ja 𝑃 = 6𝑘 + 1, tad 𝑆 = 6𝑘 2 + 2𝑘 − 1;
+
+Ja 𝑃 = 6𝑘 + 2, tad 𝑆 = 6𝑘 2 + 4𝑘;
+Ja 𝑃 = 6𝑘 + 3, tad 𝑆 = 6𝑘 2 + 6𝑘 + 1;
+Ja 𝑃 = 6𝑘 + 4, tad 𝑆 = 6𝑘 2 + 8𝑘 + 2;
+Ja 𝑃 = 6𝑘 + 5, tad 𝑆 = 6𝑘 2 + 10𝑘 + 3.
+Var ievērot, ka palielinot maksimālā polimonda, ar perimetru 𝑃, malu garumu par 1,
+iegūst maksimālo polimondu ar perimetru 𝑃 + 6. Piemēram, 1.7. att. regulārā sešstūra, kas ir
+arī 1. veida maksimālais polimonds, kad 𝑃 = 6, malas (kuru garumi ir 1), palielinot par 1,
+iegūst arī 1. veida maksimālo polimondu. Šim jaunajam polimondam katra mala ir par 1
+lielāka, līdz ar to, tā perimetrs ir palielinājies par 6. Otrā veida sešstūra gadījums aplūkojams
+1.8. att.
+
+1.7. attēls. Vairāki 1. veida maksimālie polimondi, iegūti viens no otra.
+
+1.8. attēls. Vairāki 2. veida maksimālie polimondi, iegūti viens no otra.
+
+10
+
+Kārļa Universitātes Prāgā studente Veronika Stefanova savā maģistra darbā [13]
+sniedz vispārīgu formulu
+𝑃2
+0,
+𝑟𝑜𝑢𝑛𝑑 ( ) − {
+1,
+6
+
+ja 𝑃 ≡ 0 𝑚𝑜𝑑 6
+,
+citādi
+
+un arī pierādījuma skici polimonda maksimālā laukuma aprēķināšanai fiksētam perimetram 𝑃,
+kur funkcija 𝑟𝑜𝑢𝑛𝑑(𝑥) noapaļo skaitli x līdz veselam skaitlim (piemēram, 𝑟𝑜𝑢𝑛𝑑(2.4) = 2,
+𝑟𝑜𝑢𝑛𝑑(3.8) = 4 un 𝑟𝑜𝑢𝑛𝑑(5.5) = 6). Šāda polimonda maksimālā laukuma aprēķināšanas
+formula atrodama arī jau pieminētajā rakstā [10].
+Vai maģiskā polimonda laukums
+
+un perimetrs abi ir vienlaicīgi pārskaitļi vai
+
+nepārskaitļi? Vispirms aplūkosim dažādus polimondus ar vienādu perimetru. Piecstūru
+laukuma vērtības 1.9. att. dotajiem izoperimetriskajiem (𝑃 = 15) maģiskajiem polimondiem
+𝑎), 𝑏), 𝑐), 𝑑), 𝑒) un 𝑓) attiecīgi ir 𝑆𝑎) = 21, 𝑆𝑏) = 25, 𝑆𝑐) = 31, 𝑆𝑑) = 21, 𝑆𝑒) = 2
+
+un
+
+𝑆𝑓) = 25. Vai visiem maģiskajiem polimondiem, kuriem perimetrs ir nepārskaitlis, arī
+laukums (trīsstūru skaits) būs nepārskaitlis?
+a)
+
+d)
+
+c)
+
+b)
+
+f)
+
+e)
+
+1.9. attēls. Izoperimetriski maģiskie polimondi ar
+
+= 15
+
+Maksimālo polimondu laukuma vērtības ir apkopotas un iekļautas tiešsaistes interneta
+virkņu enciklopēdijā [14]. Aplūkojot minēto virkni, var ievērot, ka šīs virknes locekļiem
+izpildās paritāte, jeb virknes n-tais loceklis ir pārskaitlis, ja n ir pārskaitlis, un nepārskaitlis, ja
+n ir nepārskaitlis. Šī paritātes īpašība ir spēkā ne tikai maksimālajiem polimondiem, bet
+patvaļīgiem polimondiem (daudzstūriem).
+Teorēma. Ja polimonda perimetrs ir pārskaitlis, tad arī tā laukums ir pārskaitlis. Analoģiski,
+ja polimonda perimetrs ir nepārskaitlis, tad arī tā laukums ir nepārskaitlis.
+
+11
+
+Pierādījums. Ar P un x apzīmēsim polimonda attiecīgi perimetru un laukumu. Tad x sakrīt
+ar polimondu veidojošo trijstūru skaitu, bet 3𝑥 ir visu šo trijstūru malu kopējais skaits. Līdz ar
+to izteiksme
+3𝑥 − 𝑃
+izsaka trijstūru to malu kopējo skaitu, kas atrodas polimonda iekšpusē. Tā kā trijstūru malas
+(izņemot tās, kas veido perimetru) pa pāriem saskaras, tad šai izteiksmei jābūt pāra skaitlim.
+P i e z ī m e : 2016. gadā starptautiskajās komandu sacensībās “Baltijas Ceļš” (Baltic Way) tika
+piedāvāts šāds uzdevums (autors A. Cibulis): “Vai eksistē sešstūris (ne obligāti izliekts) ar
+malu garumiem 1, 2, 3, 4, 5, 6 (ne obligāti šādā secībā), ko var sagriezt a) 31; b) 32
+vienādmalu trijstūros ar malas garumu 1?”. Šī uzdevuma elegantu risinājumu uzrādīja
+Latvijas komandas vadītājs Māris Valdats, viņa risinājums atrodams interneta vietnē [15].
+
+12
+
+2. Maģiskie polimondi
+Interesanti, ka atšķirībā no polimino, kuru eksistences nepieciešamais un pietiekamais
+nosacījums ir 𝑛 = 4𝑘, polimondu ir daudz vairāk. Tas vien ir redzams no tā, ka jebkuru
+maģisko polimino iespējams transformēt par diviem dažādiem polimondiem, polimino katru
+rūtiņu sadalot pa diagonāli uz pusēm (2.1. att.). Piemēram, 2.2. att. polimino transformējot
+iegūst 2.3. un 2.4. att. polimondus.
+
+2.1. attēls. Polimino rūtiņu sadalīšana
+ar diagonāli
+
+2.3. attēls. Maģiskais polimonds
+
+2.2. attēls. Maģiskais polimino
+
+2.4. attēls. Maģiskais polimonds
+
+Atzīmēsim, ka šī transformācija nav bijekcija, t.i., no polimino var iegūt polimondu,
+bet no polimonda ne vienmēr var iegūt polimino. Tas ir skaidrs jau no tā, ka transformācija
+saglabā malu skaitu un malu garumus, bet maģiskajiem polimino malu skaits 𝑛 ≥ 8, bet
+maģiskajiem polimondiem tas var būt arī mazāks.
+No polimino eksistences nepieciešamā un pietiekamā nosacījuma, kā arī rezultāta, ka
+katru polimino iespējams transformēt par polimondu izriet, ka noteikti eksistē maģiskais
+polimonds katram 𝑛 = 4𝑘. Bet šie nav vienīgie iespējamie polimondu malu garumi.
+Nav grūti noskaidrot, ka neeksistē maģiskie polimondi, ja 𝑛 ≤ 4. Tas ir viegli
+pamanāms uzzīmējot kāda veida figūras iespējams iegūt, ja 𝑛 = 3 un 𝑛 = 4. Kā tas
+aplūkojams 2.5. att., kad 𝑛 = 3, vienīgais veids ir regulārs trijstūris, kuram pēc definīcijas
+visas malas vienādas, savukārt, ja 𝑛 = 4, tad iegūst vai nu paralelogramu vai trapeci, taču, arī
+šajā gadījumā, nekādā veidā nebūs iespējams uzzīmēt 4-stūri, kuram visi malu garumi dažādi
+naturāli skaitļi.
+
+2.5. attēls. 3-stūris un divi 4-stūri
+
+13
+
+Var parādīt, ka tas ir arī pietiekamais nosacījums. To var pierādīt “zīmējot”
+polimondus zig-zag spirāles veidā.
+Kad n ir pārskaitlis, minēto spirāli sāksim zīmēt ar maģisko 6-stūri (2.6. att.), savukārt,
+kad n ir nepārskaitlis, tad ar perfektu 5-stūri (2.7. att.).
+b
+
+c
+
+c
+
+b
+a
+
+a
+2.6. attēls. Maģiskais 5-stūris
+
+2.7. attēls. Maģiskais 6-stūris
+
+Lai iegūtu n-stūri, konstrukciju veicam šādi:
+1. Attiecīgi 5-stūrim vai 6-stūrim pie malas, kas 2.6. un 2.7. att. apzīmētas ar c liek klāt pāra
+garuma malas augošā secībā, t.i., kad n ir nepārskaitlis, liek malas 6, 8, … , 𝑛 − 1, kad n ir
+pārskaitlis, tad malas 8, 10, … , 𝑛;
+2. Savukārt 5-stūrim vai 6-stūrim pie malas, kas 2.6. un 2.7. att. apzīmētas ar a liek klāt
+nepāra garuma malas augošā secībā, t.i., kad n ir nepārskaitlis, liek malas 7, , … , 𝑛, kad n
+ir pārskaitlis, tad malas 7, , … , 𝑛 − 1;
+3. Divos iepriekšējos punktos aprakstītās malas liek klāt tā, lai visu laiku starp paralēlajām
+malām vienmēr saglabātos minimālais attālums (kas ir vienības trijstūra augstums).
+Kad 𝑛 = , 10 vai 13, ar aprakstīto metodi attiecīgi tiek iegūti 2.8., 2.9. un 2.10. att.
+maģiskie polimondi.
+1
+
+9
+
+8
+10
+
+8
+
+6
+
+2
+
+7
+5
+
+7
+
+3
+
+6
+
+4
+
+4
+
+9
+
+5
+3
+
+2
+
+2.8. attēls. Maģiskais 9-stūris
+
+14
+
+2.9. attēls. Maģiskais 10-stūris
+
+1
+
+13
+1
+12
+10
+
+11
+
+9
+
+8
+6
+
+2
+
+3
+
+7
+5
+
+4
+
+2.10. attēls. Maģiskais 13-stūris
+
+Kad 𝑛 = 4𝑘 + 3 un 𝑛 = 4𝑘 + 4 konstrukcija būtībā ir tāda pati kā iepriekš, tikai
+pievienojot pēdējās divas malas, tās ir jāpievieno pretēji, kā iepriekš. Piemēram, kad 𝑛 = 11,
+iegūstam 2.11. att. maģisko 11-stūri un, kad 𝑛 = 12 iegūst 2.12. att. maģisko 12-stūri.
+1
+
+10
+
+9
+
+11
+
+8
+
+8
+
+10
+
+6
+
+2
+
+7
+5
+
+6
+
+4
+
+3
+4
+
+3
+
+7
+
+9
+
+11
+1
+
+5
+12
+
+2
+
+2.12. attēls. Maģiskais 12-stūris
+
+2.11. attēls. Maģiskais 11-stūris
+
+Maģiskie polimondi šādām malu skaita vērtībām: 𝑛 = 23, 24, 25 un 26 ir uzrādīti attiecīgi 1.,
+2., 3. un 4. pielikumā.
+
+15
+
+3. Perfektie polimondi
+Ja pievienot iepriekšējā nodaļā aplūkotajiem polimondiem papildus nosacījumu, ka
+malu garumiem jābūt dažādiem naturāliem skaitļiem no 1 līdz 𝑛 augošā vai dilstošā secībā,
+iegūstam perfektus polimondus, kas literatūrā nav daudz aplūkoti.
+Perfekti polimondi eksistē jau pirmajam iespējamajam malu skaitam 𝑛 = 5,
+sk. 3.1. att.
+
+3.1. attēls. Perfekts 5-stūris
+
+Eksistences nepieciešamais un pietiekamais nosacījums perfektam polimino ir
+𝑛 = 8𝑘; 𝑛, 𝑘 ∈ ℕ, tas ir pierādīts gan bakalaura darbā [7], gan aprakstīts un īsāk pierādīts
+Valmieras 11. Studentu konferences rakstu krājumā [16]. Ņemot vērā vēl rezultātu, ka jebkuru
+polimino iespējams transformēt par diviem dažādiem polimondiem, iegūstam, ka eksistē
+vismaz divi perfekti polimondi jebkuram 𝑛 = 8𝑘.
+Tāpat ir iespējams parādīt, ka eksistē perfekts polimonds jebkuram
+
+𝑛 = 8𝑘 − 2,
+
+𝑘 > 1, ja tie tiek konstruēti grupējot tā malas 1, 2, 3, … , 8𝑘 − 2 šādā veidā:
+1. Malu 2𝑘 zīmēsim rietumu virzienā;
+2. Malu 6𝑘 − 1 zīmēsim austrumu virzienā;
+3.
+
+Atlikušās malas sadalām četrās grupās:
+
+
+ZA – sastāv no malām 1, 3, … , 2𝑘 − 1 un 6𝑘 + 1, 6𝑘 + 3, … , 8𝑘 − 3 un
+šīs malas zīmēsim ziemeļaustrumu virzienā;
+
+
+
+ZR – sastāv no malām 2, 4, … , 2𝑘 − 2 un 6𝑘, 6𝑘 + 2, … , 8𝑘 − 2 un šīs
+malas zīmēsim ziemeļrietumu virzienā;
+
+
+
+DA – sastāv no malām 2𝑘 + 1, 2𝑘 + 3, … , 6𝑘 − 3 un šīs malas zīmēsim
+dienvidaustrumu virzienā;
+
+
+
+DR – sastāv no malām 2𝑘 + 2, 2𝑘 + 4, … , 6𝑘 − 2 un šīs malas zīmēsim
+dienvidrietumu virzienā.
+
+Kad visām malām ir piešķirts virziens, polimondu zīmē šādi:
+1. ņem garāko malu 8𝑘 − 2 un zīmē to piešķirtajā virzienā;
+2. līdzīgi turpina katru reizi ņemot malu, kas par 1 īsāka nekā iepriekšējā, un zīmē to
+piešķirtajā virzienā;
+3. kad uzzīmēta mala ar garumu 1, ir iegūts perfekts polimonds.
+16
+
+Aplūkosim, kā ar dotās konstrukcijas palīdzību uzzīmēt perfektu 6-stūri (sk. 3.2. att.)
+un 14-stūri.
+
+3.2. attēls. Perfekts 6-stūris
+
+Konstruējot sešstūri jeb gadījumu, kad 𝑛 = 6 (𝑘 = 1) uz rietumiem tiek zīmēta mala
+ar garumu 2, savukārt uz austrumiem mala ar garumu 5. Pārējās malas sakārtojot pa kopām
+ZA, ZR, DA un DR, iegūst, ka 𝑍𝐴 = {1}, 𝑍𝑅 = {6}, 𝐷𝐴 = {3}, 𝐷𝑅 = {4}. Zīmējot malas
+dilstošā secībā, dotajos virzienos, sk. 3.3. att., iegūst perfektu sešstūri.
+
+3.3. attēls. Perfekta sešstūra malu zīmēšanas virzieni
+
+Aplūkojot 𝑛 = 14 (𝑘 = 2) gadījumu jeb konstruējot 14-stūri, uz rietumiem zīmēsim malu ar
+garumu 4 un uz austrumiem malu ar garumu 11. Piešķirot virzienu pārējām malām iegūst
+kopas 𝑍𝐴 = {1; 3; 13}, 𝑍𝑅 = {2; 12; 14}, 𝐷𝐴 = {5; 7; }, 𝐷𝑅 = {6; 8; 10}. Tālāk zīmējot
+malas dilstošā secībā, dotajos virzienos, iegūst 3.4. att. perfekto polimondu.
+
+17
+
+3.4. attēls. Perfekts 14-stūris
+
+Ir pamats domāt, ka arī perfektajiem polimondiem izpildās nosacījums, ka visiem
+𝑛 ≥ 5 eksistē perfekts polimonds, taču atrast vienotu metodi, ar kuru katru no šiem
+daudzstūriem varētu uzkonstruēt ir jau sarežģītāk. Darba ietvaros atrasti daži perfektie
+polimondi, kas nav iegūstami ar iepriekš aprakstīto perfekto polimondu konstruēšanas
+algoritmu. Piemēram, 3.5. att. attēloti divi 7-stūri.
+18
+
+3.5. attēls. Perfekti 7-stūri
+
+Kā jau iepriekš tika minēts, no katra polimino iespējams iegūt divus polimondus ar nelielas
+transformācijas palīdzības. Tā 3.6. att. iegūts perfektais polimonds pa kreisi, savukārt pa labi
+esošais perfektais daudzstūris iegūts pa kreisi esošo perfekto polimondu nedaudz pārveidojot.
+Iegūti arī 3.7.- 3.10. att. aplūkojamie perfektie n-stūri.
+
+3.6. attēls. Perfekti 8-stūri
+
+3.7. attēls. Perfekti 8-stūri
+19
+
+3.8. attēls. Perfekts 9-stūris
+
+3.9. attēls. Perfekts 10-stūris
+
+3.10. attēls. Perfekti 11-stūri
+
+20
+
+4. Maģisko polimondu laukuma vērtības
+Skolēnu zinātniski-pētnieciskajā darbā [11] ar datorprogrammas palīdzību ir atrasti
+seši maksimālie maģiskie polimondi, sk. 4.1., 4.2., 4.3. un 4.4. att.
+
+4.1. attēls. Maksimālais maģiskais
+5-stūris ( = 31)
+
+4.2. attēls. Maksimālais
+maģiskais 6-stūris ( = 67)
+
+4.3. attēls. Maksimālie maģiskaie 7-stūri ( = 116)
+
+4.4. attēls. Maksimālais maģiskais 8-stūris ( = 208)
+
+Kā maksimālo laukuma vērtību maģiskajam 8-stūrim skolēni bija piedāvājuši vērtību 311
+(sk. 4.5. att.), taču to vēlāk uzlaboja viņu darba recenzents LU doktorants Juris Čerņenoks,
+uzrādot maģisko polimondu ar laukuma vērtību 315 (sk. 4.6. att.). Vēlāk arī skolēni spēja
+atkārtot šo rezultātu.
+
+21
+
+4.5. attēls. Maģisie 9-stūri ( = 311)
+
+4.6. attēls. Maksimālais maģiskais 9-stūris ( = 315)
+
+Tā kā malu skaitam pieaugot, pieaug arī polimondu skaits, lai aplūkotu, kādas varētu
+būt maksimālās laukuma vērtības maģiskajiem polimondiem, ja 𝑛 > , ar programmētāja
+Zigmunda Buliņa palīdzību tika izveidota datorprogramma.
+Lai saīsinātu programmas darbības laiku, tā ir veidota ar vairākiem pavedieniem
+(thread). Pavedienu skaitu t ievada lietotājs, un maksimālais pieļaujamais pavedienu skaits
+atkarīgs no procesora kodolu skaita. Tālāk lietotājam jāievada meklējamā 𝑛-stūra malu skaits
+n. Tad programma atrod visas permutācijas un pēc nejaušības principa tās sadala t grupās.
+Katru grupu apstrādā savs pavediens. Procesi notiek vienlaicīgi.
+Pavedienā datorprogramma katrai permutācijai piekārto leņķus un pārbauda, vai
+iespējams realizēt attiecīgo polimondu. Kad atrasts realizējams polimonds tiek rēķināta tā
+laukuma vērtība 𝑆, izmantojot, piemēram, interneta vietnē [17] atrodamo daudzstūra laukuma
+𝑆 ∗ aprēķināšanas formulu
+𝑆∗ = |
+
+(𝑥1 𝑦2 − 𝑦1 𝑥2 ) + (𝑥2 𝑦3 − 𝑦2 𝑥3 ) + ⋯ + (𝑥𝑛 𝑦1 − 𝑦𝑛 𝑥1 )
+|
+2
+
+kur (𝑥1 ; 𝑦1 ), (𝑥2 ; 𝑦2 ), … , (𝑥𝑛 ; 𝑦𝑛 ) ir attiecīgi daudzstūra virsotņu koordinātas. Lai iegūtu
+polimonda laukuma vērtību 𝑆, laukuma vērtība 𝑆 ∗ jāizdala ar regulāra vienības trijstūra
+22
+
+laukuma vērtību jeb 𝑆∆ =
+
+√3
+.
+4
+
+Līdz ar to polimonda laukums (šeit trīsstūru skaits) tiek rēķināts
+
+ar formulu
+𝑆=
+
+4√3 (𝑥1 𝑦2 − 𝑦1 𝑥2 ) + (𝑥2 𝑦3 − 𝑦2 𝑥3 ) + ⋯ + (𝑥𝑛 𝑦1 − 𝑦𝑛 𝑥1 )
+∙|
+|.
+3
+2
+
+Laukuma vērtību salīdzina ar jau iepriekš atrasto maksimālo vērtību (sākumā tā definēta kā
+0). Ja jauniegūtā laukuma vērtība ir lielākā nekā iepriekš atrastā, tā tiek saglabāta kā jaunā
+maksimālā vērtība. Šī iegūtā maksimālā vērtība tiek izvadīta kā divas virknes, kur viena
+virkne satur malu garumus un otra- leņķus kādos šīs malas jāzīmē (sk., 4.7. att.).
+
+4.7. attēls. Programmas izvadītā informācija
+
+Lai uzzīmētu 4.7. att. maģisko polimondu zīmē malas (side lengths) tādā pašā secībā kādā tās
+izvadījusi programma, pagriežot katru attiecīgi par doto leņķi (polimond). Katru jauno malu
+liek klāt iepriekšējai, un pagriezienu veic pieņemot, ka pirms pagriešanas katra mala novietota
+horizontāli (sk., 4.8. att.).
+
+4.8. attēls. Programmas izvadītais maksimālais 6-stūris
+
+Ar šīs datorprogrammas palīdzību iespējams iegūt arī 4.1.- 4.6. att. maģiskos
+polimondus. Bez 4.1.- 4.6. att. polimondiem, ar programmas palīdzību iegūti daži maģiskie
+polimondi, ja 𝑛 = 10 un 11, kuri iespējams ir maksimālie (sk., 4.9.- 4.11. att.), Jāatzīmē, ka
+datorprogramma pagaidām nav ‘izskatījusi’ visas iespējamās permutācijas maģisko 10-stūru
+un 11-stūru analīzē.
+
+23
+
+4.9. attēls. Maģiskais 10-stūris ( = 483)
+
+4.10. attēls. Maģiskais 10-stūris ( = 483)
+
+4.11. attēls. Maģiskais 11-stūris ( = 660)
+24
+
+Nedaudz pārveidojot 4.11. att. maģisko polimondu, iespējams iegūt maģisko 11-stūri ar
+laukumu 664 (sk, 4.12. att.), līdz ar to, netika tomēr atrasta maksimālā polimonda laukuma
+vērtība.
+
+4.12. attēls. Maģiskais 11-stūris ( = 664)
+
+Ar roku tika atrasts iespējams maksimālais 12-stūris un 13-stūris (sk., 4.13. un 4.14. att.).
+
+4.13. attēls. Maģiskais 12-stūris ( = 58)
+
+25
+
+4.14. attēls. Maģiskais 13-stūris ( = 1181)
+
+26
+
+Nobeigums
+Maģistra darbā aplūkotie maģiskie polimondi ir jauna un līdz šim ļoti maz pētīta
+plaknes figūru klase. Turklāt uzdevumi par dažādām šo figūru īpašībām ir viegli formulējami
+skolēniem saprotamā veidā un jau vairākas reizes ir tikuši izmantoti gan dažāda līmeņa
+matemātikas olimpiādēs, gan kā piemērotas tēmas skolēnu zinātniski-pētniecisko darbu
+izstrādāšanā.
+Ļoti pievilcīgs un pagaidām maz izpētīts ir jauna tipa ekstrēmu uzdevums par maģisko
+polimondu maksimālajiem laukumiem. Atšķirībā no klasiskā izoperimetriskā uzdevuma tagad
+grūtības rada tas, ka ir jauna tipa ierobežojumi, proti, uzdoti figūru malu garumi un figūru
+malas iet pa trīsstūra režģa līnijām. Vēl viena atšķirība – maksimāla figūra var nebūt viena
+vienīgā. Ir zināma vispārīga metode, kā konstruēt maksimālā laukuma polimondus ar fiksētu
+perimetru, bet maģisko polimondu klasē tāda metode nav atrasta un tas varētu būt viens no
+nopietniem turpmāk risināmiem uzdevumiem.
+Darbā izstrādāto datorprogrammu vajadzētu uzlabot, uzdodot kādus papildus
+nosacījumus, kas palīdzētu atsijāt lielo permutāciju skaitu. Pietiekami plaša datu kopas
+ievākšana ar datora palīdzību, iespējams, ļautu saskatīt, kādu likumsakarību par tām
+permutācijām, kurām atbilst maksimālā laukuma maģiskais polimonds.
+Jāpiemin, ka šo datorprogrammu var samērā vienkārši pielāgot minimālo maģisko
+polimondu meklēšanā, kas arī varetu būt viens no turpmāk risināmiem uzdevumiem. Dažādo
+minimālo polimondu skaita noteikšanas problēma, cik zināms, literatūrā nav pētīta.
+Darbā aprakstītas divas praktiskas maģisko polimondu iegūšanas konstrukcijas. Viena
+no tām dod polimondus zig-zag spirāles formā un, domājams, ka tie ir arī minimālie maģiskie
+polimondi (fiksētam malu skaitam n). Otra konstukcija dod perfektos polimondu šādam malu
+skatam 𝑛 = 8𝑘 − 2.
+Vēl daži turpmāk pētāmie jautājumi: vai vispārīgā gadījumā (kad n-stūra malu skaits ir
+pietiekami liels) katrai permutācijai atbilst kāds maģiskais n-stūris vai vismaz kāda noslēgta
+lauzta līnija, vai maģisko n-stūru laukumi var pieņemt visas veselās starpvērtības starp
+minimālo un maksimālo vērtību?
+
+27
+
+Izmantotās literatūras saraksts
+[1] Golomb S. W., Polyominoes: Puzzles, Patterns, Problems and Packings, Princeton
+University Press, Second edition, 1994, 184 pp.
+[2] Cibulis A., Pentamino 1. daļa, Latvijas Universitāte, Rīga, 2001, 96 lpp.
+[3] Cibulis A., Pentamino 2. daļa, Latvijas Universitāte, Rīga, 2001, 106 lpp.
+[4] Sallows L., Gardner M., Guy R. K., Knuth D., Serial Isogons of 90 Degrees,
+Mathematics Magazine, Vol. 64, No. 5, 1991, pp. 315 - 324. Pieejams:
+http://leesallows.com/files/SS%20Isogons%20of%2090%20Degrees.pdf
+[5] Sallows L., New Pathways in Serial Isogons, The Mathematical Intelligencer, 1992, pp.
+55- 67. Pieejams: http://leesallows.com/files/New%20Pathways.pdf
+[6] Buliņa E., Magic Polyiamonds And Their Usage, Proceedings of the 18th International
+Conference “Teaching Mathematics: Retrospective and Perspectives”, University of
+Latvia, pp. 5 - 9.
+[7] Buliņa E., Maģiskie daudzstūri un to īpašības, Bakalaura darbs, Rīga, 2016, 40 lpp.
+[8] Fülep G, Sieben N., Polyiamonds and Polyhexes with minimum site-perimeter and
+achievement games, Northern Arizona University. Pieejams:
+https://pdfs.semanticscholar.org/f15c/db94769b434826bc8353096b9c2960d201f8.pdf
+[9] Žagare B., Polimondi ar maksimālo laukumu, skolēnu zinātniski pētnieciskais darbs,
+Rīga, 2018, 16 lpp.
+[10] Yang W.C., Meyer R.R., Maximal and minimal polyiamonds, University of
+Wisconsin- Madison, 2002, 31p.
+[11] Rečickis E.J., Jakovļevs A., Maģiskie polimondi, skolēnu zinātniski pētnieciskais darbs,
+Rīga, 2017, 21 lpp.
+[12] “European Union Contest For Young Scientists” mājaslapa. Pieejams:
+https://eucys2017.eu/eucys2017/projects/
+[13] Steffanová V., Extremal Polyominoes, master thesis, Prague, 2014, 31 p. Pieejams:
+https://is.cuni.cz/webapps/zzp/download/120175767
+[14] Tiešsaistes virkņu enciklopēdija, Pieejams: https://oeis.org/A069813
+[15] Baltic Way 2016 atrisinājumi, Pieejams:
+http://matematiikkakilpailut.fi/BW2016/problems/BW2016sol.pdf
+[16] Buliņa E., Maģiskie polimino un polimondi , Vidzemes Augstskolas 11. studentu
+pētniecisko darbu konferences zinātnisko rakstu krājums, Valmiera: Vidzemes
+Augstskola, 2017, 3 - 10. lpp.
+[17] Area of polygon (Coordinate Geometry), Pieejams:
+https://www.mathopenref.com/coordpolygonarea.html
+
+28
+
+Pielikumi
+1. pielikums. Maģiskais 23-stūris
+
+2. pielikums. Maģiskais 24-stūris
+
+3. pielikums. Maģiskais 25-stūris
+
+4. pielikums. Maģiskais 26-stūris
+
+5. pielikums. Izstrādātās datorprogrammas kods
+// JCL_DEBUG_EXPERT_GENERATEJDBG OFF
+// JCL_DEBUG_EXPERT_INSERTJDBG OFF
+program Polimondi;
+{$APPTYPE CONSOLE}
+{$R *.res}
+{$DEFINE PRINT}
+{$DEFINE MAX}
+uses
+Spring.Collections,
+System.SysUtils,
+System.Threading,
+System.Types,
+Spring,
+uPolimondi;
+var
+FSideCombinations: IList<TArray<Integer>>;
+FSideCount: Integer;
+procedure NextSideVariation(AIndex, ALen: Integer; const ASides:
+TArray<Integer>);
+var
+i: Integer;
+LCurrSides: TArray<Integer>;
+begin
+LCurrSides := TArray.Copy<Integer>(ASides);
+LCurrSides[AIndex] := ALen;
+if AIndex = FSideCount - 1 then
+begin
+if LCurrSides[1] > LCurrSides[FSideCount - 1] then
+FSideCombinations.Add(LCurrSides);
+Exit;
+end;
+for i := 1 to FSideCount do
+if (i <> ALen) and not TArray.Contains<Integer>(LCurrSides, i)
+then
+NextSideVariation(AIndex + 1, i, LCurrSides);
+end;
+{
+(x1*y2 - y1*x2) + (x2*y3 - y2*x3) ... + (xn*y1 - yn*x1))
+-------------------------------------------------------2
+}
+function GetAreaForPolimondWithSideLenghts(const APoli,
+ASideLengths: TArray<Integer>): Extended;
+function NextCoordFromPointWithAngleAndLen(const AFrom: TPointF;
+AAngle, ALen: Integer): TPointF;
+begin
+
+case AAngle of
+60:
+Result := PointF(
+AFrom.X + ALen / 2,
+AFrom.Y + ALen * Sin(Pi / 3));
+120:
+Result := PointF(
+AFrom.X - ALen / 2,
+AFrom.Y + ALen * Cos(Pi / 6));
+180:
+Result := PointF(AFrom.X - ALen, AFrom.Y);
+240:
+Result := PointF(
+AFrom.X - ALen / 2,
+AFrom.Y - ALen * Sin(Pi / 3));
+300:
+Result := PointF(
+AFrom.X + ALen / 2,
+AFrom.Y - ALen * Cos(Pi / 6));
+else
+Result := PointF(AFrom.X + ALen, AFrom.Y);
+end;
+end;
+var
+LCoords: TArray<TPointF>;
+i: Integer;
+LSum: Extended;
+begin
+SetLength(LCoords, Length(APoli) + 1);
+LCoords[0] := TPointF.Zero;
+for i := 1 to Length(APoli) - 1 do
+LCoords[i] := NextCoordFromPointWithAngleAndLen(LCoords[i - 1],
+APoli[i - 1], ASideLengths[i - 1]);
+LCoords[Length(LCoords) - 1] := LCoords[0];
+LSum := 0;
+for i := 0 to Length(LCoords) - 2 do
+LSum := LSum + LCoords[i].X * LCoords[i + 1].Y - LCoords[i].Y *
+LCoords[i + 1].X;
+Result := Abs(LSum / 2) / (Sin(Pi / 3) / 2);
+end;
+var
+LThreadCount: Integer;
+LSides: TArray<Integer>;
+LSideVariations: TArray<TArray<Integer>>;
+LSync: IReadWriteSync;
+LMaxAreaPolimond, LMaxAreaSides: TArray<Integer>;
+begin
+LSync := TSimpleRWSync.Create;
+Write('Enter thread count: ');
+Readln(LThreadCount);
+Write('Enter side count: ');
+Readln(FSideCount);
+FSideCombinations := TCollections.CreateList<TArray<Integer>>;
+
+SetLength(LSides, FSideCount);
+Writeln('Generating side combinations...');
+NextSideVariation(0, FSideCount, LSides);
+Writeln('Side combinations to check: ', FSideCombinations.Count);
+LSideVariations := FSideCombinations.ToArray;
+TParallel.&For(0, LThreadCount - 1,
+procedure (AIndex: Integer)
+var
+i, j: Integer;
+LPart, LCount, LMin, LMax: Integer;
+LPoli: TArray<Integer>;
+LSides: TArray<Integer>;
+LIndexes: IList<Integer>;
+LCurrMinMaxArea, LArea, LMaxArea: Currency;
+begin
+LCount := Length(LSideVariations);
+LPart := LCount div LThreadCount;
+LMin := LPart * AIndex;
+if AIndex = LThreadCount - 1 then
+LMax := LCount - 1
+else
+LMax := LPart * (AIndex + 1);
+{$IFDEF MAX}
+LCurrMinMaxArea := 0;
+LMaxArea := 0;
+{$ELSE}
+LCurrMinMaxArea := High(Word);
+LMaxArea := High(Word);
+{$ENDIF}
+LIndexes := TCollections.CreateList<Integer>;
+LIndexes.Capacity := LPart;
+for i := LMin to LMax do
+LIndexes.Add(i);
+for i in LIndexes.Shuffled do
+begin
+LSides := LSideVariations[i];
+LPoli := nil;
+SetLength(LPoli, FSideCount);
+while Polimond.NextPolimondVariation(LPoli) do
+begin
+if not Polimond.IsValid(LPoli, LSides) then
+Continue;
+Inc(LCount);
+LArea := GetAreaForPolimondWithSideLenghts(LPoli,
+LSides);
+{$IFDEF MAX}
+if LArea >= LCurrMinMaxArea then
+{$ELSE}
+if LArea <= LCurrMinMaxArea then
+{$ENDIF}
+begin
+LSync.BeginWrite;
+try
+{$IFDEF MAX}
+
+if LArea < LMaxArea then
+{$ELSE}
+if LArea > LMaxArea then
+{$ENDIF}
+Continue;
+LMaxAreaPolimond := TArray.Copy<Integer>(LPoli);
+LMaxAreaSides := TArray.Copy<Integer>(LSides);
+LMaxArea := LArea;
+LCurrMinMaxArea := LMaxArea;
+{$IFDEF PRINT}
+Writeln('Thread
+: ', AIndex);
+Write('Side lengths: ');
+for j in LSides do
+Write(j:4);
+Writeln;
+Write( 'Polimond
+: ');
+for j := 0 to FSideCount - 1 do
+Write(LPoli[j]:4);
+Writeln;
+Writeln('Area
+: ', LArea:8:1);
+Writeln;
+{$ENDIF}
+finally
+LSync.EndWrite;
+end;
+end;
+end;
+end;
+///////////////////////////////////
+LSync.BeginWrite;
+try
+Writeln(Format('Thread %d finished %d combinations.',
+[AIndex, LCount]));
+finally
+LSync.EndWrite;
+end;
+///////////////////////////////////
+end);
+Writeln('Finished');
+Readln;
+end.
+unit uPolimondi;
+interface
+uses
+System.SysUtils;
+const
+Y_OFFSET_FULL = 2;
+Y_OFFSET_HALF = 1;
+
+type
+Polimond = class sealed
+class function IsValid(const APolimond: TArray<Integer>; const
+ASideLengths: TArray<Integer>): Boolean;
+class function NextPolimondVariation(var APolimond:
+TArray<Integer>): Boolean;
+end;
+implementation
+uses
+System.Types,
+Spring.Collections;
+const
+MAX_ANGLE = 360;
+ROTATION_ANGLE = 60;
+class function Polimond.IsValid(const APolimond: TArray<Integer>;
+const ASideLengths: TArray<Integer>): Boolean;
+var
+P: TPoint;
+i, j: Integer;
+LPoints: ISet<TPoint>;
+begin
+P := TPoint.Zero;
+LPoints := TCollections.CreateSet<TPoint>;
+for i := 0 to Length(APolimond) - 1 do
+for j := 1 to ASideLengths[i] do
+begin
+case APolimond[i] of
+0: P.Offset(0, Y_OFFSET_FULL);
+60: P.Offset(1, Y_OFFSET_HALF);
+120: P.Offset(1, -Y_OFFSET_HALF);
+180: P.Offset(0, -Y_OFFSET_FULL);
+240: P.Offset(-1, -Y_OFFSET_HALF);
+else { 300 }
+P.Offset(-1, Y_OFFSET_HALF);
+end;
+if not LPoints.Add(P) then
+Exit(False);
+end;
+Result := P.IsZero;
+end;
+class function Polimond.NextPolimondVariation(var APolimond:
+TArray<Integer>): Boolean;
+var
+i, j, LLen, LPrevAngle: Integer;
+LCarry, LSameAngles: Boolean;
+begin
+Result := False;
+LLen := Length(APolimond);
+repeat
+LCarry := False;
+
+i := LLen - 1;
+while i > 0 do
+if APolimond[i] = MAX_ANGLE - ROTATION_ANGLE then
+begin
+APolimond[i] := 0;
+LCarry := True;
+Dec(i);
+end
+else
+begin
+Inc(APolimond[i], ROTATION_ANGLE);
+if i = 1 then
+if APolimond[i] > 120 then
+begin
+APolimond[i] := 0;
+LCarry := True;
+Dec(i);
+Continue;
+end;
+if i = 0 then
+LPrevAngle := 0
+else
+LPrevAngle := APolimond[i - 1];
+{ Check that the direction does not go back }
+if (LPrevAngle = APolimond[i]) or (Abs(LPrevAngle APolimond[i]) = 180) then
+Continue;
+LCarry := False;
+Result := True;
+Break;
+end;
+if LCarry then
+Result := False;
+if Result then
+begin
+LSameAngles := False;
+for j := 0 to LLen - 2 do
+if APolimond[j] = APolimond[j + 1] then
+begin
+LSameAngles := True;
+Break;
+end;
+Result := not (LSameAngles or (APolimond[0] = APolimond[LLen
+- 1]));
+end;
+until Result or LCarry
+end;
+end.
+
+Maģistra darbs „Maģiskie polimondi un to īpašības” izstrādāts LU Fizikas un
+matemātikas fakultātē.
+Ar savu parakstu apliecinu, ka pētījums veikts patstāvīgi, izmantoti tikai tajā norādītie
+informācijas avoti un iesniegtā darba elektroniskā kopija atbilst izdrukai.
+Autors:
+
+Elīna Buliņa
+
+Rekomendēju darbu aizstāvēšanai
+Vadītājs: profesors Dr. math. Andrejs Cibulis
+
+31.05.2018.
+
+Recenzents: Mg. math. doktorants Juris Čerņenoks
+
+Darbs iesniegts Matemātikas nodaļā __.06.2018.
+Dekāna pilnvarotā persona: vecākā metodiķe Dzintra Holsta
+
+Darbs aizstāvēts maģistra gala pārbaudījuma komisijas sēdē
+07. 06.2018. prot. Nr._____
+Komisijas sekretāre: lektore Maruta Avotiņa
+
+
