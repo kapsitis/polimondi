@@ -3,6 +3,7 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta}
 \usepackage{amsmath, amssymb, amsthm}
+\usepackage{xcolor}
 \usepackage{hyperref}
 
 
@@ -242,7 +243,7 @@ So the number of sides $\boldsymbol{n}$ is divisible by 3. \qedsymbol
 \section{Linear Analysis of Perfect Polygonal Chains}
 
 Assume that we need to add vectors for some fragment within a perfect polyiamond, 
-e.g. $\mathtt{a}\mathtt{b}\mathtt{c}\mathtt{d}\mathtt{e}\mathtt{f}$. 
+e.g. $\mathtt{abcdef}$. 
 As usual, the last side in direction $\mathtt{f}$ is the shortest, e.g. of length $|z|$, 
 where $|z|$ is the suffix following the fragment $\mathtt{abcdef}$.  
 Side $\mathtt{a}$ is the longest ($|z| + 5$). 
@@ -253,9 +254,10 @@ a "staircase" sum of unit vectors in these directions multiplied by $6,5,4,3,2,1
 
 \[
 \begin{array}{rcl}
-\mathbb{g}(\mathtt{abcdef}) & = & 6(1,0,-1) + 5(1,-1,0) + 4(0,-1,1) + 3(-1,0,1) + 2(-1,1,0) + (0,1,-1) 
-= (6,-6,0)\\
-\mathbb{p}(\mathtt{abcdef}) & = & (1,0,-1) + (1,-1,0) + (0,-1,1) + (-1,0,1) + (-1,1,0) + (0,1,-1) = (0,0,0)\\
+\mathbf{g}(\mathtt{abcdef}) & = & 6(1,0,-1) + 5(1,-1,0) + 4(0,-1,1) + \\
+& &  + 3(-1,0,1) + 2(-1,1,0) + (0,1,-1) = (6,-6,0)\\
+\mathbf{p}(\mathtt{abcdef}) & = & (1,0,-1) + (1,-1,0) + (0,-1,1) + \\
+& & + (-1,0,1) + (-1,1,0) + (0,1,-1) = (0,0,0)\\
 \end{array}
 \]
 
@@ -287,16 +289,16 @@ w_3 &= g(z) + 3g(y) + g(x) + (3|z| + 3|y|)\,p(y) + (3|y| + |z|)\,p(x) = (0,0,0).
 \]
 
 
-After simplification we get $|y|p(y) = (0,0,0)$ and therefore
-$\mathbb{p}(y) = (0,0,0)$.
+After simplification we get $|y|\,\mathbf{p}(y) = (0,0,0)$ and therefore
+$\mathbf{p}(y) = (0,0,0)$.
 
-If $\mathbb{p}(y) \neq (0,0,0)$, then repeating $y$ moves the chain in a nonzero
+If $\mathbf{p}(y) \neq (0,0,0)$, then repeating $y$ moves the chain in a nonzero
 direction. The displacement contributed by the pumped block grows linearly with $n$,
 whereas the suffix $z$ is fixed and has finite total length. Hence for sufficiently
 large $n$ the chain cannot return to its starting point, so $w_n$ is not even a
 closed polygonal chain and therefore is not a perfect polyiamond.
 
-If $\mathbb{p}(y) = (0,0,0)$, then the claim follows from Lemma~\ref{lemma:spiralling} below:
+If $\mathbf{p}(y) = (0,0,0)$, then the claim follows from Lemma~\ref{lemma:spiralling} below:
 for sufficiently large $n$, the repeated block $y^n$ either self-intersects or traps
 the remaining finite suffix inside a contracting spiral, so $w_n$ is not a
 simple closed polygon. Therefore some $w_n$ are not perfect polyiamonds.
@@ -338,6 +340,9 @@ There is no infinite set of perfect polyiamonds that is a
 regular language over $\Sigma$. 
 \end{corollary}
 
+
+\includegraphics[width=3.5in]{perfect_polyiamonds2024_intersecting_regular_languages.png}
+
 \textbf{Proof:}
 Assume, for contradiction, that an infinite regular language
 $L\subseteq\Sigma^{*}$ contains only perfect polyiamonds.
@@ -352,6 +357,174 @@ self-intersection or a trapping contracting spiral.
 This contradicts $xy^nz\in L$ for all $n$. Therefore no such infinite regular
 language exists.  
 $\blacksquare$
+
+\subsection{Perfect Polyiamonds Matching Regular Expressions}
+
+{\bf Example 1:} Perfect accute polyiamonds: 
+$\mathcal{P} \cap (\mathtt{a}\mid\mathtt{c}\mid\mathtt{e})^{+}$.
+
+\includegraphics[width=1.5in]{perfect_polyiamonds2024_acute_example.png}
+
+
+{\bf Example 2:} Perfect obtuse polyiamonds:
+$\mathcal{P} \cap (\mathtt{ab}\mid\mathtt{af}\mid\mathtt{cb}\mid\mathtt{cd}\mid\mathtt{ed}\mid\mathtt{ef})^{+}$.
+
+\includegraphics[width=1.5in]{perfect_polyiamonds2024_obtuse_example.png}
+
+
+{\bf Example 3:} Perfect polyiamonds with a single acute angle:
+$\mathcal{P} \cap ((\mathtt{a}| \mathtt{c}| \mathtt{e})(\mathtt{b}|\mathtt{d}|\mathtt{f}))^{\ast}.((\mathtt{a}| \mathtt{c}| \mathtt{e})(\mathtt{b}|\mathtt{d}|\mathtt{f}))^{\ast}$.
+
+\includegraphics[width=1in]{perfect_polyiamonds2024_single_acute_angle.png}
+
+{\bf Example 4:} Perfect polyiamonds slanted to the right:
+$\mathcal{P} \cap (\mathtt{a}\mid\mathtt{b}\mid\mathtt{d}\mid\mathtt{e})^{+}$.
+
+\includegraphics[width=1.5in]{perfect_polyiamonds2024_two_directions.png}
+
+{\bf Example 5:} Perfect acute jagged triangle: 
+$\mathcal{P} \cap \mathtt{a}(\mathtt{ca})^{+}(\mathtt{ea})^+(\mathtt{ec})^+(\mathtt{ac})^+$. 
+
+\includegraphics[width=1.5in]{perfect_polyiamonds2024_acute_triangle.png}
+
+
+
+
+
+\subsection{Towards Context Free Grammars for Perfect Polyiamonds}
+
+\begin{proposition}
+Let $s_n = x_k y_k^n x_{k-1} y_{k-1}^n \cdots x_2 y_2^n x_1 y_1^n x_0$ 
+be an encoding for perfect polyiamonds for $n = 1,2,3$. 
+Then the same $s_n$ describe perfect polyiamonds (or
+``perfect'' closed polygonal chains) for all positive integers $n$.
+\end{proposition}
+
+\textbf{Proof:} The sum of the side vectors for the given $n$:
+\[
+\mathbf{v}_n = g(x_0) + \sum_{i=1}^k \bigl(g(y_i) + g(x_i)\bigr)
+\]
+\[
+\qquad + \sum_{i=1}^k \left( n \cdot |x_0| + \sum_{j=1}^{i-1} n \cdot \bigl(n \cdot |y_j| + |x_j|\bigr) + \frac{n(n-1)}{2}|y_i| \right)\cdot p(y_i)
+\]
+\[
+\qquad + \sum_{i=1}^k \left( |x_0| + \sum_{j=1}^{i-1} \bigl(n \cdot |y_j| + |x_j|\bigr) + n \cdot |y_i| \right)\cdot p(x_i).
+\]
+
+Vectors $\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3$ 
+are all equal to $(0,0,0)$, and they can express all the 
+remaining ones. Consequently all the other $\mathbf{v}_i$ 
+are also $(0,0,0)$.
+
+\textbf{Note:} $s_n$ could have side intersections 
+(not necessarily polyiamonds).
+
+
+Let $\mathbf{u}_1, \mathbf{u}_2, \ldots, \mathbf{u}_k$ be vectors and $P_i(t)$, $i \in [1;k]$, 
+be 2nd degree polynomials. Define $n$ vectors like this:
+
+\[
+\begin{array}{rcl}
+\mathbf{v}_1 & = & P_1(1)\cdot \mathbf{u}_1 + P_2(1)\cdot \mathbf{u}_2 + \cdots + P_k(1)\cdot \mathbf{u}_k\\
+\mathbf{v}_2 & = & P_1(2)\cdot \mathbf{u}_1 + P_2(2)\cdot \mathbf{u}_2 + \cdots + P_k(2)\cdot \mathbf{u}_k\\
+\mathbf{v}_3 & = & P_1(3)\cdot \mathbf{u}_1 + P_2(3)\cdot \mathbf{u}_2 + \cdots + P_k(3)\cdot \mathbf{u}_k\\
+& & \ldots\\
+\mathbf{v}_n & = & P_1(n)\cdot \mathbf{u}_1 + P_2(n)\cdot \mathbf{u}_2 + \cdots + P_k(n)\cdot \mathbf{u}_k\\
+\end{array}
+\]
+
+In this sequence all $\mathbf{v}_4, \mathbf{v}_5, \ldots$ are linear combinations of 
+$\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3$.
+
+\textbf{Proof:} For any quadratic polynomial $P(t) = at^2 + bt + c$ the following hold:
+\[
+\begin{array}{rcl}
+P(4) & = & P(1) - 3P(2) + 3P(3), \\
+P(5) & = & 3P(1) - 8P(2) + 6P(3), \ldots
+\end{array}
+\]
+
+The Vandermonde matrix
+${\displaystyle 
+\begin{pmatrix}
+1 & 1 & 1^2 \\
+1 & 2 & 2^2 \\
+1 & 3 & 3^2
+\end{pmatrix}
+}$
+has linearly independent rows, so it can express any 3D vector.
+
+
+
+\begin{proposition}
+Assume that polyiamonds $uvwxy$, $uvvwxxy$, $uvvvwxxxy$ (where $u,v,w,x,y$ are any strings 
+from $\{\mathtt{a}, \mathtt{b}, \mathtt{c}, \mathtt{d}, \mathtt{e}, \mathtt{f}\}^{\ast}$) are all closed polynomial 
+chains. In this case $u,v,w,x,y$ must satisfy the following equalities:
+
+\[
+\begin{array}{rcl}
+(0,0,0) & = & \mathbf{g}(y) + \mathbf{g}(w) + \mathbf{g}(u) + |y| * \mathbf{p}(w) + 
+(|y|+|w|) * \mathbf{p}(u)  \\
+(0,0,0) & = & \mathbf{g}(x) + \mathbf{g}(v) + |y| * \mathbf{p}(x) + |x|*\mathbf{p}(w)+ \\
+ & & + (|y|+|x|+|w|)*\mathbf{p}(v)+ (|x|+|v|)*\mathbf{p}(u) \\
+(0,0,0) & = & |x| * \mathbf{p}(x) + (2|x|+|v|) * \mathbf{p}(v) \\
+\end{array}
+\]
+\end{proposition}
+
+{\bf Proof:} The sums of the sides for all three polyiamonds must equal $(0,0,0)$: 
+\[
+\begin{array}{rcl}
+(0,0,0) & = & \mathbf{g}(y) + \mathbf{g}(x)  + \mathbf{g}(w) + \mathbf{g}(v) + \mathbf{g}(u) + \\
+ & &  +|y|*\mathbf{p}(x) + (|y|+|x|)*\mathbf{p}(w) + \\
+ & &  +(|y|+|x|+|w|)*\mathbf{p}(v) + (|y|+|x|+|w|+|v|)*\mathbf{p}(u) \\
+(0,0,0) & = & \mathbf{g}(y)+2\mathbf{g}(x)+\mathbf{g}(w)+2\mathbf{g}(v)+\mathbf{g}(u) + \\
+ & & + (2|y|+|x|)*\mathbf{p}(x)  +(|y|+2|x|)*\mathbf{p}(w) +\\
+ & & + (2|y|+4|x|+2|w|+|v|)*\mathbf{p}(v)+ (|y|+2|x|+|w|+2|v|)*\mathbf{p}(u) \\
+(0,0,0) & = & \mathbf{g}(y)+3\mathbf{g}(x)+\mathbf{g}(w)+3\mathbf{g}(v)+\mathbf{g}(u)+ \\
+ & & +(3|y|+3|x|)*\mathbf{p}(x)+(|y|+3|x|)*\mathbf{p}(w) + \\ 
+ & & +(3|y|+9|x|+3|w|+3|v|)*\mathbf{p}(v)+(|y|+3|x|+|w|+3|v|)*\mathbf{p}(u) \\
+\end{array}
+\]
+
+Simplifying the linear equalities gives us the following: 
+
+\[
+\begin{array}{rcl}
+(0,0,0) & = & \mathbf{g}(y) + \mathbf{g}(w) + \mathbf{g}(u) + |y| * \mathbf{p}(w) + 
+(|y|+|w|) * \mathbf{p}(u)  \\
+(0,0,0) & = & \mathbf{g}(x) + \mathbf{g}(v) + |y| * \mathbf{p}(x) + |x|*\mathbf{p}(w)+ \\
+ & & + (|y|+|x|+|w|)*\mathbf{p}(v)+ (|x|+|v|)*\mathbf{p}(u) \\
+(0,0,0) & = & |x| * \mathbf{p}(x) + (2|x|+|v|) * \mathbf{p}(v) \\
+\end{array}
+\]
+
+\qedsymbol
+
+{\bf Note:} Condition $|x| * \mathbf{p}(x) + (2|x|+|v|) * \mathbf{p}(v) = (0,0,0)$ shows the inductive step -- 
+the possible lengths of $x$ and $v$. The shortest possible are $|x|=|v|=4$.
+
+
+
+{\bf Example 1:} The following CFG generates an infinite family of perfect polyiamonds:
+
+\[
+\begin{array}{l}
+S \to \mathtt{acec} P \mathtt{db} \\
+P \to \mathtt{ecea} P \mathtt{abcb} \,\mid\, \mathtt{eaf}
+\end{array}
+\]
+
+These are the first few perfect polyiamonds generated by this CFG:
+\[
+\begin{array}{l}
+\mathtt{acec}\color{red}{\mathtt{ecea}}\color{black}{\mathtt{eaf}}\color{red}{\mathtt{abcb}}\color{black}{\mathtt{db}}, \\
+\mathtt{acec}\color{red}{\mathtt{ecea}}\color{blue}{\mathtt{ecea}}\color{black}{\mathtt{eaf}}\color{red}{\mathtt{abcb}}\color{blue}{\mathtt{abcb}}\color{black}{\mathtt{db}}, \\
+\mathtt{acec}\color{red}{\mathtt{ecea}}\color{blue}{\mathtt{ecea}}\color{red}{\mathtt{ecea}}\color{black}{\mathtt{eaf}}\color{red}{\mathtt{abcb}}\color{blue}{\mathtt{abcb}}\color{red}{\mathtt{abcb}}\color{black}{\mathtt{db}}.
+\end{array}
+\]
+
+\includegraphics[width=5in]{perfect_polyiamonds2024_cfg_example1.png}
 
 
 
@@ -374,27 +547,9 @@ $P \rightarrow \mathtt{aececacece}P(\mathtt{caea})^5 \,\mid\, \mathtt{cecececa}.
 
 
 
-\begin{proposition}
-There is a {\em parallel context-free language (PCL)}\cite{Siromoney1974} 
-generating an infinite two-dimensional family of perfect polyiamonds.
-% express this with PCL rules: {\tt \url{https://bit.ly/3UoJnkq}}.
-\end{proposition}
 
 
 
-\[
-\textbf{Example:}\quad y = \mathtt{a}\mathtt{b}\mathtt{c}\mathtt{d}\mathtt{e}\mathtt{f}
-\]
-
-\[
-g(y)
-= 6(1,0,-1) + 5(1,-1,0) + 4(0,-1,1) + 3(-1,0,1) + 2(-1,1,0) + (0,1,-1)
-= (6,-6,0)
-\]
-
-\[
-p(y) = (0,0,0)
-\]
 
 
 
@@ -412,6 +567,15 @@ $\mathtt{a}(\mathtt{ca})^{+}(\mathtt{ea})^{+}(\mathtt{ec})^{+}(\mathtt{ac})^{+}$
 
 
 \section{Parallel Grammar leading to multiple infinite families of perfect polyiamonds}
+
+
+
+\begin{proposition}
+There is a {\em parallel context-free language (PCL)}\cite{Siromoney1974} 
+generating an infinite two-dimensional family of perfect polyiamonds.
+\end{proposition}
+
+We express this with PCL rules: {\tt \url{https://bit.ly/3UoJnkq}}.
 
 
 
@@ -549,10 +713,6 @@ In "Handbook of Formal Languages" (Volume 3), Springer, (1997) 69--123.
 Rudzāte, M., Apsītis, K.
 {\it Notes for the 'Families of Perfect Polyiamonds'.} 
 Available at: \url{https://bit.ly/49mqmmL}.
-\bibitem{Siromoney1974}
-Siromoney, R., Krithivasan, K.
-{\it Parallel Context-Free Languages.}
-Information and Control. {\bf 24} (1974) 155--162. 
 \bibitem{Sipser2020}
 Michael Sipser, Notes of MIT course 18-404J: {\em Theory of Computation}, 2020.  
 {\em Lecture 3: Regular Pumping Lemma, Finite Automata → Regular Expressions, CFGs}
@@ -566,6 +726,7 @@ Aravind Joshi: {\em Tree Adjoining Grammars (start on p.226).}
 \url{doi.org/10.1017/CBO9780511597855.007}.
 \bibitem{Siromoney1974}
 Siromoney, R. and Krithivasan, K.: {\em Parallel Context-Free Languages.}
+Information and Control. {\bf 24} (1974) 155--162. 
 \url{doi.org/10.1016/S0019-9958(74)80054-9}
 \end{thebibliography}
 
