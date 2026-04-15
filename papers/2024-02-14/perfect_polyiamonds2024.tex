@@ -3,12 +3,15 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta}
 \usepackage{amsmath, amssymb, amsthm}
+\usepackage{hyperref}
 
 
 \pagestyle{empty}
 \renewcommand{\thefootnote}{}
 \newtheorem{definition}{\bf Definition}[section]
 \newtheorem{proposition}{\bf Proposition}[section]
+\newtheorem{lemma}[proposition]{\bf Lemma}
+\newtheorem{corollary}[proposition]{\bf Corollary}
 
 
 \setlength{\parindent}{0pt}
@@ -198,7 +201,7 @@ A contradiction. \qedsymbol
 
 
 \begin{proposition}
-A perfect obtuse n-polyiamond can only exist if
+A perfect obtuse $n$-polyiamond can only exist if
 \[
 n \equiv 0 \pmod{6}
 \]
@@ -215,14 +218,18 @@ For odd $n = 2k + 1$ the sum of inner angles:
 
 Contradiction. So $n$ must be even.
 
-
-
 \medskip
 
+\begin{center}
+\includegraphics[width=2.5in]{perfect_polyiamonds2024_red_blue_arrows.png}
+\end{center}
+
 For red direction vectors $(\mathtt{a},\mathtt{c},\mathtt{e})$ we have
-\[ x - y \equiv 1 \pmod{3} \]
+$x - y \equiv 1 \pmod{3}$.
+
 For blue direction vectors $(\mathtt{b},\mathtt{d},\mathtt{f})$ we have
-\[ x - y \equiv 2 \pmod{3} \]
+$x - y \equiv 2 \pmod{3}$. 
+
 In an obtuse polyiamond they alternate -- all red
 vectors are even; blue vectors are odd.
 Adding any side of a perfect obtuse polyiamond
@@ -232,13 +239,120 @@ So the number of sides $\boldsymbol{n}$ is divisible by 3. \qedsymbol
 
 
 
+\section{Linear Analysis of Perfect Polygonal Chains}
+
+Assume that we need to add vectors for some fragment within a perfect polyiamond, 
+e.g. $\mathtt{a}\mathtt{b}\mathtt{c}\mathtt{d}\mathtt{e}\mathtt{f}$. 
+As usual, the last side in direction $\mathtt{f}$ is the shortest, e.g. of length $|z|$, 
+where $|z|$ is the suffix following the fragment $\mathtt{abcdef}$.  
+Side $\mathtt{a}$ is the longest ($|z| + 5$). 
+
+We decompose it as a sum of two vectors: one of them is the sum of unit
+vecors in all these directions multiplied by $|z|$, and the other is 
+a "staircase" sum of unit vectors in these directions multiplied by $6,5,4,3,2,1$ respectively.
+
+\[
+\begin{array}{rcl}
+\mathbb{g}(\mathtt{abcdef}) & = & 6(1,0,-1) + 5(1,-1,0) + 4(0,-1,1) + 3(-1,0,1) + 2(-1,1,0) + (0,1,-1) 
+= (6,-6,0)\\
+\mathbb{p}(\mathtt{abcdef}) & = & (1,0,-1) + (1,-1,0) + (0,-1,1) + (-1,0,1) + (-1,1,0) + (0,1,-1) = (0,0,0)\\
+\end{array}
+\]
+
+
+\includegraphics[width=4in]{perfect_polyiamonds2024_abcdef.png}
+
+\includegraphics[width=4in]{perfect_polyiamonds2024_stair_functions.png}
 
 
 \begin{proposition}
+\label{prop:pumping}
+Let $x,y,z \in \{\mathtt{a},\mathtt{b},\mathtt{c},\mathtt{d},\mathtt{e},\mathtt{f}\}^{*}$
+be three sequences of direction letters and $|y| \neq 0$.
+Define $w_n = x y^n z$ for any positive $n$.
+Then some $w_n$ are not perfect polyiamonds.
+\end{proposition}
+
+{\bf Proof:} 
+Sums of side vectors:
+
+\[
+\left\{
+\begin{aligned}
+w_1 &= g(z) + g(y) + g(x) + |z|\,p(y) + (|y| + |z|)\,p(x) = (0,0,0),\\
+w_2 &= g(z) + 2g(y) + g(x) + (2|z| + |y|)\,p(y) + (2|y| + |z|)\,p(x) = (0,0,0),\\
+w_3 &= g(z) + 3g(y) + g(x) + (3|z| + 3|y|)\,p(y) + (3|y| + |z|)\,p(x) = (0,0,0).
+\end{aligned}
+\right.
+\]
+
+
+After simplification we get $|y|p(y) = (0,0,0)$ and therefore
+$\mathbb{p}(y) = (0,0,0)$.
+
+If $\mathbb{p}(y) \neq (0,0,0)$, then repeating $y$ moves the chain in a nonzero
+direction. The displacement contributed by the pumped block grows linearly with $n$,
+whereas the suffix $z$ is fixed and has finite total length. Hence for sufficiently
+large $n$ the chain cannot return to its starting point, so $w_n$ is not even a
+closed polygonal chain and therefore is not a perfect polyiamond.
+
+If $\mathbb{p}(y) = (0,0,0)$, then the claim follows from Lemma~\ref{lemma:spiralling} below:
+for sufficiently large $n$, the repeated block $y^n$ either self-intersects or traps
+the remaining finite suffix inside a contracting spiral, so $w_n$ is not a
+simple closed polygon. Therefore some $w_n$ are not perfect polyiamonds.
+
+
+\begin{lemma}
+\label{lemma:spiralling}
+If $p(y) = (0,0,0)$, then appending multiple copies of such $y$ 
+we get a sequence of polygonal chains:
+$y^1, y^2, y^3, \ldots$
+with decreasing side lengths.
+For any sequence $y$ exactly one statement is true:
+\begin{itemize}
+    \item The polygonal chain will intersect itself
+    (its $2$nd iteration intersects its $1$st iteration).
+    \item The sequence $y^1, y^2, y^3, \ldots$ creates a contracting 
+    spiral where the corresponding sides in adjacent iterations are parallel; 
+    and the distances between these parallel sides have a constant upper bound.
+\end{itemize}
+\end{lemma}
+
+{\bf Proof (sketch):}
+Since $p(y)=(0,0,0)$, each copy of $y$ has zero net unit-vector sum; thus each
+iteration starts where the previous one starts, but with uniformly shorter sides.
+Corresponding sides in consecutive iterations are parallel and their offsets are
+uniformly bounded by a constant depending only on $y$.
+
+If two consecutive iterations intersect, we are in the first case.
+If they do not intersect, the nesting of successive iterations forces a contracting
+spiral structure with bounded gaps between corresponding sides, yielding the second
+case. \qedsymbol
+
+
+\includegraphics[width=5in]{perfect_polyiamonds2024_spiralling.png}
+
+
+\begin{corollary}
 There is no infinite set of perfect polyiamonds that is a 
 regular language over $\Sigma$. 
-({\em Hint:} Apply Pumping lemma.)
-\end{proposition}
+\end{corollary}
+
+\textbf{Proof:}
+Assume, for contradiction, that an infinite regular language
+$L\subseteq\Sigma^{*}$ contains only perfect polyiamonds.
+By the Pumping Lemma, every sufficiently long $w\in L$ can be written
+$w=xyz$ with $|y|>0$ such that $xy^nz\in L$ for all $n\ge 0$.
+
+By Proposition~\ref{prop:pumping}, for any such decomposition there exists some $n$ for which
+$xy^nz$ is not a perfect polyiamond:
+either $p(y)\neq (0,0,0)$ and the chain cannot close for large $n$, or
+$p(y)=(0,0,0)$ and by Lemma~3.4 large enough pumping creates
+self-intersection or a trapping contracting spiral.
+This contradicts $xy^nz\in L$ for all $n$. Therefore no such infinite regular
+language exists.  
+$\blacksquare$
+
 
 
 
@@ -266,12 +380,160 @@ generating an infinite two-dimensional family of perfect polyiamonds.
 % express this with PCL rules: {\tt \url{https://bit.ly/3UoJnkq}}.
 \end{proposition}
 
+
+
+\[
+\textbf{Example:}\quad y = \mathtt{a}\mathtt{b}\mathtt{c}\mathtt{d}\mathtt{e}\mathtt{f}
+\]
+
+\[
+g(y)
+= 6(1,0,-1) + 5(1,-1,0) + 4(0,-1,1) + 3(-1,0,1) + 2(-1,1,0) + (0,1,-1)
+= (6,-6,0)
+\]
+
+\[
+p(y) = (0,0,0)
+\]
+
+
+
+\section{Extreme areas of perfect polyiamonds}
+
 \begin{proposition}
 For $n = 27, 35, 171, 275, 1595$, a perfect acute $n$-polyiamond with the 
 maximum area among all perfect acute $n$-polyiamonds has a 
 triangular shape and matches the regex 
 $\mathtt{a}(\mathtt{ca})^{+}(\mathtt{ea})^{+}(\mathtt{ec})^{+}(\mathtt{ac})^{+}$. 
 \end{proposition}
+
+
+
+
+
+\section{Parallel Grammar leading to multiple infinite families of perfect polyiamonds}
+
+
+
+\[
+\renewcommand{\arraystretch}{1.15}
+\begin{array}{l}
+\text{Axiom: }\;
+\mathtt{a}\mathtt{c}\mathtt{b}\mathtt{a}\,E_1\,
+\mathtt{c}\mathtt{b}\mathtt{d}\mathtt{f}\mathtt{e}\mathtt{d}\,E_5\,
+\mathtt{f}\mathtt{d}\,E_7\,
+\mathtt{f}\mathtt{e}\mathtt{d}\mathtt{f}\mathtt{e}\mathtt{d}\,E_3\,
+\mathtt{f}\mathtt{e}\mathtt{a}\mathtt{c}\mathtt{b}\mathtt{a}\,E_6\,
+\mathtt{c}\mathtt{a}\,E_8\,\mathtt{c}
+\\[1em]
+\begin{array}{c@{\qquad}c@{\qquad}c@{\qquad}c@{\qquad}c}
+\text{0.} & \text{1.} & \text{2.} & \text{3.} & \text{4.}
+\\[0.4em]
+\begin{array}{rcl}
+E_1      &\to& \mathtt{b}\\
+E_2      &\to& \mathtt{b}\\
+E_3      &\to& \mathtt{e}\\
+E_4      &\to& \mathtt{e}\\
+E_5      &\to& \varepsilon\\
+E_6      &\to& \varepsilon\\
+E_7      &\to& \varepsilon\\
+E_8      &\to& \varepsilon\\
+E_9      &\to& \varepsilon\\
+E_{10}   &\to& \varepsilon\\
+E_{11}   &\to& \varepsilon\\
+E_{12}   &\to& \varepsilon
+\end{array}
+&
+\begin{array}{rcl}
+E_1      &\to& E_9\,\mathtt{c}\mathtt{b}\mathtt{a}\,E_{11}\\
+E_5      &\to& E_4\\
+E_3      &\to& E_{10}\,\mathtt{f}\mathtt{e}\mathtt{d}\,E_{12}\\
+E_6      &\to& E_2\\
+E_{11}   &\to& \varepsilon\\
+E_{12}   &\to& \varepsilon\\
+E_9      &\to& \varepsilon\\
+E_{10}   &\to& \varepsilon
+\end{array}
+&
+\begin{array}{rcl}
+E_1      &\to& E_9\,\mathtt{c}\mathtt{b}\mathtt{a}\,E_{11}\\
+E_7      &\to& E_4\\
+E_3      &\to& E_{10}\,\mathtt{f}\mathtt{e}\mathtt{d}\,E_{12}\\
+E_8      &\to& E_2\\
+E_{11}   &\to& \varepsilon\\
+E_{12}   &\to& \varepsilon\\
+E_9      &\to& \varepsilon\\
+E_{10}   &\to& \varepsilon
+\end{array}
+&
+\begin{array}{rcl}
+E_9      &\to& E_1\\
+E_4      &\to& E_5\,\mathtt{f}\mathtt{e}\mathtt{d}\,E_7\\
+E_{10}   &\to& E_3\\
+E_2      &\to& E_6\,\mathtt{c}\mathtt{b}\mathtt{a}\,E_8\\
+E_5      &\to& \varepsilon\\
+E_6      &\to& \varepsilon\\
+E_7      &\to& \varepsilon\\
+E_8      &\to& \varepsilon
+\end{array}
+&
+\begin{array}{rcl}
+E_{11}   &\to& E_1\\
+E_4      &\to& E_5\,\mathtt{f}\mathtt{e}\mathtt{d}\,E_7\\
+E_{12}   &\to& E_3\\
+E_2      &\to& E_6\,\mathtt{c}\mathtt{b}\mathtt{a}\,E_8\\
+E_5      &\to& \varepsilon\\
+E_6      &\to& \varepsilon\\
+E_7      &\to& \varepsilon\\
+E_8      &\to& \varepsilon
+\end{array}
+\end{array}
+\end{array}
+\]
+
+
+{\bf Examples:}
+
+$\{1. 3. 2. 4.\}$ and $\{1. 4. 2. 3.\}$. 
+
+$\{1. 3. 2. 4.\}$ and $\{2. 3. 1. 4.\}$.
+
+$(1, 2, 3, 4)$ represented as $(x, y, z, w)$.
+
+
+
+
+{\bf Is this DAG a lattice?}
+
+Do two Polyiamonds $(x_1,y_1,z_1,w_1)$ and $(x_2,y_2,z_2,w_2)$ have a join
+(i.e.\ least upper bound)?
+\[
+(x_1+x_2,\; y_1+y_2,\; z_1+z_2,\; w_1+w_2)
+\]
+
+Do two Polyiamonds $(x_1,y_1,z_1,w_1)$ and $(x_2,y_2,z_2,w_2)$ have a meet
+(i.e.\ greatest lower bound)?
+\[
+(\min(x_1,x_2),\; \min(y_1,y_2),\; \min(z_1,z_2),\; \min(w_1,w_2))
+\]
+
+
+\section{Conclusions}
+
+\begin{itemize}
+\item Perfect polyiamonds are a rich source of examples and counterexamples 
+in the theory of formal languages.
+\item The set of perfect polyiamonds is not a regular language, 
+but it contains infinite subsets that are context-free languages.
+\item Many infinite sequences of perfect polyiamonds can be generated by a parallel context-free 
+grammar, which allows for more complex structures than context-free grammars. 
+\item The study of perfect polyiamonds can lead to insights into the limitations 
+of various types of grammars and the properties of formal languages.
+\item The set of perfect polyiamonds can be extended to include perfect closed polygonal 
+chains, which may have intersecting sides, providing a broader class of objects to study.
+\end{itemize}
+
+
 
 
 \begin{thebibliography}{10}
@@ -286,15 +548,26 @@ In "Handbook of Formal Languages" (Volume 3), Springer, (1997) 69--123.
 \bibitem{RudzateApsitis2024}
 Rudzāte, M., Apsītis, K.
 {\it Notes for the 'Families of Perfect Polyiamonds'.} 
-Available at: {\tt https://bit.ly/49mqmmL}
+Available at: \url{https://bit.ly/49mqmmL}.
 \bibitem{Siromoney1974}
 Siromoney, R., Krithivasan, K.
 {\it Parallel Context-Free Languages.}
 Information and Control. {\bf 24} (1974) 155--162. 
-
+\bibitem{Sipser2020}
+Michael Sipser, Notes of MIT course 18-404J: {\em Theory of Computation}, 2020.  
+{\em Lecture 3: Regular Pumping Lemma, Finite Automata → Regular Expressions, CFGs}
+Pumping Lemma for Context-Free Languages -- notes by MIT.
+Available at: \url{https://bit.ly/42cTZp2}. 
+\bibitem{Riley2022}
+Darcey Riley, {\em Tree Adjoining Grammar (TAG) Parsing}. Available at: 
+\url{https://youtu.be/gtKpkrSCVh0?si=_MHxx4WYzBIo9Zok}. 
+\bibitem{Joshi1985}
+Aravind Joshi: {\em Tree Adjoining Grammars (start on p.226).}
+\url{doi.org/10.1017/CBO9780511597855.007}.
+\bibitem{Siromoney1974}
+Siromoney, R. and Krithivasan, K.: {\em Parallel Context-Free Languages.}
+\url{doi.org/10.1016/S0019-9958(74)80054-9}
 \end{thebibliography}
-
-
 
 
 \end{document}
