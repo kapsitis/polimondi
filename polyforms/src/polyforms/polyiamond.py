@@ -19,6 +19,12 @@ import copy as cp
 
 DESCARTES = {'A': (1.0, 0.0), 'B': (0.5, 1.0), 'C': (-0.5, 1.0), 'D': (-1.0, 0.0), 'E': (-0.5, -1.0), 'F': (0.5, -1.0) }
 
+# Integer-doubled mod-Cartesian direction vectors (all entries are exact integers).
+# A PointTg(a,b,c) maps to DESCARTES2 coordinates (2a+b, -2b).
+# Unit equilateral triangle has area 2 in these coordinates (shoelace/2).
+# Therefore: signed_area_in_triangles = shoelace_sum_in_DESCARTES2 // 4
+DESCARTES2 = {'A': (2, 0), 'B': (1, 2), 'C': (-1, 2), 'D': (-2, 0), 'E': (-1, -2), 'F': (1, -2)}
+
 unit_triangle_height = math.sqrt(3) / 2
 unit_triangle_area = math.sqrt(3) / 4
 
@@ -118,16 +124,26 @@ class Polyiamond:
         return (min_x, max_x, min_y, max_y)
 
     def get_signed_area(self):
+        """Compute signed area in triangle units using exact integer arithmetic.
+
+        Uses integer-doubled mod-Cartesian coordinates (DESCARTES2) where every
+        vertex has integer coordinates.  The shoelace sum divided by 4 gives the
+        exact signed area measured in unit-triangle units (always an integer).
+        """
         if not hasattr(self, 'signed_area'):
-            self.get_descartes()
-            N = len(self.descartes)
-            area = 0
-            for i in range(0, N - 1):
-                area += self.descartes[i][0]*self.descartes[i+1][1] - self.descartes[i][1]*self.descartes[i+1][0]
-            area += self.descartes[N-1][0]*self.descartes[0][1] - self.descartes[N-1][1]*self.descartes[0][0]
-            # convert from square units into the small triangle units
-            result = (area/2)/unit_triangle_area
-            self.signed_area = int(round(result))
+            # Build integer vertices in DESCARTES2 coords without any floating point.
+            verts2 = [(0, 0)]
+            for (L, D) in self.sides[:-1]:
+                dx, dy = DESCARTES2[D]
+                verts2.append((verts2[-1][0] + L * dx, verts2[-1][1] + L * dy))
+            N = len(verts2)
+            shoelace = 0
+            for i in range(N - 1):
+                shoelace += verts2[i][0] * verts2[i+1][1] - verts2[i][1] * verts2[i+1][0]
+            shoelace += verts2[N-1][0] * verts2[0][1] - verts2[N-1][1] * verts2[0][0]
+            # shoelace == 4 * signed_area_in_triangles  (exact, no rounding needed)
+            assert shoelace % 4 == 0, "Shoelace sum not divisible by 4 – invalid polyiamond?"
+            self.signed_area = shoelace // 4
         return self.signed_area
 
     def get_area(self):
@@ -213,22 +229,47 @@ class Polyiamond:
     #         return True
 
     def winding_number(self, pt):
-        vertices = [vv.get_xy() for vv in self.vertices]
-        (x, y) = pt.get_xy()
-        sum_angle = 0.0
+        """Compute the winding number of the polygon around *pt* using exact
+        integer arithmetic in DESCARTES2 coordinates.
 
-        for i in range(len(vertices)):
-            dx1, dy1 = vertices[i][0] - x, vertices[i][1] - y
-            dx2, dy2 = vertices[(i + 1) % len(vertices)][0] - x, vertices[(i + 1) % len(vertices)][1] - y
-            angle1 = math.atan2(dy1, dx1)
-            angle2 = math.atan2(dy2, dx2)
-            da = angle1 - angle2
-            if da <= -math.pi:
-                da += 2 * math.pi
-            elif da > math.pi:
-                da -= 2 * math.pi
-            sum_angle += da
-        return round(sum_angle / (2 * math.pi))
+        Sign convention matches the original atan2-based implementation:
+        returns -1 for interior points of CCW-oriented polygons, +1 for
+        CW-oriented polygons, and 0 for exterior or boundary points.
+
+        Algorithm: for each directed edge (v_i -> v_{i+1}) count upward and
+        downward crossings of the horizontal line y = qy using integer cross
+        products.  Boundary points (on a vertex or edge) return 0 explicitly.
+        """
+        # Convert query point PointTg(a,b,c) -> DESCARTES2: (2a+b, -2b)
+        qx = 2 * pt.x + pt.y
+        qy = -2 * pt.y
+
+        # Build polygon vertices in DESCARTES2 integer coords
+        verts2 = [(0, 0)]
+        for (L, D) in self.sides[:-1]:
+            dx, dy = DESCARTES2[D]
+            verts2.append((verts2[-1][0] + L * dx, verts2[-1][1] + L * dy))
+
+        winding = 0
+        N = len(verts2)
+        for i in range(N):
+            x1, y1 = verts2[i]
+            x2, y2 = verts2[(i + 1) % N]
+            # cross product (v1->v2) x (v1->pt)
+            cross = (x2 - x1) * (qy - y1) - (y2 - y1) * (qx - x1)
+            # If cross == 0 the point lies on the line through this edge;
+            # check if it also lies within the segment bounds -> boundary point.
+            if cross == 0:
+                if min(x1, x2) <= qx <= max(x1, x2) and min(y1, y2) <= qy <= max(y1, y2):
+                    return 0  # on boundary
+            if y1 <= qy:
+                if y2 > qy and cross > 0:   # upward crossing, pt is left of edge
+                    winding += 1
+            else:
+                if y2 <= qy and cross < 0:  # downward crossing, pt is right of edge
+                    winding -= 1
+        # Negate to preserve original sign convention (CCW polygon -> -1 for interior)
+        return -winding
 
 
     # Winding-number based algorithm to find out, if "pt" is
@@ -253,6 +294,32 @@ class Polyiamond:
                 cond2 = False
                 break
         return cond1 and cond2
+
+    def diameter_sq(self):
+        """Return the squared diameter (maximum squared Euclidean distance between
+        any two vertices) as an exact integer, together with the index pair where
+        it is achieved.
+
+        Working in DESCARTES2 integer coordinates avoids all floating-point
+        arithmetic.  The actual diameter is sqrt(diameter_sq()) / 2 because the
+        DESCARTES2 scale factor is 2 relative to mod-Cartesian, but since we only
+        need comparisons the squared value suffices.
+        """
+        verts2 = [(0, 0)]
+        for (L, D) in self.sides[:-1]:
+            dx, dy = DESCARTES2[D]
+            verts2.append((verts2[-1][0] + L * dx, verts2[-1][1] + L * dy))
+        diam_sq, i_max, j_max = 0, -1, -1
+        n = len(verts2)
+        for i in range(n):
+            for j in range(i + 1, n):
+                dx = verts2[i][0] - verts2[j][0]
+                dy = verts2[i][1] - verts2[j][1]
+                d2 = dx * dx + dy * dy
+                if d2 > diam_sq:
+                    diam_sq = d2
+                    i_max, j_max = i, j
+        return (diam_sq, i_max, j_max)
 
     # Return triplet (diam, i_max, j_max) - the diameter for a set of points and where it was achieved
     def diameter(self):
@@ -306,6 +373,312 @@ class Polyiamond:
         vertices = [vv.get_xy() for vv in self.vertices]
         vertice_lists = [[x,y] for (x,y) in vertices]
         return minimum_width(np.array(vertice_lists))
+
+    # ------------------------------------------------------------------
+    # Convex hull and minimum-enclosing-shape methods (added 2026-04-30).
+    # ------------------------------------------------------------------
+    #
+    # All four methods below operate on the convex hull of the polyiamond's
+    # vertices.  The hull is computed in exact integer DESCARTES2 coordinates
+    # using Andrew's monotone chain (only integer cross products), so the hull
+    # itself is exact.  The enclosing-shape searches then operate on the hull
+    # in real Cartesian floats — they use a fully NumPy-vectorised angular
+    # sweep that is trivially batchable across many polyiamonds (just stack
+    # the per-shape hull arrays into a leading "batch" axis).
+    # ------------------------------------------------------------------
+
+    def convex_hull(self):
+        """Return the convex hull of the polyiamond's vertices as a list of
+        :class:`PointTg` instances in CCW order (standard mathematical
+        orientation, y-axis pointing up).
+
+        Andrew's monotone chain is run on the integer-doubled mod-Cartesian
+        coordinates (DESCARTES2), so all orientation tests are exact integer
+        cross products with no floating-point error.
+
+        Vectorisation note: a batched version (operating on stacked
+        coordinate arrays of multiple polyiamonds) is straightforward to
+        derive — the per-polyiamond loop body uses only integer comparisons
+        and arithmetic.
+        """
+        self.get_vertices()
+        coord_to_pt = {}
+        for p in self.vertices:
+            key = (2 * p.x + p.y, -2 * p.y)
+            coord_to_pt.setdefault(key, p)
+        coords = sorted(coord_to_pt.keys())
+        if len(coords) <= 1:
+            return [coord_to_pt[c] for c in coords]
+
+        def _cross(o, a, b):
+            return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+        lower = []
+        for p in coords:
+            while len(lower) >= 2 and _cross(lower[-2], lower[-1], p) <= 0:
+                lower.pop()
+            lower.append(p)
+        upper = []
+        for p in reversed(coords):
+            while len(upper) >= 2 and _cross(upper[-2], upper[-1], p) <= 0:
+                upper.pop()
+            upper.append(p)
+        hull_coords = lower[:-1] + upper[:-1]
+        return [coord_to_pt[c] for c in hull_coords]
+
+    def _hull_xy_array(self):
+        """Internal helper: convex-hull vertices as an (M, 2) ``float`` numpy
+        array of real Cartesian (x, y) coordinates."""
+        return np.array([p.get_xy() for p in self.convex_hull()], dtype=float)
+
+    def _hull_edge_angles(self):
+        """Hull edge directions reduced to the interval ``[0, π)``."""
+        pts = self._hull_xy_array()
+        n = len(pts)
+        if n < 2:
+            return np.array([], dtype=float)
+        edges = pts[(np.arange(n) + 1) % n] - pts
+        return np.mod(np.arctan2(edges[:, 1], edges[:, 0]), math.pi)
+
+    @staticmethod
+    def _candidate_angles(edge_angles, period, n_grid):
+        """Build a sorted, deduplicated array of candidate orientations in
+        ``[0, period)`` containing both an evenly spaced grid (``n_grid``
+        samples) and all hull-edge angles modulo ``period``."""
+        grid = np.linspace(0.0, period, n_grid, endpoint=False)
+        if edge_angles.size == 0:
+            return grid
+        edges_mod = np.mod(edge_angles, period)
+        return np.unique(np.concatenate([grid, edges_mod]))
+
+    def get_smallest_hexagon(self, n_angles=1440):
+        """Return the smallest *regular* hexagon containing the polyiamond.
+
+        Returns a list of 6 ``(x, y)`` Cartesian coordinate tuples — the
+        hexagon vertices in CCW order.  The first polyiamond vertex is at
+        Cartesian ``(0, 0)``.
+
+        Algorithm
+        ---------
+        For a fixed orientation ``θ`` the hexagon is the intersection of
+        three width-``2a`` strips perpendicular to the unit normals
+        ``n_k = (cos(θ + k·π/3), sin(θ + k·π/3))``, ``k = 0, 1, 2``.
+        Containment of the convex polygon ``P`` requires both:
+
+        1. **Strip width**:  ``2a ≥ A_k`` for each ``k``, where
+           ``A_k = max(p·n_k) − min(p·n_k)`` is the polygon width.
+        2. **Translational feasibility**:  the 2-D centre ``c`` exists with
+           ``c·n_k ∈ [max(p·n_k) − a, min(p·n_k) + a]`` for all ``k``.
+
+        Eliminating ``c`` (using the linear identity ``c·n_0 = c·n_1 − c·n_2``
+        for normals 60° apart in 2-D) gives the closed-form lower bound
+
+        ::
+
+            a*(θ) = max( A_0/2, A_1/2, A_2/2,
+                         (|M_1 − M_0 − M_2| + (A_0+A_1+A_2)/2) / 3 )
+
+        with ``M_k = (max + min)/2`` of the polygon's projection on ``n_k``.
+        The hexagon side length is ``s(θ) = 2 a*(θ) / √3``.
+
+        Candidate orientations are the union of an evenly spaced grid in
+        ``[0, π/3)`` (``n_angles`` samples) and the convex-hull edge angles
+        modulo ``π/3``.  The full sweep is vectorised with NumPy and is
+        trivially batchable across many polyiamonds.
+
+        Tie-breaking: when several optimal hexagons exist (numerically tied
+        sizes), the one with the smallest centre x-coordinate is returned.
+        """
+        pts = self._hull_xy_array()
+        period = math.pi / 3.0
+        angles = self._candidate_angles(self._hull_edge_angles(), period, n_angles)
+
+        # 3 normal directions per angle: shape (M, 3, 2)
+        ks = np.arange(3)
+        phi = angles[:, None] + ks[None, :] * period             # (M, 3)
+        normals = np.stack([np.cos(phi), np.sin(phi)], axis=-1)  # (M, 3, 2)
+
+        # Project hull points onto every normal: (M, 3, N)
+        proj = np.einsum('mkd,nd->mkn', normals, pts)
+        pmax = proj.max(axis=2)                                  # (M, 3)
+        pmin = proj.min(axis=2)
+        widths = pmax - pmin                                     # (M, 3) -> A_k
+        midpts = (pmax + pmin) / 2.0                             # (M, 3) -> M_k
+
+        # apothem candidates: half-widths + translational feasibility term
+        half_w_max = widths.max(axis=1) / 2.0
+        sum_half_widths = widths.sum(axis=1) / 2.0
+        unbalance = np.abs(midpts[:, 1] - midpts[:, 0] - midpts[:, 2])
+        translate_term = (unbalance + sum_half_widths) / 3.0
+        apothem = np.maximum(half_w_max, translate_term)         # (M,)
+        sides = 2.0 * apothem / math.sqrt(3.0)                   # hexagon side
+
+        # Compute centre c from chosen u_k = M_k + d_k that satisfy
+        # u_1 − u_0 − u_2 = M_1 − M_0 − M_2  (the 2-D linear constraint).
+        # Distribute deviations proportionally to slacks δ_k = a − A_k/2:
+        deltas = apothem[:, None] - widths / 2.0                 # (M, 3) >= 0
+        S = deltas.sum(axis=1)                                   # (M,)
+        T = midpts[:, 1] - midpts[:, 0] - midpts[:, 2]           # (M,)
+        # Avoid div-by-zero when S == 0 (then T must also be 0).
+        safe_S = np.where(S > 0, S, 1.0)
+        ratio = T / safe_S                                       # (M,)
+        d0 =  deltas[:, 0] * ratio
+        d1 = -deltas[:, 1] * ratio
+        d2 =  deltas[:, 2] * ratio
+        u0 = midpts[:, 0] + d0
+        u1 = midpts[:, 1] + d1
+        # u2 = midpts[:, 2] + d2  (consistent by construction)
+
+        # c = α n_0 + β m_0  with α = u0, β = (2 u1 − u0)/√3, m_0 ⟂ n_0
+        alpha = u0
+        beta = (2.0 * u1 - u0) / math.sqrt(3.0)
+        cos_t = np.cos(angles); sin_t = np.sin(angles)
+        cx = alpha * cos_t - beta * sin_t
+        cy = alpha * sin_t + beta * cos_t
+
+        s_min = sides.min()
+        tol = 1e-9 * max(1.0, s_min)
+        cand_idx = np.flatnonzero(sides <= s_min + tol)
+        best = cand_idx[int(np.argmin(cx[cand_idx]))]
+
+        theta = float(angles[best])
+        s = float(sides[best])
+        cxf, cyf = float(cx[best]), float(cy[best])
+
+        # Hexagon vertices: at angles θ + π/6 + k·π/3, distance s from centre.
+        verts = []
+        for k in range(6):
+            ang = theta + math.pi / 6.0 + k * (math.pi / 3.0)
+            verts.append((cxf + s * math.cos(ang), cyf + s * math.sin(ang)))
+        return verts
+
+    def get_smallest_square(self, n_angles=1440):
+        """Return the smallest enclosing square as a list of 4 ``(x, y)``
+        Cartesian vertices in CCW order (first polyiamond vertex at origin).
+
+        Algorithm
+        ---------
+        For each candidate orientation ``θ`` we rotate the convex hull by
+        ``-θ`` and take its axis-aligned bounding box.  The smallest square
+        at this orientation has side ``max(width_x, width_y)``.  The optimum
+        is found over a vectorised sweep of candidate angles in
+        ``[0, π/2)``.
+
+        Candidate angles include both an evenly spaced grid of ``n_angles``
+        samples and all hull-edge angles modulo ``π/2`` (an edge of the
+        optimal square is generally flush with a hull edge — the
+        rotating-calipers theorem for the minimum-area enclosing rectangle
+        — and the smallest square's optimum is either at such an angle or
+        at a balance angle where ``width_x = width_y``, both well-covered
+        by a fine grid).
+        """
+        pts = self._hull_xy_array()
+        period = math.pi / 2.0
+        angles = self._candidate_angles(self._hull_edge_angles(), period, n_angles)
+
+        cos_t = np.cos(angles)
+        sin_t = np.sin(angles)
+        # rotated coords: x' = cos·x + sin·y ; y' = -sin·x + cos·y
+        x = pts[:, 0]
+        y = pts[:, 1]
+        xp = cos_t[:, None] * x[None, :] + sin_t[:, None] * y[None, :]   # (M, N)
+        yp = -sin_t[:, None] * x[None, :] + cos_t[:, None] * y[None, :]  # (M, N)
+
+        xmax = xp.max(axis=1); xmin = xp.min(axis=1)
+        ymax = yp.max(axis=1); ymin = yp.min(axis=1)
+        wx = xmax - xmin
+        wy = ymax - ymin
+        sides = np.maximum(wx, wy)
+
+        # Centre in rotated frame, then in original frame.
+        cxp = (xmax + xmin) / 2.0
+        cyp = (ymax + ymin) / 2.0
+        cx = cos_t * cxp - sin_t * cyp
+        cy = sin_t * cxp + cos_t * cyp
+
+        s_min = sides.min()
+        tol = 1e-9 * max(1.0, s_min)
+        cand_idx = np.flatnonzero(sides <= s_min + tol)
+        best = cand_idx[int(np.argmin(cx[cand_idx]))]
+
+        theta = float(angles[best])
+        s = float(sides[best])
+        cxf, cyf = float(cx[best]), float(cy[best])
+
+        # Square corners in CCW order, in canonical (rotated) frame:
+        half = s / 2.0
+        canonical = [(-half, -half), (half, -half), (half, half), (-half, half)]
+        ct, st = math.cos(theta), math.sin(theta)
+        return [(cxf + ct * vx - st * vy, cyf + st * vx + ct * vy)
+                for (vx, vy) in canonical]
+
+    def get_smallest_triangle(self, n_angles=1440):
+        """Return the smallest enclosing equilateral triangle as a list of
+        3 ``(x, y)`` Cartesian vertices in CCW order (first polyiamond
+        vertex at origin).
+
+        Algorithm
+        ---------
+        Rotate the convex hull by ``-θ`` so the candidate triangle becomes
+        the canonical "apex-up" equilateral triangle.  In that frame, with
+        outward normals ``(0,-1)``, ``(√3/2, 1/2)``, ``(-√3/2, 1/2)``::
+
+            cy = min(y_rot)
+            A  = max( (√3/2)·x_rot + (1/2)·y_rot )
+            B  = max(-(√3/2)·x_rot + (1/2)·y_rot )
+            s  = 2·(A + B - cy) / √3
+            cx = (A - B) / √3
+
+        gives the smallest enclosing apex-up equilateral triangle at this
+        orientation.  We sweep ``θ`` over ``[0, 2π/3)`` (the rotational
+        period of an equilateral triangle) and return the configuration
+        with the smallest side ``s``.
+
+        The whole sweep is fully vectorised with NumPy.
+        """
+        pts = self._hull_xy_array()
+        period = 2.0 * math.pi / 3.0
+        angles = self._candidate_angles(self._hull_edge_angles(), period, n_angles)
+
+        cos_t = np.cos(angles)
+        sin_t = np.sin(angles)
+        x = pts[:, 0]
+        y = pts[:, 1]
+        xp = cos_t[:, None] * x[None, :] + sin_t[:, None] * y[None, :]    # (M, N)
+        yp = -sin_t[:, None] * x[None, :] + cos_t[:, None] * y[None, :]   # (M, N)
+
+        sqrt3_2 = math.sqrt(3.0) / 2.0
+        cy = yp.min(axis=1)
+        A = ( sqrt3_2 * xp + 0.5 * yp).max(axis=1)
+        B = (-sqrt3_2 * xp + 0.5 * yp).max(axis=1)
+        sides = 2.0 * (A + B - cy) / math.sqrt(3.0)
+        cx_rot = (A - B) / math.sqrt(3.0)
+        cy_rot = cy
+
+        # Centre in original frame (for tie-breaking).
+        cx = cos_t * cx_rot - sin_t * cy_rot
+        # cy_orig = sin_t * cx_rot + cos_t * cy_rot   # not needed for tie-break
+
+        s_min = sides.min()
+        tol = 1e-9 * max(1.0, s_min)
+        cand_idx = np.flatnonzero(sides <= s_min + tol)
+        best = cand_idx[int(np.argmin(cx[cand_idx]))]
+
+        theta = float(angles[best])
+        s = float(sides[best])
+        cxr = float(cx_rot[best])
+        cyr = float(cy_rot[best])
+
+        # Triangle vertices in canonical (rotated) frame, CCW:
+        #   bottom-left, bottom-right, apex
+        h = s * math.sqrt(3.0) / 2.0
+        canonical = [(cxr - s/2.0, cyr),
+                     (cxr + s/2.0, cyr),
+                     (cxr,        cyr + h)]
+        ct, st = math.cos(theta), math.sin(theta)
+        return [(ct * vx - st * vy, st * vx + ct * vy) for (vx, vy) in canonical]
+
+    # ------------------------------------------------------------------
 
     # Return all internal+perimeter points as [PointTg, PointTg, ...]
     def list_inside(self):

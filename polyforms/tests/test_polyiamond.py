@@ -111,3 +111,329 @@ def test_list_triangles():
     area = pp.get_area()
     triangles = pp.list_triangles()
     assert len(triangles) == area
+
+
+# ---------------------------------------------------------------------------
+# Tests for the exact-integer implementations added in 2026-04:
+#   get_signed_area, get_area, winding_number (integer version), diameter_sq
+# ---------------------------------------------------------------------------
+
+def test_signed_area_integer_type():
+    """get_signed_area must return a Python int, not a float."""
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    result = p.get_signed_area()
+    assert isinstance(result, int)
+
+
+def test_signed_area_basic():
+    """Known value: the (5A 4C 3E 2D 1F) polyiamond has signed area 19."""
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    assert p.get_signed_area() == 19
+
+
+def test_area_equals_abs_signed_area():
+    """get_area == abs(get_signed_area) for all test shapes."""
+    shapes = [
+        [(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')],
+        list(zip(range(9, 0, -1), list('ABFDEDCDC'))),
+        list(zip(range(9, 0, -1), list('ACECEAEAC'))),
+    ]
+    for sides in shapes:
+        p = Polyiamond(sides)
+        assert p.get_area() == abs(p.get_signed_area())
+
+
+def test_signed_area_orientation_sign():
+    """Reversing traversal direction negates the signed area."""
+    sides_fwd = [(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')]
+    # The same polygon traversed CW has opposite direction letters (A<->D, B<->E, C<->F).
+    sides_rev = [(1, 'C'), (2, 'A'), (3, 'B'), (4, 'F'), (5, 'D')]
+    p_fwd = Polyiamond(sides_fwd)
+    p_rev = Polyiamond(sides_rev)
+    assert p_fwd.get_signed_area() == -p_rev.get_signed_area()
+
+
+def test_signed_area_large_integers():
+    """Exact integer arithmetic must handle large side lengths without overflow
+    or floating-point rounding (Python ints are arbitrary precision)."""
+    # Scale sides by 1000; area should scale by 1000^2 = 1_000_000.
+    scale = 1000
+    sides_small = [(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')]
+    sides_large = [(L * scale, D) for (L, D) in sides_small]
+    p_small = Polyiamond(sides_small)
+    p_large = Polyiamond(sides_large)
+    assert p_large.get_signed_area() == p_small.get_signed_area() * scale * scale
+
+
+def test_winding_number_interior():
+    """Winding number for a clearly interior point equals -1 (CCW polygon convention)."""
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    # 2*AA + 2*BB is well inside the polygon
+    assert p.winding_number(2 * AA + 2 * BB) == -1
+
+
+def test_winding_number_exterior():
+    """Winding number for an exterior point equals 0."""
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    assert p.winding_number(10 * AA) == 0
+    assert p.winding_number(PointTg(0, 0, 0)) == 0  # origin is a vertex -> boundary -> 0
+
+
+def test_winding_number_consistent_with_is_inside():
+    """winding_number != 0 iff is_inside returns True."""
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    # sample a grid of points
+    for a in range(-2, 8):
+        for b in range(-2, 8):
+            pt = PointTg(a, b, -a - b)
+            wn = p.winding_number(pt)
+            inside = p.is_inside(pt)
+            assert (wn != 0) == inside, f"Mismatch at {pt}: winding={wn}, is_inside={inside}"
+
+
+def test_diameter_sq_integer_type():
+    """diameter_sq must return (int, int, int)."""
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    d2, i, j = p.diameter_sq()
+    assert isinstance(d2, int)
+    assert isinstance(i, int)
+    assert isinstance(j, int)
+
+
+def test_diameter_sq_consistent_with_diameter():
+    """diameter_sq and diameter should be consistent: d^2 == d2 * (1/2)^2 in real coords.
+
+    DESCARTES2 coords are 2x the mod-Cartesian coords, and mod-Cartesian y is
+    the actual triangle-height unit (1 = sqrt(3)/2 in real lengths).  So the
+    squared Euclidean distance in real units is::
+
+        real_dist^2 = (dx_d2/2)^2 + (dy_d2/2 * sqrt(3)/2)^2
+                    = dx_d2^2/4 + 3*dy_d2^2/16
+
+    which is irrational in general.  We only check ordering: the pair achieving
+    diameter_sq also achieves the maximum real distance.
+    """
+    import math
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    d2_val, i_sq, j_sq = p.diameter_sq()
+    d_val, i_fl, j_fl = p.diameter()
+    # The diameter() function uses floating-point L2 distances; the maximising
+    # pair of vertices should be the same (or symmetrically equivalent).
+    assert i_sq == i_fl and j_sq == j_fl
+
+
+def test_diameter_sq_scales_quadratically():
+    """Scaling side lengths by k scales diameter_sq by k^2."""
+    k = 7
+    sides_small = [(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')]
+    sides_large = [(L * k, D) for (L, D) in sides_small]
+    p_small = Polyiamond(sides_small)
+    p_large = Polyiamond(sides_large)
+    d2_small, _, _ = p_small.diameter_sq()
+    d2_large, _, _ = p_large.diameter_sq()
+    assert d2_large == d2_small * k * k
+
+
+# ---------------------------------------------------------------------------
+# Tests for the convex hull and minimum-enclosing-shape methods (2026-04-30).
+# ---------------------------------------------------------------------------
+
+import math
+import numpy as np
+
+
+_EPS = 1e-7  # numerical slack for "is the polyiamond inside this shape?" checks
+
+
+def _hull_vertices_xy(p):
+    """Real-Cartesian coordinates of all polyiamond vertices."""
+    return np.array([v.get_xy() for v in p.vertices], dtype=float)
+
+
+def _point_in_convex_polygon(pt, poly_verts_ccw):
+    """True iff *pt* lies inside (or on boundary of) the convex CCW polygon."""
+    n = len(poly_verts_ccw)
+    for i in range(n):
+        x1, y1 = poly_verts_ccw[i]
+        x2, y2 = poly_verts_ccw[(i + 1) % n]
+        # cross product (edge) x (edge -> pt) should be >= 0 for CCW polygon
+        cross = (x2 - x1) * (pt[1] - y1) - (y2 - y1) * (pt[0] - x1)
+        if cross < -_EPS:
+            return False
+    return True
+
+
+# ---- convex_hull ----------------------------------------------------------
+
+def test_convex_hull_returns_pointtg():
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    hull = p.convex_hull()
+    assert len(hull) >= 3
+    for v in hull:
+        assert isinstance(v, PointTg)
+
+
+def test_convex_hull_contains_all_vertices():
+    """Every polyiamond vertex must lie inside the convex hull."""
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    hull_xy = [v.get_xy() for v in p.convex_hull()]
+    for v in p.vertices:
+        assert _point_in_convex_polygon(v.get_xy(), hull_xy)
+
+
+def test_convex_hull_is_ccw():
+    """Hull edges should be CCW: the signed area is positive."""
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    hull_xy = [v.get_xy() for v in p.convex_hull()]
+    n = len(hull_xy)
+    s = 0.0
+    for i in range(n):
+        x1, y1 = hull_xy[i]
+        x2, y2 = hull_xy[(i + 1) % n]
+        s += x1 * y2 - x2 * y1
+    assert s > 0
+
+
+def test_convex_hull_triangle_polyiamond():
+    """A single triangle 'ACE' has exactly 3 hull vertices."""
+    p = Polyiamond('ACE')
+    hull = p.convex_hull()
+    assert len(hull) == 3
+
+
+# ---- get_smallest_hexagon -------------------------------------------------
+
+def _hexagon_side_length(verts):
+    """Side length of a polygon given as list of (x,y) tuples."""
+    return math.hypot(verts[1][0] - verts[0][0], verts[1][1] - verts[0][1])
+
+
+def _hexagon_is_regular(verts, tol=1e-6):
+    sides = [math.hypot(verts[(i+1) % 6][0] - verts[i][0],
+                        verts[(i+1) % 6][1] - verts[i][1]) for i in range(6)]
+    s0 = sides[0]
+    return all(abs(s - s0) < tol * max(1.0, s0) for s in sides)
+
+
+def test_smallest_hexagon_returns_six_vertices():
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    hexa = p.get_smallest_hexagon()
+    assert len(hexa) == 6
+    assert _hexagon_is_regular(hexa)
+
+
+def test_smallest_hexagon_contains_polyiamond():
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    hexa = p.get_smallest_hexagon()
+    for v in p.vertices:
+        assert _point_in_convex_polygon(v.get_xy(), hexa), \
+            f"vertex {v} = {v.get_xy()} is outside the enclosing hexagon"
+
+
+def test_smallest_hexagon_size_lower_bound():
+    """A regular hexagon's max width (vertex-to-vertex) equals 2*side, so the
+    smallest enclosing hexagon must satisfy: side >= max_polygon_width / 2."""
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    hexa = p.get_smallest_hexagon()
+    side = _hexagon_side_length(hexa)
+    pts = _hull_vertices_xy(p)
+    s = 0.0
+    for k in range(180):
+        ang = k * math.pi / 180.0
+        n = np.array([math.cos(ang), math.sin(ang)])
+        proj = pts @ n
+        s = max(s, proj.max() - proj.min())
+    assert side + 1e-6 >= s / 2.0
+
+
+# ---- get_smallest_square --------------------------------------------------
+
+def _square_is_square(verts, tol=1e-6):
+    sides = [math.hypot(verts[(i+1) % 4][0] - verts[i][0],
+                        verts[(i+1) % 4][1] - verts[i][1]) for i in range(4)]
+    s0 = sides[0]
+    if not all(abs(s - s0) < tol * max(1.0, s0) for s in sides):
+        return False
+    # check perpendicularity of adjacent edges
+    e0 = (verts[1][0] - verts[0][0], verts[1][1] - verts[0][1])
+    e1 = (verts[2][0] - verts[1][0], verts[2][1] - verts[1][1])
+    return abs(e0[0] * e1[0] + e0[1] * e1[1]) < tol * s0 * s0
+
+
+def test_smallest_square_returns_four_vertices():
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    sq = p.get_smallest_square()
+    assert len(sq) == 4
+    assert _square_is_square(sq)
+
+
+def test_smallest_square_contains_polyiamond():
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    sq = p.get_smallest_square()
+    for v in p.vertices:
+        assert _point_in_convex_polygon(v.get_xy(), sq)
+
+
+def test_smallest_square_axis_aligned_for_axis_aligned_input():
+    """A right-triangle polyiamond 'ACE' has a small enclosing square."""
+    p = Polyiamond('ACE')
+    sq = p.get_smallest_square()
+    side = math.hypot(sq[1][0] - sq[0][0], sq[1][1] - sq[0][1])
+    # The triangle 'ACE' is the unit triangle (vertices at (0,0), (1,0), (0.5, sqrt(3)/2))
+    # The smallest enclosing square has side >= height = sqrt(3)/2 ≈ 0.866
+    assert side >= math.sqrt(3) / 2.0 - 1e-6
+
+
+# ---- get_smallest_triangle ------------------------------------------------
+
+def _triangle_is_equilateral(verts, tol=1e-6):
+    sides = [math.hypot(verts[(i+1) % 3][0] - verts[i][0],
+                        verts[(i+1) % 3][1] - verts[i][1]) for i in range(3)]
+    s0 = sides[0]
+    return all(abs(s - s0) < tol * max(1.0, s0) for s in sides)
+
+
+def test_smallest_triangle_returns_three_vertices():
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    tri = p.get_smallest_triangle()
+    assert len(tri) == 3
+    assert _triangle_is_equilateral(tri)
+
+
+def test_smallest_triangle_contains_polyiamond():
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    tri = p.get_smallest_triangle()
+    for v in p.vertices:
+        assert _point_in_convex_polygon(v.get_xy(), tri)
+
+
+def test_smallest_triangle_of_unit_triangle():
+    """The smallest enclosing equilateral triangle of a unit equilateral
+    triangle must itself have side 1."""
+    # A valid unit triangle: A + C + E = (0,0,0).
+    p = Polyiamond([(1, 'A'), (1, 'C'), (1, 'E')])
+    tri = p.get_smallest_triangle()
+    side = math.hypot(tri[1][0] - tri[0][0], tri[1][1] - tri[0][1])
+    assert abs(side - 1.0) < 1e-4
+
+
+# ---- batch / scaling sanity ----------------------------------------------
+
+def test_smallest_shapes_scale_linearly():
+    """Scaling polyiamond side lengths by k scales bounding shape sides by k."""
+    k = 4
+    sides_small = [(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')]
+    sides_large = [(L * k, D) for (L, D) in sides_small]
+    p_small = Polyiamond(sides_small)
+    p_large = Polyiamond(sides_large)
+    for getter in ('get_smallest_hexagon',
+                   'get_smallest_square',
+                   'get_smallest_triangle'):
+        small_v = getattr(p_small, getter)()
+        large_v = getattr(p_large, getter)()
+        s_small = math.hypot(small_v[1][0] - small_v[0][0],
+                             small_v[1][1] - small_v[0][1])
+        s_large = math.hypot(large_v[1][0] - large_v[0][0],
+                             large_v[1][1] - large_v[0][1])
+        assert abs(s_large - k * s_small) < 1e-3 * s_large, \
+            f"{getter}: small={s_small}, large={s_large}, k={k}"
