@@ -271,3 +271,63 @@ multiple polyiamonds are batched by stacking padded vertex arrays into a
 leading batch dimension and broadcasting `np.roll`/`einsum` across it
 (directly portable to CuPy or JAX with no algorithmic change).
 
+
+---
+
+## Closest-Hausdorff regular hexagon (2026-05)
+
+`get_closest_hausdorff_hexagon()` returns the regular hexagon `S` (any 6
+real-valued Cartesian vertices, **not** required to lie on the triangular
+grid) that minimises the one-sided Hausdorff distance from the polyiamond's
+vertices to the hexagon's perimeter:
+
+$$
+h(P, S) \;=\; \max_{v\,\in\,V(P)} \;\min_{x\,\in\,\partial S} \;\lVert v - x\rVert
+$$
+
+Returned as `(vertices, distance)` where `vertices` is a list of 6
+`(x, y)` tuples (CCW order, vertex 0 at angle `θ + π/6` from the centre).
+
+### Parametrisation
+
+A regular hexagon has only 4 real degrees of freedom: centre `(cx, cy)`,
+orientation `θ ∈ [0, π/3)` (60° rotational symmetry) and apothem `a > 0`.
+The corresponding side length is `s = 2a/√3`.
+
+### Two-stage GPU-friendly algorithm
+
+The objective is a non-smooth `max` of distances, so a derivative-free
+strategy is used:
+
+1. **Vectorised coarse grid.**  An initial guess for `(θ, a, cx, cy)` is
+   taken from `get_smallest_enclosing_hexagon()` (see above), then a small
+   4-D grid of perturbations around it is built.  The cost
+   `max_v dist(v, ∂S)` is evaluated for **every** grid candidate and
+   **every** polyiamond convex-hull vertex in one broadcast of shape
+   `(M, N, 6)` (M candidates × N hull vertices × 6 hexagon edges).  The
+   inner kernel is a pure element-wise expression (`np.clip`, `np.sqrt`,
+   `np.roll`, `np.argmin`) — directly portable to CuPy / JAX with no
+   algorithmic change.  Only the convex hull is needed because the
+   Hausdorff distance is determined by the extreme vertices.
+2. **Local Nelder–Mead refinement.**  A simplex-based search starting from
+   the best grid candidate converges to the local optimum.  Nelder–Mead
+   needs no derivatives, which suits the non-smooth `max` cost exactly.
+
+### Why a regular hexagon's distance kernel is GPU-trivial
+
+For a candidate hexagon with vertices `h_0 … h_5` (CCW) and any query point
+`p`, the distance to the perimeter is
+
+$$
+\text{dist}(p, \partial S) \;=\; \min_{k=0..5} \; \big\lVert p - \mathrm{proj}_{[h_k, h_{k+1}]}(p) \big\rVert
+$$
+
+with the segment projection clamped to `t ∈ [0, 1]`.  This is one
+`np.clip` + one Euclidean distance per `(candidate, vertex, edge)` triple
+— exactly the kind of dense, regular tensor expression that GPUs run at
+peak throughput.
+
+### Tie breaking
+
+When several optima exist (numerically tied) the implementation returns
+the one found first by the optimiser, as the spec allows any optimum.

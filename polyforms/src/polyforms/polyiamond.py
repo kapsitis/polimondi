@@ -745,6 +745,194 @@ class Polyiamond:
 
     # ------------------------------------------------------------------
 
+    @staticmethod
+    def _hex_perimeter_distances(points, cx, cy, theta, apothem):
+        """Vectorised distance from each row of ``points`` (shape ``(N, 2)``)
+        to the perimeter of the regular hexagon with given centre, orientation
+        ``theta`` and apothem ``apothem``.
+
+        All work is element-wise NumPy on broadcast-compatible arrays of
+        shape ``(N, 6)`` (one column per hexagon edge), so the same routine
+        runs unchanged on CuPy / JAX device arrays for batched evaluation.
+        """
+        side = 2.0 * apothem / math.sqrt(3.0)
+        # Hexagon vertices: at angles theta + pi/6 + k*pi/3, distance ``side``
+        # from centre (vertex distance == side length for a regular hexagon).
+        ks = np.arange(6)
+        ang = theta + math.pi / 6.0 + ks * (math.pi / 3.0)
+        hx = cx + side * np.cos(ang)
+        hy = cy + side * np.sin(ang)
+        ax = hx[None, :]                       # (1, 6) edge start x
+        ay = hy[None, :]
+        bx = np.roll(hx, -1)[None, :]          # (1, 6) edge end x
+        by = np.roll(hy, -1)[None, :]
+        px = points[:, 0:1]                    # (N, 1)
+        py = points[:, 1:2]
+        abx = bx - ax
+        aby = by - ay
+        apx = px - ax
+        apy = py - ay
+        ab_len2 = abx * abx + aby * aby        # (1, 6) > 0
+        t = np.clip((apx * abx + apy * aby) / ab_len2, 0.0, 1.0)
+        qx = ax + t * abx
+        qy = ay + t * aby
+        seg_d = np.sqrt((px - qx) ** 2 + (py - qy) ** 2)   # (N, 6)
+        return seg_d.min(axis=1)               # (N,)
+
+    def get_closest_hausdorff_hexagon(self, n_angles=60, n_apothem=11,
+                                      n_centre=7, refine=True):
+        """Find a regular hexagon ``S`` minimising the one-sided Hausdorff
+        distance from the polyiamond's vertices to the hexagon's perimeter::
+
+            h(P, S) = max_{v ∈ vertices(P)}  min_{x ∈ ∂S}  ||v − x||
+
+        Returns
+        -------
+        (vertices, distance)
+            ``vertices`` is a list of 6 ``(x, y)`` floats (CCW order); the
+            first vertex is the one whose outward direction is at angle
+            ``θ + π/6`` from the centre (i.e. the canonical hexagon-vertex
+            convention used by :py:meth:`get_smallest_hexagon`).
+            ``distance`` is the achieved Hausdorff distance ``h(P, S)``.
+
+        Algorithm
+        ---------
+        A regular hexagon has 4 real parameters: centre ``(cx, cy)``,
+        orientation ``θ ∈ [0, π/3)`` (60° rotational symmetry) and apothem
+        ``a > 0``.  The objective ``f(cx, cy, θ, a) = max_v dist(v, ∂S)`` is
+        non-smooth (a max-of-distances), so we use a two-stage strategy:
+
+        1. **Vectorised coarse search (GPU-friendly).**  Build a small dense
+           grid of candidate ``(θ, a, cx, cy)`` quadruples around an initial
+           guess derived from :py:meth:`get_smallest_hexagon` (which already
+           supplies a near-optimal orientation and size), evaluate the
+           objective for *all* candidates *and* all polyiamond vertices in a
+           single broadcast, and pick the best.  The inner kernel is
+           :py:meth:`_hex_perimeter_distances` — a pure element-wise
+           NumPy/CuPy/JAX expression with shape ``(M, N, 6)`` (M candidates,
+           N vertices, 6 edges).
+        2. **Local refinement.**  Run a Nelder–Mead minimisation from the
+           best grid point.  Nelder–Mead handles the non-smooth ``max``
+           objective without derivatives.
+
+        Parameters
+        ----------
+        n_angles : int
+            Number of orientation samples in ``[0, π/3)`` for the coarse
+            grid.
+        n_apothem : int
+            Number of apothem samples (geometrically spaced around the
+            initial guess).
+        n_centre : int
+            Per-axis number of centre offset samples for the coarse grid.
+        refine : bool
+            If ``True`` (default), follow the coarse search with a
+            Nelder–Mead refinement.
+
+        Notes
+        -----
+        Tie-breaking is implicit: when several optima are numerically tied,
+        the one found first by the optimiser is returned (the spec allows
+        any optimum).
+        """
+        from scipy.optimize import minimize
+
+        # --- Initial guess from the smallest enclosing regular hexagon. -----
+        init_hex = np.asarray(self.get_smallest_hexagon(), dtype=float)
+        cx0, cy0 = init_hex.mean(axis=0)
+        # apothem = distance from centre to midpoint of an edge
+        mid01 = 0.5 * (init_hex[0] + init_hex[1])
+        a0 = float(np.hypot(mid01[0] - cx0, mid01[1] - cy0))
+        # orientation: edge-midpoint direction is at angle theta + pi/6 + pi/6
+        # (vertex 0 sits at theta+pi/6; midpoint between v0,v1 sits at
+        # theta + pi/6 + pi/6 = theta + pi/3).  Recover theta:
+        theta0 = math.atan2(mid01[1] - cy0, mid01[0] - cx0) - math.pi / 3.0
+        theta0 = (theta0 % (math.pi / 3.0))   # fold to fundamental domain
+
+        verts = self._hull_xy_array() if len(self.vertices) >= 3 \
+            else np.array([p.get_xy() for p in self.vertices], dtype=float)
+        # NB: the Hausdorff distance is determined by the *extreme* vertices;
+        # using the convex hull is sufficient and dramatically faster.
+
+        # --- Stage 1: vectorised coarse grid around the initial guess. ------
+        thetas = np.linspace(0.0, math.pi / 3.0, n_angles, endpoint=False)
+        apothems = a0 * np.linspace(0.5, 1.0, n_apothem)
+        span = 0.5 * a0
+        offs = np.linspace(-span, span, n_centre)
+        # All combinations: shape (n_angles, n_apothem, n_centre, n_centre)
+        TH, AP, CX, CY = np.meshgrid(thetas, apothems,
+                                     cx0 + offs, cy0 + offs, indexing='ij')
+        TH_f = TH.ravel(); AP_f = AP.ravel()
+        CX_f = CX.ravel(); CY_f = CY.ravel()
+        M = TH_f.size
+
+        # Hexagon vertex coordinates per candidate, shape (M, 6).
+        ks = np.arange(6)
+        ang = TH_f[:, None] + math.pi / 6.0 + ks[None, :] * (math.pi / 3.0)
+        side = 2.0 * AP_f / math.sqrt(3.0)
+        hx = CX_f[:, None] + side[:, None] * np.cos(ang)        # (M, 6)
+        hy = CY_f[:, None] + side[:, None] * np.sin(ang)
+        ax = hx[:, None, :]                                     # (M, 1, 6)
+        ay = hy[:, None, :]
+        bx = np.roll(hx, -1, axis=1)[:, None, :]
+        by = np.roll(hy, -1, axis=1)[:, None, :]
+        # Polyiamond hull vertices, shape (1, N, 1).
+        N = verts.shape[0]
+        px = verts[:, 0][None, :, None]
+        py = verts[:, 1][None, :, None]
+        abx = bx - ax; aby = by - ay
+        apx = px - ax; apy = py - ay
+        ab_len2 = abx * abx + aby * aby                         # (M, 1, 6)
+        t = np.clip((apx * abx + apy * aby) / ab_len2, 0.0, 1.0)
+        qx = ax + t * abx
+        qy = ay + t * aby
+        seg_d = np.sqrt((px - qx) ** 2 + (py - qy) ** 2)        # (M, N, 6)
+        per_vertex_min = seg_d.min(axis=2)                      # (M, N)
+        haus = per_vertex_min.max(axis=1)                       # (M,)
+        best_idx = int(np.argmin(haus))
+        h_best = float(haus[best_idx])
+        th_best = float(TH_f[best_idx])
+        a_best = float(AP_f[best_idx])
+        cx_best = float(CX_f[best_idx])
+        cy_best = float(CY_f[best_idx])
+
+        # --- Stage 2: Nelder–Mead refinement. ------------------------------
+        if refine:
+            def _obj(p):
+                cx, cy, th, a = p
+                if a <= 1e-12:
+                    return 1e18
+                return float(self._hex_perimeter_distances(
+                    verts, cx, cy, th, a).max())
+
+            x0 = np.array([cx_best, cy_best, th_best, a_best], dtype=float)
+            scale = max(a_best, 1e-6)
+            initial_simplex = np.vstack([
+                x0,
+                x0 + [scale * 0.05, 0.0,           0.0,            0.0          ],
+                x0 + [0.0,          scale * 0.05,  0.0,            0.0          ],
+                x0 + [0.0,          0.0,           math.pi / 180., 0.0          ],
+                x0 + [0.0,          0.0,           0.0,            scale * 0.05 ],
+            ])
+            res = minimize(_obj, x0, method='Nelder-Mead',
+                           options={'xatol': 1e-10, 'fatol': 1e-12,
+                                    'maxiter': 5000, 'maxfev': 10000,
+                                    'initial_simplex': initial_simplex})
+            if res.fun < h_best:
+                cx_best, cy_best, th_best, a_best = (float(v) for v in res.x)
+                h_best = float(res.fun)
+
+        # --- Build the 6 hexagon vertices in CCW order. --------------------
+        side = 2.0 * a_best / math.sqrt(3.0)
+        verts_out = []
+        for k in range(6):
+            ang = th_best + math.pi / 6.0 + k * (math.pi / 3.0)
+            verts_out.append((cx_best + side * math.cos(ang),
+                              cy_best + side * math.sin(ang)))
+        return verts_out, h_best
+
+    # ------------------------------------------------------------------
+
     # Return all internal+perimeter points as [PointTg, PointTg, ...]
     def list_inside(self):
         # Cache answers to avoid computing anything twice

@@ -486,3 +486,53 @@ def test_inertia_tensor_scaling():
     assert np.allclose(p_large.get_inertia_tensor(),
                        (k ** 4) * p_small.get_inertia_tensor(),
                        rtol=1e-12, atol=1e-9)
+
+
+# ---------------------------------------------------------------------------
+# Tests for get_closest_hausdorff_hexagon (2026-05).
+# ---------------------------------------------------------------------------
+
+def test_hausdorff_hexagon_regular_polyiamond():
+    import math
+    p = Polyiamond([(1, 'A'), (1, 'B'), (1, 'C'),
+                    (1, 'D'), (1, 'E'), (1, 'F')])
+    verts, h = p.get_closest_hausdorff_hexagon()
+    assert h < 1e-6
+    assert len(verts) == 6
+    poly_verts = [pt.get_xy() for pt in p.vertices]
+    for pv in poly_verts:
+        d_min = min(math.hypot(pv[0] - hv[0], pv[1] - hv[1]) for hv in verts)
+        assert d_min < 1e-5
+
+
+def test_hausdorff_hexagon_scaled_regular():
+    import math
+    k = 4
+    p = Polyiamond([(k, 'A'), (k, 'B'), (k, 'C'),
+                    (k, 'D'), (k, 'E'), (k, 'F')])
+    verts, h = p.get_closest_hausdorff_hexagon()
+    assert h < 1e-5
+    side = math.hypot(verts[1][0] - verts[0][0], verts[1][1] - verts[0][1])
+    assert abs(side - k) < 1e-4
+
+
+def test_hausdorff_hexagon_bound_by_smallest_enclosing():
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    verts, h = p.get_closest_hausdorff_hexagon()
+    assert h >= 0
+    assert h < p.get_perimeter()
+
+
+def test_hausdorff_hexagon_returns_regular_hexagon():
+    import math
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    verts, _ = p.get_closest_hausdorff_hexagon()
+    cx = sum(v[0] for v in verts) / 6.0
+    cy = sum(v[1] for v in verts) / 6.0
+    radii = [math.hypot(v[0] - cx, v[1] - cy) for v in verts]
+    sides = [math.hypot(verts[(i + 1) % 6][0] - verts[i][0],
+                        verts[(i + 1) % 6][1] - verts[i][1])
+             for i in range(6)]
+    r0 = radii[0]; s0 = sides[0]
+    assert all(abs(r - r0) < 1e-6 * max(1.0, r0) for r in radii)
+    assert all(abs(s - s0) < 1e-6 * max(1.0, s0) for s in sides)
