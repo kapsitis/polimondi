@@ -536,3 +536,72 @@ def test_hausdorff_hexagon_returns_regular_hexagon():
     r0 = radii[0]; s0 = sides[0]
     assert all(abs(r - r0) < 1e-6 * max(1.0, r0) for r in radii)
     assert all(abs(s - s0) < 1e-6 * max(1.0, s0) for s in sides)
+
+
+# ---------------------------------------------------------------------------
+# Tests for get_closest_hausdorff_triangle (2026-05).
+# ---------------------------------------------------------------------------
+
+def test_hausdorff_triangle_equilateral_polyiamond():
+    """A polyiamond whose 3 vertices already form an equilateral triangle
+    (sides = kA, kC, kE) must give Hausdorff distance ~0 and the returned
+    triangle must coincide with that triangle."""
+    import math
+    k = 5
+    p = Polyiamond([(k, 'A'), (k, 'C'), (k, 'E')])
+    verts, h = p.get_closest_hausdorff_triangle()
+    assert h < 1e-6
+    assert len(verts) == 3
+    poly_verts = [pt.get_xy() for pt in p.vertices]
+    for pv in poly_verts:
+        d_min = min(math.hypot(pv[0] - tv[0], pv[1] - tv[1]) for tv in verts)
+        assert d_min < 1e-5
+    # Side length matches.
+    side = math.hypot(verts[1][0] - verts[0][0], verts[1][1] - verts[0][1])
+    assert abs(side - k) < 1e-4
+
+
+def test_hausdorff_triangle_returns_equilateral():
+    """Result must be an equilateral triangle: 3 equal sides and 3 equal
+    distances from the centroid."""
+    import math
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    verts, _ = p.get_closest_hausdorff_triangle()
+    assert len(verts) == 3
+    cx = sum(v[0] for v in verts) / 3.0
+    cy = sum(v[1] for v in verts) / 3.0
+    radii = [math.hypot(v[0] - cx, v[1] - cy) for v in verts]
+    sides = [math.hypot(verts[(i + 1) % 3][0] - verts[i][0],
+                        verts[(i + 1) % 3][1] - verts[i][1])
+             for i in range(3)]
+    r0 = radii[0]; s0 = sides[0]
+    assert all(abs(r - r0) < 1e-6 * max(1.0, r0) for r in radii)
+    assert all(abs(s - s0) < 1e-6 * max(1.0, s0) for s in sides)
+
+
+def test_hausdorff_triangle_bounded_and_nonneg():
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    verts, h = p.get_closest_hausdorff_triangle()
+    assert h >= 0
+    assert h < p.get_perimeter()
+
+
+def test_hausdorff_triangle_optimum_no_worse_than_smallest_enclosing():
+    """The closest Hausdorff triangle must achieve a distance at least as
+    small as the one obtained by using the smallest *enclosing* equilateral
+    triangle (which trivially bounds the one-sided Hausdorff distance from
+    above)."""
+    import math
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    verts_opt, h_opt = p.get_closest_hausdorff_triangle()
+    enc = p.get_smallest_triangle()
+    poly_verts = np.array([pt.get_xy() for pt in p.vertices], dtype=float)
+    # Compute Hausdorff distance of polyiamond vertices to smallest enclosing
+    # triangle's perimeter using the same helper.
+    cx = sum(v[0] for v in enc) / 3.0
+    cy = sum(v[1] for v in enc) / 3.0
+    side = math.hypot(enc[1][0] - enc[0][0], enc[1][1] - enc[0][1])
+    theta = math.atan2(enc[0][1] - cy, enc[0][0] - cx) - math.pi / 2.0
+    d = Polyiamond._tri_perimeter_distances(poly_verts, cx, cy, theta, side)
+    h_enc = float(d.max())
+    assert h_opt <= h_enc + 1e-9

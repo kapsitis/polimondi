@@ -933,6 +933,188 @@ class Polyiamond:
 
     # ------------------------------------------------------------------
 
+    @staticmethod
+    def _tri_perimeter_distances(points, cx, cy, theta, side):
+        """Vectorised distance from each row of ``points`` (shape ``(N, 2)``)
+        to the perimeter of the equilateral triangle with given centre,
+        orientation ``theta`` and side length ``side``.
+
+        Triangle vertex ``k`` (``k = 0, 1, 2``) sits at angle
+        ``theta + π/2 + k·2π/3`` from the centre, at distance
+        ``side / √3`` (the circumradius).  All work is element-wise NumPy
+        on broadcast-compatible arrays of shape ``(N, 3)`` (one column per
+        triangle edge), so the same routine runs unchanged on CuPy / JAX
+        device arrays for batched evaluation.
+        """
+        R = side / math.sqrt(3.0)            # circumradius
+        ks = np.arange(3)
+        ang = theta + math.pi / 2.0 + ks * (2.0 * math.pi / 3.0)
+        hx = cx + R * np.cos(ang)
+        hy = cy + R * np.sin(ang)
+        ax = hx[None, :]                     # (1, 3)
+        ay = hy[None, :]
+        bx = np.roll(hx, -1)[None, :]
+        by = np.roll(hy, -1)[None, :]
+        px = points[:, 0:1]                  # (N, 1)
+        py = points[:, 1:2]
+        abx = bx - ax; aby = by - ay
+        apx = px - ax; apy = py - ay
+        ab_len2 = abx * abx + aby * aby      # (1, 3) > 0
+        t = np.clip((apx * abx + apy * aby) / ab_len2, 0.0, 1.0)
+        qx = ax + t * abx
+        qy = ay + t * aby
+        seg_d = np.sqrt((px - qx) ** 2 + (py - qy) ** 2)   # (N, 3)
+        return seg_d.min(axis=1)             # (N,)
+
+    def get_closest_hausdorff_triangle(self, n_angles=120, n_side=11,
+                                       n_centre=7, refine=True):
+        """Find an equilateral triangle ``T`` minimising the one-sided
+        Hausdorff distance from the polyiamond's vertices to the triangle's
+        perimeter::
+
+            h(P, T) = max_{v ∈ vertices(P)}  min_{x ∈ ∂T}  ||v − x||
+
+        Returns
+        -------
+        (vertices, distance)
+            ``vertices`` is a list of 3 ``(x, y)`` floats (CCW order); the
+            first vertex is at angle ``θ + π/2`` from the centre (the
+            "apex-up" canonical convention used by
+            :py:meth:`get_smallest_triangle`).
+            ``distance`` is the achieved Hausdorff distance ``h(P, T)``.
+
+        Algorithm
+        ---------
+        An equilateral triangle has 4 real degrees of freedom: centre
+        ``(cx, cy)``, orientation ``θ ∈ [0, 2π/3)`` (120° rotational
+        symmetry) and side length ``s > 0``.  The objective
+        ``f(cx, cy, θ, s) = max_v dist(v, ∂T)`` is non-smooth (a
+        max-of-distances), so a two-stage strategy is used — identical in
+        spirit to :py:meth:`get_closest_hausdorff_hexagon`:
+
+        1. **Vectorised coarse search (GPU-friendly).**  Build a small
+           dense 4-D grid of candidate ``(θ, s, cx, cy)`` quadruples
+           around an initial guess derived from
+           :py:meth:`get_smallest_triangle`, evaluate the objective for
+           *all* candidates *and* all (convex-hull) polyiamond vertices in
+           a single broadcast of shape ``(M, N, 3)`` (M candidates, N
+           vertices, 3 triangle edges).  The inner kernel
+           :py:meth:`_tri_perimeter_distances` is a pure element-wise
+           NumPy/CuPy/JAX expression.
+        2. **Local refinement.**  Nelder–Mead from the best grid point —
+           derivative-free, so it tolerates the non-smooth ``max``.
+
+        Parameters
+        ----------
+        n_angles : int
+            Number of orientation samples in ``[0, 2π/3)`` for the coarse
+            grid.
+        n_side : int
+            Number of triangle-side samples (linearly spaced around the
+            initial guess; range ``[0.5·s0, 1.0·s0]`` where ``s0`` is the
+            side of the smallest enclosing equilateral triangle).
+        n_centre : int
+            Per-axis number of centre offset samples for the coarse grid.
+        refine : bool
+            If ``True`` (default), follow the coarse search with a
+            Nelder–Mead refinement.
+
+        Notes
+        -----
+        Tie-breaking is implicit: when several optima are numerically tied,
+        the one found first by the optimiser is returned (the spec allows
+        any optimum).
+        """
+        from scipy.optimize import minimize
+
+        # --- Initial guess from the smallest enclosing triangle. -----------
+        init_tri = np.asarray(self.get_smallest_triangle(), dtype=float)
+        cx0, cy0 = init_tri.mean(axis=0)
+        # Side length: distance between any two consecutive vertices.
+        s0 = float(np.hypot(init_tri[1, 0] - init_tri[0, 0],
+                            init_tri[1, 1] - init_tri[0, 1]))
+        # Orientation: vertex 0 sits at angle theta + pi/2 from the centre.
+        theta0 = math.atan2(init_tri[0, 1] - cy0,
+                            init_tri[0, 0] - cx0) - math.pi / 2.0
+        theta0 = (theta0 % (2.0 * math.pi / 3.0))   # fold to fundamental domain
+
+        verts = self._hull_xy_array() if len(self.vertices) >= 3 \
+            else np.array([p.get_xy() for p in self.vertices], dtype=float)
+
+        # --- Stage 1: vectorised coarse grid. ------------------------------
+        thetas = np.linspace(0.0, 2.0 * math.pi / 3.0, n_angles, endpoint=False)
+        sides_grid = s0 * np.linspace(0.5, 1.0, n_side)
+        span = 0.5 * s0
+        offs = np.linspace(-span, span, n_centre)
+        TH, SD, CX, CY = np.meshgrid(thetas, sides_grid,
+                                     cx0 + offs, cy0 + offs, indexing='ij')
+        TH_f = TH.ravel(); SD_f = SD.ravel()
+        CX_f = CX.ravel(); CY_f = CY.ravel()
+
+        # Triangle vertex coordinates per candidate, shape (M, 3).
+        ks = np.arange(3)
+        ang = TH_f[:, None] + math.pi / 2.0 + ks[None, :] * (2.0 * math.pi / 3.0)
+        R = SD_f / math.sqrt(3.0)                               # circumradius
+        hx = CX_f[:, None] + R[:, None] * np.cos(ang)           # (M, 3)
+        hy = CY_f[:, None] + R[:, None] * np.sin(ang)
+        ax = hx[:, None, :]; ay = hy[:, None, :]                # (M, 1, 3)
+        bx = np.roll(hx, -1, axis=1)[:, None, :]
+        by = np.roll(hy, -1, axis=1)[:, None, :]
+        px = verts[:, 0][None, :, None]                         # (1, N, 1)
+        py = verts[:, 1][None, :, None]
+        abx = bx - ax; aby = by - ay
+        apx = px - ax; apy = py - ay
+        ab_len2 = abx * abx + aby * aby                         # (M, 1, 3)
+        t = np.clip((apx * abx + apy * aby) / ab_len2, 0.0, 1.0)
+        qx = ax + t * abx
+        qy = ay + t * aby
+        seg_d = np.sqrt((px - qx) ** 2 + (py - qy) ** 2)        # (M, N, 3)
+        per_vertex_min = seg_d.min(axis=2)                      # (M, N)
+        haus = per_vertex_min.max(axis=1)                       # (M,)
+        best_idx = int(np.argmin(haus))
+        h_best = float(haus[best_idx])
+        th_best = float(TH_f[best_idx])
+        s_best = float(SD_f[best_idx])
+        cx_best = float(CX_f[best_idx])
+        cy_best = float(CY_f[best_idx])
+
+        # --- Stage 2: Nelder–Mead refinement. ------------------------------
+        if refine:
+            def _obj(p):
+                cx, cy, th, s = p
+                if s <= 1e-12:
+                    return 1e18
+                return float(self._tri_perimeter_distances(
+                    verts, cx, cy, th, s).max())
+
+            x0 = np.array([cx_best, cy_best, th_best, s_best], dtype=float)
+            scale = max(s_best, 1e-6)
+            initial_simplex = np.vstack([
+                x0,
+                x0 + [scale * 0.05, 0.0,           0.0,            0.0          ],
+                x0 + [0.0,          scale * 0.05,  0.0,            0.0          ],
+                x0 + [0.0,          0.0,           math.pi / 180., 0.0          ],
+                x0 + [0.0,          0.0,           0.0,            scale * 0.05 ],
+            ])
+            res = minimize(_obj, x0, method='Nelder-Mead',
+                           options={'xatol': 1e-10, 'fatol': 1e-12,
+                                    'maxiter': 5000, 'maxfev': 10000,
+                                    'initial_simplex': initial_simplex})
+            if res.fun < h_best:
+                cx_best, cy_best, th_best, s_best = (float(v) for v in res.x)
+                h_best = float(res.fun)
+
+        # --- Build the 3 triangle vertices in CCW order. -------------------
+        R = s_best / math.sqrt(3.0)
+        verts_out = []
+        for k in range(3):
+            ang = th_best + math.pi / 2.0 + k * (2.0 * math.pi / 3.0)
+            verts_out.append((cx_best + R * math.cos(ang),
+                              cy_best + R * math.sin(ang)))
+        return verts_out, h_best
+
+    # ------------------------------------------------------------------
+
     # Return all internal+perimeter points as [PointTg, PointTg, ...]
     def list_inside(self):
         # Cache answers to avoid computing anything twice
