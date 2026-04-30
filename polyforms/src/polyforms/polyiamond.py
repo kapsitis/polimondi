@@ -1115,6 +1115,273 @@ class Polyiamond:
 
     # ------------------------------------------------------------------
 
+    @staticmethod
+    def _polygon_edge_distances(poly_xy, px, py):
+        """Vectorised distance from each query point ``(px[i], py[i])`` to
+        every edge of the polygon ``poly_xy`` (shape ``(E, 2)``, CCW or CW
+        irrelevant).
+
+        Returns a ``(N, E)`` array of point-to-segment distances using a
+        single broadcast of clamped projections.  Pure element-wise NumPy
+        — ports unchanged to CuPy / JAX.
+        """
+        x1 = poly_xy[:, 0]; y1 = poly_xy[:, 1]
+        x2 = np.roll(x1, -1); y2 = np.roll(y1, -1)
+        ax = x1[None, :]; ay = y1[None, :]                 # (1, E)
+        bx = x2[None, :]; by = y2[None, :]
+        qx = px[:, None];  qy = py[:, None]                # (N, 1)
+        abx = bx - ax; aby = by - ay
+        apx = qx - ax; apy = qy - ay
+        ab_len2 = abx * abx + aby * aby
+        # Avoid divide-by-zero on degenerate (zero-length) edges.
+        ab_len2 = np.where(ab_len2 > 0, ab_len2, 1.0)
+        t = np.clip((apx * abx + apy * aby) / ab_len2, 0.0, 1.0)
+        proj_x = ax + t * abx
+        proj_y = ay + t * aby
+        return np.sqrt((qx - proj_x) ** 2 + (qy - proj_y) ** 2)   # (N, E)
+
+    @staticmethod
+    def _points_in_polygon(poly_xy, px, py):
+        """Vectorised even-odd ray-casting point-in-polygon test.
+
+        ``poly_xy``: ``(E, 2)`` polygon vertices (any orientation).
+        ``px``, ``py``: ``(N,)`` query coordinates.
+
+        Returns a boolean array of shape ``(N,)``.  Pure NumPy element-wise
+        broadcasting — runs unchanged on CuPy / JAX device arrays.
+        """
+        x1 = poly_xy[:, 0]; y1 = poly_xy[:, 1]
+        x2 = np.roll(x1, -1); y2 = np.roll(y1, -1)
+        # (E, 1) edges  vs  (1, N) query points
+        y1c = y1[:, None]; y2c = y2[:, None]
+        x1c = x1[:, None]; x2c = x2[:, None]
+        qx = px[None, :];  qy = py[None, :]
+        crosses_y = (y1c > qy) != (y2c > qy)
+        # avoid div-by-zero on horizontal edges; result is masked out by crosses_y
+        dy = np.where(y2c - y1c == 0, 1.0, y2c - y1c)
+        x_intersect = (qy - y1c) * (x2c - x1c) / dy + x1c
+        cond = crosses_y & (qx < x_intersect)
+        return (np.sum(cond, axis=0) % 2) == 1            # (N,)
+
+    def get_incircle(self, n_grid=80, refine=True):
+        """Find the largest circle that lies entirely inside the polyiamond
+        (an inscribed circle / "inradius").
+
+        Returns
+        -------
+        ((cx, cy), r) : tuple
+            Centre as a pair of floats and radius as a float.
+
+        Algorithm
+        ---------
+        The inscribed-circle problem on a (possibly non-convex) simple
+        polygon ``P`` is::
+
+            r* = max_{c ∈ P} dist(c, ∂P)
+
+        i.e. the maximum, over interior points ``c``, of the distance from
+        ``c`` to the polygon boundary.  The objective is non-smooth (it is
+        a min-of-distances) so a derivative-free strategy is used:
+
+        1. **Vectorised coarse grid (GPU-friendly).**  Build an
+           ``n_grid × n_grid`` rectangular sample grid covering the
+           polygon's bounding box.  In **one** broadcast:
+             * mask out exterior points with a vectorised even-odd
+               ray-casting test (:py:meth:`_points_in_polygon`),
+             * compute every grid point's distance to every polygon edge
+               via :py:meth:`_polygon_edge_distances` and reduce with
+               ``min`` over the edge axis.
+           The grid point with the largest interior distance is the
+           coarse optimum.  Both inner kernels are pure element-wise
+           NumPy operations and port unchanged to CuPy / JAX.
+        2. **Local refinement.**  ``scipy.optimize.minimize`` (Nelder–
+           Mead) maximises the same signed distance starting from the
+           coarse optimum.  A penalty term is added when the candidate
+           leaves the polygon.
+
+        Note: for a convex polygon the inscribed-circle radius equals the
+        Chebyshev radius (a small LP).  We do not branch on convexity —
+        the grid-plus-refine algorithm handles both convex and non-convex
+        polyiamonds with the same code path.
+        """
+        from scipy.optimize import minimize
+
+        poly = np.asarray(self.get_descartes(), dtype=float)
+        # Bounding box.
+        xmin, ymin = poly.min(axis=0)
+        xmax, ymax = poly.max(axis=0)
+
+        # Stage 1: vectorised coarse grid.
+        gx = np.linspace(xmin, xmax, n_grid)
+        gy = np.linspace(ymin, ymax, n_grid)
+        GX, GY = np.meshgrid(gx, gy, indexing='ij')
+        px = GX.ravel(); py = GY.ravel()
+        inside = self._points_in_polygon(poly, px, py)
+        if not inside.any():
+            # Polyiamond is degenerate; return a zero-radius circle at origin.
+            return ((float(poly[0, 0]), float(poly[0, 1])), 0.0)
+
+        d_to_edge = self._polygon_edge_distances(poly, px, py).min(axis=1)
+        # Exterior points get distance 0 (so they cannot win the argmax).
+        d_to_edge = np.where(inside, d_to_edge, -np.inf)
+        best_idx = int(np.argmax(d_to_edge))
+        cx_best, cy_best = float(px[best_idx]), float(py[best_idx])
+        r_best = float(d_to_edge[best_idx])
+
+        # Stage 2: Nelder–Mead refinement on the signed-distance objective.
+        if refine:
+            def _neg_radius(p):
+                cx, cy = p
+                ins = self._points_in_polygon(
+                    poly, np.array([cx]), np.array([cy]))[0]
+                d = float(self._polygon_edge_distances(
+                    poly, np.array([cx]), np.array([cy])).min())
+                if not ins:
+                    # Strong outside-penalty, smooth in distance to boundary.
+                    return d + 1e6
+                return -d
+
+            scale = max(min(xmax - xmin, ymax - ymin), 1e-6)
+            x0 = np.array([cx_best, cy_best], dtype=float)
+            initial_simplex = np.vstack([
+                x0,
+                x0 + [scale * 0.05, 0.0],
+                x0 + [0.0,          scale * 0.05],
+            ])
+            res = minimize(_neg_radius, x0, method='Nelder-Mead',
+                           options={'xatol': 1e-10, 'fatol': 1e-12,
+                                    'maxiter': 5000, 'maxfev': 10000,
+                                    'initial_simplex': initial_simplex})
+            if -res.fun > r_best:
+                cx_best, cy_best = float(res.x[0]), float(res.x[1])
+                r_best = float(-res.fun)
+
+        return ((cx_best, cy_best), r_best)
+
+    def get_circumcircle(self):
+        """Find the smallest circle containing every vertex of the
+        polyiamond (the minimum enclosing circle of the vertex set).
+
+        Returns
+        -------
+        ((cx, cy), r) : tuple
+            Centre and radius as floats.
+
+        Algorithm
+        ---------
+        The smallest enclosing circle of a finite point set equals the
+        smallest enclosing circle of its convex hull and is determined by
+        either:
+
+        * a **diameter pair** — two hull vertices spanning a circle whose
+          diameter is the segment between them, or
+        * a **circumscribed triple** — three hull vertices on the circle's
+          boundary (the polygon's circumscribed circle for that triple).
+
+        Both candidate sets are enumerated and validated in fully
+        vectorised NumPy:
+
+        1. **Diameter candidates.**  All ``H·(H−1)/2`` pairs of hull
+           vertices give one circle each (centre = midpoint, radius =
+           half-distance).  Validity = every other hull vertex lies
+           within radius (one ``(N_pairs, H)`` distance broadcast).
+        2. **Triple candidates.**  All ``H·(H−1)·(H−2)/6`` ordered
+           triples are converted to circumcircles via the closed-form
+           determinant formula::
+
+               D = 2 ((B−A) × (C−A))
+               cx = ( |B|²−|A|² )(C_y−A_y) − ( |C|²−|A|² )(B_y−A_y)) / D + A_x
+               cy = ( |C|²−|A|² )(B_x−A_x) − ( |B|²−|A|² )(C_x−A_x)) / D + A_y
+
+           Degenerate (collinear) triples have ``D ≈ 0`` and are masked
+           out.  Validity is again a single ``(N_triples, H)`` distance
+           broadcast.
+
+        The smallest valid radius among both candidate sets is returned.
+        Computation cost is ``O(H³)`` in NumPy — for typical polyiamonds
+        ``H`` is small (the convex hull of an integer-grid polygon has
+        few vertices) so this is dramatically faster than Welzl in pure
+        Python and runs unchanged on CuPy / JAX.
+        """
+        hull_xy = self._hull_xy_array()
+        H = hull_xy.shape[0]
+
+        if H == 1:
+            return ((float(hull_xy[0, 0]), float(hull_xy[0, 1])), 0.0)
+        if H == 2:
+            cx = 0.5 * (hull_xy[0, 0] + hull_xy[1, 0])
+            cy = 0.5 * (hull_xy[0, 1] + hull_xy[1, 1])
+            r = 0.5 * float(np.hypot(hull_xy[1, 0] - hull_xy[0, 0],
+                                     hull_xy[1, 1] - hull_xy[0, 1]))
+            return ((float(cx), float(cy)), r)
+
+        tol = 1e-9 * float(np.linalg.norm(hull_xy.max(axis=0)
+                                          - hull_xy.min(axis=0)))
+        tol = max(tol, 1e-12)
+
+        candidates = []   # list of (radius, cx, cy)
+
+        # --- Stage 1: diameter pairs (vectorised). ------------------------
+        i_idx, j_idx = np.triu_indices(H, k=1)
+        ax = hull_xy[i_idx, 0]; ay = hull_xy[i_idx, 1]
+        bx = hull_xy[j_idx, 0]; by = hull_xy[j_idx, 1]
+        cx_p = 0.5 * (ax + bx)
+        cy_p = 0.5 * (ay + by)
+        r_p = 0.5 * np.hypot(bx - ax, by - ay)
+        # Validity: every hull vertex within radius (with tolerance).
+        d = np.hypot(hull_xy[None, :, 0] - cx_p[:, None],
+                     hull_xy[None, :, 1] - cy_p[:, None])
+        valid_p = (d <= r_p[:, None] + tol).all(axis=1)
+        if valid_p.any():
+            best = int(np.argmin(np.where(valid_p, r_p, np.inf)))
+            candidates.append((float(r_p[best]),
+                               float(cx_p[best]), float(cy_p[best])))
+
+        # --- Stage 2: circumscribed triples (vectorised). -----------------
+        # Build all unordered triples (i < j < k).
+        ii, jj, kk = np.array(np.meshgrid(np.arange(H), np.arange(H),
+                                          np.arange(H), indexing='ij'))
+        mask = (ii < jj) & (jj < kk)
+        i3 = ii[mask]; j3 = jj[mask]; k3 = kk[mask]
+        Ax = hull_xy[i3, 0]; Ay = hull_xy[i3, 1]
+        Bx = hull_xy[j3, 0]; By = hull_xy[j3, 1]
+        Cx = hull_xy[k3, 0]; Cy = hull_xy[k3, 1]
+        D = 2.0 * ((Bx - Ax) * (Cy - Ay) - (By - Ay) * (Cx - Ax))
+        nondeg = np.abs(D) > 1e-14
+        Dsafe = np.where(nondeg, D, 1.0)
+        ABsq = (Bx - Ax) ** 2 + (By - Ay) ** 2
+        # Use cofactor formulas relative to A.
+        # ux = ((B-A)·(B-A)) (Cy-Ay) - ((C-A)·(C-A)) (By-Ay)  ... etc.
+        Bx2 = (Bx - Ax) ** 2 + (By - Ay) ** 2
+        Cx2 = (Cx - Ax) ** 2 + (Cy - Ay) ** 2
+        ux = (Bx2 * (Cy - Ay) - Cx2 * (By - Ay)) / Dsafe
+        uy = (Cx2 * (Bx - Ax) - Bx2 * (Cx - Ax)) / Dsafe
+        cx_t = Ax + ux
+        cy_t = Ay + uy
+        r_t = np.hypot(ux, uy)
+        d3 = np.hypot(hull_xy[None, :, 0] - cx_t[:, None],
+                      hull_xy[None, :, 1] - cy_t[:, None])
+        valid_t = nondeg & (d3 <= r_t[:, None] + tol).all(axis=1)
+        if valid_t.any():
+            r_masked = np.where(valid_t, r_t, np.inf)
+            best = int(np.argmin(r_masked))
+            candidates.append((float(r_t[best]),
+                               float(cx_t[best]), float(cy_t[best])))
+
+        if not candidates:
+            # Defensive fallback (should not happen for valid polyiamond).
+            cx = float(hull_xy[:, 0].mean())
+            cy = float(hull_xy[:, 1].mean())
+            r = float(np.hypot(hull_xy[:, 0] - cx,
+                               hull_xy[:, 1] - cy).max())
+            return ((cx, cy), r)
+
+        candidates.sort(key=lambda t: t[0])
+        r_best, cx_best, cy_best = candidates[0]
+        return ((cx_best, cy_best), r_best)
+
+    # ------------------------------------------------------------------
+
     # Return all internal+perimeter points as [PointTg, PointTg, ...]
     def list_inside(self):
         # Cache answers to avoid computing anything twice

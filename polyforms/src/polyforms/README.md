@@ -331,3 +331,85 @@ peak throughput.
 
 When several optima exist (numerically tied) the implementation returns
 the one found first by the optimiser, as the spec allows any optimum.
+
+---
+
+## Incircle and circumcircle (2026-05)
+
+Two complementary circle-based methods on `Polyiamond`:
+
+| Method | Returns |
+|--------|---------|
+| `get_incircle()` | `((cx, cy), r)` — centre and radius of the **largest** circle fully inside the polyiamond |
+| `get_circumcircle()` | `((cx, cy), r)` — centre and radius of the **smallest** circle containing every polyiamond vertex |
+
+Coordinates and radii are real Cartesian (NumPy) floats; no exact-integer
+or symbolic √3 expressions are needed (the polyiamond's vertices already
+involve √3/2 from the triangular grid).
+
+### Circumcircle — `O(H³)` vectorised candidate enumeration
+
+The smallest enclosing circle of any finite point set equals that of its
+**convex hull**, and the optimum is determined by either:
+
+* a **diameter pair** of hull vertices (centre at the segment midpoint,
+  radius half the segment length), or
+* a **circumscribed triple** of hull vertices (the three points lie on
+  the circle).
+
+Both candidate sets are enumerated and tested in pure NumPy:
+
+1. All `H·(H−1)/2` pairs are evaluated in one broadcast: each candidate
+   circle is checked against all `H` hull vertices via a single
+   `(N_pairs, H)` distance tensor, kept iff every vertex is inside.
+2. All `H·(H−1)·(H−2)/6` triples produce circumcircle centres via the
+   closed-form determinant formula (no matrix inverse, only element-wise
+   arithmetic), and are validated by another `(N_triples, H)` broadcast.
+
+The smallest valid radius wins.  The hull of an integer-grid polyiamond
+typically has very few vertices, so `O(H³)` is in practice trivial; the
+inner kernels are pure broadcast operations and run unchanged on
+CuPy/JAX.  This avoids the recursion of Welzl's algorithm — the
+recursion is what makes Welzl GPU-unfriendly.
+
+### Incircle — coarse-grid + Nelder–Mead
+
+The largest inscribed circle problem on a (possibly non-convex) simple
+polygon is
+
+$$
+r^{\star} \;=\; \max_{c\,\in\,P}\;\operatorname{dist}(c, \partial P)
+$$
+
+with the maximum-of-`min`-of-distances objective being non-smooth.  The
+implementation has two stages, both driven by element-wise NumPy:
+
+1. **Vectorised coarse grid (GPU-friendly).**  Sample the polygon's
+   bounding box with an `n_grid × n_grid` rectangular grid (default
+   `n_grid = 80`).  In a single broadcast:
+     * a vectorised even-odd ray-casting test
+       (`_points_in_polygon`) masks out exterior points;
+     * `_polygon_edge_distances` returns a `(N, E)` matrix of
+       point-to-edge distances, reduced with `min` over the edge axis to
+       give each grid point's distance to the polygon boundary.
+   The interior point with the largest boundary distance is the coarse
+   optimum.
+2. **Local Nelder–Mead refinement.**  `scipy.optimize.minimize`
+   maximises the same signed-distance objective (with a strong
+   exterior-penalty term) starting from the coarse optimum.  Nelder–Mead
+   is derivative-free, which suits the non-smooth `min` objective.
+
+For a *convex* polygon this problem reduces to the Chebyshev-centre LP
+(linear-programming on the half-plane intersection); we deliberately do
+**not** branch on convexity — the grid-plus-refine pipeline handles both
+convex and non-convex polyiamonds with the same code path.
+
+### Why these two helpers are GPU-friendly
+
+The two private static helpers introduced for the incircle —
+`_points_in_polygon` and `_polygon_edge_distances` — are themselves
+pure element-wise NumPy expressions over `(E, 1)`-vs-`(1, N)` broadcasts
+of edges versus query points.  They reduce to a single `np.sqrt`,
+`np.clip`, and a couple of comparisons each.  Both replace ``shapely``
+calls (which are Python-level, per-point) with batchable tensor ops that
+port directly to CuPy/JAX device arrays.

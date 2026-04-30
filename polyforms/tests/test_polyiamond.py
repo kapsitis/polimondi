@@ -605,3 +605,84 @@ def test_hausdorff_triangle_optimum_no_worse_than_smallest_enclosing():
     d = Polyiamond._tri_perimeter_distances(poly_verts, cx, cy, theta, side)
     h_enc = float(d.max())
     assert h_opt <= h_enc + 1e-9
+
+
+# ---------------------------------------------------------------------------
+# Tests for get_incircle and get_circumcircle (2026-05).
+# ---------------------------------------------------------------------------
+
+def test_circumcircle_unit_triangle():
+    """Circumcircle of the unit equilateral triangle (A,C,E):
+    centroid = (0.5, sqrt(3)/6), circumradius = sqrt(3)/3."""
+    import math
+    p = Polyiamond([(1, 'A'), (1, 'C'), (1, 'E')])
+    (cx, cy), r = p.get_circumcircle()
+    assert abs(cx - 0.5) < 1e-9
+    assert abs(cy - math.sqrt(3) / 6.0) < 1e-9
+    assert abs(r - math.sqrt(3) / 3.0) < 1e-9
+
+
+def test_circumcircle_contains_all_vertices():
+    """Every polyiamond vertex must lie inside (or on) the returned circle."""
+    import math
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    (cx, cy), r = p.get_circumcircle()
+    for v in p.vertices:
+        x, y = v.get_xy()
+        d = math.hypot(x - cx, y - cy)
+        assert d <= r + 1e-9
+
+
+def test_circumcircle_scaling():
+    """Scaling all sides by k scales centre and radius by k."""
+    import math
+    k = 5
+    p_small = Polyiamond([(1, 'A'), (1, 'C'), (1, 'E')])
+    p_large = Polyiamond([(k, 'A'), (k, 'C'), (k, 'E')])
+    (cxs, cys), rs = p_small.get_circumcircle()
+    (cxl, cyl), rl = p_large.get_circumcircle()
+    assert abs(cxl - k * cxs) < 1e-9
+    assert abs(cyl - k * cys) < 1e-9
+    assert abs(rl - k * rs) < 1e-9
+
+
+def test_incircle_unit_triangle():
+    """Incircle of unit equilateral triangle: centre = (0.5, sqrt(3)/6),
+    inradius = sqrt(3)/6."""
+    import math
+    p = Polyiamond([(1, 'A'), (1, 'C'), (1, 'E')])
+    (cx, cy), r = p.get_incircle()
+    assert abs(cx - 0.5) < 1e-3
+    assert abs(cy - math.sqrt(3) / 6.0) < 1e-3
+    assert abs(r - math.sqrt(3) / 6.0) < 1e-3
+
+
+def test_incircle_inside_polygon():
+    """The incircle's centre must be inside the polyiamond and every point
+    on the circle must lie inside or on the polyiamond's perimeter (i.e.
+    the centre's distance to the polygon boundary equals the radius)."""
+    import math
+    p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    (cx, cy), r = p.get_incircle()
+    # Centre is inside.
+    poly_xy = np.asarray(p.get_descartes(), dtype=float)
+    inside = Polyiamond._points_in_polygon(
+        poly_xy, np.array([cx]), np.array([cy]))[0]
+    assert bool(inside)
+    # Min distance from centre to polygon edges is >= r (within tol).
+    d = float(Polyiamond._polygon_edge_distances(
+        poly_xy, np.array([cx]), np.array([cy])).min())
+    assert d + 1e-6 >= r
+
+
+def test_incircle_scaling():
+    """Scaling sides by k scales incircle centre and radius by k."""
+    k = 4
+    p_small = Polyiamond([(1, 'A'), (1, 'C'), (1, 'E')])
+    p_large = Polyiamond([(k, 'A'), (k, 'C'), (k, 'E')])
+    (cxs, cys), rs = p_small.get_incircle()
+    (cxl, cyl), rl = p_large.get_incircle()
+    # Coarse-grid + Nelder-Mead refinement → modest tolerance.
+    assert abs(cxl - k * cxs) < 1e-2
+    assert abs(cyl - k * cys) < 1e-2
+    assert abs(rl - k * rs) < 1e-2
