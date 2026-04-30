@@ -437,3 +437,52 @@ def test_smallest_shapes_scale_linearly():
                              large_v[1][1] - large_v[0][1])
         assert abs(s_large - k * s_small) < 1e-3 * s_large, \
             f"{getter}: small={s_small}, large={s_large}, k={k}"
+
+# ---------------------------------------------------------------------------
+# Tests for the area moment of inertia tensor (2026-05).
+# ---------------------------------------------------------------------------
+
+def test_inertia_tensor_unit_triangle():
+    """For the unit upward triangle (0,0)-(1,0)-(0.5, sqrt(3)/2) the
+    closed-form values are::
+
+        ∫ y²  dA = sqrt(3)/32
+        ∫ x²  dA = 7*sqrt(3)/96
+        ∫ x y dA = 1/16
+
+    so the inertia tensor is
+        [[ sqrt(3)/32, -1/16        ],
+         [ -1/16,       7*sqrt(3)/96]].
+    """
+    import math
+    import numpy as np
+    p = Polyiamond([(1, 'A'), (1, 'C'), (1, 'E')])
+    I = p.get_inertia_tensor()
+    expected = np.array([[math.sqrt(3) / 32.0, -1.0 / 16.0],
+                         [-1.0 / 16.0,         7.0 * math.sqrt(3) / 96.0]])
+    assert isinstance(I, np.ndarray)
+    assert I.shape == (2, 2)
+    assert np.allclose(I, expected, atol=1e-12)
+    # Symmetry of the tensor.
+    assert np.isclose(I[0, 1], I[1, 0])
+
+
+def test_inertia_tensor_orientation_invariant():
+    """Reversing the traversal direction (CW vs CCW) must not change the
+    tensor -- the geometric region is the same."""
+    import numpy as np
+    fwd = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    rev = Polyiamond([(1, 'C'), (2, 'A'), (3, 'B'), (4, 'F'), (5, 'D')])
+    assert np.allclose(fwd.get_inertia_tensor(), rev.get_inertia_tensor(),
+                       atol=1e-9)
+
+
+def test_inertia_tensor_scaling():
+    """Scaling all side lengths by k scales every tensor entry by k**4."""
+    import numpy as np
+    k = 3
+    p_small = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
+    p_large = Polyiamond([(L * k, D) for (L, D) in p_small.sides])
+    assert np.allclose(p_large.get_inertia_tensor(),
+                       (k ** 4) * p_small.get_inertia_tensor(),
+                       rtol=1e-12, atol=1e-9)

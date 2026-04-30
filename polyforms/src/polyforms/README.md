@@ -215,3 +215,59 @@ making batched processing of many polyiamonds (or migration to GPU array
 libraries such as CuPy / JAX) straightforward — the per-polyiamond `for`
 loop becomes another broadcast axis with no algorithmic change.
 
+---
+
+## Area moment of inertia tensor (2026-05)
+
+`get_inertia_tensor()` returns the planar **area moment of inertia tensor**
+about the origin (the first polyiamond vertex) for a uniform unit-density
+lamina bounded by the polyiamond's sides:
+
+$$
+I \;=\; \int_{\Omega} \bigl(\lVert\mathbf r\rVert^2\,I_2 - \mathbf r\,\mathbf r^{T}\bigr)\,dm
+\;=\;
+\begin{pmatrix}
+\int y^2\,dA & -\int xy\,dA\\[2pt]
+-\int xy\,dA & \int x^2\,dA
+\end{pmatrix}
+$$
+
+with `dm = dA` (uniform unit density).  The result is a `(2, 2)` `float`
+NumPy array.  Real Cartesian coordinates are used (so the unit equilateral
+triangle has area `√3/4`).
+
+### Why not a brute-force area integral?
+
+A naive implementation discretises Ω into pixels or triangles and sums
+`x²`, `y²`, `xy` over them.  Cost scales with **area** — O(N²) for a
+polyiamond of side O(N) — which is wasteful and noisy.  Instead, the three
+double integrals are converted analytically into **boundary line
+integrals** by Green's theorem, then evaluated as a closed-form sum over
+polygon vertices.
+
+### Closed-form polygon moment formulas
+
+For a polygon with vertices `(x_i, y_i)` in CCW order and the per-edge
+shoelace term `c_i = x_i·y_{i+1} − x_{i+1}·y_i`:
+
+```
+∫ x²  dA = (1/12) Σ c_i · (x_i² + x_i x_{i+1} + x_{i+1}²)
+∫ y²  dA = (1/12) Σ c_i · (y_i² + y_i y_{i+1} + y_{i+1}²)
+∫ x y dA = (1/24) Σ c_i · (x_i y_{i+1} + 2 x_i y_i
+                          + 2 x_{i+1} y_{i+1} + x_{i+1} y_i)
+```
+
+If the polygon is traversed CW the three sums all flip sign; the
+implementation multiplies by `sign(signed_area)` so the returned tensor
+always corresponds to the geometric region with positive area.
+
+### GPU-friendliness
+
+Each surface integral becomes **one element-wise NumPy expression over the
+N vertices followed by a single sum-reduction**.  There is no interior
+sampling at all, so cost is O(N) (perimeter) instead of O(N²) (area).  The
+three reductions are independent and can be fused into a single GPU kernel;
+multiple polyiamonds are batched by stacking padded vertex arrays into a
+leading batch dimension and broadcasting `np.roll`/`einsum` across it
+(directly portable to CuPy or JAX with no algorithmic change).
+

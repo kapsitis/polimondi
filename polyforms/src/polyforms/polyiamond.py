@@ -680,6 +680,71 @@ class Polyiamond:
 
     # ------------------------------------------------------------------
 
+    def get_inertia_tensor(self):
+        """Compute the planar area moment of inertia tensor about the origin
+        (the first polyiamond vertex) for a uniform unit-density lamina
+        bounded by the polyiamond's sides.
+
+        Returns a ``(2, 2)`` ``float`` NumPy array::
+
+            I = [[  ∫ y²  dA,  - ∫ x y dA ],
+                 [- ∫ x y dA,    ∫ x²  dA ]]
+
+        Computation
+        -----------
+        Rather than discretising the interior into a brute-force pixel/triangle
+        grid, the surface integrals are converted to **closed-form polygon
+        boundary sums** via Green's theorem.  For a polygon with vertices
+        ``(x_i, y_i)`` traversed CCW and ``c_i = x_i·y_{i+1} − x_{i+1}·y_i``::
+
+            ∫ x²  dA = (1/12) Σ c_i · (x_i² + x_i x_{i+1} + x_{i+1}²)
+            ∫ y²  dA = (1/12) Σ c_i · (y_i² + y_i y_{i+1} + y_{i+1}²)
+            ∫ x y dA = (1/24) Σ c_i · (x_i y_{i+1} + 2 x_i y_i
+                                       + 2 x_{i+1} y_{i+1} + x_{i+1} y_i)
+
+        Each sum is implemented with a single NumPy vectorised expression over
+        the ``N`` vertices — i.e. ``O(N)`` floating-point ops with no
+        interior sampling.  That is dramatically faster than any
+        rasterised/quadrature approach (which would scale with the **area**),
+        and it maps directly to GPU array libraries (CuPy / JAX): every step
+        is an element-wise op or a reduction over the vertex axis.  Multiple
+        polyiamonds can be batched by stacking their padded vertex arrays into
+        a leading batch dimension.
+
+        Sign convention: if the polygon is traversed CW (negative signed
+        area), the boundary sums above all change sign; the result is
+        multiplied by ``sign(signed_area)`` so the returned tensor always
+        corresponds to the geometric region with positive area.
+        """
+        if not hasattr(self, 'inertia_tensor'):
+            self.get_descartes()
+            verts = np.asarray(self.descartes, dtype=float)
+            x = verts[:, 0]
+            y = verts[:, 1]
+            x1 = np.roll(x, -1)
+            y1 = np.roll(y, -1)
+            cross = x * y1 - x1 * y                             # c_i
+
+            int_xx = np.sum(cross * (x*x + x*x1 + x1*x1)) / 12.0
+            int_yy = np.sum(cross * (y*y + y*y1 + y1*y1)) / 12.0
+            int_xy = np.sum(cross * (x*y1 + 2.0*x*y
+                                     + 2.0*x1*y1 + x1*y)) / 24.0
+
+            signed_area_real = 0.5 * float(np.sum(cross))
+            sign = 1.0 if signed_area_real >= 0.0 else -1.0
+            int_xx *= sign
+            int_yy *= sign
+            int_xy *= sign
+
+            self.inertia_tensor = np.array(
+                [[int_yy, -int_xy],
+                 [-int_xy, int_xx]],
+                dtype=float,
+            )
+        return self.inertia_tensor
+
+    # ------------------------------------------------------------------
+
     # Return all internal+perimeter points as [PointTg, PointTg, ...]
     def list_inside(self):
         # Cache answers to avoid computing anything twice
