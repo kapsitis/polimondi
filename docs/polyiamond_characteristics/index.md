@@ -80,3 +80,39 @@ print(f'parallel_lines={parallel_lines}')
 />
 
 
+## Ievilkts riņķis
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+incircle = p.get_incircle()
+print(f'incircle={incircle}')
+
+# incircle=((62.33516483517474, -36.88697214361352), 45.292972491130485)
+```
+
+<img
+  id="30gon_incircle"
+  alt="30-polimonda ievilkts riņķis"
+  src="{{ '/polyiamond_characteristics/30gon_incircle.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
+
+
+## Apvilkts riņķis
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+circumcircle = p.get_circumcircle()
+print(f'circumcircle={circumcircle}')
+
+# circumcircle=((55.42307692307693, -33.730579188424656), 73.66091885436556)
+```
+
+<img
+  id="30gon_circumcircle"
+  alt="30-polimonda apvilkts riņķis"
+  src="{{ '/polyiamond_characteristics/30gon_circumcircle.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
