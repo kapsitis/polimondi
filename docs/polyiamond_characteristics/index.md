@@ -63,8 +63,13 @@ print(f'diam_sq={diam_sq}, i_max={i_max}, j_max={j_max}')
 from polyforms.polyiamond import Polyiamond
 p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
 min_width, seg_min_width, parallel_lines = p.min_width()
+print(f'min_width={min_width},')
+print(f'seg_min_width={seg_min_width},')
+print(f'parallel_lines={parallel_lines}')
 
-print(f'min_width={min_width}, seg_min_width={seg_min_width}, parallel_lines={parallel_lines}')
+# min_width=109.87076689881448,
+# seg_min_width=((112.0, 1.7320508075688772), (55.50272034820456, -92.49980585927413)),
+# parallel_lines=((37.0, -81.40638795573723), (63.0, -96.99484522385713), (112.0, 1.7320508075688772))
 ```
 
 <img
@@ -73,3 +78,5 @@ print(f'min_width={min_width}, seg_min_width={seg_min_width}, parallel_lines={pa
   src="{{ '/polyiamond_characteristics/30gon_min_width.svg' | relative_url }}"
   style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
 />
+
+
