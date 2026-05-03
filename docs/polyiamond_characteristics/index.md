@@ -19,9 +19,9 @@ details summary:hover { text-decoration: underline; }
 ## Laukums
 
 <img
-  id="perfect_30gon"
+  id="30gon_area"
   alt="Perfekts 30-polimonds"
-  src="{{ '/polyiamond_characteristics/perfect_30gon.svg' | relative_url }}"
+  src="{{ '/polyiamond_characteristics/30gon_area.svg' | relative_url }}"
   style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
 />
 
