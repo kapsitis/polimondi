@@ -18,6 +18,12 @@ details summary:hover { text-decoration: underline; }
 
 ## Laukums
 
+Laukumu varētu definēt vai nu kā laukumu 
+tradicionālajā Eiklīda plaknē $L_2$ (tas vienmēr ir 
+iracionāls skaitlis), vai arī kā polimondā 
+ietilpstošo vienības trijstūrīšu skaitu jeb tradicionālo laukumu 
+dalītu ar $\sqrt{3}/4$ (tas vienmēr ir vesels skaitlis).
+
 ```
 from polyforms.polyiamond import Polyiamond
 p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
@@ -36,6 +42,13 @@ print(f'area={area}')
 />
 
 ## Diametrs
+
+Par *diametru* plaknes figūrai sauc lielāko 
+attālums starp figūras punktiem (polimondos un citos daudzstūros  
+tās vienmēr ir daudzstūra virsotnes).
+"Kompaktām" figūrām ir relatīvi neliels diameters pie 
+fiksēta perimetra. (Visu izoperimetrisko plaknes figūru vidū 
+mazākais diametrs ir aplim.)
 
 ```
 from polyforms.polyiamond import Polyiamond
@@ -58,6 +71,14 @@ print(f'diam_sq={diam_sq}, i_max={i_max}, j_max={j_max}')
 
 
 ## Platums
+
+Par ierobežotas plaknes figūras *platumu* sauc 
+mazāko attālumu starp divām paralēlām *atbalsta taisnēm*, starp kurām 
+atrodas figūra. Pietiekami lielam laukumam pie dotā perimetra, 
+arī platumam jābūt lielam. 
+Platumu var iegūt ar rotējošo skavu (*rotating callipers*) 
+algoritmu (vai arī kā minimizācijas uzdevumu virsotņu projekcijām
+uz kādu fiksētu taisni). 
 
 ```
 from polyforms.polyiamond import Polyiamond
@@ -82,6 +103,16 @@ print(f'parallel_lines={parallel_lines}')
 
 ## Ievilkts riņķis
 
+Par daudzstūri *ievilktu riņķi* sauc lielāko riņķi, 
+kurš pilnībā atrodas figūras iekšpusē. Neizliektiem daudzstūriem 
+varētu eksistēt vairāki vienāda lieluma ievilktie riņķi, ja, piemēram, 
+tā satur vairākus "izaugumus" identisku trijstūru formā. 
+Perfektiem polimondiem ar lielu laukumu tā parasti nebūs - tie 
+satur savā iekšienē vienu lielu plaknes apgabalu. 
+Ja figūra ir gandrīz "apaļa", tad pie dotā perimetra tai būs 
+liels ievilktā riņķa rādiuss. 
+
+
 ```
 from polyforms.polyiamond import Polyiamond
 p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
@@ -100,6 +131,9 @@ print(f'incircle={incircle}')
 
 
 ## Apvilkts riņķis
+
+Par daudzstūrim *apvilktu riņķi* sauc mazāko riņķi, 
+kurš satur doto figūru.
 
 ```
 from polyforms.polyiamond import Polyiamond

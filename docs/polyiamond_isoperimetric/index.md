@@ -94,88 +94,22 @@ Katrs no zemāk minētajiem ģeometriskajiem raksturlielumiem
 
 ## Metriku atbilstības problēma
 
-**Hipotēze:** Eksistē kāds ģeometrisks raksturlielums, kura maksimums 
+**Hipotēze 1:**   
+Eksistē kāds ģeometrisks raksturlielums, kura maksimums 
 vai minimums kādai no polimondu saimēm ir "sinonīms" maksimālajam laukumam. 
 Citiem vārdiem: Katrai (vai vismaz pietiekami lielai) $n$ vērtībai
 eksistē tāds $n$-polimonds $P_n$ ar maksimālo laukumu starp visiem 
 attiecīgās saimes $n$-polimondiem, kurš vienlaikus ir rekordists arī 
 attiecībā pret kādu citu ģeometrisku raksturlielumu.
 
+**Hipotēze 2:**  
+Ģenerējot bezgalīgas polimondu virknes ar formālām valodām, 
+var mēģināt aprobežoties ar tiem polimondiem, kuriem kāds no ģeometriskajiem 
+raksturlielumiem pieņem minimālo vai maksimālo vērtību.  
 
 
 
 
-
-### 1. Laukums (*Area*)
-
-**Definīcija:** 
-  Vai nu tradicionālā figūras laukuma definīcija 
-  Eiklīda plaknē $L_2$ vai arī polimondā ietilpstošo vienības 
-  trijstūrīšu skaits (t.i. figūras laukums dalīts ar $\sqrt{3}/4$). 
-
-**Intuīcija:**
-  Laukums ir svarīgs figūras invariants un to var rēķināt dažādos veidos
-
-**Algoritms:**
-  Laukumu var atrast ar paralelizējamu "kurpju šņoru algoritmu".
-
-
-
-### 2. Diametrs (*Diameter*)
-
-**Definīcija:** 
-  Lielākais attālums starp figūras punktiem (daudzstūra virsotnēm).
-
-**Intuīcija:**
-  "Kompakti" novietotām figūrām ir mazs diameters, piemēram, visu fiksēta 
-  perimetra figūru vidū aplis ir optimāls.
-
-**Algoritms:** 
-  Paralelizētā algoritmā var meklēt maksimālo vērtību virsotņu attālumu matricā. 
-
-
-
-### 3. **Platums** (*Width*)
-
-**Definition:** 
-  Minimālais attālums starp divām paralēlām atbalsta taisnēm, starp kurām 
-  atrodas figūra (t.i. taišņu atstarpe "tievākajā" virzienā). 
-
-**Intuīcija:**
-  Parasti gribam maksimizēt platumu. 
-  Figūra, kurai ir liels laukums, nevar būt ļoti mazs platums - 
-  tā ir tuvāka aplim nevis tievam un izstieptam daudzstūrim. 
-
-**Algoritms:** 
-  Platumu var iegūt ar rotējošo skavu (*rotating callipers*) 
-  algoritmu. To var reducēt arī uz minimizācijas uzdevumu virsotņu projekcijām
-  uz taisni. 
-
-
-### 4. **Radius of Inscribed Circle** (*Inradius*)
-
-**Definīcija:** 
-  Lielākais riņķis, kurš pilnībā atrodas figūras iekšpusē.
-
-**Intuīcija:** 
-  Kāds ir vislielākais ievilktā riņķa rādius starp visiem polimondiem 
-  no dotās saimes. Cieši saistīts ar to, cik figūra ir "apaļa".
-
-**Algoritms:** 
-  TBD.
-
-
-### 5. **Radius of Circumscribed Circle** (Circumradius)
-
-**Definīcija:**
-  Mazākais riņķis, kurš satur doto figūru.
-
-**Intuīcija:** 
-  
-
-- **Isoperimetric question:** *What is the minimal circumradius?*
-
----
 
 ### 6. **Compactness / Roundness**
 
