@@ -114,7 +114,7 @@ class Polyiamond:
             self.descartes = [(x, unit_triangle_height*y) for (x,y) in self.mod_descartes]
         return self.descartes
 
-    def get_rect_box(self):
+    def get_bounding_rectangle(self):
         if not hasattr(self, 'descartes'):
             self.get_mod_descartes()
         min_x = min([uu[0] for uu in self.mod_descartes])
@@ -1460,12 +1460,6 @@ class Polyiamond:
         return sorted(result)
 
 
-    # Assuming that polyiamond is 2-colored (usual parity coloring),
-    # Return pair (black, white) -- the count of black and white triangles.
-    # The following equality should be satisfied: black+white == area.
-    # TODO: Should use list_trianles()
-    def black_white(self):
-        return (0,0)
 
     # Return a quadruplet (a,b,c,d) representing the
     # counts of internal angles by their size. They can be 60 or 120 degrees;

@@ -78,18 +78,17 @@ Katrs no zemāk minētajiem ģeometriskajiem raksturlielumiem
   rezultāti, tad censties tos pamatot.
 * Tām $n$ vērtībām, kurām optimumu atrast neizdodas, atrast 
   pietiekami labus novērtējumus gan lielākajai, gan mazākajai 
-  vērtībai. 
+  vērtībai.
 * Saprast, kā konstruējami $n$-polimondu piemēri, kuri ir vai 
   nu optimāli dotajam $n$, vai sasniedz pietiekami labu novērtējumu.
   Tai skaitā var konstruēt arī induktīvas polimondu virknes, 
   atrodot optimālus polimondus *bezgalīgi bieži* (jeb 
-  bezgalīgi augošām polimondu virknēm). 
+  bezgalīgi augošām polimondu virknēm).
 * Pamatot asimptotiskus novērtējumus un rezultātus, kuri 
   ir spēkā "pietiekami lielām" $n$ vērtībām. 
 * Aplūkot efektīvus algoritmus polimondu piemēru atrašanai. 
   Gan pilno pārlasi jeb *backtracking*, 
-  gan dažādi paātrinātu pilno pārlasi, gan mašīnmācīšanās modeļus (PyTorch)
-  un/vai ģenētiskos algoritmus, gan paralēlus algoritmus.   
+  gan dažādi paātrinātu pilno pārlasi, gan mašīnmācīšanās modeļus.   
 
 
 ## Metriku atbilstības problēma
@@ -111,113 +110,7 @@ raksturlielumiem pieņem minimālo vai maksimālo vērtību.
 
 
 
-### 6. **Compactness / Roundness**
-
-- **Definition:** Quantities like \(\frac{\text{Area}}{\text{Diameter}^2}\), which measure how circular or compact a shape is for its perimeter.
-
-**Intuīcija:** 
-  Maksimāls kompaktums piemīt figūrām, kuras ir tuvas apļa formai. 
-
-**Algoritms:** 
-  Pietiek ievietot formulā. 
-
-
-### 7. Inerces moments (*Moment of Inertia*)
-- **Definition:** \(\int (r^2) dA\), where \(r\) is distance to centroid.
-- **Isoperimetric question:** *What shape minimizes/maximizes moment of inertia for given area/perimeter?*
-- **Popular in:** Physics, shape optimization. Easily converted into matrix operations from coordinates.
-
----
-
-### 8. **Bounding Rectangle Area**
-- **Definition:** Minimal area rectangle containing the shape.
-- **Isoperimetric question:** *Which polyiamond minimizes this for a fixed perimeter?*
-- **Matrix-friendly:** Yes; quick for GPU with known vertices.
-
----
-
-### 9. **Symmetry Measures**
-- **Definition:** Quantify (perhaps via representations or principal axes) how symmetric a shape is.
-- **Isoperimetric question:** *Among polygons with given side lengths, which is most/least symmetric?*
-- **Matrix-friendly:** Eigenvalue decomposition of inertia tensor.
-
----
-
-### 10. **Convex Hull Area**
-- **Definition:** Area of the convex hull.
-- **Relevance:** Useful if studying "how concave" a given shape is (difference between hull area and polygon area).
-
----
-
-### 11. **Number of Vertices with Acute/Obtuse Angles**
-- **Definition:** Count of angles of given type.
-- **Documentation:** Can optimize for extremal angles, which connects to classical questions in combinatorics and geometric design.
-
----
-
-### 12. **Cheeger Constant (Isoperimetric Quotient)**
-- **Definition:** Ratio of perimeter to area (or area to perimeter squared).
-- **Isoperimetric question:** *Which shape optimizes this within the prescribed family?*
-- **Relevance:** Used in analysis, spectral geometry, fluid dynamics.
-
----
-
-### 13. Hausdorfa attālums līdz dotai figūrai (*Hausdorff Distance to a Reference Shape*)
-
-**Definīcija:** 
-  Cik tālu figūra ir no ideāla apļa vai sešstūra.
-
-**Intuīcija:** 
-  Kura no figūrām dotajā klasē ir vistuvāk regulāram sešstūrim. 
-
-**Algoritms:** 
-  Attāluma matricas(?) starp punktu mākoņiem abās figūrās.
 
 
 
 
-## Paralizējami aprēķini ar virsotņu vai malu vektoriem
-
-* Laukums (*Area*): Polimondu laukuma formula (kurpju šņoru algoritms).
-* Diametrs (*Diameter*): Rēķina attālumus virsotņu pāriem un maksimumus.
-* Ievilktā/apvilktā riņķa rādiuss (*Inradius/circumradius*): 
-  Lineāras programmas, kas izmanto malas un leņķus. 
-* Inerces moments (*Moment of inertia*): Summē pa virsotnēm 
-  vai mazajiem trijstūrīšiem; matricu darbības.
-* Izliektā čaula (*Convex hull*): Kaut kādi specializēti izliekto čaulu 
-  algoritmi Fast parallel algorithms for 2D hulls.
-* Ierobežojošais taisnstūris/sešstūris (*Bounding rectangle/hexagon*): 
-  Rotējošo skavu algoritms; var vektorizēt.
-* Simetrija (*Symmetry*) Inerces tenzora īpašvērtību dekompozīcija.
-* Šauro/plato leņku skaits (*Acute/obtuse angle counts*):
-  Vektoru skalārie reizinājumi. 
-* Ieliekumu skaits (*Concave bends*): Vektoru skalārie reizinājumi. 
-
-Vairums no šiem lielumiem ir efektīvi izrēķināmi; vektoru/matricu operācijām 
-var izmantot GPU optimizācijas, ja daudzstūru ievades dati (virsotņu 
-koordinātes) ir jau sagatavotas.
-
-
-## **Summary Table**:
-
-| Property                     | Natural Isoperimetric Q?        | Matrix/Algebra Friendly? | Optimized for...  |
-|------------------------------|----------------------------------|-------------------------|-------------------|
-| Area                         | Max (classic)                    | Yes                     | Enclosed region   |
-| Diameter                     | Min/Max                          | Yes                     | Spread            |
-| Width                        | Min/Max                          | Yes                     | Thinness          |
-| Inradius                     | Max                              | Yes                     | Inscribed circle  |
-| Circumradius                 | Min                              | Yes                     | Circumscribed c.  |
-| Compactness                  | Max                              | Yes                     | "Roundness"       |
-| Inertia                      | Min/Max                          | Yes                     | Mass distribution |
-| Bounding Rec. area           | Min/Max                          | Yes                     | Boxiness          |
-| Convex Hull area             | Min/Max                          | Yes                     | Convexity measure |
-| Acute/obtuse angle count     | Min/Max                          | Yes                     | Angular structure |
-| Hausdorff dist. to prototype | Min                              | Yes                     | Shape similarity  |
-
----
-
-
-**Bibliotēkas**
-
-* C++ bibliotēka CGAL [https://www.cgal.org/](https://www.cgal.org/).
-* Python bibliotēka Shapely [https://shapely.readthedocs.io/en/stable/](https://shapely.readthedocs.io/en/stable/).

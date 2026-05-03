@@ -306,3 +306,130 @@ print(f'hull_area={hull_area}')
   src="{{ '/polyiamond_characteristics/30gon_convex_hull.svg' | relative_url }}"
   style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
 />
+
+
+## Ierobežojošais taisnstūris
+
+Taisnstūris, kura malas paralēlas $x$ un $y$ asīm un kurš satur doto polimondu (mazākais no šādiem taisnstūriem).
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+rect = p.get_bounding_rectangle()
+print(f'rect={rect}')
+
+# rect=(-12.0, 124.5, -112.0, 29.0)
+```
+
+<img
+  id="30gon_bounding_rectangle"
+  alt="30-polimonda ierobežojošais taisnstūris"
+  src="{{ '/polyiamond_characteristics/30gon_bounding_rectangle.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
+
+
+## Ierobežojošais sešstūris
+
+Regulārs sešstūris ar trīsstūru režģim paralēlām malām, kurš satur doto polimondu (mazākais no šādiem sešstūriem).
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+hex_bounds = p.get_bounding_hexagon()
+print(f'hex_bounds={hex_bounds}')
+
+# hex_bounds=(-29, 112, -159, 10, -38, 113)
+```
+
+<img
+  id="30gon_bounding_hexagon"
+  alt="30-polimonda ierobežojošais sešstūris"
+  src="{{ '/polyiamond_characteristics/30gon_bounding_hexagon.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
+
+
+## Izodiametriskais un izoperimetriskais koeficienti
+
+Starp visām figūrām ar doto diametru $D$, vislielākais laukums $A$
+ir aplim. Līdzīgi arī starp visām figūrām ar doto perimetru $P$ 
+vislielākais laukums ir aplim. Tāpēc katrai figūrai $S$, 
+kam laukumu apzīmējam ar $A(S)$, diametru ar $D(S)$, 
+perimetru ar $P(S)$, definē šādus koeficientus: 
+
+$$q_{ID}(S) = \frac{4\pi A(S)}{D(S)^2}, \quad q_{IP}(S) = \frac{4\pi A(S)}{P(S)^2}.$$
+
+Angliski tie ir pazīstami kā *isodiametric quotient (ID)* un *isoperimetric quotient (IP)*. 
+Šo koeficientu vērtība ir no $0$ neieskaitot (ļoti izstieptām figūrām) 
+līdz $1$ ieskaitot (aplim).
+
+
+
+## Šauro leņķu skaits
+
+Katram polimondam var būt četru dažādu veidu leņķi, kuru leņķiskie lielumi ir 
+$60^\circ$, $120^\circ$, $240^\circ$ un $300^\circ$.
+Klasē `Polyiamond` ir definēta funkcija, kas tos visus saskaita. 
+
+Ņemot vērā to, ka lielāki laukumi parasti tiek sasniegti tad, ja 
+visi vai gandrīz visi leņķi ir plati ($120^\circ$ vai $240^\circ$), 
+tad katram $n$-polimondam var saskaitīt šauro leņķu ($60^\circ$ un $300^\circ$) 
+skaitu $k$, un tad platie leņķi būs visi pārējie $n-k$. 
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+(a60, a120, a240, a300) = p.internal_angles()
+print(f'(a60, a120, a240, a300) = ({a60}, {a120}, {a240}, {a300})')
+(acute, obtuse) = (a60 + a300, a120 + a240)
+print(f'(acute, obtuse) = ({acute}, {obtuse})')
+
+```
+
+
+## Inerces moments
+
+Inerces moments 2D figūrai $S$ ir laukuma 
+integrālis, kas laukuma elementu $dA$ reizina ar 
+attālumu kvadrātā līdz figūras smaguma centram.
+Šajā izteiksmē pieņemam, ka figūra $S$ pārnesta tā, ka 
+$O(0,0)$ ir figūras smaguma centrs.
+
+
+
+
+
+## Inerces tenzors 
+
+Par inerces tenzoru 2D figūrai $S$ sauc matricu: 
+
+$${\cal I}(S) = \left( \begin{array}{cc} I_{xx} & I_{xy} \\ I_{yx} & I_{yy} \end{array} \right) = 
+\left( \begin{array}{cc} \int_S y^2 dA & -\int_S xy dA \\ -\int_S xy dA & \int_S x^2 dA\end{array} \right)$$
+
+Ar $\lambda_1$ un $\lambda_2$ apzīmēsim šīs matricas īpašvērtības.
+
+Šādā gadījumā polārais inerces moments ir:
+$$I_z(S) = \int_S r^2 dA  = I_{xx} + I_{yy} = \int_S (x^2+y^2) dx dy = \lambda_1 + \lambda_2.$$
+
+Figūras nesimetriskuma mērs ir frakcionālā anizotropija:
+$$A(S) = \frac{|\lambda_2 - \lambda_1|}{\lambda_1 + \lambda_2} = \frac{\lambda_2 - \lambda_1}{I_z(S)}, \quad \lambda_1 \le \lambda_2.$$
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+inertia_tensor = p.get_inertia_tensor()
+print(f'inertia_tensor={inertia_tensor}')
+
+# inertia_tensor=[[-4785.0111764725275, 6900.296957168467], [6900.296957168467, 10812.745525659647]]
+```
+
+
+
+
+
+
+## Bibliotēkas
+
+* C++ bibliotēka CGAL [https://www.cgal.org/](https://www.cgal.org/).
+* Python bibliotēka Shapely [https://shapely.readthedocs.io/en/stable/](https://shapely.readthedocs.io/en/stable/).
