@@ -216,3 +216,47 @@ print(f'triangle={triangle}')
   src="{{ '/polyiamond_characteristics/30gon_smallest_triangle.svg' | relative_url }}"
   style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
 />
+
+
+## Tuvākais sešstūris (pēc Hausdorfa)
+
+Sešstūris (patvaļīgi pagriezts), kura Hausdorfa attālums līdz 
+dotajam polimondam ir vismazākais.
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+h_hex, dist = p.get_closest_hausdorff_hexagon()
+print(f'h_hex={h_hex}')
+
+# h_hex=[(59.57084546535845, 41.75414189844926), (-3.4503763897335062, 6.917133959716978), (-4.79125345049718, -65.07934911369384), (56.88909134383108, -102.23882424837242), (119.91031319892308, -67.40181630964014), (121.25119025968678, 4.5946667637706184)]
+```
+
+<img
+  id="30gon_hausdorff_hexagon"
+  alt="30-polimonda tuvākais sešstūris (Hausdorfa)"
+  src="{{ '/polyiamond_characteristics/30gon_hausdorff_hexagon.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
+
+
+## Tuvākais trijstūris (pēc Hausdorfa)
+
+Trijstūris (patvaļīgi pagriezts), kura Hausdorfa attālums līdz 
+dotajam polimondam ir vismazākais.
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+h_tri, dist = p.get_closest_hausdorff_triangle()
+print(f'h_tri={h_tri}')
+
+# h_tri=[(-37.603428032177334, -19.544468725195397), (106.3041782745083, -127.50956225373126), (127.85088883884049, 51.10062736993618)]
+```
+
+<img
+  id="30gon_hausdorff_triangle"
+  alt="30-polimonda tuvākais trijstūris (Hausdorfa)"
+  src="{{ '/polyiamond_characteristics/30gon_hausdorff_triangle.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
