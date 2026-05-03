@@ -18,6 +18,16 @@ details summary:hover { text-decoration: underline; }
 
 ## Laukums
 
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+area = p.get_area()
+print(f'area={area}')
+
+# area = 25617
+```
+
+
 <img
   id="30gon_area"
   alt="Perfekts 30-polimonds"
@@ -26,6 +36,17 @@ details summary:hover { text-decoration: underline; }
 />
 
 ## Diametrs
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+diam_sq, i_max, j_max = p.diameter_sq()
+print(f'diam_sq={diam_sq}, i_max={i_max}, j_max={j_max}')
+
+diam_sq=95428, i_max=9, j_max=26
+```
+
+
 
 <img
   id="30gon_diameter"
