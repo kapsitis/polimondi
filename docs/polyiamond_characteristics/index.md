@@ -43,7 +43,7 @@ p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
 diam_sq, i_max, j_max = p.diameter_sq()
 print(f'diam_sq={diam_sq}, i_max={i_max}, j_max={j_max}')
 
-diam_sq=95428, i_max=9, j_max=26
+# diam_sq=95428, i_max=9, j_max=26
 ```
 
 
@@ -59,4 +59,10 @@ diam_sq=95428, i_max=9, j_max=26
 
 ## Platums
 
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+min_width, seg_min_width, parallel_lines = p.min_width()
 
+print(f'min_width={min_width}, seg_min_width={seg_min_width}, parallel_lines={parallel_lines}')
+```

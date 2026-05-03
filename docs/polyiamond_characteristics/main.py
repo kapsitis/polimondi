@@ -1,5 +1,6 @@
 from polyforms.polyiamond import Polyiamond
 p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
-area = p.get_area()
-print(f'area={area}')
+min_width, seg_min_width, parallel_lines = p.min_width()
+
+print(f'min_width={min_width}, seg_min_width={seg_min_width}, parallel_lines={parallel_lines}')
 

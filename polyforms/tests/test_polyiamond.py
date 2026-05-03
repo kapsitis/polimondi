@@ -705,3 +705,12 @@ def test_incircle_scaling():
     assert abs(cxl - k * cxs) < 1e-2
     assert abs(cyl - k * cys) < 1e-2
     assert abs(rl - k * rs) < 1e-2
+
+def test_min_width():
+    # Test on a known polyiamond
+    p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+    min_w, seg_min_width, parallel_lines = p.min_width()
+    # The expected min_width from previous test script was ~109.87076689881448
+    assert abs(min_w - 109.87076689881448) < 1e-6
+    assert len(seg_min_width) == 2
+    assert len(parallel_lines) == 3

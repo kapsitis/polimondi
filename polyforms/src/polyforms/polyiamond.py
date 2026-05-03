@@ -337,42 +337,69 @@ class Polyiamond:
     # such that all vertices are between these parallel lines (or on these lines).
     def min_width(self):
         vertices = [vv.get_xy() for vv in self.vertices]
+        if len(vertices) < 3:
+            return 0.0, None
+
+        import numpy as np
+        from scipy.spatial import ConvexHull
+        import math
+
         hull = ConvexHull(vertices)
-        convex_vertices = [vertices[i] for i in hull.vertices]
-        pol = Polygon(convex_vertices)
+        hull_pts = [vertices[i] for i in hull.vertices]
 
-        # the rotating calipers algorithm needs the vertices ordered by angle
-        sorted_vertices = sorted(pol.exterior.coords[:-1])
-        # initialize min_width variable as infinity
         min_width = float('inf')
-        seg_min_width = [0, 0]
+        best_p1 = None
+        best_p2 = None
+        best_pt = None
 
-        n = len(sorted_vertices)
+        n = len(hull_pts)
         for i in range(n):
-            # Create a LineString from a pair of vertices
-            line = LineString([sorted_vertices[i], sorted_vertices[(i + 1) % n]])
+            p1 = np.array(hull_pts[i])
+            p2 = np.array(hull_pts[(i+1)%n])
+            
+            edge_vec = p2 - p1
+            edge_len = np.linalg.norm(edge_vec)
+            if edge_len < 1e-9:
+                continue
+            
+            edge_dir = edge_vec / edge_len
+            normal = np.array([-edge_dir[1], edge_dir[0]])
+            
+            max_dist = -1.0
+            furthest_pt = None
+            
+            for j in range(n):
+                if j == i or j == (i+1)%n: continue
+                pt = np.array(hull_pts[j])
+                dist = abs(np.dot(pt - p1, normal))
+                if dist > max_dist:
+                    max_dist = dist
+                    furthest_pt = hull_pts[j]
+                    
+            if max_dist < min_width:
+                min_width = max_dist
+                best_p1 = tuple(float(x) for x in p1)
+                best_p2 = tuple(float(x) for x in p2)
+                best_pt = tuple(float(x) for x in furthest_pt)
 
-            # 180 deg rotation to compute parallel line through opposite vertex
-            # rotated_line = rotate(line, 180, sorted_vertices[i])
-            rotated_line = affinity.rotate(line, 180, sorted_vertices[i])
+        # Calculate projection of furthest point onto the edge
+        # so we return the line segment measuring the width.
+        p1_arr = np.array(best_p1)
+        p2_arr = np.array(best_p2)
+        pt_arr = np.array(best_pt)
+        edge_vec = p2_arr - p1_arr
+        edge_dir = edge_vec / np.linalg.norm(edge_vec)
+        proj_pt = p1_arr + np.dot(pt_arr - p1_arr, edge_dir) * edge_dir
+        
+        seg_min_width = (best_pt, tuple(float(x) for x in proj_pt))
+        parallel_lines_data = (best_p1, best_p2, best_pt)
 
-            # Find the closest point on the rotated line to the opposite vertex
-            closest_point = rotated_line.interpolate(rotated_line.project(Point(sorted_vertices[(i + n // 2) % n])))
+        return float(min_width), seg_min_width, parallel_lines_data
 
-            # Compute the distance between the vertex and its closest point on the rotated line
-            width = Point(sorted_vertices[i]).distance(closest_point)
-
-            # Update min_width and seg_min_width if the width is smaller than min_width
-            if width < min_width:
-                min_width = width
-                seg_min_width = [sorted_vertices[i], (closest_point.x, closest_point.y)]
-
-        return min_width, seg_min_width
-
-    def width(self):
-        vertices = [vv.get_xy() for vv in self.vertices]
-        vertice_lists = [[x,y] for (x,y) in vertices]
-        return minimum_width(np.array(vertice_lists))
+    # def width(self):
+    #     vertices = [vv.get_xy() for vv in self.vertices]
+    #     vertice_lists = [[x,y] for (x,y) in vertices]
+    #     return minimum_width(np.array(vertice_lists))
 
     # ------------------------------------------------------------------
     # Convex hull and minimum-enclosing-shape methods (added 2026-04-30).
