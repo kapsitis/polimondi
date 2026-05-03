@@ -27,6 +27,15 @@ details summary:hover { text-decoration: underline; }
 
 ## Diametrs
 
+<img
+  id="30gon_diameter"
+  alt="30-polimonda diametrs"
+  src="{{ '/polyiamond_characteristics/30gon_diameter.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
+
+
+
 ## Platums
 
 
