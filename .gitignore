@@ -24,3 +24,5 @@ papers/bw-problem/*
 papers/2024-02-14/*.pdf
 sources/*.pdf
 sources/subdir/*.pdf
+
+__init__.pyc

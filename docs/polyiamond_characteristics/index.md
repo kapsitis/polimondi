@@ -1,0 +1,32 @@
+---
+layout: default
+title: Platleņķu regex meklēšana
+---
+
+<style>
+.boring-table { border-collapse: collapse; width: 100%; margin-bottom: 1rem; }
+.boring-table th, .boring-table td { border: 1px solid #ccc; padding: 4px 8px; vertical-align: top; }
+.boring-table thead th { background: #f6f8fa; position: sticky; top: 0; z-index: 1; }
+.boring-table td:nth-child(1) { text-align: right; width: 3em; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.85em; word-break: break-all; }
+details { margin-bottom: 1rem; }
+details summary { cursor: pointer; font-weight: bold; padding: 4px 0; }
+details summary:hover { text-decoration: underline; }
+</style>
+
+# Polimondu raksturlielumi 
+
+## Laukums
+
+<img
+  id="perfect_30gon"
+  alt="Perfekts 30-polimonds"
+  src="{{ '/polyiamond_characteristics/perfect_30gon.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
+
+## Diametrs
+
+## Platums
+
+
