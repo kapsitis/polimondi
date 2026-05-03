@@ -130,6 +130,25 @@ def test_signed_area_basic():
     p = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
     assert p.get_signed_area() == 19
 
+def test_largest_areas():
+    print("Testing get_area on larger shapes...")
+
+    shapes = [
+        list(zip(range(12, 0, -1), list('ABCDEDEFAFAB'))),
+        list(zip(range(18, 0, -1), list('ABAFEDEDEDCBCBCBAB'))),
+        list(zip(range(24, 0, -1), list('ABAFEFEDEDCDCBCDCBABABAB'))),
+        list(zip(range(30, 0, -1), list('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF'))),
+        list(zip(range(36, 0, -1), list('ABABCBCDCDCDEDEFEFEFEFEFAFAFAFABABCB'))),
+        list(zip(range(42, 0, -1), list('ABABCBCBCDCDEDEDEDEFEFEFEFAFAFAFAFAFABABCB'))),
+        list(zip(range(48, 0, -1), list('ABABCBCDCDCDCDEDEDEFEFEFEFAFAFAFAFAFABABABAFABCB')))
+    ]
+
+    expected_areas = [820, 2997, 10178, 25617, 54692, 101621, 170018]
+
+    for sides, expected in zip(shapes, expected_areas):
+        p = Polyiamond(sides)
+        actual_area = p.get_area()
+        assert actual_area == expected, f"Expected area {expected} but got {actual_area} for shape with sides {sides}"
 
 def test_area_equals_abs_signed_area():
     """get_area == abs(get_signed_area) for all test shapes."""
