@@ -220,8 +220,18 @@ print(f'triangle={triangle}')
 
 ## Tuvākais sešstūris (pēc Hausdorfa)
 
-Sešstūris (patvaļīgi pagriezts), kura Hausdorfa attālums līdz 
-dotajam polimondam ir vismazākais.
+Regulārs sešstūris $S$ (patvaļīgi pagriezts), līdz kuram dotajam polimondam 
+ir mazākais Hausdorfa attālums.
+Hausdorfa attālumu definē kā lielāko no attālumiem 
+no kādas polimonda virsotnes līdz tās 
+tuvākajam punktam uz sešstūra perimetra $P(S)$:
+
+$$
+h(P, S) = \max_{v \in P} \left( \min_{q \in P(S)} d(v, q)\right)
+$$
+
+No visiem regulāriem sešstūriem $S$ izvēlamies to, kuram $h(P,S)$ ir vismazākais. 
+
 
 ```
 from polyforms.polyiamond import Polyiamond
@@ -242,8 +252,18 @@ print(f'h_hex={h_hex}')
 
 ## Tuvākais trijstūris (pēc Hausdorfa)
 
-Trijstūris (patvaļīgi pagriezts), kura Hausdorfa attālums līdz 
-dotajam polimondam ir vismazākais.
+Regulārs trijstūris $S$ (patvaļīgi pagriezts), līdz kuram dotajam polimondam 
+ir mazākais Hausdorfa attālums.
+Hausdorfa attālumu definē kā lielāko no attālumiem 
+no kādas polimonda virsotnes līdz tās 
+tuvākajam punktam uz trijstūra perimetra $P(S)$:
+
+$$
+h(P, S) = \max_{v \in P} \left( \min_{q \in P(S)} d(v, q)\right)
+$$
+
+No visiem regulāriem trijstūriem $S$ izvēlamies to, kuram $h(P,S)$ ir vismazākais.
+
 
 ```
 from polyforms.polyiamond import Polyiamond
@@ -265,14 +285,19 @@ print(f'h_tri={h_tri}')
 ## Izliektais apvalks
 
 Mazākais izliektais daudzstūris, kurš satur doto polimondu.
+Izliektā apvalka laukums izteikts mazo vienības trijstūrīšu vienībās 
+(tas vienmēr ir vesels skaitlis).
 
 ```
 from polyforms.polyiamond import Polyiamond
 p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
 hull = p.convex_hull()
 print(f'hull={hull}')
+hull_area = p.convex_hull_area()
+print(f'hull_area={hull_area}')
 
 # hull=[(-38,52,-14), (-38,64,-26), (-25,78,-53), (-10,94,-84), (7,112,-119), (26,112,-138), (67,92,-159), (89,70,-159), (113,23,-136), (113,-2,-111), (87,-29,-58), (59,-29,-30), (-6,-4,10), (-11,1,10), (-18,14,4), (-27,31,-4)]
+# hull_area=29511
 ```
 
 <img

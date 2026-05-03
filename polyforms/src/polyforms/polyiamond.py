@@ -453,6 +453,17 @@ class Polyiamond:
         hull_coords = lower[:-1] + upper[:-1]
         return [coord_to_pt[c] for c in hull_coords]
 
+    def convex_hull_area(self):
+        """Compute the area of the convex hull in triangle units."""
+        hull = self.convex_hull()
+        if len(hull) < 3:
+            return 0
+        s = 0
+        N = len(hull)
+        for i in range(N):
+            s += hull[i].x * hull[(i+1)%N].y - hull[(i+1)%N].x * hull[i].y
+        return abs(s)
+
     def _hull_xy_array(self):
         """Internal helper: convex-hull vertices as an (M, 2) ``float`` numpy
         array of real Cartesian (x, y) coordinates."""
