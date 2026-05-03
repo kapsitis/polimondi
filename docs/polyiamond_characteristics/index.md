@@ -66,3 +66,10 @@ min_width, seg_min_width, parallel_lines = p.min_width()
 
 print(f'min_width={min_width}, seg_min_width={seg_min_width}, parallel_lines={parallel_lines}')
 ```
+
+<img
+  id="30gon_min_width"
+  alt="30-polimonda platums"
+  src="{{ '/polyiamond_characteristics/30gon_min_width.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
