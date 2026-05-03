@@ -150,3 +150,69 @@ print(f'circumcircle={circumcircle}')
   src="{{ '/polyiamond_characteristics/30gon_circumcircle.svg' | relative_url }}"
   style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
 />
+
+
+## Mazākais sešstūris
+
+Mazākais regulārais sešstūris (patvaļīgi pagriezts), kurš 
+satur doto polimondu. 
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+hexagon = p.get_smallest_hexagon()
+print(f'hexagon={hexagon}')
+
+# hexagon=[(57.19219351042855, 43.601875992409255), (-11.37975989414688, 5.134203513912659), (-12.351755005597049, -73.48468636082082), (55.24820328752825, -113.63590375705769), (123.8201566921037, -75.16823127856108), (124.79215180355388, 3.450658596172353)]
+```
+
+<img
+  id="30gon_smallest_hexagon"
+  alt="30-polimonda mazākais sešstūris"
+  src="{{ '/polyiamond_characteristics/30gon_smallest_hexagon.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
+
+
+## Mazākais kvadrāts
+
+Mazākais kvadrāts (patvaļīgi pagriezts), kurš 
+satur doto polimondu. 
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+square = p.get_smallest_square()
+print(f'square={square}')
+
+# square=[(32.23684775994439, -124.65001604883619), (147.2049894160717, -60.7580909233342), (83.31306429056971, 54.210050732793114), (-31.655077365557595, -9.68187439270887)]
+```
+
+<img
+  id="30gon_smallest_square"
+  alt="30-polimonda mazākais kvadrāts"
+  src="{{ '/polyiamond_characteristics/30gon_smallest_square.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
+
+
+## Mazākais trijstūris
+
+Mazākais regulārais trijstūris (patvaļīgi pagriezts), kurš 
+satur doto polimondu. 
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+triangle = p.get_smallest_triangle()
+print(f'triangle={triangle}')
+
+# triangle=[(122.63062767637325, -133.0370749227576), (126.61809070888232, 77.82838031485414), (-57.99048182371437, -24.151103021147545)]
+```
+
+<img
+  id="30gon_smallest_triangle"
+  alt="30-polimonda mazākais trijstūris"
+  src="{{ '/polyiamond_characteristics/30gon_smallest_triangle.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
