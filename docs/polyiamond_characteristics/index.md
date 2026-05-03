@@ -260,3 +260,24 @@ print(f'h_tri={h_tri}')
   src="{{ '/polyiamond_characteristics/30gon_hausdorff_triangle.svg' | relative_url }}"
   style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
 />
+
+
+## Izliektais apvalks
+
+Mazākais izliektais daudzstūris, kurš satur doto polimondu.
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+hull = p.convex_hull()
+print(f'hull={hull}')
+
+# hull=[(-38,52,-14), (-38,64,-26), (-25,78,-53), (-10,94,-84), (7,112,-119), (26,112,-138), (67,92,-159), (89,70,-159), (113,23,-136), (113,-2,-111), (87,-29,-58), (59,-29,-30), (-6,-4,10), (-11,1,10), (-18,14,4), (-27,31,-4)]
+```
+
+<img
+  id="30gon_convex_hull"
+  alt="30-polimonda izliektais apvalks"
+  src="{{ '/polyiamond_characteristics/30gon_convex_hull.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
