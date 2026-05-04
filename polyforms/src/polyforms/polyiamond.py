@@ -158,6 +158,25 @@ class Polyiamond:
         return self.perimeter
 
     def get_bounding_hexagon(self):
+        """
+        Calculates the bounding hexagon of the polyiamond on the triangular grid.
+        
+        The intuition behind the returned tuple (a_min, a_max, b_min, b_max, c_min, c_max) 
+        comes from the three axes of the triangular grid (x, y, z):
+        
+        - `a` relates to the `y` coordinate. Since `y` is constant when moving East or West 
+          (directions A, D), (a_max - a_min) shows the "height" of the bounding hexagon 
+          in the vertical (North-South) direction.
+        - `b` relates to the `z` coordinate. Since `z` is constant when moving NorthEast 
+          or SouthWest (directions B, E), the lines of constant `z` are parallel to the 
+          NE-SW axis. Thus, (b_max - b_min) shows the "height" along the NW-SE axis.
+        - `c` relates to the `x` coordinate. Since `x` is constant when moving NorthWest 
+          or SouthEast (directions C, F), the lines of constant `x` are parallel to the 
+          NW-SE axis. Thus, (c_max - c_min) shows the "height" along the NE-SW axis.
+        
+        Returns:
+            tuple: (a_min, a_max, b_min, b_max, c_min, c_max)
+        """
         if not hasattr(self, 'bounding_hexagon'):
             self.get_vertices()
             a_min = min([p.y for p in self.vertices])

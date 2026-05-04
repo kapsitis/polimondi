@@ -218,6 +218,64 @@ print(f'triangle={triangle}')
 />
 
 
+
+## Ierobežojošais taisnstūris
+
+Taisnstūris, kura malas paralēlas $x$ un $y$ asīm un 
+kurš satur doto polimondu (mazākais no šādiem taisnstūriem).
+Abus gabarītus mēra kā Eiklīda telpā; 
+vienības trijstūrīša ierobežojošās kastes augstums ir $\sqrt{3}/2$.
+
+
+```
+from polyforms.polyiamond import Polyiamond
+import math
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+rect = p.get_bounding_rectangle()
+print(f'rect={rect}')
+width, height = rect[1] - rect[0], (rect[3] - rect[2]) * math.sqrt(3) / 2
+area = width * height
+print(f'width={width}, height={height}, area={area}')
+
+# rect=(-12.0, 124.5, -112.0, 29.0)
+# width=136.5, height=122.10958193360584, area=16667.957933937196
+```
+
+<img
+  id="30gon_bounding_rectangle"
+  alt="30-polimonda ierobežojošais taisnstūris"
+  src="{{ '/polyiamond_characteristics/30gon_bounding_rectangle.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
+
+
+## Ierobežojošais sešstūris
+
+Sešstūris ar trīsstūru režģim paralēlām malām (parasti nav. regulārs), 
+kurš satur doto polimondu (mazākais no šādiem sešstūriem). 
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+hex_bounds = p.get_bounding_hexagon()
+print(f'hex_bounds={hex_bounds}')
+h_ns = hex_bounds[1] - hex_bounds[0]
+h_nw_se = hex_bounds[3] - hex_bounds[2]
+h_ne_sw = hex_bounds[5] - hex_bounds[4]
+print(f'h_ns={h_ns}, h_nw_se={h_nw_se}, h_ne_sw={h_ne_sw}')
+
+# hex_bounds=(-29, 112, -159, 10, -38, 113)
+# h_ns=141, h_nw_se=169, h_ne_sw=151
+```
+
+<img
+  id="30gon_bounding_hexagon"
+  alt="30-polimonda ierobežojošais sešstūris"
+  src="{{ '/polyiamond_characteristics/30gon_bounding_hexagon.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
+
+
 ## Tuvākais sešstūris (pēc Hausdorfa)
 
 Regulārs sešstūris $S$ (patvaļīgi pagriezts), līdz kuram dotajam polimondam 
@@ -292,7 +350,7 @@ Izliektā apvalka laukums izteikts mazo vienības trijstūrīšu vienībās
 from polyforms.polyiamond import Polyiamond
 p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
 hull = p.convex_hull()
-print(f'hull={hull}')
+print(f'hull={hull}, n_hull={len(hull)}')
 hull_area = p.convex_hull_area()
 print(f'hull_area={hull_area}')
 
@@ -308,46 +366,6 @@ print(f'hull_area={hull_area}')
 />
 
 
-## Ierobežojošais taisnstūris
-
-Taisnstūris, kura malas paralēlas $x$ un $y$ asīm un kurš satur doto polimondu (mazākais no šādiem taisnstūriem).
-
-```
-from polyforms.polyiamond import Polyiamond
-p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
-rect = p.get_bounding_rectangle()
-print(f'rect={rect}')
-
-# rect=(-12.0, 124.5, -112.0, 29.0)
-```
-
-<img
-  id="30gon_bounding_rectangle"
-  alt="30-polimonda ierobežojošais taisnstūris"
-  src="{{ '/polyiamond_characteristics/30gon_bounding_rectangle.svg' | relative_url }}"
-  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
-/>
-
-
-## Ierobežojošais sešstūris
-
-Regulārs sešstūris ar trīsstūru režģim paralēlām malām, kurš satur doto polimondu (mazākais no šādiem sešstūriem).
-
-```
-from polyforms.polyiamond import Polyiamond
-p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
-hex_bounds = p.get_bounding_hexagon()
-print(f'hex_bounds={hex_bounds}')
-
-# hex_bounds=(-29, 112, -159, 10, -38, 113)
-```
-
-<img
-  id="30gon_bounding_hexagon"
-  alt="30-polimonda ierobežojošais sešstūris"
-  src="{{ '/polyiamond_characteristics/30gon_bounding_hexagon.svg' | relative_url }}"
-  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
-/>
 
 
 ## Izodiametriskais un izoperimetriskais koeficienti
@@ -417,7 +435,43 @@ print(f'inertia_tensor={inertia_tensor}')
 ```
 
 
+## Kopsavilkums
 
+Polimondam `ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF` apkoposim 
+tā skaitliskās īpašības. 
+
+
+| Īpašība | Vērtība |
+| --- | -- |
+| Malu skaits | $n=30$ |
+| Perimetrs | $P=n(n+1)/2 = 465$ |
+| Laukums (vienības trijstūrīšos) | $A = 25617$ |
+| Laukums (Eiklīda) | $A' = 25617\frac{\sqrt{3}}{4} = 11092.486$ |
+| Diametrs | $D = \sqrt{95428} = 308.914$ |
+| Platums | $w = 109.871$ |
+| Ievilktā riņķa rādiuss | $r = 45.293$ |
+| Apvilktā riņķa rādiuss | $R = 73.661$ |
+| Apvilktā regulārā sešstūra mala | $a_6 = 78.625$ |
+| Apvilktā kvadrāta mala | $a_4 = 131.52890059643207$ |
+| Apvilktā regulārā trijstūra mala | $a_3 = 210.90315330502023$ |
+| Ierobežojošā taisnstūra (*bounding rectangle*) platums, augstums | $(b'_4, b''_4) = (136.5, 141)$ | 
+| Ierobežojošā taisnstūra laukums | $B_{rect} = b'_4 \cdot b''_4 = 19246.5$ | 
+
+
+
+| Ierobežojošā sešstūra (*bounding hexagon*) "augstumi" pa vertikāli, NW-SE un NE-SW virzienos | $(b'_6, b''_6, b'''_6) = (131.865, 136.576)$ | 
+| Ierobežojošā sešstūra laukums | $B_{hex} = 25617$ | 
+| Hausdorfa attālums līdz tuvākajam sešstūrim | $h_6 = 59.57084546535845$ |
+| Hausdorfa attālums līdz tuvākajam trijstūrim | $h_3 = 59.57084546535845$ |
+| Izliektā apvalka virsotņu skaits | $n_{hull}=16$ |
+| Izliektā apvalka laukums (vienības trijstūrīšos) | $A_{hull}=29511$ |
+| Izodiametriskais koeficients | $q_{ID}(S) = \frac{4 \cdot A'}{\pi \cdot D^2} = 0.8579095861333519$ |
+| Izoperimetriskais koeficients | $q_{IP}(S) = \frac{4\pi \cdot A'}{P^2} = 0.7552257596163983$ |
+| Inerces tenzors | $\displaystyle{ \left( \begin{array}{cc} 22026287.09102281 & 24281789.1875 \\ 24281789.1875 & 51188299.77810814 \\ \end{array} \right)}$ |
+| Inerces tenzora īpašvērtības | $\lambda_1=4445861.206391842$, $\lambda_2=68758825.66273911$ |
+| Polārais inerces moments | $I_z(S) = \lambda_1 + \lambda_2 = 73214586.86913095$ |
+| Frakcionālā anizotropija | $A(S) = \frac{\lambda_2 - \lambda_1}{I_z(S)} = 0.25776034563477425$ |
+| 
 
 
 
