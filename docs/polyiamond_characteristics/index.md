@@ -506,7 +506,7 @@ skaitliskās īpašības.
 | Laukums (Eiklīda) | $A_E = 25617\frac{\sqrt{3}}{4} = 11092.486$ |
 | Leņķu skaits | $k_{60}, k_{120}, k_{240}, k_{300} = (0, 18, 12, 0)$ |
 | Šauro/Plato leņķu skaits | $k_{\text{acute}}, k_{\text{obtuse}} = (0, 30)$ |
-| Malu skaits trīs virzienos | $n_{AD}, n_{BE}, n_{CF} = (0, 18, 12)$ |
+| Malu skaits trīs virzienos | $n_{AD}, n_{BE}, n_{CF} = (10, 8, 12)$ |
 | Diametrs | $D = \sqrt{95428} = 308.914$ |
 | Izodiametriskais koeficients | $q_{ID}(S) = \frac{4 \cdot A_E}{\pi \cdot D^2} = 0.6520194041835579$ |
 | Izoperimetriskais koeficients | $q_{IP}(S) = \frac{4\pi \cdot A_E}{P^2} = 0.6446631746595622$ |
