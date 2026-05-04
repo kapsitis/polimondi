@@ -843,6 +843,21 @@ class Polyiamond:
             )
         return self.inertia_tensor
 
+    def get_inertia_eigenvalues(self):
+        """Returns the eigenvalues of the inertia tensor (λ₁, λ₂) where λ₁ ≤ λ₂."""
+        tensor = self.get_inertia_tensor()
+        return np.linalg.eigvalsh(tensor)
+
+    def get_polar_inertia_moment(self):
+        """Returns the polar inertia moment Iz = λ₁ + λ₂."""
+        lambdas = self.get_inertia_eigenvalues()
+        return float(lambdas[0] + lambdas[1])
+
+    def get_fractional_anisotropy(self):
+        """Returns the fractional anisotropy FA = (λ₂ - λ₁) / (λ₁ + λ₂)."""
+        lambdas = self.get_inertia_eigenvalues()
+        return float((lambdas[1] - lambdas[0]) / (lambdas[0] + lambdas[1]))
+
     # ------------------------------------------------------------------
 
     @staticmethod

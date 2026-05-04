@@ -110,10 +110,19 @@ līdz $1$ ieskaitot (aplim).
 from polyforms.polyiamond import Polyiamond
 import math
 p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
-print(f'diametr={p.diameter()},')
+D = p.diameter()[0]
+P = p.get_perimeter()
+a_euclid = p.get_area()*(math.sqrt(3)/4)
+print(f'D={D}, P={P}, A_(Euclidean) = {a_euclid}')
 
-# diametr=308.9138523657699
+q_ID = (4*a_euclid)/(math.pi * D**2)
+q_IP = (4*math.pi * a_euclid)/(P**2)
+print(f'q_ID={q_ID}, q_IP={q_IP}')
+
+# D=147.1767644704829, P=465, A_(Euclidean) = 11092.486384372982
+# q_ID=0.6520194041835579, q_IP=0.6446631746595622
 ```
+
 
 
 
@@ -132,11 +141,16 @@ Platumu var iegūt ar rotējošo skavu (*rotating callipers*)
 algoritmu (vai arī kā minimizācijas uzdevumu virsotņu projekcijām
 uz kādu fiksētu taisni).
 
-![](extreme_shape.png){width=108px}
+![](extreme_shape.png)
 
 Figūrām ar lielu laukumu, kas līdzīgas aplim, diamters nevar būt 
 ļoti mazs. Tomēr iespējamas figūras ar (fiksētajam perimetram) nelielu 
-laukumu, bet ar lielu platumu.
+laukumu, bet ar lielu platumu. Šādas figūras skice redzama augšminētajā 
+zīmējumā (kaut ko līdzīgu var iegūt arī ar perfektu polimondu, ja garās malas 
+tuvina ar zigzagu). Tomēr ievērosim, ka šādu figūru (nepalielinot tās 
+perimetru) var "atlocīt" par sešstūri, kuram būs ievērojami lielāks laukums, 
+un arī aptuveni par trešdaļu lielāks platums.  
+
 
 ```
 from polyforms.polyiamond import Polyiamond
@@ -355,10 +369,12 @@ No visiem regulāriem sešstūriem $S$ izvēlamies to, kuram $h(P,S)$ ir vismaz�
 ```
 from polyforms.polyiamond import Polyiamond
 p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
-h_hex, dist = p.get_closest_hausdorff_hexagon()
+h_hex, dist_hex = p.get_closest_hausdorff_hexagon()
 print(f'h_hex={h_hex}')
+print(f'dist_hex={dist_hex}')
 
 # h_hex=[(59.57084546535845, 41.75414189844926), (-3.4503763897335062, 6.917133959716978), (-4.79125345049718, -65.07934911369384), (56.88909134383108, -102.23882424837242), (119.91031319892308, -67.40181630964014), (121.25119025968678, 4.5946667637706184)]
+# dist_hex=7.580773208149545
 ```
 
 <img
@@ -387,10 +403,12 @@ No visiem regulāriem trijstūriem $S$ izvēlamies to, kuram $h(P,S)$ ir vismaz�
 ```
 from polyforms.polyiamond import Polyiamond
 p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
-h_tri, dist = p.get_closest_hausdorff_triangle()
+h_tri, dist_tri = p.get_closest_hausdorff_triangle()
 print(f'h_tri={h_tri}')
+print(f'dist_tri={dist_tri}')
 
 # h_tri=[(-37.603428032177334, -19.544468725195397), (106.3041782745083, -127.50956225373126), (127.85088883884049, 51.10062736993618)]
+# dist_tri=9.824065054293587
 ```
 
 <img
@@ -443,7 +461,7 @@ $${\cal I}(S) = \left( \begin{array}{cc} I_{xx} & I_{xy} \\ I_{yx} & I_{yy} \end
 
 Ar $\lambda_1$ un $\lambda_2$ apzīmēsim šīs matricas īpašvērtības.
 
-Šādā gadījumā polārais inerces moments ir:
+Polārais inerces moments (inerces moments, rotējot attiecībā pret asi, kas perpendikulāra $xOy$ plaknei un iet caur polimonda smaguma centru):
 $$I_z(S) = \int_S r^2 dA  = I_{xx} + I_{yy} = \int_S (x^2+y^2) dx dy = \lambda_1 + \lambda_2.$$
 
 Figūras nesimetriskuma mērs ir frakcionālā anizotropija:
@@ -453,17 +471,25 @@ $$A(S) = \frac{|\lambda_2 - \lambda_1|}{\lambda_1 + \lambda_2} = \frac{\lambda_2
 from polyforms.polyiamond import Polyiamond
 p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
 inertia_tensor = p.get_inertia_tensor()
-print(f'inertia_tensor={inertia_tensor}')
+print(f'inertia_tensor=\n{inertia_tensor}')
+lambdas = p.get_inertia_eigenvalues()
+print(f'lambda1={lambdas[0]}, lambda2={lambdas[1]}')
+print(f'I_z={p.get_polar_inertia_moment()}')
+print(f'FA={p.get_fractional_anisotropy()}')
 
+# inertia_tensor=
 # [[22026287.09102281 24281789.1875    ]
 #  [24281789.1875     51188299.77810814]]
+# lambda1=8283963.2607207475, lambda2=64930623.60841021
+# I_z=73214586.86913095
+# FA=0.7737073002808006
 ```
 
 
 ## Kopsavilkums
 
-Polimondam `ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF` apkoposim 
-tā skaitliskās īpašības. 
+Polimondam `ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF` (kā plaknes figūrai $S$) apkoposim 
+skaitliskās īpašības. 
 
 
 | Īpašība | Vērtība |
@@ -471,12 +497,13 @@ tā skaitliskās īpašības.
 | Malu skaits | $n=30$ |
 | Perimetrs | $P=n(n+1)/2 = 465$ |
 | Laukums (vienības trijstūrīšos) | $A = 25617$ |
-| Laukums (Eiklīda) | $A' = 25617\frac{\sqrt{3}}{4} = 11092.486$ |
-| Leņķu skaits | $a_{60}, a_{120}, a_{240}, a_{300} = (0, 18, 12, 0)$ |
+| Laukums (Eiklīda) | $A_E = 25617\frac{\sqrt{3}}{4} = 11092.486$ |
+| Leņķu skaits | $k_{60}, k_{120}, k_{240}, k_{300} = (0, 18, 12, 0)$ |
 | Šauro/Plato leņķu skaits | $k_{\text{acute}}, k_{\text{obtuse}} = (0, 30)$ |
+| Malu skaits trīs virzienos | $n_{AD}, n_{BE}, n_{CF} = (0, 18, 12)$ |
 | Diametrs | $D = \sqrt{95428} = 308.914$ |
-| Izodiametriskais koeficients | $q_{ID}(S) = \frac{4 \cdot A'}{\pi \cdot D^2} = 0.8579095861333519$ |
-| Izoperimetriskais koeficients | $q_{IP}(S) = \frac{4\pi \cdot A'}{P^2} = 0.7552257596163983$ |
+| Izodiametriskais koeficients | $q_{ID}(S) = \frac{4 \cdot A_E}{\pi \cdot D^2} = 0.6520194041835579$ |
+| Izoperimetriskais koeficients | $q_{IP}(S) = \frac{4\pi \cdot A_E}{P^2} = 0.6446631746595622$ |
 | Platums | $w = 109.871$ |
 | Ievilktā riņķa rādiuss | $r = 45.293$ |
 | Apvilktā riņķa rādiuss | $R = 73.661$ |
@@ -484,18 +511,18 @@ tā skaitliskās īpašības.
 | Apvilktā kvadrāta mala | $a_4 = 131.52890059643207$ |
 | Apvilktā regulārā trijstūra mala | $a_3 = 210.90315330502023$ |
 | Ierobežojošā taisnstūra (*bounding rectangle*) platums, augstums | $(b_x, b_y) = (136.5, 122.10958193360584)$ | 
-| Ierobežojošā taisnstūra laukums (Eiklīda) | $B_{rect} = b_x \cdot b_y = 16667.957933937196$ | 
-| Ierobežojošā sešstūra (*bounding hexagon*) "augstumi" pa vertikāli, NW-SE un NE-SW virzienos | $(b_{N-S}, b_{NW-SE}, b_{NE-SW}) = (141, 169, 151)$ | 
-| Ierobežojošā sešstūra laukums (vienības trijstūrīšos) | $B_{hex} = 34977$ | 
-| Hausdorfa attālums līdz tuvākajam sešstūrim | $h_6 = 59.57084546535845$ |
-| Hausdorfa attālums līdz tuvākajam trijstūrim | $h_3 = 59.57084546535845$ |
-| Izliektā apvalka virsotņu skaits | $n_{hull}=16$ |
-| Izliektā apvalka laukums (vienības trijstūrīšos) | $A_{hull}=29511$ |
-| Inerces tenzors | $\displaystyle{ \left( \begin{array}{cc} 22026287.09102281 & 24281789.1875 \\ 24281789.1875 & 51188299.77810814 \\ \end{array} \right)}$ |
-| Inerces tenzora īpašvērtības | $\lambda_1=4445861.206391842$, $\lambda_2=68758825.66273911$ |
+| Ierobežojošā taisnstūra laukums (Eiklīda) | $B_{\text{rect},E} = b_x \cdot b_y = 16667.957933937196$ | 
+| Ierobežojošā sešstūra (*bounding hexagon*) "augstumi" pa vertikāli, NW-SE un NE-SW virzienos | $(b_{\text{N-S}}, b_{\text{NW-SE}}, b_{\text{NE-SW}}) = (141, 169, 151)$ | 
+| Ierobežojošā sešstūra laukums (vienības trijstūrīšos) | $B_{\text{hex}} = 34977$ | 
+| Hausdorfa attālums līdz tuvākajam regulāram sešstūrim | $h_6 = 7.580773208149545$ |
+| Hausdorfa attālums līdz tuvākajam regulāram trijstūrim | $h_3 = 9.824065054293587$ |
+| Izliektā apvalka virsotņu skaits | $n_{\text{hull}}=16$ |
+| Izliektā apvalka laukums (vienības trijstūrīšos) | $A_{\text{hull}}=29511$ |
+| Inerces tenzors | ${\cal I}(S) = \displaystyle{ \left( \begin{array}{cc} 22026287.09102281 & 24281789.1875 \\ 24281789.1875 & 51188299.77810814 \\ \end{array} \right)}$ |
+| Inerces tenzora īpašvērtības ($\lambda_1 \leq \lambda_2$) | $\lambda_1=4445861.206391842$, $\lambda_2=68758825.66273911$ |
 | Polārais inerces moments | $I_z(S) = \lambda_1 + \lambda_2 = 73214586.86913095$ |
-| Frakcionālā anizotropija | $A(S) = \frac{\lambda_2 - \lambda_1}{I_z(S)} = 0.25776034563477425$ |
-| 
+| Anizotropija | $\displaystyle{FA(S) = \frac{\lambda_2 - \lambda_1}{\lambda_1 + \lambda_2} = 0.25776034563477425}$ |
+
 
 
 

@@ -626,6 +626,14 @@ def test_hausdorff_triangle_optimum_no_worse_than_smallest_enclosing():
     assert h_opt <= h_enc + 1e-9
 
 
+def test_hausdorff_30gon_distances():
+    p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+    _, h_hex = p.get_closest_hausdorff_hexagon()
+    assert abs(h_hex - 7.580773208149545) < 1e-6
+
+    _, h_tri = p.get_closest_hausdorff_triangle()
+    assert abs(h_tri - 9.824065054293587) < 1e-6
+
 # ---------------------------------------------------------------------------
 # Tests for get_incircle and get_circumcircle (2026-05).
 # ---------------------------------------------------------------------------
