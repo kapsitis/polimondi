@@ -477,12 +477,11 @@ print(f'lambda1={lambdas[0]}, lambda2={lambdas[1]}')
 print(f'I_z={p.get_polar_inertia_moment()}')
 print(f'FA={p.get_fractional_anisotropy()}')
 
-# inertia_tensor=
-# [[22026287.09102281 24281789.1875    ]
-#  [24281789.1875     51188299.77810814]]
-# lambda1=8283963.2607207475, lambda2=64930623.60841021
-# I_z=73214586.86913095
-# FA=0.7737073002808006
+inertia_tensor=[[22026287.09102281 24281789.1875    ]
+ [24281789.1875     51188299.77810814]]
+lambda1=8283963.2607207475, lambda2=64930623.60841021
+I_z=73214586.86913095
+FA=0.773707300280800
 ```
 
 
@@ -519,9 +518,9 @@ skaitliskās īpašības.
 | Izliektā apvalka virsotņu skaits | $n_{\text{hull}}=16$ |
 | Izliektā apvalka laukums (vienības trijstūrīšos) | $A_{\text{hull}}=29511$ |
 | Inerces tenzors | ${\cal I}(S) = \displaystyle{ \left( \begin{array}{cc} 22026287.09102281 & 24281789.1875 \\ 24281789.1875 & 51188299.77810814 \\ \end{array} \right)}$ |
-| Inerces tenzora īpašvērtības ($\lambda_1 \leq \lambda_2$) | $\lambda_1=4445861.206391842$, $\lambda_2=68758825.66273911$ |
+| Inerces tenzora īpašvērtības ($\lambda_1 \leq \lambda_2$) | $\lambda_1=8283963.2607207475$, $\lambda_2=64930623.60841021$ |
 | Polārais inerces moments | $I_z(S) = \lambda_1 + \lambda_2 = 73214586.86913095$ |
-| Anizotropija | $\displaystyle{FA(S) = \frac{\lambda_2 - \lambda_1}{\lambda_1 + \lambda_2} = 0.25776034563477425}$ |
+| Anizotropija | $\displaystyle{FA(S) = \frac{\lambda_2 - \lambda_1}{\lambda_1 + \lambda_2} = 0.773707300280800}$ |
 
 
 
