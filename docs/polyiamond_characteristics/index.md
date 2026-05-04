@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Platleņķu regex meklēšana
+title: Polimondu raksturlielumi
 ---
 
 <style>
@@ -358,7 +358,7 @@ vislielākais laukums ir aplim. Tāpēc katrai figūrai $S$,
 kam laukumu apzīmējam ar $A(S)$, diametru ar $D(S)$, 
 perimetru ar $P(S)$, definē šādus koeficientus: 
 
-$$q_{ID}(S) = \frac{4\pi A(S)}{D(S)^2}, \quad q_{IP}(S) = \frac{4\pi A(S)}{P(S)^2}.$$
+$$q_{ID}(S) = \frac{4 A(S)}{\pi \cdot D(S)^2}, \quad q_{IP}(S) = \frac{4\pi \cdot A(S)}{P(S)^2}.$$
 
 Angliski tie ir pazīstami kā *isodiametric quotient (ID)* un *isoperimetric quotient (IP)*. 
 Šo koeficientu vērtība ir no $0$ neieskaitot (ļoti izstieptām figūrām) 
@@ -388,20 +388,11 @@ print(f'(acute, obtuse) = ({acute}, {obtuse})')
 ```
 
 
-## Inerces moments
-
-Inerces moments 2D figūrai $S$ ir laukuma 
-integrālis, kas laukuma elementu $dA$ reizina ar 
-attālumu kvadrātā līdz figūras smaguma centram.
-Šajā izteiksmē pieņemam, ka figūra $S$ pārnesta tā, ka 
-$O(0,0)$ ir figūras smaguma centrs.
-
-
-
-
 
 ## Inerces tenzors 
 
+Pieņemam, ka figūra (polimonds) $S$ pārnesta tā, ka 
+$O(0,0)$ ir figūras smaguma centrs.
 Par inerces tenzoru 2D figūrai $S$ sauc matricu: 
 
 $${\cal I}(S) = \left( \begin{array}{cc} I_{xx} & I_{xy} \\ I_{yx} & I_{yy} \end{array} \right) = 
@@ -421,7 +412,8 @@ p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
 inertia_tensor = p.get_inertia_tensor()
 print(f'inertia_tensor={inertia_tensor}')
 
-# inertia_tensor=[[-4785.0111764725275, 6900.296957168467], [6900.296957168467, 10812.745525659647]]
+# [[22026287.09102281 24281789.1875    ]
+#  [24281789.1875     51188299.77810814]]
 ```
 
 

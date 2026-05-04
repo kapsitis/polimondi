@@ -107,8 +107,13 @@ var mēģināt aprobežoties ar tiem polimondiem, kuriem kāds no ģeometriskaji
 raksturlielumiem pieņem minimālo vai maksimālo vērtību.  
 
 
+## Piemēri
 
+Konkrētam 30 virsotņu perfektam polimondam (ar visiem platiem leņķiem)
+izrēķināti dažādi ģeometriskie raksturlielumi - tā ir ilustrācija augšminētājai
+ģeometrisko īpašību pētīšanas pieejai. 
 
+Sk. [Polimondu raksturlielumi]({{ '/polyiamond_characteristics/' | relative_url }}).
 
 
 
