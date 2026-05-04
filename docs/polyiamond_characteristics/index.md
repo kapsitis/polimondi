@@ -257,15 +257,18 @@ kurš satur doto polimondu (mazākais no šādiem sešstūriem).
 ```
 from polyforms.polyiamond import Polyiamond
 p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
-hex_bounds = p.get_bounding_hexagon()
+hex_bounds = p.get_hex_bounds()
 print(f'hex_bounds={hex_bounds}')
 h_ns = hex_bounds[1] - hex_bounds[0]
 h_nw_se = hex_bounds[3] - hex_bounds[2]
 h_ne_sw = hex_bounds[5] - hex_bounds[4]
 print(f'h_ns={h_ns}, h_nw_se={h_nw_se}, h_ne_sw={h_ne_sw}')
+hex_area = p.get_bounding_hexagon().get_area()
+print(f'hex_area={hex_area}')
 
 # hex_bounds=(-29, 112, -159, 10, -38, 113)
 # h_ns=141, h_nw_se=169, h_ne_sw=151
+# hex_area=34977
 ```
 
 <img
@@ -454,13 +457,10 @@ tā skaitliskās īpašības.
 | Apvilktā regulārā sešstūra mala | $a_6 = 78.625$ |
 | Apvilktā kvadrāta mala | $a_4 = 131.52890059643207$ |
 | Apvilktā regulārā trijstūra mala | $a_3 = 210.90315330502023$ |
-| Ierobežojošā taisnstūra (*bounding rectangle*) platums, augstums | $(b'_4, b''_4) = (136.5, 141)$ | 
-| Ierobežojošā taisnstūra laukums | $B_{rect} = b'_4 \cdot b''_4 = 19246.5$ | 
-
-
-
-| Ierobežojošā sešstūra (*bounding hexagon*) "augstumi" pa vertikāli, NW-SE un NE-SW virzienos | $(b'_6, b''_6, b'''_6) = (131.865, 136.576)$ | 
-| Ierobežojošā sešstūra laukums | $B_{hex} = 25617$ | 
+| Ierobežojošā taisnstūra (*bounding rectangle*) platums, augstums | $(b_x, b_y) = (136.5, 122.10958193360584)$ | 
+| Ierobežojošā taisnstūra laukums (Eiklīda) | $B_{rect} = b_x \cdot b_y = 16667.957933937196$ | 
+| Ierobežojošā sešstūra (*bounding hexagon*) "augstumi" pa vertikāli, NW-SE un NE-SW virzienos | $(b_{N-S}, b_{NW-SE}, b_{NE-SW}) = (141, 169, 151)$ | 
+| Ierobežojošā sešstūra laukums (vienības trijstūrīšos) | $B_{hex} = 34977$ | 
 | Hausdorfa attālums līdz tuvākajam sešstūrim | $h_6 = 59.57084546535845$ |
 | Hausdorfa attālums līdz tuvākajam trijstūrim | $h_3 = 59.57084546535845$ |
 | Izliektā apvalka virsotņu skaits | $n_{hull}=16$ |

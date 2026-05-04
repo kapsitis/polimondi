@@ -84,25 +84,17 @@ for c in range(min_c2, max_c2 + 1):
 
 
 # Bounding hexagon
-a_min, a_max, b_min, b_max, c_min, c_max = p.get_bounding_hexagon()
+a_min, a_max, b_min, b_max, c_min, c_max = p.get_hex_bounds()
 y_min, y_max = a_min, a_max
 z_min, z_max = b_min, b_max
 x_min, x_max = c_min, c_max
 
 # The bounding hexagon in (x, y) integer coordinates is formed by these intersections
-hex_pts = [
-    ( -z_min - y_max, y_max ),
-    ( x_max, -z_min - x_max ),
-    ( x_max, y_min ),
-    ( -z_max - y_min, y_min ),
-    ( x_min, -z_max - x_min ),
-    ( x_min, y_max )
-]
+hex_pts = p.get_bounding_hexagon_vertices()
 
 hex_xs = []
 hex_ys = []
-for v in hex_pts:
-    pt = PointTg(v[0], v[1], -v[0]-v[1])
+for pt in hex_pts:
     xy = pt.get_xy()
     hex_xs.append(xy[0])
     hex_ys.append(xy[1])

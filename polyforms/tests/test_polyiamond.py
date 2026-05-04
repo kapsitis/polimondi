@@ -6,7 +6,7 @@ from polyforms.perfect_seq import PerfectSeq
 def test_bounding_hexagon():
     p1 = Polyiamond([(5, 'A'), (4, 'C'), (3, 'E'), (2, 'D'), (1, 'F')])
     p1.setup()
-    result = p1.get_bounding_hexagon()
+    result = p1.get_hex_bounds()
     assert result == (-4, 0, -5, 1, 0, 5)
 
 def test_bounding_box():

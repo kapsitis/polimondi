@@ -75,7 +75,7 @@ class Polyiamond:
         self.get_signed_area()
         self.get_area()
         self.get_perimeter()
-        self.get_bounding_hexagon()
+        self.get_hex_bounds()
         self.get_bounding_sizes()
 
 
@@ -157,7 +157,7 @@ class Polyiamond:
             self.perimeter = sum([L for (L, D) in self.sides])
         return self.perimeter
 
-    def get_bounding_hexagon(self):
+    def get_hex_bounds(self):
         """
         Calculates the bounding hexagon of the polyiamond on the triangular grid.
         
@@ -177,7 +177,7 @@ class Polyiamond:
         Returns:
             tuple: (a_min, a_max, b_min, b_max, c_min, c_max)
         """
-        if not hasattr(self, 'bounding_hexagon'):
+        if not hasattr(self, 'hex_bounds'):
             self.get_vertices()
             a_min = min([p.y for p in self.vertices])
             a_max = max([p.y for p in self.vertices])
@@ -187,13 +187,56 @@ class Polyiamond:
 
             c_min = min([p.x for p in self.vertices])
             c_max = max([p.x for p in self.vertices])
-            self.bounding_hexagon = (a_min, a_max, b_min, b_max, c_min, c_max)
+            self.hex_bounds = (a_min, a_max, b_min, b_max, c_min, c_max)
 
-        return self.bounding_hexagon
+        return self.hex_bounds
+
+    def get_bounding_hexagon(self):
+        """
+        Returns a Polyiamond object representing the bounding hexagon.
+        """
+        if not hasattr(self, 'bounding_hexagon_poly'):
+            a_min, a_max, b_min, b_max, c_min, c_max = self.get_hex_bounds()
+            
+            l_A = -(c_min + a_max + b_min)
+            l_B = c_max + a_max + b_min
+            l_C = -(c_max + a_min + b_min)
+            l_D = c_max + a_min + b_max
+            l_E = -(c_min + a_min + b_max)
+            l_F = c_min + a_max + b_max
+            
+            sides = []
+            for l, d in [(l_A, 'A'), (l_B, 'B'), (l_C, 'C'), (l_D, 'D'), (l_E, 'E'), (l_F, 'F')]:
+                if l > 0:
+                    sides.append((l, d))
+                    
+            self.bounding_hexagon_poly = Polyiamond(sides) if sides else None
+            
+        return self.bounding_hexagon_poly
+
+    def get_bounding_hexagon_vertices(self):
+        """
+        Returns the vertices of the bounding hexagon in the absolute PointTg coordinates
+        of the polyiamond.
+        """
+        if not hasattr(self, 'bounding_hexagon_vertices'):
+            a_min, a_max, b_min, b_max, c_min, c_max = self.get_hex_bounds()
+            y_min, y_max = a_min, a_max
+            z_min, z_max = b_min, b_max
+            x_min, x_max = c_min, c_max
+            self.bounding_hexagon_vertices = [
+                PointTg( -z_min - y_max, y_max, z_min ),
+                PointTg( x_max, -z_min - x_max, z_min ),
+                PointTg( x_max, y_min, -x_max - y_min ),
+                PointTg( -z_max - y_min, y_min, z_max ),
+                PointTg( x_min, -z_max - x_min, z_max ),
+                PointTg( x_min, y_max, -x_min - y_max )
+            ]
+        return self.bounding_hexagon_vertices
 
     def get_bounding_sizes(self):
         if not hasattr(self, 'bounding_sizes'):
-            (a_min, a_max, b_min, b_max, c_min, c_max) = self.get_bounding_hexagon()
+            (a_min, a_max, b_min, b_max, c_min, c_max) = self.get_hex_bounds()
             self.bounding_sizes = (a_max - a_min, b_max - b_min, c_max - c_min)
         return self.bounding_sizes
 
