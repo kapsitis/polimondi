@@ -484,6 +484,13 @@ I_z=73214586.86913095
 FA=0.773707300280800
 ```
 
+<img
+  id="30gon_inertia_ellipse"
+  alt="30-polimonda inerces elipse"
+  src="{{ '/polyiamond_characteristics/30gon_inertia_ellipse.svg' | relative_url }}"
+  style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
+/>
+
 
 ## Kopsavilkums
 
@@ -517,7 +524,7 @@ skaitliskās īpašības.
 | Hausdorfa attālums līdz tuvākajam regulāram trijstūrim | $h_3 = 9.824065054293587$ |
 | Izliektā apvalka virsotņu skaits | $n_{\text{hull}}=16$ |
 | Izliektā apvalka laukums (vienības trijstūrīšos) | $A_{\text{hull}}=29511$ |
-| Inerces tenzors | ${\cal I}(S) = \displaystyle{ \left( \begin{array}{cc} 22026287.09102281 & 24281789.1875 \\ 24281789.1875 & 51188299.77810814 \\ \end{array} \right)}$ |
+| Inerces tenzors | $\displaystyle{ {\cal I}(S) = \left( \begin{array}{cc} 22026287.09102281 & 24281789.1875 \\ 24281789.1875 & 51188299.77810814 \\ \end{array} \right)}$ |
 | Inerces tenzora īpašvērtības ($\lambda_1 \leq \lambda_2$) | $\lambda_1=8283963.2607207475$, $\lambda_2=64930623.60841021$ |
 | Polārais inerces moments | $I_z(S) = \lambda_1 + \lambda_2 = 73214586.86913095$ |
 | Anizotropija | $\displaystyle{FA(S) = \frac{\lambda_2 - \lambda_1}{\lambda_1 + \lambda_2} = 0.773707300280800}$ |
