@@ -41,6 +41,31 @@ print(f'area={area}')
   style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
 />
 
+
+## Iekšējie leņķi un šauro leņķu skaits
+
+Katram polimondam var būt četru dažādu veidu leņķi, kuru leņķiskie lielumi ir 
+$60^\circ$, $120^\circ$, $240^\circ$ un $300^\circ$.
+Klasē `Polyiamond` ir definēta funkcija, kas tos visus saskaita. 
+
+Ņemot vērā to, ka lielāki laukumi parasti tiek sasniegti tad, ja 
+visi vai gandrīz visi leņķi ir plati ($120^\circ$ vai $240^\circ$), 
+tad katram $n$-polimondam var saskaitīt šauro leņķu ($60^\circ$ un $300^\circ$) 
+skaitu $k$, un tad platie leņķi būs visi pārējie $n-k$. 
+
+```
+from polyforms.polyiamond import Polyiamond
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+(a60, a120, a240, a300) = p.internal_angles()
+print(f'(a60, a120, a240, a300) = ({a60}, {a120}, {a240}, {a300})')
+(acute, obtuse) = (a60 + a300, a120 + a240)
+print(f'(acute, obtuse) = ({acute}, {obtuse})')
+
+# (a60, a120, a240, a300) = (0, 18, 12, 0)
+# (acute, obtuse) = (0, 30)
+```
+
+
 ## Diametrs
 
 Par *diametru* plaknes figūrai sauc lielāko 
@@ -59,14 +84,41 @@ print(f'diam_sq={diam_sq}, i_max={i_max}, j_max={j_max}')
 # diam_sq=95428, i_max=9, j_max=26
 ```
 
-
-
 <img
   id="30gon_diameter"
   alt="30-polimonda diametrs"
   src="{{ '/polyiamond_characteristics/30gon_diameter.svg' | relative_url }}"
   style="width: 100%; max-width: 600px; border:none; background-color:#FFFFE0;"
 />
+
+
+
+## Izodiametriskais un izoperimetriskais koeficienti
+
+Starp visām plaknes figūrām ar doto diametru $D$, vislielākais laukums $A$
+ir aplim. Līdzīgi arī, starp visām plaknes figūrām ar doto perimetru $P$ 
+vislielākais laukums ir aplim. Figūras $S$ laukumu apzīmējam ar $A(S)$, diametru ar $D(S)$, 
+perimetru ar $P(S)$, un definējam divus koeficientus: 
+
+$$q_{ID}(S) = \frac{4 A(S)}{\pi \cdot D(S)^2}, \quad q_{IP}(S) = \frac{4\pi \cdot A(S)}{P(S)^2}.$$
+
+Angliski tie ir pazīstami kā *isodiametric quotient (ID)* un *isoperimetric quotient (IP)*. 
+Šo koeficientu vērtība ir no $0$ neieskaitot (ļoti izstieptām figūrām) 
+līdz $1$ ieskaitot (aplim).
+
+```
+from polyforms.polyiamond import Polyiamond
+import math
+p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
+print(f'diametr={p.diameter()},')
+
+# diametr=308.9138523657699
+```
+
+
+
+
+
 
 
 
@@ -78,7 +130,13 @@ atrodas figūra. Pietiekami lielam laukumam pie dotā perimetra,
 arī platumam jābūt lielam. 
 Platumu var iegūt ar rotējošo skavu (*rotating callipers*) 
 algoritmu (vai arī kā minimizācijas uzdevumu virsotņu projekcijām
-uz kādu fiksētu taisni). 
+uz kādu fiksētu taisni).
+
+![](extreme_shape.png){width=108px}
+
+Figūrām ar lielu laukumu, kas līdzīgas aplim, diamters nevar būt 
+ļoti mazs. Tomēr iespējamas figūras ar (fiksētajam perimetram) nelielu 
+laukumu, bet ar lielu platumu.
 
 ```
 from polyforms.polyiamond import Polyiamond
@@ -371,42 +429,6 @@ print(f'hull_area={hull_area}')
 
 
 
-## Izodiametriskais un izoperimetriskais koeficienti
-
-Starp visām figūrām ar doto diametru $D$, vislielākais laukums $A$
-ir aplim. Līdzīgi arī starp visām figūrām ar doto perimetru $P$ 
-vislielākais laukums ir aplim. Tāpēc katrai figūrai $S$, 
-kam laukumu apzīmējam ar $A(S)$, diametru ar $D(S)$, 
-perimetru ar $P(S)$, definē šādus koeficientus: 
-
-$$q_{ID}(S) = \frac{4 A(S)}{\pi \cdot D(S)^2}, \quad q_{IP}(S) = \frac{4\pi \cdot A(S)}{P(S)^2}.$$
-
-Angliski tie ir pazīstami kā *isodiametric quotient (ID)* un *isoperimetric quotient (IP)*. 
-Šo koeficientu vērtība ir no $0$ neieskaitot (ļoti izstieptām figūrām) 
-līdz $1$ ieskaitot (aplim).
-
-
-
-## Šauro leņķu skaits
-
-Katram polimondam var būt četru dažādu veidu leņķi, kuru leņķiskie lielumi ir 
-$60^\circ$, $120^\circ$, $240^\circ$ un $300^\circ$.
-Klasē `Polyiamond` ir definēta funkcija, kas tos visus saskaita. 
-
-Ņemot vērā to, ka lielāki laukumi parasti tiek sasniegti tad, ja 
-visi vai gandrīz visi leņķi ir plati ($120^\circ$ vai $240^\circ$), 
-tad katram $n$-polimondam var saskaitīt šauro leņķu ($60^\circ$ un $300^\circ$) 
-skaitu $k$, un tad platie leņķi būs visi pārējie $n-k$. 
-
-```
-from polyforms.polyiamond import Polyiamond
-p = Polyiamond('ABAFAFEFEDEDCDCDCDCBCBCBCBAFAF')
-(a60, a120, a240, a300) = p.internal_angles()
-print(f'(a60, a120, a240, a300) = ({a60}, {a120}, {a240}, {a300})')
-(acute, obtuse) = (a60 + a300, a120 + a240)
-print(f'(acute, obtuse) = ({acute}, {obtuse})')
-
-```
 
 
 
@@ -450,7 +472,11 @@ tā skaitliskās īpašības.
 | Perimetrs | $P=n(n+1)/2 = 465$ |
 | Laukums (vienības trijstūrīšos) | $A = 25617$ |
 | Laukums (Eiklīda) | $A' = 25617\frac{\sqrt{3}}{4} = 11092.486$ |
+| Leņķu skaits | $a_{60}, a_{120}, a_{240}, a_{300} = (0, 18, 12, 0)$ |
+| Šauro/Plato leņķu skaits | $k_{\text{acute}}, k_{\text{obtuse}} = (0, 30)$ |
 | Diametrs | $D = \sqrt{95428} = 308.914$ |
+| Izodiametriskais koeficients | $q_{ID}(S) = \frac{4 \cdot A'}{\pi \cdot D^2} = 0.8579095861333519$ |
+| Izoperimetriskais koeficients | $q_{IP}(S) = \frac{4\pi \cdot A'}{P^2} = 0.7552257596163983$ |
 | Platums | $w = 109.871$ |
 | Ievilktā riņķa rādiuss | $r = 45.293$ |
 | Apvilktā riņķa rādiuss | $R = 73.661$ |
@@ -465,8 +491,6 @@ tā skaitliskās īpašības.
 | Hausdorfa attālums līdz tuvākajam trijstūrim | $h_3 = 59.57084546535845$ |
 | Izliektā apvalka virsotņu skaits | $n_{hull}=16$ |
 | Izliektā apvalka laukums (vienības trijstūrīšos) | $A_{hull}=29511$ |
-| Izodiametriskais koeficients | $q_{ID}(S) = \frac{4 \cdot A'}{\pi \cdot D^2} = 0.8579095861333519$ |
-| Izoperimetriskais koeficients | $q_{IP}(S) = \frac{4\pi \cdot A'}{P^2} = 0.7552257596163983$ |
 | Inerces tenzors | $\displaystyle{ \left( \begin{array}{cc} 22026287.09102281 & 24281789.1875 \\ 24281789.1875 & 51188299.77810814 \\ \end{array} \right)}$ |
 | Inerces tenzora īpašvērtības | $\lambda_1=4445861.206391842$, $\lambda_2=68758825.66273911$ |
 | Polārais inerces moments | $I_z(S) = \lambda_1 + \lambda_2 = 73214586.86913095$ |
