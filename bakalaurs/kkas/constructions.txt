@@ -1,0 +1,97 @@
+# Perfect Polyiamond Constructions
+# ===================================
+# All constructions follow the formula:   S_k = u + v^k + w + x^k + y
+# where v^k means the string v repeated k times.
+# Each entry is written as:  u | v | w | x | y
+#
+# Every rule has been computationally verified valid for k = 1 .. 20.
+# "valid" means Polyiamond(S_k) passes is_valid() — the polygon is
+# closed, non-self-intersecting, with strictly decreasing side lengths.
+#
+# Columns:
+#   parity  = odd/even (number of sides)
+#   base    = number of sides at k=1 = len(u+v+w+x+y)
+#   step    = edges added per increment of k = len(v) + len(x)
+#
+# Directions: A B C D E F on triangular grid
+#   Opposite pairs: A<->D,  B<->E,  C<->F
+#
+# Last updated: 2026-04-05
+# ===================================
+
+# -------------------------------------------------------
+# Group 1: ODD — from kursa_darbs_nr3.pdf (step 8 and 12)
+# -------------------------------------------------------
+# parity | base | step |  u         |  v       |  w           |  x       |  y
+# odd      19     8      AB           ACEC       BDEDEFDF       EFAF       E
+# odd      19     12                  ABAEDE     FE             CECBDB     CBCAC
+# odd      19     8      ABC          ACEC       DEFDE          FEFA       FAB
+
+AB | ACEC | BDEDEFDF | EFAF | E
+ | ABAEDE | FE | CECBDB | CBCAC
+ABC | ACEC | DEFDE | FEFA | FAB
+
+# -------------------------------------------------------
+# Group 2: EVEN — base 16, step 8  (found via find_fragments_cfg on perfect_16)
+# -------------------------------------------------------
+
+ABD | BDFD | EDE | AFAB | AB
+AB | DBDF | DEDE | AFAB | AB
+
+# -------------------------------------------------------
+# Group 3: ODD — base 17, step 8  (found via find_fragments_cfg on perfect_17)
+# -------------------------------------------------------
+
+ABF | BFDF | DEDCD | CDCB | C
+AB | FBFD | FDEDCD | CDCB | C
+ABFD | FBFD | EDCD | CBCD | C
+ABFD | FBFD | EDC | DCBC | DC
+ABFD | FBFD | ED | CDCB | CDC
+ABF | DFBF | DEDCD | CBCD | C
+ABF | DFBF | DEDC | DCBC | DC
+ABF | DFBF | DED | CDCB | CDC
+AB | FDFB | FDEDCD | CBCD | C
+AB | FDFB | FDEDC | DCBC | DC
+AB | FDFB | FDED | CDCB | CDC
+A | BFDF | BFDEDCD | CBCD | C
+A | BFDF | BFDEDC | DCBC | DC
+A | BFDF | BFDED | CDCB | CDC
+A | BFDF | DBDFE | CDCB | CAF
+A | BFDF | DCEAE | CDCB | ACB
+A | BFDF | DFDBCE | DCBC | AB
+A | CACE | DFDBD | EFAF | BAE
+A | CACE | DFDBD | EFAF | BFB
+ACDFD | CEAE | AF | ABCB | DB
+ACEC | BDFD | EAE | AFAB | AC
+ACEC | BDFD | FDF | AFAB | AC
+ACECE | CEAE | AF | ABCB | DB
+ACEC | ECEA | EAF | ABCB | DB
+
+# -------------------------------------------------------
+# Group 4: ODD � base 15, step 8  (found via string-matching perfect_15 -> perfect_23)
+# Verified valid for k = 1 .. 20
+# Last updated: 2026-04-05
+# -------------------------------------------------------
+
+A | BFDF | ECBDE | CDCB | F
+AC | DBDF | EFD | FABA | CB
+
+
+# -------------------------------------------------------
+# Group 5: EVEN � base 14, step 8  (string-matching perfect_14 -> perfect_22)
+# Verified valid for k = 1 .. 20
+# Last updated: 2026-04-05
+# -------------------------------------------------------
+
+A | CACE | CED | EFAF | AE
+AC | ACEC | ED | EFAF | AE
+A | CACE | DEC | EFAF | AB
+
+# -------------------------------------------------------
+# Group 6: ODD � base 13, step 8  (string-matching perfect_13 -> perfect_21)
+# Verified valid for k = 1 .. 20
+# Last updated: 2026-04-05
+# -------------------------------------------------------
+
+A | BFDF | DE | DCBC | BC
+AC | BDFD | EDF | AFAB | 

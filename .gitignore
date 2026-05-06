@@ -26,3 +26,4 @@ sources/*.pdf
 sources/subdir/*.pdf
 
 __init__.pyc
+.vscode/*
