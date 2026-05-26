@@ -62,8 +62,3 @@ Keep all heavy data on disk; put scripts in a scripts/ directory; summarize find
 chat in under ~30 lines. If the tandem-repeat search surfaces too many candidates, rank
 them by (number of distinct sizes the family is corroborated at) descending and report
 the top 20.
-
-
-(AB)^kABABAF(ED)^kEDEDED(EF)^kEFED(CB)^kCBCBCB(CD)^kCDCB(AF)^kAF
-
-(AB)^kABAF(ED)^kEDED(EF)^kED(CB)^kCBCB(CD)^kCB(AF)^kAB
