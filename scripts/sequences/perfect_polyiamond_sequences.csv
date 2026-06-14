@@ -1,0 +1,29 @@
+SeqName,Expression,InitialValue,Step,Locations
+PP24_perfect_cfg_a,acec(ecea)^k eceaeafabcb(abcb)^k db,17,8,2
+PP24_perfect_cfg_b,abaede(abaede)^k fececbdb(cecbdb)^k cbcac,19,12,2
+KD_cfgA_8kp6,(ab)^k ace(dede)^k dfb(ab)^k,6,8,3
+KD_cfgB_8kp8,(cbcb)^k cbfe(fefe)^k fecb,8,8,2
+KD_cfgC_8kp10,(cbcb)^k dbafd(fefe)^k aedca,10,8,2
+KD_cfgD_8kp12,(cbcb)^k dbfbfd(fefe)^k aececa,12,8,2
+KD_cfg_8kp1,acec(ecea)^k eaf(abcb)^k db,9,8,2
+KD_pcg_8km3_main,a(ca)^k cacd(fd)^k e(fd)^k fdfdfa(ca)^k b,13,8,4
+KD_pcg_8km1_87a,a(cd)^k cd(fa)^k efa(fa)^k (cd)^k c,7,8,4
+KD_pcg_8km1_87b,a(cb)^k cbcdefe(fe)^k aefe(fe)^k a(cb)^k cb,15,8,4
+KD_pcg_8km3_85b,a(bc)^k bcbcdea(ef)^k efed(ef)^k efefabd(bc)^k bc,21,8,4
+KD_pcg_8km5_83a,a(bd)^k bdbdcea(ea)^k efdfdfa(ea)^k f(bd)^k bdb,19,8,4
+KD_pcg_8km5_83b,a(bc)^k bcdf(ef)^k ed(ef)^k efac(bc)^k,11,8,4
+KD_pcg_8km5_83c,a(bc)^k bcde(fe)^k fd(fe)^k feac(bc)^k,11,8,4
+KD_pcg_8km5_83d,a(cb)^k cbdf(ef)^k ed(ef)^k efab(cb)^k,11,8,4
+KD_pcg_8km5_83e,a(cb)^k cbde(fe)^k fd(fe)^k feab(cb)^k,11,8,4
+KD_pcg_8km7_81a,a(ca)^k cace(dfdf)^k dfdfea(ca)^k cacdbf,17,8,3
+KD_pcg_8km7_81b,a(cb)^k cbcdea(fe)^k fed(fe)^k fefabd(cb)^k c,17,8,4
+KD_pcg_4km1_43a_even,acb(cb)^k dfe(fe)^k dfe(fe)^k ac(bc)^k,11,8,4
+KD_pcg_4km1_43a_odd,acb(cb)^k c dfe(fe)^k f dfe(fe)^k f ac(bc)^k b,15,8,4
+KD_pcg_4km1_43b_even,abc(bc)^k def(ef)^k def(ef)^k ab(cb)^k,11,8,4
+KD_pcg_4km1_43b_odd,abc(bc)^k b def(ef)^k e def(ef)^k e ab(cb)^k c,15,8,4
+KD_pcg_4km3_41a_even,acbc(bc)^k deaef(ef)^k dfef(ef)^k abdb(cb)^k,17,8,4
+KD_pcg_4km3_41a_odd,acbc(bc)^k b deaef(ef)^k e dfef(ef)^k e abdb(cb)^k c,21,8,4
+BD_cfg_8kp1,abfbfdf(bfdf)^k dedcd(cdcb)^k cdcbc,17,8,2
+BD_pcg_8km3,a(ca)^k cacd(fd)^k e(fd)^k fdfdfa(ca)^k b,13,8,4
+BD_obtuse_12kp12,(ab)^k abc(de)^k de(dc)^k de(fa)^k fa(fe)^k fa(bc)^k b,12,12,6
+BD_obtuse_12kp18,(ab)^k abaf(ed)^k eded(ef)^k ed(cb)^k cbcb(cd)^k cb(af)^k ab,18,12,6

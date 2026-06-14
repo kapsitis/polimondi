@@ -18,6 +18,8 @@
       url: /perfect_obtuse/
     - title: Platleņķu regex meklēšana
       url: /perfect_obtuse_boring/
+    - title: Polimondu raksturlielumi
+      url: /polyiamond_characteristics/
 - title: Paka 'polyforms'
   children:
     - title: Vides uzstādīšana

@@ -56,7 +56,7 @@ class DrawScene:
     def pack(self):
         bounding = []
         for label in self.labels:
-            nums = self.polygons[label][0].get_rect_box()
+            nums = self.polygons[label][0].get_bounding_rectangle()
             numbers = nums
             bounding.append((numbers[0], numbers[1], numbers[2], numbers[3]))
         self.bottom = int(round(min([item[2] for item in bounding]))) - 1
@@ -121,7 +121,7 @@ class DrawScene:
         y = [yy * TH for yy in y]
         self.ax.plot(x,y,'-', color=color, linewidth=0.8)
         if box:
-            (xmin, xmax, ymin, ymax) = poly.get_rect_box()
+            (xmin, xmax, ymin, ymax) = poly.get_bounding_rectangle()
             x1 = [xmin, xmax, xmax, xmin, xmin]
             y1 = [ymin, ymin, ymax, ymax, ymin]
             x1 = [offset[0] + xx for xx in x1]
