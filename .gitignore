@@ -21,6 +21,9 @@ source-data/
 docs/obtuse_new/obtuse_48.txt
 papers/bw-problem/*
 papers/2026-03-20/*
+*.bcf
+*.toc
+*.run.xml
 
 scripts/sequences/out/*
 papers/2024-02-14/*.pdf
