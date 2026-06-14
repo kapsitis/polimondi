@@ -1,11 +1,11 @@
 SeqName,Expression,InitialValue,Step,Locations
-PP24_perfect_cfg_a,acec(ecea)^k eceaeafabcb(abcb)^k db,17,8,2
 PP24_perfect_cfg_b,abaede(abaede)^k fececbdb(cecbdb)^k cbcac,19,12,2
 KD_cfgA_8kp6,(ab)^k ace(dede)^k dfb(ab)^k,6,8,3
-KD_cfgB_8kp8,(cbcb)^k cbfe(fefe)^k fecb,8,8,2
-KD_cfgC_8kp10,(cbcb)^k dbafd(fefe)^k aedca,10,8,2
-KD_cfgD_8kp12,(cbcb)^k dbfbfd(fefe)^k aececa,12,8,2
-KD_cfg_8kp1,acec(ecea)^k eaf(abcb)^k db,9,8,2
+KD_cfgB_8kp8a,ab(ab)^k dede(dede)^k ab(ab)^k,8,8,3
+KD_cfgB_8kp8b,ac(ac)^k dfdf(dfdf)^k ac(ac)^k,8,8,3
+KD_cfgC_8kp18,ab(ab)^k fbcdfdede(dede)^k cefacab(ab)^k,18,8,3
+KD_cfgD_8kp20,ab(ab)^k fbdbdfdede(dede)^k ceaeacab(ab)^k,20,8,3
+KD_cfg_8kp1,acececea(ecea)^k eafabcb(abcb)^k db,17,8,2
 KD_pcg_8km3_main,a(ca)^k cacd(fd)^k e(fd)^k fdfdfa(ca)^k b,13,8,4
 KD_pcg_8km1_87a,a(cd)^k cd(fa)^k efa(fa)^k (cd)^k c,7,8,4
 KD_pcg_8km1_87b,a(cb)^k cbcdefe(fe)^k aefe(fe)^k a(cb)^k cb,15,8,4
