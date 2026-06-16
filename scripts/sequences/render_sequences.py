@@ -33,6 +33,7 @@ Run from anywhere::
 import csv
 import os
 import re
+import sys
 
 import matplotlib
 matplotlib.use("Agg")  # head-less SVG rendering, no display needed
@@ -44,10 +45,9 @@ from polyforms.draw_scene import DrawScene, Align
 
 # How many members (k = 0, 1, ..., NUM_MEMBERS-1) of each sequence to check
 # and draw.  k=3 is included so that "intersects for k=3" style problems show.
-NUM_MEMBERS = 4
+NUM_MEMBERS = 7
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-CSV_PATH = os.path.join(HERE, "perfect_polyiamond_sequences.csv")
 OUT_DIR = os.path.join(HERE, "out")
 
 # Substitutes a single ``(group)^k`` occurrence; whitespace is stripped first.
@@ -112,7 +112,7 @@ def render_sequence(name, expression, initial_value, step):
             continue
         if not simple:
             print(f"WARNING: {name}: the side sequence for k={k} intersects itself")
-            continue
+            # continue
 
         polys.append(Polyiamond(side_string))
         valid_ks.append(k)
@@ -136,7 +136,11 @@ def render_sequence(name, expression, initial_value, step):
 
 
 def main():
+    if len(sys.argv) < 2:
+        print(f"Usage: {sys.argv[0]} <sequences.csv>")
+        sys.exit(1)
     os.makedirs(OUT_DIR, exist_ok=True)
+    CSV_PATH = os.path.join(HERE, sys.argv[1])
     with open(CSV_PATH, newline="") as f:
         rows = list(csv.DictReader(f))
 
